@@ -1,0 +1,40 @@
+{
+  "name": "next-image-extras-monorepo",
+  "private": true,
+  "packageManager": "npm@8.1.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "clean": "rm -rf node_modules",
+    "dev": "concurrently \"npm:next-image-extras:dev\"",
+    "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
+    "lint": "eslint --ignore-path .eslintignore \"**/src/**/*.+(ts|js|tsx)\"",
+    "lint:quiet": "eslint --ignore-path .eslintignore \"**/src/**/*.+(ts|js|tsx)\" --quiet",
+    "next-image-extras:dev": "npm run dev --workspace=packages/next-image-extras",
+    "next-image-extras:test": "npm run test --workspace=packages/next-image-extras",
+    "postinstall": "husky install",
+    "pre-commit": "lint-staged",
+    "test": "npm run test"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "5.23.0",
+    "@typescript-eslint/parser": "5.23.0",
+    "concurrently": "^8.2.0",
+    "eslint": "8.15.0",
+    "eslint-config-next": "14.2.5",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-import-resolver-typescript": "3.6.3",
+    "eslint-plugin-prettier": "5.0.0",
+    "husky": "8.0.1",
+    "lint-staged": "12.4.1",
+    "prettier": "^3.4.2",
+    "typescript": "4.9.4"
+  },
+  "lint-staged": {
+    "./src/**/*.{ts,js,jsx,tsx}": [
+      "eslint --ignore-path .gitignore --fix",
+      "prettier --ignore-path .gitignore --write"
+    ]
+  }
+}
