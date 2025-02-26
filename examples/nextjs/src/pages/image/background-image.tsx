@@ -12,33 +12,24 @@ export function Hero({ children }: HeroProps) {
     {
       breakpoint: "fallback",
       media: "(max-width: 430px)",
-      imageProps: {
-        src: "https://picsum.photos/id/10/430/215",
-        width: 430,
-        height: 215,
-        priority: true,
-      },
+      url: "https://picsum.photos/id/10/430/215",
+      width: 430,
+      height: 215,
     },
     {
       breakpoint: "md",
       // media: "(min-width: 431px) and (max-width: 768px)",
       media: "(min-width: 768px) and (max-width: 1023px)",
-      imageProps: {
-        src: "https://picsum.photos/id/10/767/274",
-        width: 767,
-        height: 274,
-        priority: true,
-      },
+      url: "https://picsum.photos/id/10/767/274",
+      width: 767,
+      height: 274,
     },
     {
       breakpoint: "lg",
       media: "(min-width: 1024px)",
-      imageProps: {
-        src: "https://picsum.photos/id/10/3360/1200",
-        width: 3360,
-        height: 1200,
-        priority: true,
-      },
+      url: "https://picsum.photos/id/10/3360/1200",
+      width: 3360,
+      height: 1200,
     },
   ]);
 
@@ -51,7 +42,8 @@ export function Hero({ children }: HeroProps) {
   return (
     <div className="hero">
       <BackgroundImage
-        data={bgImageProps}
+        preload={true}
+        images={bgImageProps}
         className={`${bgImgBaseClasses} ${bgImgBreakpointClasses}`}
       >
         <div className="inner md:relative p-0 h-auto pt-[300px] md:h-[600px] max-w-5xl m-auto">
