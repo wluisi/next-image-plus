@@ -1,6 +1,4 @@
 import * as React from "react";
-import { default as NextLink } from "next/link";
-
 import { getBackgroundImageProps, BackgroundImage } from "next-image-extras";
 
 interface HeroProps {
@@ -71,10 +69,7 @@ export default function ImagePagesBackgroundImage() {
           id="main-content"
           className="container mx-auto pt-10 pb-10 max-w-5xl"
         >
-          <h1>Next Image Extras: NextJS Example App</h1>
-          <NextLink href="/blog">Blog Collection (Pages Dir)</NextLink>
-          <NextLink href="/event">Event Collection (App Dir)</NextLink>
-          <NextLink href="/press">Press Collection (Pages Dir)</NextLink>
+          main content
         </div>
       </div>
     </>
