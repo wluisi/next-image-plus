@@ -1,6 +1,6 @@
-const FALLBACK_IMG = "https://picsum.photos/id/10/430/215";
-const MD_IMG = "https://picsum.photos/id/10/767/274";
-const LG_IMG = "https://picsum.photos/id/10/3360/1200";
+const FALLBACK_IMG = "https://picsum.photos/id/870/430/466";
+const MD_IMG = "https://picsum.photos/id/870/768/512";
+const LG_IMG = "https://picsum.photos/id/870/2560/800";
 
 // Breakpoints
 const FALLBACK_BREAKPOINT = "(max-width: 430px)";
@@ -17,7 +17,7 @@ const LG_WIDTH_1X = "3840";
 //
 const BASE_URL = Cypress.config().baseUrl;
 
-const SLUG = "/image/background-image";
+const SLUG = "/image/background";
 
 export function interceptNextImage(options) {
   const { fallback, md, lg } = options;
