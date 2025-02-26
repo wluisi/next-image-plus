@@ -41,32 +41,4 @@ describe("Picture tests", () => {
 
     screen.debug();
   });
-
-  // it("should return a picture element if as is picture.", () => {
-  //   render(
-  //     <GraphineryNextImage
-  //       src="http://localhost:3000/image.jpg"
-  //       as="picture"
-  //       alt="alt text"
-  //       width={400}
-  //       height={400}
-  //       sources={[
-  //         {
-  //           media: "(min-width: 768px)",
-  //           srcSet: "http://localhost:3000/image-large.jpg",
-  //           width: 400,
-  //           height: 400,
-  //         },
-  //         {
-  //           media: "(min-width: 513px)",
-  //           srcSet: "http://localhost:3000/image-medium.jpg",
-  //           width: 400,
-  //           height: 400,
-  //         },
-  //       ]}
-  //     />
-  //   );
-
-  //   screen.debug();
-  // });
 });

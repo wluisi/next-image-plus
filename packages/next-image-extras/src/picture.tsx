@@ -53,7 +53,7 @@ export type PictureProps = React.ComponentPropsWithRef<"picture"> & {
   preload?: boolean;
   /** The media query to be used for the fallback image, if preload is true. */
   fallbackMedia?: string;
-  children: SourceProps | ImageProps;
+  children: SourceProps[] | ImageProps;
 };
 
 export function Picture({
