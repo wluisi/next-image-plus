@@ -7,10 +7,10 @@ import {
 
 import { PreloadImageLink } from "./preload";
 
-type BackgroundImageOptions = {
+type BackgroundImageOptions = Omit<NextImageProps, "alt" | "src"> & {
   breakpoint: string;
   media: string;
-  imageProps: Omit<NextImageProps, "alt">;
+  url: string;
 };
 
 type BackgroundImageData = {
@@ -27,10 +27,12 @@ export function getBackgroundImageProps(
 ): BackgroundImageData {
   const props: any = {};
 
-  for (const { breakpoint, media, imageProps } of options) {
+  for (const { breakpoint, media, url, width, height } of options) {
     const nextImage = getNextImageProps({
       alt: "background-image",
-      ...imageProps,
+      src: url,
+      width: width,
+      height: height,
     });
 
     // @todo this should also return the css var for this breakpoint
@@ -60,23 +62,23 @@ function getStyleProps(data: BackgroundImageData): React.CSSProperties {
 }
 
 interface BackgroundImageProps {
-  data: BackgroundImageData;
+  images: BackgroundImageData;
   preload?: boolean;
   className: string;
   children: React.ReactNode;
 }
 
 export function BackgroundImage({
-  data,
-  preload = true,
+  preload = false,
+  images,
   className,
   children,
 }: BackgroundImageProps) {
-  const styleProps = getStyleProps(data);
+  const styleProps = getStyleProps(images);
 
   // Format the in the format needed for the preloaded.
   const preloadData = [];
-  for (const [_key, value] of Object.entries(data)) {
+  for (const [_key, value] of Object.entries(images)) {
     preloadData.push({ ...value.img, media: value.media });
   }
 
