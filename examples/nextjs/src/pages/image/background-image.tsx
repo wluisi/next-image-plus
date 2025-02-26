@@ -1,10 +1,7 @@
 import * as React from "react";
 import { default as NextLink } from "next/link";
 
-import {
-  getBackgroundImageProps,
-  NextBackgroundImage,
-} from "next-image-extras";
+import { getBackgroundImageProps, BackgroundImage } from "next-image-extras";
 
 interface HeroProps {
   children: React.ReactNode;
@@ -53,7 +50,7 @@ export function Hero({ children }: HeroProps) {
 
   return (
     <div className="hero">
-      <NextBackgroundImage
+      <BackgroundImage
         data={bgImageProps}
         className={`${bgImgBaseClasses} ${bgImgBreakpointClasses}`}
       >
@@ -62,7 +59,7 @@ export function Hero({ children }: HeroProps) {
             {children}
           </div>
         </div>
-      </NextBackgroundImage>
+      </BackgroundImage>
     </div>
   );
 }

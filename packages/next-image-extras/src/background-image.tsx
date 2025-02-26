@@ -59,19 +59,19 @@ function getStyleProps(data: BackgroundImageData): React.CSSProperties {
   return cssVars;
 }
 
-interface NextBackgroundImageProps {
+interface BackgroundImageProps {
   data: BackgroundImageData;
   preload?: boolean;
   className: string;
   children: React.ReactNode;
 }
 
-export function NextBackgroundImage({
+export function BackgroundImage({
   data,
   preload = true,
   className,
   children,
-}: NextBackgroundImageProps) {
+}: BackgroundImageProps) {
   const styleProps = getStyleProps(data);
 
   // Format the in the format needed for the preloaded.
