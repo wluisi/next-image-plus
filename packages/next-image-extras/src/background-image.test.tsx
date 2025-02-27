@@ -43,6 +43,18 @@ describe("getBackgroundImageProps tests", () => {
   it("should do something cool", () => {
     const bgImageProps = getBackgroundImageProps(backgroundImageDataMock);
 
-    console.log(bgImageProps);
+    expect(bgImageProps).toHaveProperty("classNames");
+    expect(bgImageProps).toHaveProperty("images");
+
+    expect(bgImageProps.images).toHaveProperty("fallback");
+    expect(bgImageProps.images).toHaveProperty("md");
+    expect(bgImageProps.images).toHaveProperty("lg");
+
+    expect(bgImageProps.images.fallback).toHaveProperty("media");
+    expect(bgImageProps.images.fallback).toHaveProperty("img");
+
+    expect(bgImageProps.images.fallback.media).toEqual("(max-width: 400px)");
+
+    console.log(bgImageProps.images.fallback);
   });
 });
