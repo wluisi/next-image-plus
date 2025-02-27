@@ -2,7 +2,7 @@ import {
   checkLinkPreload,
   encodeLikeNext,
   interceptNextImage,
-} from "../../support/utils";
+} from "../support/utils";
 
 const FALLBACK_IMG = "https://picsum.photos/id/59/430/215";
 const MD_IMG = "https://picsum.photos/id/59/860/430";
