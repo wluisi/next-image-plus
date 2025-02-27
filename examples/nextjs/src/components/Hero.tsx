@@ -32,15 +32,18 @@ export default function Hero({ title, description }: HeroProps) {
 
   const bgImgBaseClasses = "absolute inset-0 bg-cover bg-center bg-no-repeat";
 
-  const bgImgBreakpointClasses =
-    "bg-[image:var(--bg-img-fallback)] md:bg-[image:var(--bg-img-md)] lg:bg-[image:var(--bg-img-lg)]";
+  // const bgImgBreakpointClasses =
+  //   "bg-[image:var(--bg-img-fallback)] md:bg-[image:var(--bg-img-md)] lg:bg-[image:var(--bg-img-lg)]";
+
+  console.log(bgImageProps);
 
   return (
     <section className="relative w-full h-[50vh] lg:h-[800px] overflow-hidden">
       <BackgroundImage
         preload={true}
-        images={bgImageProps}
-        className={`${bgImgBaseClasses} ${bgImgBreakpointClasses}`}
+        images={bgImageProps.images}
+        className={`${bgImgBaseClasses} ${bgImageProps.classNames}`}
+        // className={`${bgImgBaseClasses} ${bgImgBreakpointClasses}`}
       >
         <div className="absolute inset-0 bg-black bg-opacity-50" />
         <div className="relative h-full w-full flex items-center justify-center">
