@@ -11,7 +11,7 @@ const LG_IMG = "https://picsum.photos/id/59/220/220";
 // Breakpoints
 const FALLBACK_BREAKPOINT = "(max-width: 430px)";
 const MD_BREAKPOINT = "(min-width: 431px) and (max-width: 1023px)";
-// const LG_BREAKPOINT = "(min-width: 1024px)";
+const LG_BREAKPOINT = "(min-width: 1024px)";
 
 // Image density
 const FALLBACK_WIDTH_1X = "640";
@@ -20,7 +20,7 @@ const FALLBACK_WIDTH_2X = "1080";
 const MD_WIDTH_1X = "640";
 const MD_WIDTH_2X = "1920";
 
-const LG_WIDTH_1X = "1920";
+const LG_WIDTH_1X = "640";
 
 //
 const BASE_URL = Cypress.config().baseUrl;
@@ -164,6 +164,79 @@ describe("md: Picture component (pages)", () => {
         expect(imgEl.naturalWidth).to.be.greaterThan(0);
         expect(imgEl.currentSrc).not.to.include(fallbackImgUrl);
         expect(imgEl.currentSrc).not.to.include(lgImgUrl);
+      });
+  });
+});
+
+describe("lg: Picture component (pages)", () => {
+  beforeEach(() => {
+    cy.viewport(1024, 768);
+  });
+
+  // You're testing a single image on the first card, and checking whether fallback, md, or lg verion was loaded ?
+  // @todo how do you know this is testing the network preload request ?
+  it("should make network request (preload) for lg (desktop) picture image and not fallback or md.", () => {
+    interceptNextImage({
+      fallback: FALLBACK_IMG,
+      md: MD_IMG,
+      lg: LG_IMG,
+    });
+
+    cy.visit(SLUG);
+
+    cy.wait("@lg-image").its("response.statusCode").should("eq", 200);
+    // Ensure the other two images were NOT requested
+    cy.get("@fallback-image.all").should("have.length", 0);
+    cy.get("@md-image.all").should("have.length", 0);
+  });
+
+  it("should have <link rel='preload'> in head with correct attrs for lg (desktop) picture image", () => {
+    cy.visit(SLUG);
+
+    checkLinkPreload({
+      img: LG_IMG,
+      media: LG_BREAKPOINT,
+      width1x: LG_WIDTH_1X,
+      width2x: LG_WIDTH_1X,
+    });
+  });
+
+  it("should have lg (desktop) picture image src as the current src.", () => {
+    cy.visit(SLUG);
+
+    const lgImg = encodeLikeNext(`${LG_IMG}&w=${LG_WIDTH_1X}&q=75`);
+    const lgImgUrl = `${BASE_URL}/_next/image?url=${lgImg}`;
+
+    cy.get("#card-item__abcd-1234 picture img")
+      .should("be.visible")
+      .should(($img) => {
+        const imgEl = $img[0] as HTMLImageElement;
+        // Check the image is loaded.
+        expect(imgEl.naturalWidth).to.be.greaterThan(0);
+        // Check the actual loadded image is the current src.
+        expect(imgEl.currentSrc).to.include(lgImgUrl);
+      });
+  });
+
+  it("should not have fallback and md picture source images as the current src.", () => {
+    cy.visit(SLUG);
+
+    const fallbackImg = encodeLikeNext(
+      `${FALLBACK_IMG}&w=${FALLBACK_WIDTH_1X}&q=75`
+    );
+    const fallbackImgUrl = `${BASE_URL}/_next/image?url=${fallbackImg}`;
+
+    const mdImg = encodeLikeNext(`${MD_IMG}&w=${MD_WIDTH_1X}&q=75`);
+    const mdImgUrl = `${BASE_URL}/_next/image?url=${mdImg}`;
+
+    cy.get("#card-item__abcd-1234 picture img")
+      .should("be.visible")
+      .should(($img) => {
+        const imgEl = $img[0] as HTMLImageElement;
+        // Check the image is loaded.
+        expect(imgEl.naturalWidth).to.be.greaterThan(0);
+        expect(imgEl.currentSrc).not.to.include(fallbackImgUrl);
+        expect(imgEl.currentSrc).not.to.include(mdImgUrl);
       });
   });
 });
