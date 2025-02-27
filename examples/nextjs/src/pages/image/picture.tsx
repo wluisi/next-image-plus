@@ -18,6 +18,7 @@ export default function ImagePagesPicture() {
 
           return (
             <Card
+              id={item.id}
               key={item.id}
               title={item.title}
               description={item.description}

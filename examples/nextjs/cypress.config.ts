@@ -19,6 +19,6 @@ export default defineConfig({
         },
       });
     },
-    specPattern: "**/*.test.js",
+    specPattern: "**/*.test.{js,jsx,ts,tsx}",
   },
 });

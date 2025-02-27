@@ -45,6 +45,9 @@ export function Image({ src, width, height, alt, className }: ImageProps) {
       height={height}
       alt={alt}
       className={className}
+      onLoad={(event) =>
+        console.log("Loaded src:", event.currentTarget.currentSrc)
+      }
     />
   );
 }
