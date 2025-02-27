@@ -10,17 +10,17 @@ const LG_IMG = "https://picsum.photos/id/59/220/220";
 
 // Breakpoints
 const FALLBACK_BREAKPOINT = "(max-width: 430px)";
-// const MD_BREAKPOINT = "(min-width: 768px) and (max-width: 1023px)";
+const MD_BREAKPOINT = "(min-width: 431px) and (max-width: 1023px)";
 // const LG_BREAKPOINT = "(min-width: 1024px)";
 
 // Image density
 const FALLBACK_WIDTH_1X = "640";
 const FALLBACK_WIDTH_2X = "1080";
 
-const MD_WIDTH_1X = "430";
+const MD_WIDTH_1X = "640";
 const MD_WIDTH_2X = "1920";
 
-const LG_WIDTH_1X = "3840";
+const LG_WIDTH_1X = "1920";
 
 //
 const BASE_URL = Cypress.config().baseUrl;
@@ -117,7 +117,16 @@ describe("md: Picture component (pages)", () => {
     cy.get("@lg-image.all").should("have.length", 0);
   });
 
-  // @todo add 2 other tests here
+  it("should have <link rel='preload'> in head with correct attrs for md (tablet) picture image", () => {
+    cy.visit(SLUG);
+
+    checkLinkPreload({
+      img: MD_IMG,
+      media: MD_BREAKPOINT,
+      width1x: MD_WIDTH_1X,
+      width2x: MD_WIDTH_2X,
+    });
+  });
 
   it("should have md (tablet) picture image src as the current src.", () => {
     cy.visit(SLUG);
@@ -133,6 +142,28 @@ describe("md: Picture component (pages)", () => {
         expect(imgEl.naturalWidth).to.be.greaterThan(0);
         // Check the actual loadded image is the current src.
         expect(imgEl.currentSrc).to.include(mdImgUrl);
+      });
+  });
+
+  it("should not have fallback and large picture source images as the current src.", () => {
+    cy.visit(SLUG);
+
+    const fallbackImg = encodeLikeNext(
+      `${FALLBACK_IMG}&w=${FALLBACK_WIDTH_1X}&q=75`
+    );
+    const fallbackImgUrl = `${BASE_URL}/_next/image?url=${fallbackImg}`;
+
+    const lgImg = encodeLikeNext(`${LG_IMG}&w=${LG_WIDTH_1X}&q=75`);
+    const lgImgUrl = `${BASE_URL}/_next/image?url=${lgImg}`;
+
+    cy.get("#card-item__abcd-1234 picture img")
+      .should("be.visible")
+      .should(($img) => {
+        const imgEl = $img[0] as HTMLImageElement;
+        // Check the image is loaded.
+        expect(imgEl.naturalWidth).to.be.greaterThan(0);
+        expect(imgEl.currentSrc).not.to.include(fallbackImgUrl);
+        expect(imgEl.currentSrc).not.to.include(lgImgUrl);
       });
   });
 });
