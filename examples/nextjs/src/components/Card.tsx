@@ -6,7 +6,7 @@ interface CardProps {
 
 export default function Card({ title, description, image }: CardProps) {
   return (
-    <div className="flex flex-col lg:flex-row overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm m-6 md:m-10">
+    <div className="flex flex-col lg:flex-row overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm my-6 md:my-10">
       <div className="relative lg:flex-shrink-0">
         {/* <div className="relative aspect-square md:aspect-[2/1] lg:aspect-square lg:h-[220px] lg:w-[220px]"> */}
         <div className="relative aspect-[2/1] lg:aspect-square">{image}</div>
