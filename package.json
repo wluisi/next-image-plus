@@ -22,7 +22,7 @@
     "nextjs-example:start": "npm run start --workspace=examples/nextjs",
     "postinstall": "husky install",
     "pre-commit": "lint-staged",
-    "test": "npm run test"
+    "test": "npm run test --workspace=packages/next-image-extras"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "5.23.0",

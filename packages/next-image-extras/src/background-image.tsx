@@ -20,12 +20,30 @@ type BackgroundImageData = {
   };
 };
 
-// type BackgroundImage
+export function getTailwindCssClassNames(options: BackgroundImageOptions[]) {
+  let classNames = "";
 
-export function getBackgroundImageProps(
-  options: BackgroundImageOptions[]
-): BackgroundImageData {
-  const props: any = {};
+  for (const { breakpoint } of options) {
+    const cssVar = `--bg-img-${breakpoint}`;
+    // If fallback, then don't add prefix to class name.
+    if (breakpoint === "fallback") {
+      classNames = `bg-[image:var(${cssVar})]`;
+    } else {
+      classNames = `${classNames} ${breakpoint}:bg-[image:var(${cssVar})]`;
+    }
+  }
+
+  return classNames;
+}
+
+export function getBackgroundImageProps(options: BackgroundImageOptions[]): {
+  classNames: string;
+  images: BackgroundImageData;
+} {
+  const props: any = {
+    classNames: getTailwindCssClassNames(options),
+    images: {},
+  };
 
   for (const { breakpoint, media, url, width, height } of options) {
     const nextImage = getNextImageProps({
@@ -35,11 +53,10 @@ export function getBackgroundImageProps(
       height: height,
     });
 
-    // @todo this should also return the css var for this breakpoint
-    // cssVar: '--bg-img-fallback'
-    // This can be used then inside a consuming component
-    // bgImageProps.md.cssVar
-    props[breakpoint] = { media, img: nextImage.props };
+    props.images[breakpoint] = {
+      media,
+      img: nextImage.props,
+    };
   }
 
   return props;

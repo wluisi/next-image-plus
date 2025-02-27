@@ -39,7 +39,7 @@ export default function Hero({ title, description }: HeroProps) {
     <section className="relative w-full h-[50vh] lg:h-[800px] overflow-hidden">
       <BackgroundImage
         preload={true}
-        images={bgImageProps}
+        images={bgImageProps.images}
         className={`${bgImgBaseClasses} ${bgImgBreakpointClasses}`}
       >
         <div className="absolute inset-0 bg-black bg-opacity-50" />
