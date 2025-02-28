@@ -34,7 +34,8 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           install: false
-          config-file: examples/nextjs/cypress.config.ts
+          working-directory: examples/nextjs
+          # config-file: examples/nextjs/cypress.config.ts
           # build: npm run nextjs-example:build
           start: npm run nextjs-example:start
 
