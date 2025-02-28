@@ -22,9 +22,7 @@ const MD_WIDTH_2X = "1920";
 
 const LG_WIDTH_1X = "640";
 
-//
 const BASE_URL = Cypress.config().baseUrl;
-
 const SLUG = "/image/picture";
 
 describe("Fallback: Picture component (pages)", () => {

@@ -16,5 +16,10 @@
 // Import commands.js using ES2015 syntax:
 import "./commands";
 
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
+// eslint-disable-next-line import/no-extraneous-dependencies
+require("cypress-terminal-report/src/installLogsCollector")();
+
+// Set dpr to 2x globally.
+before(() => {
+  cy.setDevicePixelRatio(2);
+});

@@ -9,8 +9,39 @@ on:
       - "*"
 
 jobs:
-  test:
-    name: next-image-extras test
+  cypress-run:
+    name: cypress tests
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.17.0
+
+      - name: Install
+        run: npm install
+
+      - name: Build next-image-extras package
+        run: npm run build --workspace=packages/next-image-extras
+
+      - name: Build examples app
+        run: npm run nextjs-example:build
+
+      - name: Start examples app in the background
+        run: npm run nextjs-example:start &
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          browser: chrome
+          working-directory: examples/nextjs
+
+  jest-test:
+    name: next-image-extras jest tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout branch
