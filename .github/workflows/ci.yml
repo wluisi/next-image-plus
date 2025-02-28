@@ -30,12 +30,12 @@ jobs:
       - name: Build examples app
         run: npm run nextjs-example:build
 
-      # - name: Cypress run
-      #   uses: cypress-io/github-action@v6
-      #   with:
-      #     install: false
-      #     build: npm run nextjs-example:build
-      #     start: npm run nextjs-example:start
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          # build: npm run nextjs-example:build
+          start: npm run nextjs-example:start
 
   jest-test:
     name: next-image-extras jest tests
