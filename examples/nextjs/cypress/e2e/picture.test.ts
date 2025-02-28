@@ -14,8 +14,8 @@ const MD_BREAKPOINT = "(min-width: 431px) and (max-width: 1023px)";
 const LG_BREAKPOINT = "(min-width: 1024px)";
 
 // Image density
-const FALLBACK_WIDTH_1X = "640";
-const FALLBACK_WIDTH_2X = "1080";
+const FALLBACK_WIDTH_1X = "430";
+const FALLBACK_WIDTH_2X = "860";
 
 const MD_WIDTH_1X = "640";
 const MD_WIDTH_2X = "1920";
@@ -61,6 +61,11 @@ describe("Fallback: Picture component (pages)", () => {
   it("should have fallback (mobile) picture image src as the current src.", () => {
     cy.visit(SLUG);
 
+    const fallbackImg = encodeLikeNext(
+      `${FALLBACK_IMG}&w=${FALLBACK_WIDTH_2X}&q=75`
+    );
+    const fallbackImgUrl = `${BASE_URL}/_next/image?url=${fallbackImg}`;
+
     cy.get("#card-item__abcd-1234 picture img")
       .should("be.visible")
       .should(($img) => {
@@ -68,7 +73,7 @@ describe("Fallback: Picture component (pages)", () => {
         // Check the image is loaded.
         expect(imgEl.naturalWidth).to.be.greaterThan(0);
         // Check the actual loadded image is the current src.
-        expect(imgEl.currentSrc).to.include(FALLBACK_IMG);
+        expect(imgEl.currentSrc).to.include(fallbackImgUrl);
       });
   });
 

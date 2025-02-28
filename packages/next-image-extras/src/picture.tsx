@@ -68,26 +68,30 @@ export function Picture({
 
   const childrenValidated = getValidReactChildren(children);
 
-  const imgClone = childrenValidated.find((child) => {
-    if (child.type === Image) {
-      const imgChildProps = child.props;
+  // Find the Image component passed as a child
+  const imgElement = childrenValidated.find((child) => child.type === Image);
+  if (!imgElement) {
+    throw new Error("Image component not found in children");
+  }
 
-      const { props: imageProps } = getNextImageProps({
-        src: imgChildProps.src,
-        alt: imgChildProps.alt,
-        width: imgChildProps.width as number,
-        height: imgChildProps.height as number,
-      });
+  const imgChildProps = imgElement.props;
+  const { props: imageProps } = getNextImageProps({
+    src: imgChildProps.src,
+    alt: imgChildProps.alt,
+    width: imgChildProps.width as number,
+    height: imgChildProps.height as number,
+  });
 
-      preloadData.push({
-        media: fallbackMedia,
-        ...imageProps,
-      });
+  // console.log(imageProps);
 
-      return React.cloneElement(child, {
-        ...imageProps,
-      });
-    }
+  preloadData.push({
+    media: fallbackMedia,
+    ...imageProps,
+  });
+
+  const imgClone = React.cloneElement(imgElement, {
+    ...imageProps,
+    // src: imageProps.src,
   });
 
   const alt = imgClone.props.alt;
