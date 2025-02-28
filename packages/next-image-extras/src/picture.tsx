@@ -68,7 +68,7 @@ export function Picture({
 
   const childrenValidated = getValidReactChildren(children);
 
-  // Find the Image component passed as a child
+  // Find the Image component passed as a child.
   const imgElement = childrenValidated.find((child) => child.type === Image);
   if (!imgElement) {
     throw new Error("Image component not found in children");
@@ -82,8 +82,6 @@ export function Picture({
     height: imgChildProps.height as number,
   });
 
-  // console.log(imageProps);
-
   preloadData.push({
     media: fallbackMedia,
     ...imageProps,
@@ -91,7 +89,6 @@ export function Picture({
 
   const imgClone = React.cloneElement(imgElement, {
     ...imageProps,
-    // src: imageProps.src,
   });
 
   const alt = imgClone.props.alt;
