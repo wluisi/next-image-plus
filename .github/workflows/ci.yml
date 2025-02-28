@@ -37,6 +37,7 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           install: false
+          browser: chrome
           working-directory: examples/nextjs
 
   jest-test:

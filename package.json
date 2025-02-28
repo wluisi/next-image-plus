@@ -9,7 +9,7 @@
   "scripts": {
     "clean": "rm -rf node_modules",
     "cypress:open": "npm run cypress:open --workspace=examples/nextjs",
-    "cypress:run": "npm run cypress:run --workspace=examples/nextjs",
+    "cypress:run": "npm run cypress:run --workspace=examples/nextjs -- --browser chrome",
     "dev": "concurrently \"npm:next-image-extras:dev\" \"npm:nextjs-example:dev\"",
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
     "lint": "eslint --ignore-path .eslintignore \"**/src/**/*.+(ts|js|tsx)\"",
