@@ -9,8 +9,24 @@ on:
       - "*"
 
 jobs:
-  test:
-    name: next-image-extras test
+  cypress-run:
+    name: cypress tests
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # - name: Install
+      #   run: npm install
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          build: npm run nextjs-example:build
+          start: npm run nextjs-example:start
+
+  jest-test:
+    name: next-image-extras jest tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout branch
