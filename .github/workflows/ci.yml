@@ -37,7 +37,7 @@ jobs:
           working-directory: examples/nextjs
           # config-file: examples/nextjs/cypress.config.ts
           # build: npm run nextjs-example:build
-          start: npm run nextjs-example:start
+          start: npm run start --workspace=examples/nextjs
 
   jest-test:
     name: next-image-extras jest tests
