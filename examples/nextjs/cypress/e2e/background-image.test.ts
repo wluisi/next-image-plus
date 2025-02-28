@@ -14,8 +14,8 @@ const MD_BREAKPOINT = "(min-width: 768px) and (max-width: 1023px)";
 const LG_BREAKPOINT = "(min-width: 1024px)";
 
 // Image density
-const FALLBACK_WIDTH_1X = "640";
-const FALLBACK_WIDTH_2X = "1080";
+const FALLBACK_WIDTH_1X = "430";
+const FALLBACK_WIDTH_2X = "860";
 const MD_WIDTH_1X = "828";
 const MD_WIDTH_2X = "1920";
 const LG_WIDTH_1X = "3840";
