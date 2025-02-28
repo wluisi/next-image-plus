@@ -42,6 +42,7 @@ describe("Fallback: Picture component (pages)", () => {
     });
 
     cy.visit(SLUG);
+    cy.wait(2000);
 
     cy.wait("@fallback-image").its("response.statusCode").should("eq", 200);
     // Ensure the other two images were NOT requested
