@@ -30,6 +30,9 @@ jobs:
       - name: Build examples app
         run: npm run nextjs-example:build
 
+      - name: Start examples app in the background
+        run: npm run nextjs-example:start &
+
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
@@ -37,7 +40,7 @@ jobs:
           working-directory: examples/nextjs
           # config-file: examples/nextjs/cypress.config.ts
           # build: npm run nextjs-example:build
-          start: npm run start --workspace=examples/nextjs
+          # start: npm run start --workspace=examples/nextjs
 
   jest-test:
     name: next-image-extras jest tests
