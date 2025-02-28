@@ -6,7 +6,7 @@ export default defineConfig({
     baseUrl: "http://localhost:3000",
     setupNodeEvents(on, _config) {
       on("before:browser:launch", (browser: any = {}, launchOptions) => {
-        if (browser.family === "chrome") {
+        if (browser.family === "chrome" || browser.name === "chromium") {
           launchOptions.args.push("--force-device-scale-factor=2");
           launchOptions.args.push("--high-dpi-support=2");
         }
