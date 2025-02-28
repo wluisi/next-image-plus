@@ -20,6 +20,7 @@ const FALLBACK_WIDTH_2X = "1080";
 const MD_WIDTH_1X = "640";
 const MD_WIDTH_2X = "1920";
 
+// 256 is needed for headless; 640 for headed wtf.
 const LG_WIDTH_1X = "640";
 
 //
@@ -30,6 +31,7 @@ const SLUG = "/image/picture";
 describe("Fallback: Picture component (pages)", () => {
   beforeEach(() => {
     cy.viewport(430, 932);
+    // cy.setDevicePixelRatio(2);
   });
 
   // You're testing a single image on the first card, and checking whether fallback, md, or lg verion was loaded ?
@@ -99,6 +101,7 @@ describe("Fallback: Picture component (pages)", () => {
 describe("md: Picture component (pages)", () => {
   beforeEach(() => {
     cy.viewport(768, 1024);
+    // cy.setDevicePixelRatio(2);
   });
 
   // You're testing a single image on the first card, and checking whether fallback, md, or lg verion was loaded ?
@@ -172,6 +175,7 @@ describe("md: Picture component (pages)", () => {
 describe("lg: Picture component (pages)", () => {
   beforeEach(() => {
     cy.viewport(1024, 768);
+    // cy.setDevicePixelRatio(2);
   });
 
   // You're testing a single image on the first card, and checking whether fallback, md, or lg verion was loaded ?

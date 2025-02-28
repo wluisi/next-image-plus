@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { defineConfig } from "cypress";
 
 export default defineConfig({
@@ -5,6 +6,12 @@ export default defineConfig({
     experimentalRunAllSpecs: true,
     baseUrl: "http://localhost:3000",
     setupNodeEvents(on, _config) {
+      // eslint-disable-next-line import/no-extraneous-dependencies
+      require("cypress-terminal-report/src/installLogsPrinter")(on, {
+        printLogsToConsole: "always",
+      });
+
+      // @todo im not sure if this actually does anything ?
       on("before:browser:launch", (browser: any = {}, launchOptions) => {
         if (browser.family === "chrome" || browser.name === "chromium") {
           launchOptions.args.push("--force-device-scale-factor=2");
@@ -13,21 +20,6 @@ export default defineConfig({
         return launchOptions;
       });
     },
-    // setupNodeEvents(on, config) {
-    //   // implement node event listeners here
-    //   on("task", {
-    //     log(message) {
-    //       console.log(message);
-
-    //       return null;
-    //     },
-    //     table(message) {
-    //       console.table(message);
-
-    //       return null;
-    //     },
-    //   });
-    // },
     specPattern: "**/*.test.{js,jsx,ts,tsx}",
   },
 });
