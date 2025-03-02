@@ -28,7 +28,7 @@ export async function CodeSnippet({ title, code, language }: CodeSnippetProps) {
       <div className="relative">
         <ClipboardCopyButton text={code} />
         <div
-          className={`${paddingClassName} [&>pre]:overflow-x-auto [&>pre]:p-5 [&>pre]:text-xs [&>pre]:antialiased`}
+          className={`${paddingClassName} [&>pre]:whitespace-pre-wrap [&>pre]:overflow-x-auto [&>pre]:p-5 [&>pre]:text-xs [&>pre]:antialiased`}
           dangerouslySetInnerHTML={{ __html: html }}
         />
       </div>

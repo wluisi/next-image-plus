@@ -35,7 +35,7 @@ export function Header({ children }: { children: React.ReactNode }) {
         <div className="flex justify-between px-5">
           <Link
             href="/"
-            className="text-black text-xl no-underline hover:underline"
+            className="text-black text-l font-extrabold no-underline hover:underline"
           >
             next-image-extras
           </Link>
