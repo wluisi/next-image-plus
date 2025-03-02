@@ -1,4 +1,5 @@
 import "./globals.css";
+import { Header } from "./../components/Header";
 
 export const metadata = {
   title: "Next.js",
@@ -11,8 +12,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" className="h-full antialiased">
+      <body>
+        <Header>Header component child</Header>
+        {children}
+      </body>
     </html>
   );
 }

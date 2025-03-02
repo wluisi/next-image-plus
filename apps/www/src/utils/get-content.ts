@@ -13,6 +13,14 @@ import { compileMDX } from "next-mdx-remote/rsc";
 
 import CustomComponent from "./../components/CustomComponent";
 import CustomComponentTwo from "./../components/CustomComponentTwo";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  CodeSnippet,
+  Heading,
+} from "./../components/ui";
 
 export async function getContent(slug: string) {
   const filePath = path.join(process.cwd(), "src/__content", `${slug}.mdx`);
@@ -27,7 +35,16 @@ export async function getContent(slug: string) {
     const { content, frontmatter } = await compileMDX<{ title: string }>({
       source: mdxSource,
       options: { parseFrontmatter: true },
-      components: { CustomComponent, CustomComponentTwo },
+      components: {
+        Accordion,
+        AccordionButton,
+        AccordionItem,
+        AccordionPanel,
+        CodeSnippet,
+        CustomComponent,
+        CustomComponentTwo,
+        Heading,
+      },
     });
 
     // console.log("---- compileMDX content! ----");
