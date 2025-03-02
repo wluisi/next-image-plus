@@ -18,6 +18,7 @@ import {
   AccordionPanel,
   CodeSnippet,
   Heading,
+  HeadingAnchorLink,
 } from "./../components/ui";
 
 export async function getContent(slug: string) {
@@ -56,10 +57,14 @@ export async function getContent(slug: string) {
           return <Heading level="h1" {...props} />;
         },
         h2(props) {
-          return <Heading level="h2" {...props} />;
+          return (
+            <HeadingAnchorLink level="h2" title={props.children as string} />
+          );
         },
         h3(props) {
-          return <Heading level="h3" {...props} />;
+          return (
+            <HeadingAnchorLink level="h3" title={props.children as string} />
+          );
         },
       },
       options: {

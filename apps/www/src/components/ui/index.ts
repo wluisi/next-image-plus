@@ -12,6 +12,7 @@ export * from "./CodeSnippet/CodeSnippet";
 export * from "./Grid/Grid";
 export * from "./Grid/GridItem";
 export * from "./Heading/Heading";
+export * from "./Heading/HeadingAnchorLink";
 export * from "./Icons/ArrowLeftIcon";
 export * from "./Icons/ArrowRightIcon";
 export * from "./Icons/CheckIcon";
