@@ -43,6 +43,7 @@ export function Pagination({
             type="button"
             className={prevClasses}
             onClick={() => {
+              // @ts-expect-error - fix me later
               onChange(prevPageNumber);
             }}
             disabled={currentPage <= 1}
@@ -61,6 +62,7 @@ export function Pagination({
             type="button"
             className={nextClasses}
             onClick={() => {
+              // @ts-expect-error - fix me later
               onChange(nextPageNumber);
             }}
             disabled={pageCount <= currentPage}

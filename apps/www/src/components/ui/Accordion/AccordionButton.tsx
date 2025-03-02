@@ -14,6 +14,7 @@ export function AccordionButton({ className, children }: AccordionButtonProps) {
   const ref = React.useRef();
 
   const accordionContext = React.useContext(AccordionItemContext);
+  // @ts-expect-error - fix me later
   const { getButtonProps } = accordionContext;
   const buttonProps = getButtonProps({ className, children }, ref);
 

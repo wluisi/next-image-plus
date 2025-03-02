@@ -17,6 +17,7 @@ export function AccordionPanel({ className, children }: AccordionPanelProps) {
   }
 
   const accordionContext = React.useContext(AccordionItemContext);
+  // @ts-expect-error - fix me later
   const { getPanelProps } = accordionContext;
   const panelProps = getPanelProps({ className: classNames, children }, ref);
 

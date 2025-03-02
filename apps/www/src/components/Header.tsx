@@ -2,7 +2,7 @@ import * as React from "react";
 
 import {
   GithubIcon,
-  Heading,
+  // Heading,
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
@@ -23,7 +23,7 @@ const menuItems = [
   },
 ];
 
-export function Header({ children }: { children: React.ReactNode }) {
+export function Header() {
   const menuId = "headerNavigationMenuLabel";
 
   return (

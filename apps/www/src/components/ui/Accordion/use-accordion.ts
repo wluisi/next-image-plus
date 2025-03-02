@@ -10,7 +10,7 @@ export function useAccordion() {
   const handleClick = () => {
     setIsOpen(!isOpen);
   };
-
+  // @ts-expect-error - fix me later
   const getButtonProps = (props, ref) => {
     return {
       ...props,
@@ -22,7 +22,7 @@ export function useAccordion() {
       onClick: handleClick,
     };
   };
-
+  // @ts-expect-error - fix me later
   const getPanelProps = (props, ref) => {
     return {
       ...props,

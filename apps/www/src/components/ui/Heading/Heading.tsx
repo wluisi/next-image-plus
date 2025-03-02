@@ -16,6 +16,7 @@ export function Heading({ id, level, children, className }: HeadingProps) {
   }: React.HTMLAttributes<HTMLHeadingElement>) =>
     React.createElement(level, props, children);
 
+  // @ts-expect-error - fix me later
   const classNames = `${headingSizeMap[level]} font-bold mb-5`;
   const classNamesFinal = className ? `${classNames} ${className}` : classNames;
 

@@ -14,7 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased">
       <body>
-        <Header>Header component child</Header>
+        <Header />
         {children}
       </body>
     </html>

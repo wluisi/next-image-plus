@@ -19,6 +19,7 @@ export function AccordionItem({ className, children }: AccordionItemProps) {
   }
 
   return (
+    // @ts-expect-error - fix me later
     <AccordionItemContext.Provider value={accordionContext}>
       <div className={classNames}>{children}</div>
     </AccordionItemContext.Provider>

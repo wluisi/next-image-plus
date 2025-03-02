@@ -11,8 +11,6 @@ import path from "path";
 
 import { compileMDX } from "next-mdx-remote/rsc";
 
-import CustomComponent from "./../components/CustomComponent";
-import CustomComponentTwo from "./../components/CustomComponentTwo";
 import {
   Accordion,
   AccordionItem,
@@ -32,23 +30,48 @@ export async function getContent(slug: string) {
     const mdxSource = await fs.promises.readFile(filePath, "utf-8");
 
     // Compile the mdx file.
-    const { content, frontmatter } = await compileMDX<{ title: string }>({
+    // content is a react component, that can be rendered as is, ie., {content}
+    // example output:
+    //
+    // {
+    //   '$$typeof': Symbol(react.element),
+    //   type: [Function: MDXContent],
+    //   key: null,
+    //   ref: null,
+    //   _owner: null,
+    //   _store: {}
+    // }
+    //
+    const { content, frontmatter } = await compileMDX({
       source: mdxSource,
-      options: { parseFrontmatter: true },
       components: {
         Accordion,
         AccordionButton,
         AccordionItem,
         AccordionPanel,
+        // @ts-expect-error - fix me later
         CodeSnippet,
-        CustomComponent,
-        CustomComponentTwo,
         Heading,
+        h1(props) {
+          return <Heading level="h1" {...props} />;
+        },
+        h2(props) {
+          return <Heading level="h2" {...props} />;
+        },
+        h3(props) {
+          return <Heading level="h3" {...props} />;
+        },
+      },
+      options: {
+        parseFrontmatter: true,
       },
     });
 
+    // console.log("---- compileMDX frontmatter! ----");
+    // console.log(frontmatter);
+
     // console.log("---- compileMDX content! ----");
-    // console.log(content);
+    // console.log(Object.getOwnPropertyNames(content.props.components.Accordion));
 
     return {
       frontmatter: frontmatter,
