@@ -53,6 +53,32 @@ export async function getContent(slug: string) {
             <HeadingAnchorLink level="h3" title={props.children as string} />
           );
         },
+        pre(props) {
+          // @ts-expect-error - fuck off
+          const code = props.children?.props?.children as string;
+          // @ts-expect-error - fuck off
+          const language = props.children?.props?.className.replace(
+            "language-",
+            ""
+          );
+
+          let codeFinal = "";
+          let title;
+
+          const firstLine = code.split("\n")[0];
+          const shortcode = "@filename:";
+
+          if (firstLine.startsWith(shortcode)) {
+            codeFinal = code.split("\n").slice(1).join("\n");
+            title = firstLine.split(shortcode)[1];
+          } else {
+            codeFinal = code;
+          }
+
+          return (
+            <CodeSnippet title={title} language={language} code={codeFinal} />
+          );
+        },
       },
       options: {
         parseFrontmatter: true,

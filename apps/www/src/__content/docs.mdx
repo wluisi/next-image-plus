@@ -14,6 +14,36 @@ It has all the great features from Next.js, plus extra power to create Markdown-
 
 To start using next-image-extras, instal the package using your favorite package manager
 
-```
+```shell
 npm install next-image-extras
+```
+
+## Picture
+
+To use the picture, do this:
+
+```tsx
+@filename: picture.tsx
+<Picture>
+  <Source
+    media="(min-width: 431px) and (max-width: 1023px)"
+    src={image.medium.url}
+    sizes="100vw"
+    width={image.medium.width}
+    height={image.medium.height}
+  />
+  <Source
+    media="(min-width: 1024px)"
+    src={image.large.url}
+    width={image.large.width}
+    height={image.large.height}
+  />
+  <Image
+    src={image.fallback.url}
+    width={image.fallback.width}
+    height={image.fallback.height}
+    alt={image.fallback.alt}
+    className="object-cover"
+  />
+</Picture>
 ```
