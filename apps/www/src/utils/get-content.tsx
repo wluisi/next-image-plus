@@ -10,6 +10,7 @@ import fs from "fs";
 import path from "path";
 
 import { compileMDX } from "next-mdx-remote/rsc";
+import { notFound } from "next/navigation";
 
 import getTableOfContents from "./get-table-of-contents";
 
@@ -66,7 +67,6 @@ export async function getContent(slug: string) {
       toc: toc,
     };
   } catch (error) {
-    // @todo this should return notFound() ?
-    throw new Error("Could not process the MDX file");
+    notFound();
   }
 }
