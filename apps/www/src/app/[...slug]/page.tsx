@@ -21,7 +21,7 @@ export default async function PageSlugPage({
             Sidebar nav
           </GridItem>
           <GridItem id="main-content" className="md:col-span-8 pb-10 md:px-10">
-            <article className="space-y-7 prose">{page.content}</article>
+            <article className="space-y-5 prose">{page.content}</article>
           </GridItem>
           <GridItem id="left-sidebar" as="aside" className="md:col-span-2">
             <TableOfContents data={page.toc} />

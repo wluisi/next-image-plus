@@ -9,6 +9,8 @@
 import fs from "fs";
 import path from "path";
 import { compileMDX } from "next-mdx-remote/rsc";
+import remarkGfm from "remark-gfm";
+
 // Utils
 import getTableOfContents from "./get-table-of-contents";
 // Components
@@ -27,6 +29,9 @@ export async function getContent(slug: string) {
       components: componentMap,
       options: {
         parseFrontmatter: true,
+        mdxOptions: {
+          remarkPlugins: [remarkGfm],
+        },
       },
     });
 

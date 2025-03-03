@@ -1,6 +1,7 @@
 const path = require("path");
 // import typographyPlugin from "@tailwindcss/typography";
 import typographyStyles from "./typography";
+const plugin = require("tailwindcss/plugin");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -28,5 +29,57 @@ module.exports = {
     typography: typographyStyles,
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addBase, config }) {
+      // Add default styles
+      addBase({
+        p: {
+          margin: `${config("theme.spacing.2")} 0`,
+        },
+        a: {
+          color: config("theme.colors.blue.500"),
+          textDecoration: "underline",
+          textUnderlineOffset: config("theme.spacing.1"),
+        },
+        hr: {
+          margin: `${config("theme.spacing.5")} 0`,
+        },
+        ul: {
+          listStyleType: "disc",
+          paddingLeft: config("theme.spacing.7"),
+        },
+        ol: {
+          listStyleType: "decimal",
+          paddingLeft: config("theme.spacing.7"),
+        },
+        h2: {
+          fontWeight: "bold",
+          marginBottom: config("theme.spacing.5"),
+          fontSize: config("theme.fontSize.2xl"),
+        },
+        h3: {
+          fontWeight: "bold",
+          marginBottom: config("theme.spacing.3"),
+          fontSize: config("theme.fontSize.1xl"),
+        },
+        table: {
+          width: "100%",
+          marginBottom: config("theme.spacing.7"),
+          fontSize: config("theme.fontSize.xs"),
+          // overflowX: "auto",
+          // whiteSpace: "pre-wrap",
+        },
+        "table tr th": {
+          textAlign: "left",
+          backgroundColor: config("theme.colors.gray.700"),
+          color: config("theme.colors.white"),
+          padding: `${config("theme.spacing.3")} ${config("theme.spacing.4")}`,
+        },
+        "table tr td": {
+          borderBottom: `1px solid ${config("theme.colors.gray.500")}`,
+          padding: `${config("theme.spacing.3")} ${config("theme.spacing.4")}`,
+        },
+      });
+    }),
+  ],
 };
