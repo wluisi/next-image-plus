@@ -13,8 +13,6 @@ export default function getTableOfContents(source: string) {
   const data: TableOfContentsItem[] = [];
   tree.children.forEach((item) => {
     if (item.type === "heading" && item.depth !== 1) {
-      console.log(item);
-
       data.push({
         // @ts-expect-error - fml
         id: getSlug(item.children[0]?.value),
