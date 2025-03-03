@@ -60,8 +60,8 @@ export function Header() {
               <NavigationMenuItem className="pr-5">
                 <NavigationMenuLink
                   as={Link}
-                  href="https://github.com/wluisi/graphinery"
-                  aria-label="Go to graphinery github page"
+                  href="https://github.com/wluisi/next-image-extras"
+                  aria-label="Go to next-image-extras github page"
                   // isCurrentPage={currentPath === item.url}
                 >
                   <GithubIcon className="h-6 w-6" />

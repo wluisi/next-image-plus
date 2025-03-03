@@ -36,7 +36,7 @@ export function Pagination({
         `${buttonClasses} text-black underline-offset-4 hover:underline`;
 
   return (
-    <nav aria-label="pagination" className="graphinery-ui__pagination">
+    <nav aria-label="pagination" className="pagination">
       <ul className="list-none pl-0 flex justify-between">
         <li>
           <button

@@ -7,7 +7,7 @@ export interface TextFormattedProps {
 }
 
 export function TextFormatted({ id, className, html }: TextFormattedProps) {
-  let classNames = "graphinery-ui__text-formatted";
+  let classNames = "text-formatted";
   if (className) {
     classNames = `${className} ${classNames}`;
   }

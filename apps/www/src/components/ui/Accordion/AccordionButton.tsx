@@ -19,7 +19,7 @@ export function AccordionButton({ className, children }: AccordionButtonProps) {
   const buttonProps = getButtonProps({ className, children }, ref);
 
   let classNames =
-    "graphinery-ui__accordion-button p-3 w-full flex justify-between items-center hover:bg-gray-200";
+    "accordion-button p-3 w-full flex justify-between items-center hover:bg-gray-200";
   if (className) {
     classNames = `${className} ${classNames}`;
   }

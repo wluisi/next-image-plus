@@ -11,7 +11,7 @@ export interface AccordionPanelProps extends React.HTMLAttributes<HTMLElement> {
 export function AccordionPanel({ className, children }: AccordionPanelProps) {
   const ref = React.useRef();
 
-  let classNames = "graphinery-ui__accordion-panel p-3";
+  let classNames = "accordion-panel p-3";
   if (className) {
     classNames = `${className} ${classNames}`;
   }
