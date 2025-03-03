@@ -31,7 +31,7 @@ export function Header() {
       role="banner"
       className="border-b-[1px] border-b-gray-300 py-3 items-center"
     >
-      <div className="container mx-auto px-5">
+      <div className="container mx-auto px-3">
         <div className="flex justify-between px-5">
           <Link
             href="/"

@@ -57,11 +57,11 @@ module.exports = {
           marginBottom: config("theme.spacing.5"),
           fontSize: config("theme.fontSize.2xl"),
         },
-        h3: {
-          fontWeight: "bold",
-          marginBottom: config("theme.spacing.3"),
-          fontSize: config("theme.fontSize.1xl"),
-        },
+        // h3: {
+        //   fontWeight: "bold",
+        //   marginBottom: config("theme.spacing.3"),
+        //   fontSize: config("theme.fontSize.1xl"),
+        // },
         table: {
           width: "100%",
           marginBottom: config("theme.spacing.7"),
