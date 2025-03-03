@@ -16,6 +16,7 @@
   "dependencies": {
     "@tailwindcss/typography": "^0.5.4",
     "autoprefixer": "^10.4.14",
+    "mdast-util-from-markdown": "^2.0.2",
     "next": "14.2.5",
     "next-image-extras": "*",
     "next-mdx-remote": "^5.0.0",

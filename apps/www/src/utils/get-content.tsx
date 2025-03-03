@@ -11,6 +11,8 @@ import path from "path";
 
 import { compileMDX } from "next-mdx-remote/rsc";
 
+import getTableOfContents from "./get-table-of-contents";
+
 import {
   Accordion,
   AccordionItem,
@@ -24,25 +26,9 @@ import {
 export async function getContent(slug: string) {
   const filePath = path.join(process.cwd(), "src/__content", `${slug}.mdx`);
 
-  console.log("filePath", filePath);
-
   try {
-    // Load the MDX file
     const mdxSource = await fs.promises.readFile(filePath, "utf-8");
 
-    // Compile the mdx file.
-    // content is a react component, that can be rendered as is, ie., {content}
-    // example output:
-    //
-    // {
-    //   '$$typeof': Symbol(react.element),
-    //   type: [Function: MDXContent],
-    //   key: null,
-    //   ref: null,
-    //   _owner: null,
-    //   _store: {}
-    // }
-    //
     const { content, frontmatter } = await compileMDX({
       source: mdxSource,
       components: {
@@ -72,17 +58,15 @@ export async function getContent(slug: string) {
       },
     });
 
-    // console.log("---- compileMDX frontmatter! ----");
-    // console.log(frontmatter);
-
-    // console.log("---- compileMDX content! ----");
-    // console.log(Object.getOwnPropertyNames(content.props.components.Accordion));
+    const toc = getTableOfContents(mdxSource);
 
     return {
       frontmatter: frontmatter,
       content: content,
+      toc: toc,
     };
   } catch (error) {
+    // @todo this should return notFound() ?
     throw new Error("Could not process the MDX file");
   }
 }
