@@ -5,8 +5,6 @@ import TableOfContents from "./../components/table-of-contents";
 export default async function HomePage() {
   const page = await getContent("home");
 
-  console.log(page.toc);
-
   return (
     <div id="page-layout" className="container mx-auto px-10 py-3">
       <main role="main">
@@ -21,13 +19,6 @@ export default async function HomePage() {
             {page.content}
           </GridItem>
           <GridItem id="left-sidebar" as="aside" className="md:col-span-2">
-            {/* On this page
-            <ul>
-              <li>Introduction</li>
-              <li>Introduction 2</li>
-              <li>More Stuff</li>
-              <li>Hello, world</li>
-            </ul> */}
             <TableOfContents data={page.toc} />
           </GridItem>
         </Grid>
