@@ -3,6 +3,7 @@
   "private": true,
   "packageManager": "npm@8.1.0",
   "workspaces": [
+    "apps/*",
     "examples/*",
     "packages/*"
   ],
@@ -23,7 +24,11 @@
     "nextjs-example:start": "npm run start --workspace=examples/nextjs",
     "postinstall": "husky install",
     "pre-commit": "lint-staged",
-    "test": "npm run test --workspace=packages/next-image-extras"
+    "test": "npm run test --workspace=packages/next-image-extras",
+    "www:build": "npm run build --workspace=apps/www",
+    "www:dev": "npm run dev --workspace=apps/www",
+    "www:production": "npm run www:build && npm run www:start",
+    "www:start": "npm run start --workspace=apps/www"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "5.23.0",
