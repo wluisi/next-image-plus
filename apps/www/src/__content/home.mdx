@@ -44,33 +44,31 @@ eum fugiat quo voluptas nulla pariatur?
 
 ### Im an h3
 
-<CodeSnippet
-  title="picture-example.tsx"
-  code={`<Picture preload={preload} fallbackMedia="(max-width: 430px)">
-    <Source
-      media="(min-width: 431px) and (max-width: 1023px)"
-      src={image.medium.url}
-      sizes="100vw"
-      width={image.medium.width}
-      height={image.medium.height}
-    />
-    <Source
-      media="(min-width: 1024px)"
-      src={image.large.url}
-      width={image.large.width}
-      height={image.large.height}
-    />
-    <Image
-      src={image.fallback.url}
-      width={image.fallback.width}
-      height={image.fallback.height}
-      alt={image.fallback.alt}
-      className="object-cover"
-    />
-  </Picture>
-  `}
-  language="tsx"
-/>
+```tsx
+@filename: picture.tsx
+<Picture>
+  <Source
+    media="(min-width: 431px) and (max-width: 1023px)"
+    src={image.medium.url}
+    sizes="100vw"
+    width={image.medium.width}
+    height={image.medium.height}
+  />
+  <Source
+    media="(min-width: 1024px)"
+    src={image.large.url}
+    width={image.large.width}
+    height={image.large.height}
+  />
+  <Image
+    src={image.fallback.url}
+    width={image.fallback.width}
+    height={image.fallback.height}
+    alt={image.fallback.alt}
+    className="object-cover"
+  />
+</Picture>
+```
 
 <Accordion>
   <AccordionItem>
