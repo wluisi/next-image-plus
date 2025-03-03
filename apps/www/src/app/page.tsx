@@ -16,7 +16,7 @@ export default async function HomePage() {
             Sidebar nav
           </GridItem>
           <GridItem id="main-content" className="md:col-span-8 pb-10 md:px-10">
-            {page.content}
+            <article className="space-y-7 prose">{page.content}</article>
           </GridItem>
           <GridItem id="left-sidebar" as="aside" className="md:col-span-2">
             <TableOfContents data={page.toc} />
