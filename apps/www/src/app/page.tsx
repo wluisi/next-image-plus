@@ -1,5 +1,6 @@
 import { getContent } from "./../utils/get-content";
 import { Grid, GridItem } from "./../components/ui";
+import TableOfContents from "./../components/table-of-contents";
 
 export default async function HomePage() {
   const page = await getContent("home");
@@ -18,13 +19,7 @@ export default async function HomePage() {
             {page.content}
           </GridItem>
           <GridItem id="left-sidebar" as="aside" className="md:col-span-2">
-            On this page
-            <ul>
-              <li>Introduction</li>
-              <li>Introduction 2</li>
-              <li>More Stuff</li>
-              <li>Hello, world</li>
-            </ul>
+            <TableOfContents data={page.toc} />
           </GridItem>
         </Grid>
       </main>

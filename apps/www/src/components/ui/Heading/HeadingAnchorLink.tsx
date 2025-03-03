@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Heading, LinkIcon } from "./../../ui";
+import getSlug from "./../../../utils/get-slug";
 
 interface HeadingAnchorLinkProps
   extends React.HTMLAttributes<HTMLHeadingElement> {
@@ -7,15 +8,8 @@ interface HeadingAnchorLinkProps
   level: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 }
 
-export function getSlugFromTitle(text: string) {
-  return text
-    .toLowerCase()
-    .replace(/ /g, "-")
-    .replace(/[^\w-]+/g, "");
-}
-
 export function HeadingAnchorLink({ title, level }: HeadingAnchorLinkProps) {
-  const slug = getSlugFromTitle(title);
+  const slug = getSlug(title);
   const href = `#${slug}`;
   const permaLink = `Permalink: ${title}`;
 
