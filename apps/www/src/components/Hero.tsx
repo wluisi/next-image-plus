@@ -11,7 +11,7 @@ export default function Hero() {
               next-image-extras
             </h1>
             <p className="text-lg md:text-xl text-black/90 mb-8">
-              Turbo fast responsive images for Nextjs
+              Turbocharge responsive images in your Nextjs app
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
