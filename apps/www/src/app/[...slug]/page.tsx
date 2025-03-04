@@ -37,7 +37,7 @@ export default async function PageSlugPage({
       <main role="main">
         <Grid
           id="grid"
-          className="grid md:grid-cols-12 md:grid-flow-col gap-5 pb-10"
+          className="md:grid md:grid-cols-12 md:grid-flow-col gap-5 pb-10"
         >
           <GridItem id="left-sidebar" as="aside" className="md:col-span-2">
             <SidebarMenu />
