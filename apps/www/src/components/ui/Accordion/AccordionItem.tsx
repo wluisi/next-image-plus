@@ -13,7 +13,7 @@ export function AccordionItem({ className, children }: AccordionItemProps) {
   const accordionContext = useAccordion();
 
   let classNames =
-    "accordion-item bg-gray-50 border-2 border-gray-50 rounded-lg mb-3";
+    "accordion-item bg-gray-100 border-2 border-gray-100 rounded-lg mb-3";
   if (className) {
     classNames = `${className} ${classNames}`;
   }

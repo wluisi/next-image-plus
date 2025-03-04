@@ -26,6 +26,13 @@ export const componentMap = {
   h3(props: any) {
     return <HeadingAnchorLink level="h3" title={props.children as string} />;
   },
+  table(props: any) {
+    return (
+      <div className="overflow-x-auto">
+        <table {...props} />
+      </div>
+    );
+  },
   pre(props: any) {
     const code = props.children?.props?.children as string;
     const language = props.children?.props?.className.replace("language-", "");

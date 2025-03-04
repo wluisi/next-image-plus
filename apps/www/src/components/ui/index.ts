@@ -21,6 +21,7 @@ export * from "./Icons/ChevronLeftIcon";
 export * from "./Icons/ChevronRightIcon";
 export * from "./Icons/ClipboardCopyIcon";
 export * from "./Icons/GithubIcon";
+export * from "./Icons/ImageIcon";
 export * from "./Icons/LinkIcon";
 export * from "./NavigationMenu/NavigationMenu";
 export * from "./NavigationMenu/NavigationMenuItem";

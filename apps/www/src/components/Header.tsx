@@ -2,11 +2,11 @@ import * as React from "react";
 
 import {
   GithubIcon,
-  // Heading,
+  ImageIcon,
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuList,
   NavigationMenuLink,
+  NavigationMenuList,
 } from "./../components/ui";
 import Link from "next/link";
 
@@ -31,14 +31,17 @@ export function Header() {
       role="banner"
       className="border-b-[1px] border-b-gray-300 py-3 items-center"
     >
-      <div className="container mx-auto px-5">
+      <div className="container mx-auto px-3">
         <div className="flex justify-between px-5">
-          <Link
-            href="/"
-            className="text-black text-l font-extrabold no-underline hover:underline"
-          >
-            next-image-extras
-          </Link>
+          <div className="logo flex">
+            <Link
+              href="/"
+              className="text-black text-l font-extrabold no-underline hover:underline"
+            >
+              <ImageIcon className="h-6 w-6 text-red-500 float-left mr-1" />
+              <span>next-image-extras</span>
+            </Link>
+          </div>
           <NavigationMenu id={menuId}>
             {/* <Heading id={menuId} level="h2" className="text-2xl mb-5">
             Hello menu title?

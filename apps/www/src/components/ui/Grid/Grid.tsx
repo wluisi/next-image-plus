@@ -9,7 +9,7 @@ export interface GridProps {
 }
 
 export function Grid({ id, as, className, children }: GridProps) {
-  let classNames = "grid";
+  let classNames = "md:grid";
   if (className) {
     classNames = `${className} ${classNames}`;
   }

@@ -12,7 +12,7 @@ export type CodeSnippetProps = {
 export async function CodeSnippet({ title, code, language }: CodeSnippetProps) {
   const html = await codeToHtml(code, {
     lang: language,
-    theme: "nord",
+    theme: "andromeeda",
   });
   const paddingClassName = title
     ? "[&>pre]:rounded-b-xl"

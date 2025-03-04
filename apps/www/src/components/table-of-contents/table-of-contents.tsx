@@ -20,8 +20,8 @@ export type TableOfContentsProps = {
 export default function TableOfContents({ data }: TableOfContentsProps) {
   return (
     <div id="toc-navigation-menu">
-      <NavigationMenu id="docs-toc">
-        <Heading level="h3" className="text-2xl mb-5">
+      <NavigationMenu id="docs-toc" className="mt-3">
+        <Heading level="h3" className="text-1xl mb-1">
           On this page
         </Heading>
         <NavigationMenuList>
