@@ -3,7 +3,7 @@ title: "Picture Component"
 description: "This is an example MDX file."
 ---
 
-# Picture
+# Picture Component
 
 The `<Picture>` component provides 3 components for creating responsive images:
 
@@ -47,3 +47,37 @@ Here's a summary of the props available for the Picture, Source, and Image compo
 | sizes  | `sizes="(max-width: 768px) 100vw, 33vw"` | String       | -        |
 | width  | `width={500}`                            | Integer (px) | Required |
 | height | `height={500}`                           | Integer (px) | Required |
+
+To use the picture, do this:
+
+```tsx
+@filename: picture.tsx
+import { Picture, Source, Image } from "next-image-extras";
+
+export default function ReactComponent() {
+  return (
+    <Picture>
+      <Source
+        media="(min-width: 431px) and (max-width: 1023px)"
+        src={image.medium.url}
+        sizes="100vw"
+        width={image.medium.width}
+        height={image.medium.height}
+      />
+      <Source
+        media="(min-width: 1024px)"
+        src={image.large.url}
+        width={image.large.width}
+        height={image.large.height}
+      />
+      <Image
+        src={image.fallback.url}
+        width={image.fallback.width}
+        height={image.fallback.height}
+        alt={image.fallback.alt}
+        className="object-cover"
+      />
+    </Picture>
+  );
+}
+```
