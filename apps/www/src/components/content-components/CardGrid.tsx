@@ -2,11 +2,16 @@ import * as React from "react";
 import {
   ArrowRightIcon,
   Card,
+  CodeIcon,
+  DesktopIcon,
+  GearIcon,
+  GithubIcon,
   Grid,
   GridItem,
   Heading,
-  GithubIcon,
   ImageIcon,
+  LightningBoltIcon,
+  RocketshipIcon,
 } from "./../ui";
 
 export interface CardProps {
@@ -29,8 +34,13 @@ export interface CardGridProps {
 
 const iconMap: Record<string, React.JSX.Element> = {
   "arrow-right": <ArrowRightIcon className="h-8 w-8 mb-3" />,
+  "lightning-bolt": <LightningBoltIcon className="h-8 w-8 mb-3" />,
+  code: <CodeIcon className="h-8 w-8 mb-3" />,
+  desktop: <DesktopIcon className="h-8 w-8 mb-3" />,
+  gear: <GearIcon className="h-8 w-8 mb-3" />,
   github: <GithubIcon className="h-8 w-8 mb-3" />,
   image: <ImageIcon className="h-8 w-8 mb-3" />,
+  rocketship: <RocketshipIcon className="h-8 w-8 mb-3" />,
 };
 
 export default function CardGrid({

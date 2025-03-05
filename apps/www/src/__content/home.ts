@@ -21,7 +21,7 @@ export const homeContent = {
           title: "Preloading",
           description:
             "Optimize loading of your images to get a perfect lighthouse score.",
-          icon: "arrow-right",
+          icon: "lightning-bolt",
         },
         {
           id: "feature-2",
@@ -35,28 +35,28 @@ export const homeContent = {
           title: "Background Images",
           description:
             "Get started in no time! Explore comprehensive documentation and rich examples.",
-          icon: "github",
+          icon: "rocketship",
         },
         {
           id: "feature-4",
           title: "Preloading",
           description:
             "Yes, but out of the box, it does not directly support the picture element or background images.",
-          icon: "github",
+          icon: "code",
         },
         {
           id: "feature-5",
           title: "Open Source",
           description:
             "Yes, but out of the box, it does not directly support the picture element or background images.",
-          icon: "github",
+          icon: "desktop",
         },
         {
           id: "feature-6",
           title: "Background Images",
           description:
             "Get started in no time! Explore comprehensive documentation and rich examples.",
-          icon: "github",
+          icon: "gear",
         },
       ],
     },
@@ -74,6 +74,18 @@ export const homeContent = {
         },
         {
           id: "faq-2",
+          question: "Doesn't next already have an image component?",
+          answer:
+            "Yes, but out of the box, it does not directly support the picture element or background images.",
+        },
+        {
+          id: "faq-3",
+          question: "Doesn't next already have an image component?",
+          answer:
+            "Yes, but out of the box, it does not directly support the picture element or background images.",
+        },
+        {
+          id: "faq-4",
           question: "Doesn't next already have an image component?",
           answer:
             "Yes, but out of the box, it does not directly support the picture element or background images.",
