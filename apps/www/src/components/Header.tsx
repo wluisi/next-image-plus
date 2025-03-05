@@ -60,7 +60,7 @@ export function Header({ id, menuItems }: HeaderProps) {
                   </NavigationMenuItem>
                 );
               })}
-              <NavigationMenuItem className="pr-5">
+              <NavigationMenuItem>
                 <NavigationMenuLink
                   as={Link}
                   href={githubMenuItem.url}
