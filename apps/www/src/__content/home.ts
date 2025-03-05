@@ -50,20 +50,20 @@ export const homeContent = {
             "Yes, but out of the box, it does not directly support the picture element or background images.",
           icon: "code",
         },
-        {
-          id: "feature-5",
-          title: "Open Source",
-          description:
-            "Yes, but out of the box, it does not directly support the picture element or background images.",
-          icon: "desktop",
-        },
-        {
-          id: "feature-6",
-          title: "Background Images",
-          description:
-            "Get started in no time! Explore comprehensive documentation and rich examples.",
-          icon: "gear",
-        },
+        // {
+        //   id: "feature-5",
+        //   title: "Open Source",
+        //   description:
+        //     "Yes, but out of the box, it does not directly support the picture element or background images.",
+        //   icon: "desktop",
+        // },
+        // {
+        //   id: "feature-6",
+        //   title: "Background Images",
+        //   description:
+        //     "Get started in no time! Explore comprehensive documentation and rich examples.",
+        //   icon: "gear",
+        // },
       ],
     },
     {

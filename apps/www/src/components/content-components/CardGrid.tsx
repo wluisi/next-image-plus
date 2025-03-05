@@ -50,8 +50,13 @@ export default function CardGrid({
   description,
   items,
 }: CardGridProps) {
-  const gridClassNames =
-    layout === "column" ? "md:grid md:grid-cols-3 md:gap-6" : "md:grid";
+  const itemsCount = items.length;
+  const gridCols =
+    itemsCount === 4
+      ? "md:grid md:grid-cols-2 md:gap-6"
+      : "md:grid md:grid-cols-3 md:gap-6";
+
+  const gridClassNames = layout === "column" ? gridCols : "md:grid";
 
   return (
     <div
@@ -72,7 +77,6 @@ export default function CardGrid({
             <GridItem key={item.id} as="li" className="md:flex">
               <Card>
                 <div className="p-5">
-                  {/* <GithubIcon className="h-8 w-8 mb-3" /> */}
                   {iconMap[item.icon]}
                   <Heading level="h3" className="text-lg mb-2">
                     {item.title}
