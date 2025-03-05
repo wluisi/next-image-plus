@@ -84,12 +84,6 @@ export const homeContent = {
           answer:
             "Yes, but out of the box, it does not directly support the picture element or background images.",
         },
-        {
-          id: "faq-4",
-          question: "Doesn't next already have an image component?",
-          answer:
-            "Yes, but out of the box, it does not directly support the picture element or background images.",
-        },
       ],
     },
   ],
