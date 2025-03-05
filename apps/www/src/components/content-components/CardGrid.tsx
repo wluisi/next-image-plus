@@ -69,7 +69,7 @@ export default function CardGrid({
       <Grid as="ul" className={`list-none p-0 ${gridClassNames}`}>
         {items.map((item: CardProps) => {
           return (
-            <GridItem key={item.id} as="li" className="flex">
+            <GridItem key={item.id} as="li" className="md:flex">
               <Card>
                 <div className="p-5">
                   {/* <GithubIcon className="h-8 w-8 mb-3" /> */}
