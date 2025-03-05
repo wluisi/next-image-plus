@@ -12,6 +12,45 @@ import TableOfContents from "./../../../components/table-of-contents";
 import SidebarMenu from "../../../components/SidebarMenu";
 import Link from "next/link";
 
+import { metadataBase } from "./../../../__content/metadata";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Record<string, string | string[]>;
+}): Promise<Metadata | undefined> {
+  const slug = params.slug[0];
+  const page = await getContent(slug);
+
+  const { title, description, keywords } = page.frontmatter;
+  const titleFinal = `${title} | ${metadataBase.siteName}`;
+
+  return {
+    title: titleFinal,
+    description: description as string,
+    abstract: description as string,
+    keywords: keywords as string,
+    alternates: {
+      canonical: metadataBase.url,
+    },
+    openGraph: {
+      title: titleFinal,
+      description: description as string,
+      type: "website",
+      siteName: metadataBase.siteName,
+      url: metadataBase.url,
+    },
+    twitter: {
+      title: titleFinal,
+      description: description as string,
+      card: "summary",
+      site: metadataBase.url,
+      creator: metadataBase.twitterHandle,
+    },
+  };
+}
+
 export default async function DocsSlugPage({
   params,
 }: {

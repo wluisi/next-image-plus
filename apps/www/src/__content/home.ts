@@ -1,4 +1,10 @@
 export const homeContent = {
+  id: "home",
+  title: "Next Image Plus",
+  description: "Next Image Plus desc",
+  metadata: {
+    keywords: "keywords replace me",
+  },
   mainContent: [
     {
       __typename: "Hero",
