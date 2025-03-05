@@ -14,7 +14,7 @@ export default function Hero({ id, title, description, link }: HeroProps) {
   return (
     <section
       id={id}
-      className="relative w-full h-[25vh] lg:h-[400px] overflow-hidden"
+      className="relative w-full h-[50vh] lg:h-[400px] overflow-hidden"
     >
       <div className="absolute inset-0 bg-cover bg-center bg-no-repeat">
         <div className="absolute inset-0" />

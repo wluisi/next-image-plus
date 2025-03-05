@@ -11,7 +11,7 @@ export function NavigationMenuItem({
   children,
   isActiveTrail = false,
 }: NavigationMenuItemProps) {
-  let classNames = "pr-2";
+  let classNames = "navigation-menu-item";
 
   if (className) {
     classNames = `${className} ${classNames}`;

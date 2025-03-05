@@ -17,7 +17,9 @@ export default function RootLayout({
     <html lang="en" className="h-full antialiased">
       <body>
         <Header id={mainMenu.id} menuItems={mainMenu.items} />
-        {children}
+        <div id="page-layout" className="container mx-auto px-3 py-4">
+          <main role="main">{children}</main>
+        </div>
       </body>
     </html>
   );

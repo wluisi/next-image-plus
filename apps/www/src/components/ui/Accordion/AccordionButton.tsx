@@ -19,7 +19,7 @@ export function AccordionButton({ className, children }: AccordionButtonProps) {
   const buttonProps = getButtonProps({ className, children }, ref);
 
   let classNames =
-    "accordion-button p-3 w-full flex justify-between items-center hover:bg-gray-200";
+    "accordion-button p-3 w-full flex justify-between items-center hover:bg-gray-200 text-left";
   if (className) {
     classNames = `${className} ${classNames}`;
   }

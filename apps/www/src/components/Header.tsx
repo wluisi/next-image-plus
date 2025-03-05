@@ -47,7 +47,7 @@ export function Header({ id, menuItems }: HeaderProps) {
       className="border-b-[1px] border-b-gray-300 py-3 items-center"
     >
       <div className="container mx-auto px-3">
-        <div className="flex justify-between px-5">
+        <div className="flex justify-between">
           <Logo />
           <NavigationMenu id={`menu__${id}`}>
             <NavigationMenuList className="flex list-none">
@@ -60,7 +60,7 @@ export function Header({ id, menuItems }: HeaderProps) {
                   </NavigationMenuItem>
                 );
               })}
-              <NavigationMenuItem className="pr-5">
+              <NavigationMenuItem>
                 <NavigationMenuLink
                   as={Link}
                   href={githubMenuItem.url}
