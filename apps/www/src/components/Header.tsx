@@ -46,8 +46,8 @@ export function Header({ id, menuItems }: HeaderProps) {
       role="banner"
       className="border-b-[1px] border-b-gray-300 py-3 items-center"
     >
-      <div className="container mx-auto px-3">
-        <div className="flex justify-between px-5">
+      <div className="container mx-auto px-8">
+        <div className="flex justify-between">
           <Logo />
           <NavigationMenu id={`menu__${id}`}>
             <NavigationMenuList className="flex list-none">
