@@ -47,7 +47,7 @@ export default async function HomePage() {
         id="home__main-content"
         className="md:col-span-8 pb-10 md:px-10"
       >
-        <div className="max-w-[960px] mx-auto px-10 py-3">
+        <div className="max-w-[960px] mx-auto px-3 py-3">
           <ContentComponents
             content={homeContent.mainContent}
             components={{
