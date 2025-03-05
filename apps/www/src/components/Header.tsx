@@ -39,7 +39,7 @@ export function Header() {
               className="text-black text-l font-extrabold no-underline hover:underline"
             >
               <ImageIcon className="h-6 w-6 text-red-500 float-left mr-1" />
-              <span>next-image-extras</span>
+              <span>next-image-plus</span>
             </Link>
           </div>
           <NavigationMenu id={menuId}>
