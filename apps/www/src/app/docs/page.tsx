@@ -12,6 +12,9 @@ import TableOfContents from "./../../components/table-of-contents";
 import SidebarMenu from "../../components/SidebarMenu";
 import Link from "next/link";
 
+import type { Metadata } from "next";
+import { metadataBase } from "./../../__content/metadata";
+
 const breadcrumbs = [
   {
     title: "Home",
@@ -24,6 +27,36 @@ const breadcrumbs = [
     isCurrentPage: true,
   },
 ];
+
+export async function generateMetadata(): Promise<Metadata | undefined> {
+  const docsPage = await getContent("docs");
+  const { title, description, keywords } = docsPage.frontmatter;
+  const titleFinal = `${title} | ${metadataBase.siteName}`;
+
+  return {
+    title: titleFinal,
+    description: description as string,
+    abstract: description as string,
+    keywords: keywords as string,
+    alternates: {
+      canonical: metadataBase.url,
+    },
+    openGraph: {
+      title: titleFinal,
+      description: description as string,
+      type: "website",
+      siteName: metadataBase.siteName,
+      url: metadataBase.url,
+    },
+    twitter: {
+      title: titleFinal,
+      description: description as string,
+      card: "summary",
+      site: metadataBase.url,
+      creator: metadataBase.twitterHandle,
+    },
+  };
+}
 
 export default async function DocsPage() {
   const page = await getContent("docs");
