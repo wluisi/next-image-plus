@@ -4,17 +4,17 @@ export const sidebarMenu = {
   items: [
     {
       id: "sidebar-menu-item-1",
-      url: "#introduction",
+      url: "/docs",
       title: "Introduction",
     },
     {
       id: "sidebar-menu-item-2",
-      url: "#picture-component",
+      url: "/docs/picture",
       title: "Picture Component",
     },
     {
       id: "sidebar-menu-item-3",
-      url: "#background-image-component",
+      url: "/docs/background-image",
       title: "Background Image Component",
     },
   ],
