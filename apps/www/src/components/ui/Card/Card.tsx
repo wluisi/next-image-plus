@@ -11,7 +11,7 @@ export function Card({ id, children }: CardProps) {
       {...(id && {
         id: id,
       })}
-      className="card rounded overflow-hidden shadow-xl mb-10"
+      className="card rounded overflow-hidden border border-gray-300 mb-10"
     >
       {children}
     </div>
