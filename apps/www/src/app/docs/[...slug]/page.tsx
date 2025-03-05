@@ -1,5 +1,5 @@
-import { getContent } from "./../../utils/get-content";
-import { sidebarMenu } from "./../../__content/sidebar-menu";
+import { getContent } from "./../../../utils/get-content";
+import { sidebarMenu } from "./../../../__content/sidebar-menu";
 
 import {
   Breadcrumb,
@@ -7,31 +7,36 @@ import {
   BreadcrumbLink,
   Grid,
   GridItem,
-} from "./../../components/ui";
-import TableOfContents from "./../../components/table-of-contents";
-import SidebarMenu from "../../components/SidebarMenu";
+} from "./../../../components/ui";
+import TableOfContents from "./../../../components/table-of-contents";
+import SidebarMenu from "../../../components/SidebarMenu";
 import Link from "next/link";
 
-const breadcrumbs = [
-  {
-    title: "Home",
-    url: "/",
-    // isCurrentPage: true,
-  },
-  {
-    title: "Docs",
-    url: "/docs",
-    isCurrentPage: false,
-  },
-];
-
-export default async function PageSlugPage({
+export default async function DocsSlugPage({
   params,
 }: {
   params: Record<string, string | string[]>;
 }) {
   const slug = params.slug[0];
   const page = await getContent(slug);
+
+  const breadcrumbs = [
+    {
+      title: "Home",
+      url: "/",
+      isCurrentPage: false,
+    },
+    {
+      title: "Docs",
+      url: "/docs",
+      isCurrentPage: false,
+    },
+    {
+      title: page.frontmatter.title as string,
+      url: `/docs/${slug}`,
+      isCurrentPage: true,
+    },
+  ];
 
   return (
     <div id="page-layout" className="container mx-auto px-8 py-4">
