@@ -10,22 +10,37 @@ import {
 } from "./../components/ui";
 import Link from "next/link";
 
-const menuItems = [
-  {
-    id: "item-1",
-    url: "/docs",
-    title: "Documentation",
-  },
-  {
-    id: "item-2",
-    url: "/about",
-    title: "About",
-  },
-];
+const githubMenuItem = {
+  url: "https://github.com/wluisi/next-image-extras",
+  ariaLabel: "Go to next-image-extras github page",
+};
 
-export function Header() {
-  const menuId = "headerNavigationMenuLabel";
+interface MenuItem {
+  id: string;
+  title: string;
+  url: string;
+}
 
+interface HeaderProps {
+  id: string;
+  menuItems: MenuItem[];
+}
+
+function Logo() {
+  return (
+    <div className="logo flex">
+      <Link
+        href="/"
+        className="text-black text-l font-extrabold no-underline hover:underline"
+      >
+        <ImageIcon className="h-6 w-6 text-red-500 float-left mr-1" />
+        <span>next-image-plus</span>
+      </Link>
+    </div>
+  );
+}
+
+export function Header({ id, menuItems }: HeaderProps) {
   return (
     <header
       role="banner"
@@ -33,28 +48,13 @@ export function Header() {
     >
       <div className="container mx-auto px-3">
         <div className="flex justify-between px-5">
-          <div className="logo flex">
-            <Link
-              href="/"
-              className="text-black text-l font-extrabold no-underline hover:underline"
-            >
-              <ImageIcon className="h-6 w-6 text-red-500 float-left mr-1" />
-              <span>next-image-plus</span>
-            </Link>
-          </div>
-          <NavigationMenu id={menuId}>
-            {/* <Heading id={menuId} level="h2" className="text-2xl mb-5">
-            Hello menu title?
-          </Heading> */}
+          <Logo />
+          <NavigationMenu id={`menu__${id}`}>
             <NavigationMenuList className="flex list-none">
-              {menuItems.map((item: any) => {
+              {menuItems.map((item: MenuItem) => {
                 return (
                   <NavigationMenuItem key={item.id} className="pr-5">
-                    <NavigationMenuLink
-                      as={Link}
-                      href={item.url}
-                      // isCurrentPage={currentPath === item.url}
-                    >
+                    <NavigationMenuLink as={Link} href={item.url}>
                       {item.title}
                     </NavigationMenuLink>
                   </NavigationMenuItem>
@@ -63,9 +63,8 @@ export function Header() {
               <NavigationMenuItem className="pr-5">
                 <NavigationMenuLink
                   as={Link}
-                  href="https://github.com/wluisi/next-image-extras"
-                  aria-label="Go to next-image-extras github page"
-                  // isCurrentPage={currentPath === item.url}
+                  href={githubMenuItem.url}
+                  aria-label={githubMenuItem.ariaLabel}
                 >
                   <GithubIcon className="h-6 w-6" />
                 </NavigationMenuLink>
