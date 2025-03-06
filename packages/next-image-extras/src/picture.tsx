@@ -84,6 +84,7 @@ export function Picture({
 
   preloadData.push({
     media: fallbackMedia,
+    fetchPriority: preload ? "high" : "auto",
     ...imageProps,
   });
 
@@ -105,6 +106,7 @@ export function Picture({
 
       preloadData.push({
         media: child.props.media,
+        fetchPriority: preload ? "high" : "auto",
         ...sourceProps,
       });
 
