@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { defineConfig } from "cypress";
 
 export default defineConfig({
@@ -6,7 +5,6 @@ export default defineConfig({
     experimentalRunAllSpecs: true,
     baseUrl: "http://localhost:3000",
     setupNodeEvents(on, _config) {
-      // eslint-disable-next-line import/no-extraneous-dependencies
       require("cypress-terminal-report/src/installLogsPrinter")(on, {
         printLogsToConsole: "always",
       });

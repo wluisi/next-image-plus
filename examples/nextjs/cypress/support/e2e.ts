@@ -16,7 +16,6 @@
 // Import commands.js using ES2015 syntax:
 import "./commands";
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 require("cypress-terminal-report/src/installLogsCollector")();
 
 // Set dpr to 2x globally.
