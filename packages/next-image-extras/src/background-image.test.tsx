@@ -1,4 +1,13 @@
+/**
+ * @jest-environment jsdom
+ */
+
+import * as React from "react";
+import "@testing-library/jest-dom";
+import { render } from "@testing-library/react";
+
 import {
+  BackgroundImage,
   getBackgroundImageProps,
   getTailwindCssClassNames,
 } from "./background-image";
@@ -56,5 +65,44 @@ describe("getBackgroundImageProps tests", () => {
     expect(bgImageProps.images.fallback.media).toEqual("(max-width: 400px)");
 
     console.log(bgImageProps.images.fallback);
+  });
+});
+
+describe("BackgroundImage component tests", () => {
+  it("should render a div.", () => {
+    const bgImageProps = getBackgroundImageProps(backgroundImageDataMock);
+
+    const componentMock = (
+      <BackgroundImage
+        preload={true}
+        images={bgImageProps.images}
+        className="bg-image"
+      />
+    );
+
+    const { container } = render(componentMock);
+    const element = container.querySelector(".bg-image");
+
+    expect(element).toBeInTheDocument();
+    expect(element?.tagName.toLowerCase()).toBe("div");
+  });
+
+  it("should render a span if as prop is set to span.", () => {
+    const bgImageProps = getBackgroundImageProps(backgroundImageDataMock);
+
+    const componentMock = (
+      <BackgroundImage
+        as="span"
+        preload={true}
+        images={bgImageProps.images}
+        className="bg-image"
+      />
+    );
+
+    const { container } = render(componentMock);
+    const element = container.querySelector(".bg-image");
+
+    expect(element).toBeInTheDocument();
+    expect(element?.tagName.toLowerCase()).toBe("span");
   });
 });

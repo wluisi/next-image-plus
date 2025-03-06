@@ -79,18 +79,21 @@ function getStyleProps(data: BackgroundImageData): React.CSSProperties {
 }
 
 interface BackgroundImageProps {
+  as?: React.ElementType;
   images: BackgroundImageData;
   preload?: boolean;
   className: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export function BackgroundImage({
+  as = null,
   preload = false,
   images,
   className,
   children,
 }: BackgroundImageProps) {
+  const classNames = `next-background-image ${className}`;
   const styleProps = getStyleProps(images);
 
   // Format the in the format needed for the preloaded.
@@ -99,11 +102,25 @@ export function BackgroundImage({
     preloadData.push({ ...value.img, media: value.media });
   }
 
+  // If as prop is passed, create the react component, other default to div.
+  const component = as ? (
+    React.createElement(
+      as,
+      {
+        className: classNames,
+        style: styleProps,
+      },
+      children
+    )
+  ) : (
+    <div className={classNames} style={styleProps}>
+      {children}
+    </div>
+  );
+
   return (
     <>
-      <div className={`next-background-image ${className}`} style={styleProps}>
-        {children}
-      </div>
+      {component}
       {preload ? <PreloadImageLink data={preloadData} /> : null}
     </>
   );
