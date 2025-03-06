@@ -20,7 +20,6 @@ export interface PreloadImageLinkProps {
 }
 
 export function getSharedOptions(attributes: ImageAttributes) {
-  // @ts-expect-error TODO: upgrade to `@types/react-dom@18.3.x`
   const fetchPriority = Boolean(React.use)
     ? // In React 19.0.0 or newer, we must use camelCase
       // prop to avoid "Warning: Invalid DOM property".
