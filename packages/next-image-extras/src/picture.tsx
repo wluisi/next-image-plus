@@ -74,7 +74,7 @@ export function Picture({
     throw new Error("Image component not found in children");
   }
 
-  const imgChildProps = imgElement.props;
+  const imgChildProps: any = imgElement.props;
   const { props: imageProps } = getNextImageProps({
     src: imgChildProps.src,
     alt: imgChildProps.alt,
@@ -87,13 +87,13 @@ export function Picture({
     ...imageProps,
   });
 
-  const imgClone = React.cloneElement(imgElement, {
+  const imgClone: any = React.cloneElement(imgElement, {
     ...imageProps,
   });
 
   const alt = imgClone.props.alt;
 
-  const sourceClones = childrenValidated.map((child) => {
+  const sourceClones = childrenValidated.map((child: any) => {
     if (child.type === Source) {
       const { props: sourceProps } = getNextImageProps({
         src: child.props.src,

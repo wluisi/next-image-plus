@@ -51,7 +51,6 @@ export function PreloadImageLink({ data }: PreloadImageLinkProps) {
   const isAppRouter = router === null ? true : false;
   // const isAppRouter = router === null;
 
-  // @ts-expect-error TODO: upgrade to `@types/react-dom@18.3.x`
   if (isAppRouter && ReactDOM.preload) {
     data.forEach((attributes) => {
       // See https://github.com/facebook/react/pull/26940
