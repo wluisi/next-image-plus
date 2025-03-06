@@ -54,9 +54,19 @@ export function PreloadImageLink({ data }: PreloadImageLinkProps) {
   // @ts-expect-error TODO: upgrade to `@types/react-dom@18.3.x`
   if (isAppRouter && ReactDOM.preload) {
     data.forEach((attributes) => {
+      console.log("\n-------- getSharedOptions(attributes) -------\n");
+      console.log(getSharedOptions(attributes));
       // See https://github.com/facebook/react/pull/26940
       // @ts-expect-error TODO: upgrade to `@types/react-dom@18.3.x`
-      ReactDOM.preload(attributes.src, getSharedOptions(attributes));
+      // ReactDOM.preload(attributes.src, getSharedOptions(attributes));
+      ReactDOM.preload(attributes.src, {
+        as: "image",
+        imageSrcSet: attributes.srcSet,
+        // media: attributes.media,
+
+        fetchPriority: "high",
+      });
+
       return null;
     });
   }
