@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import "cypress-set-device-pixel-ratio";
 
 Cypress.Commands.add("visitWithNoJS", (route) => {
