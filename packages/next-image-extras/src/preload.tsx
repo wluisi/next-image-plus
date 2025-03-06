@@ -6,6 +6,8 @@ import ReactDOM from "react-dom";
 import Head from "next/head";
 import { type ImageProps as NextImageProps } from "next/image";
 
+import { useRouter } from "next/compat/router";
+
 export type ImageAttributes = Omit<NextImageProps, "src" | "loader"> & {
   sizes: string | undefined;
   srcSet: string | undefined;
@@ -42,8 +44,13 @@ export function getSharedOptions(attributes: ImageAttributes) {
 }
 
 export function PreloadImageLink({ data }: PreloadImageLinkProps) {
-  // @todo - figure out how to do this.
-  const isAppRouter = false;
+  // We use an alternate version of useRouter() provided by next/compat/router
+  // This version doens't throw but returns null for the app router.
+  // This allows us to know if the route is app or pages.
+  // @see https://github.com/vercel/next.js/blob/canary/packages/next/src/client/compat/router.ts
+  const router = useRouter();
+  const isAppRouter = router === null ? true : false;
+  // const isAppRouter = router === null;
 
   // @ts-expect-error TODO: upgrade to `@types/react-dom@18.3.x`
   if (isAppRouter && ReactDOM.preload) {
