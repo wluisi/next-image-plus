@@ -18,9 +18,9 @@ import type { Metadata } from "next";
 export async function generateMetadata({
   params,
 }: {
-  params: Record<string, string | string[]>;
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata | undefined> {
-  const slug = params.slug[0];
+  const slug = (await params).slug[0];
   const page = await getContent(slug);
 
   const { title, description, keywords } = page.frontmatter;
@@ -54,9 +54,9 @@ export async function generateMetadata({
 export default async function DocsSlugPage({
   params,
 }: {
-  params: Record<string, string | string[]>;
+  params: Promise<{ slug: string }>;
 }) {
-  const slug = params.slug[0];
+  const slug = (await params).slug[0];
   const page = await getContent(slug);
 
   const breadcrumbs = [
