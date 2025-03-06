@@ -35,10 +35,10 @@ const routerTypes = [
   },
 ];
 
-routerTypes.forEach((routeType) => {
-  describe(`[ ${routeType.router} ] Fallback: Picture component`, () => {
-    const SLUG = routeType.slug;
+routerTypes.forEach((routerType) => {
+  const SLUG = routerType.slug;
 
+  describe(`[ ${routerType.router} ] Fallback: Picture component`, () => {
     beforeEach(() => {
       cy.viewport(430, 932);
 
@@ -119,9 +119,7 @@ routerTypes.forEach((routeType) => {
     });
   });
 
-  describe(`[ ${routeType.router} ] md: Picture component`, () => {
-    const SLUG = routeType.slug;
-
+  describe(`[ ${routerType.router} ] md: Picture component`, () => {
     beforeEach(() => {
       cy.viewport(768, 1024);
 
@@ -202,9 +200,7 @@ routerTypes.forEach((routeType) => {
     });
   });
 
-  describe(`[ ${routeType.router} ] lg: Picture component`, () => {
-    const SLUG = routeType.slug;
-
+  describe(`[ ${routerType.router} ] lg: Picture component`, () => {
     beforeEach(() => {
       cy.viewport(1024, 768);
 

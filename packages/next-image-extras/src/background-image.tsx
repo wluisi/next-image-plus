@@ -99,7 +99,11 @@ export function BackgroundImage({
   // Format the in the format needed for the preloaded.
   const preloadData = [];
   for (const [_key, value] of Object.entries(images)) {
-    preloadData.push({ ...value.img, media: value.media });
+    preloadData.push({
+      ...value.img,
+      media: value.media,
+      fetchPriority: preload ? "high" : "auto",
+    });
   }
 
   // If as prop is passed, create the react component, other default to div.
