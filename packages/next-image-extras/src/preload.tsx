@@ -20,29 +20,15 @@ export interface PreloadImageLinkProps {
 }
 
 export function getSharedOptions(attributes: ImageAttributes) {
-  // console.log("\n ------- getSharedOptions -------\n");
-  // console.log(attributes);
-  // const fetchPriority = Boolean(React.use)
-  //   ? // In React 19.0.0 or newer, we must use camelCase
-  //     // prop to avoid "Warning: Invalid DOM property".
-  //     // See https://github.com/facebook/react/pull/25927
-  //     { fetchPriority: attributes.fetchPriority }
-  //   : // In React 18.2.0 or older, we must use lowercase prop
-  //     // to avoid "Warning: Invalid DOM property".
-  //     { fetchpriority: attributes.fetchPriority };
-
-  const options = {
+  return {
     as: "image",
     imageSrcSet: attributes.srcSet,
     imageSizes: attributes.sizes,
     crossOrigin: attributes.crossOrigin,
     referrerPolicy: attributes.referrerPolicy,
-    // ...fetchPriority,
     fetchPriority: attributes.fetchPriority,
     media: attributes.media,
   };
-
-  return options;
 }
 
 export function PreloadImageLink({ data }: PreloadImageLinkProps) {
@@ -52,7 +38,17 @@ export function PreloadImageLink({ data }: PreloadImageLinkProps) {
   // @see https://github.com/vercel/next.js/blob/canary/packages/next/src/client/compat/router.ts
   const router = useRouter();
   const isAppRouter = router === null ? true : false;
-  // const isAppRouter = router === null;
+
+  // Check if React 19 and app router.
+  // ReactDOM.preload() did not support media attribute until 19.
+  // @see https://github.com/facebook/react/pull/28635
+  if (!Boolean(React.use) && isAppRouter) {
+    console.warn(
+      "Preloading is not supported when using React 18 with Next.js app router, because ReactDOM.preload() does not support the media attribute."
+    );
+
+    return null;
+  }
 
   if (isAppRouter && ReactDOM.preload) {
     data.forEach((attributes) => {
