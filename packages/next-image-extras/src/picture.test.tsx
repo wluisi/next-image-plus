@@ -13,16 +13,16 @@ import { Picture, Image, Source } from "./picture";
 const PictureComponentMock = (
   <Picture preload={true}>
     <Source
-      media="(min-width: 600px) and (max-width:959px)"
       src="/images/medium.jpg"
       width={400}
       height={200}
+      media="(min-width: 600px) and (max-width:959px)"
     />
     <Source
-      media="(min-width: 960px)"
       src="/images/large.jpg"
       width={600}
       height={600}
+      media="(min-width: 960px)"
     />
     <Image
       src="/images/fallback.jpg"
@@ -47,7 +47,31 @@ describe("Picture component tests", () => {
     // screen.debug();
   });
 
-  it("should return correct source elements.", () => {
+  it("should generate correct attributes for source elements.", () => {
+    const { container } = render(PictureComponentMock);
+
+    const sourceMd = container.querySelector(
+      "picture source[media='(min-width: 600px) and (max-width:959px)']"
+    );
+
+    expect(sourceMd).not.toHaveAttribute("src");
+    expect(sourceMd).toHaveAttribute("srcSet");
+    expect(sourceMd).toHaveAttribute("media");
+    expect(sourceMd).toHaveAttribute("width");
+    expect(sourceMd).toHaveAttribute("height");
+
+    const sourceLarge = container.querySelector(
+      "picture source[media='(min-width: 960px)']"
+    );
+
+    expect(sourceLarge).not.toHaveAttribute("src");
+    expect(sourceLarge).toHaveAttribute("srcSet");
+    expect(sourceLarge).toHaveAttribute("media");
+    expect(sourceLarge).toHaveAttribute("width");
+    expect(sourceLarge).toHaveAttribute("height");
+  });
+
+  it("should generate srcset from source src.", () => {
     const { container } = render(PictureComponentMock);
 
     const sourceMd = container.querySelector(
