@@ -14,6 +14,9 @@ function getValidReactChildren(children: React.ReactNode) {
 
 export type SourceProps = React.ComponentPropsWithRef<"source"> & {
   src?: string;
+  alt?: string;
+  width: number | `${number}`;
+  height: number | `${number}`;
 };
 
 /*
@@ -69,12 +72,14 @@ export function Picture({
   const childrenValidated = getValidReactChildren(children);
 
   // Find the Image component passed as a child.
-  const imgElement = childrenValidated.find((child) => child.type === Image);
+  const imgElement: React.ReactElement<ImageProps> = childrenValidated.find(
+    (child) => child.type === Image
+  );
   if (!imgElement) {
     throw new Error("Image component not found in children");
   }
 
-  const imgChildProps: any = imgElement.props;
+  const imgChildProps = imgElement.props;
   const { props: imageProps } = getNextImageProps({
     src: imgChildProps.src,
     alt: imgChildProps.alt,
@@ -88,34 +93,38 @@ export function Picture({
     ...imageProps,
   });
 
-  const imgClone: any = React.cloneElement(imgElement, {
+  const imgClone = React.cloneElement(imgElement, {
     ...imageProps,
   });
 
   const alt = imgClone.props.alt;
 
-  const sourceClones = childrenValidated.map((child: any) => {
-    if (child.type === Source) {
-      const { props: sourceProps } = getNextImageProps({
-        src: child.props.src,
-        alt: alt,
-        sizes: child.props.sizes,
-        width: child.props.width as number,
-        height: child.props.height as number,
-      });
+  const sourceClones = childrenValidated.map(
+    (child: React.ReactElement<SourceProps>) => {
+      if (child.type === Source) {
+        const { props: sourceProps } = getNextImageProps({
+          src: child.props.src,
+          alt: alt,
+          sizes: child.props.sizes,
+          width: child.props.width,
+          height: child.props.height,
+        });
 
-      preloadData.push({
-        media: child.props.media,
-        fetchPriority: preload ? "high" : "auto",
-        ...sourceProps,
-      });
+        preloadData.push({
+          media: child.props.media,
+          fetchPriority: preload ? "high" : "auto",
+          ...sourceProps,
+        });
 
-      return React.cloneElement(child, {
-        alt: alt,
-        ...sourceProps,
-      });
+        // Clone the source element, and add the srcSet and sizes props
+        return React.cloneElement(child, {
+          alt: alt,
+          srcSet: sourceProps.srcSet,
+          sizes: sourceProps.sizes,
+        });
+      }
     }
-  });
+  );
 
   return (
     <>
