@@ -45,9 +45,9 @@ export function Image({ src, width, height, alt, className }: ImageProps) {
       height={height}
       alt={alt}
       className={className}
-      onLoad={(event) =>
-        console.log("Loaded src:", event.currentTarget.currentSrc)
-      }
+      // onLoad={(event) =>
+      //   console.log("Loaded src:", event.currentTarget.currentSrc)
+      // }
     />
   );
 }
@@ -74,7 +74,7 @@ export function Picture({
     throw new Error("Image component not found in children");
   }
 
-  const imgChildProps = imgElement.props;
+  const imgChildProps: any = imgElement.props;
   const { props: imageProps } = getNextImageProps({
     src: imgChildProps.src,
     alt: imgChildProps.alt,
@@ -84,16 +84,17 @@ export function Picture({
 
   preloadData.push({
     media: fallbackMedia,
+    fetchPriority: preload ? "high" : "auto",
     ...imageProps,
   });
 
-  const imgClone = React.cloneElement(imgElement, {
+  const imgClone: any = React.cloneElement(imgElement, {
     ...imageProps,
   });
 
   const alt = imgClone.props.alt;
 
-  const sourceClones = childrenValidated.map((child) => {
+  const sourceClones = childrenValidated.map((child: any) => {
     if (child.type === Source) {
       const { props: sourceProps } = getNextImageProps({
         src: child.props.src,
@@ -105,6 +106,7 @@ export function Picture({
 
       preloadData.push({
         media: child.props.media,
+        fetchPriority: preload ? "high" : "auto",
         ...sourceProps,
       });
 

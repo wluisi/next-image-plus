@@ -16,6 +16,7 @@ export function Breadcrumb({ className, children }: BreadcrumbProps) {
   const childrenValidated = getValidChildren(children);
   const childrenClones = childrenValidated.map((child, index) =>
     React.cloneElement(child, {
+      // @ts-expect-error - fix me later
       isLastChild: childrenValidated.length === index + 1,
     })
   );

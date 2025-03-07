@@ -9,7 +9,7 @@ export interface AccordionPanelProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 export function AccordionPanel({ className, children }: AccordionPanelProps) {
-  const ref = React.useRef();
+  const ref = React.useRef(null);
 
   let classNames = "accordion-panel p-3";
   if (className) {

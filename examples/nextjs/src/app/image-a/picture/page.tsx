@@ -1,12 +1,12 @@
 import * as React from "react";
-import CardGrid from "./../../components/CardGrid";
+import CardGrid from "./../../../components/CardGrid";
 
-export default function PicturePagePages() {
+export default async function PicturePageApp() {
   return (
     <div id="main-content" className="container mx-auto pt-10 pb-10 max-w-4xl">
       <div className="mx-6">
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6">
-          Picture Example (Pages Router)
+          Picture Example (App Router)
         </h1>
         <CardGrid />
       </div>
