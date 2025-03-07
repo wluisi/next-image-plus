@@ -15,11 +15,8 @@ function getValidReactChildren(children: React.ReactNode) {
   ) as React.ReactElement[];
 }
 
-export type SourceProps = {
-  srcSet: string;
+export type SourceProps = React.ComponentPropsWithRef<"source"> & {
   src: string;
-  media: string;
-  sizes?: string;
   width: number | `${number}`;
   height: number | `${number}`;
 };
