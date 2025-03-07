@@ -1,7 +1,10 @@
 import * as React from "react";
 
 import { getImageProps as getNextImageProps } from "next/image";
-import { PreloadImageLink } from "./preload";
+import {
+  PreloadImageLink,
+  ImageAttributes as PreloadImageAttributes,
+} from "./preload";
 
 /*
  *
@@ -12,11 +15,8 @@ function getValidReactChildren(children: React.ReactNode) {
   ) as React.ReactElement[];
 }
 
-export type SourceProps = {
-  srcSet: string;
+export type SourceProps = React.ComponentPropsWithRef<"source"> & {
   src: string;
-  media: string;
-  sizes?: string;
   width: number | `${number}`;
   height: number | `${number}`;
 };
@@ -61,7 +61,7 @@ export function Picture({
   fallbackMedia,
   children,
 }: PictureProps) {
-  const preloadData: any = [];
+  const preloadData: PreloadImageAttributes[] = [];
 
   const childrenValidated = getValidReactChildren(children);
 
@@ -71,7 +71,7 @@ export function Picture({
     throw new Error("Image component not found in children");
   }
 
-  const imgChildProps: any = imgElement.props;
+  const imgChildProps: ImageProps = imgElement.props;
   const { props: imageProps } = getNextImageProps({
     src: imgChildProps.src,
     alt: imgChildProps.alt,
@@ -85,9 +85,12 @@ export function Picture({
     ...imageProps,
   });
 
-  const imgClone: any = React.cloneElement(imgElement, {
-    ...imageProps,
-  });
+  const imgClone: React.ReactElement<ImageProps> = React.cloneElement(
+    imgElement,
+    {
+      ...imageProps,
+    }
+  );
 
   const alt = imgClone.props.alt;
 
