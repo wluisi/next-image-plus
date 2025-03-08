@@ -13,6 +13,11 @@ export const sidebarMenu = {
       title: "Picture Component",
     },
     {
+      id: "sidebar-menu-item-4",
+      url: "/examples/picture",
+      title: "Picture Component Example",
+    },
+    {
       id: "sidebar-menu-item-3",
       url: "/docs/background-image",
       title: "Background Image Component",

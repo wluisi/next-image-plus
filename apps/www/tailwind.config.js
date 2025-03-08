@@ -66,10 +66,15 @@ module.exports = {
         //   fontSize: config("theme.fontSize.sm"),
         // },
         blockquote: {
+          backgroundColor: config("theme.colors.gray.100"),
+          paddingTop: config("theme.spacing.2"),
+          paddingBottom: config("theme.spacing.2"),
           paddingLeft: config("theme.spacing.6"),
-          borderLeftWidth: config("theme.borderWidth.2"),
+          paddingRight: config("theme.spacing.6"),
+          borderLeftWidth: config("theme.borderWidth.4"),
           borderLeftColor: "var(--tw-prose-quote-borders)",
-          fontStyle: "italic",
+          borderRadius: config("theme.borderRadius.sm"),
+          // fontStyle: "italic",
         },
         table: {
           width: "100%",
