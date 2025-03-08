@@ -62,6 +62,15 @@ module.exports = {
         //   marginBottom: config("theme.spacing.3"),
         //   fontSize: config("theme.fontSize.1xl"),
         // },
+        // ".prose code": {
+        //   fontSize: config("theme.fontSize.sm"),
+        // },
+        blockquote: {
+          paddingLeft: config("theme.spacing.6"),
+          borderLeftWidth: config("theme.borderWidth.2"),
+          borderLeftColor: "var(--tw-prose-quote-borders)",
+          fontStyle: "italic",
+        },
         table: {
           width: "100%",
           marginBottom: config("theme.spacing.7"),
