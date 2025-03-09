@@ -1,6 +1,6 @@
 import * as React from "react";
 import Card from "./Card";
-import { Picture, Source, Image } from "next-image-extras";
+import { Picture, Source, Img } from "next-image-extras";
 import { cardsContent } from "./../__content/cards";
 
 export default function CardGrid() {
@@ -32,7 +32,7 @@ export default function CardGrid() {
                   width={image.large.width}
                   height={image.large.height}
                 />
-                <Image
+                <Img
                   src={image.fallback.url}
                   width={image.fallback.width}
                   height={image.fallback.height}
