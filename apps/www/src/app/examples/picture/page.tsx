@@ -47,7 +47,7 @@ export default async function ExamplesPicture() {
       <GridItem
         id="left-sidebar"
         as="aside"
-        className="md:col-span-2 md:h-screen md:sticky md:top-[var(--docs-navbar-height)]"
+        className="hidden md:flex md:col-span-2 md:h-screen md:sticky md:top-[var(--docs-navbar-height)]"
       >
         <SidebarMenu
           id={sidebarMenu.id}
@@ -87,15 +87,6 @@ export default async function ExamplesPicture() {
             </TabsContent>
           </Tabs>
         </article>
-
-        {/* <section className="prose">
-          <p>
-            Responsive images with art direction, using different images and
-            ratios per breakpoint.
-          </p>
-        </section>
-        {/* <CardGrid /> */}
-        {/* <article className="space-y-5 prose">{mdx.content}</article> */}
       </GridItem>
     </Grid>
   );

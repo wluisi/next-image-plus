@@ -41,10 +41,6 @@ export default async function ExamplesBackgroundImagePage() {
 
   return (
     <>
-      {/* <Hero
-        title="Background image example"
-        description="Create stunning websites and applications with our powerful platform. Get started today and bring your ideas to life."
-      /> */}
       <Grid
         id="grid"
         className="md:grid md:grid-cols-12 md:grid-flow-col gap-5 pb-10"
@@ -52,7 +48,7 @@ export default async function ExamplesBackgroundImagePage() {
         <GridItem
           id="left-sidebar"
           as="aside"
-          className="md:col-span-2 md:h-screen md:sticky md:top-[var(--docs-navbar-height)]"
+          className="hidden md:flex md:col-span-2 md:h-screen md:sticky md:top-[var(--docs-navbar-height)]"
         >
           <SidebarMenu
             id={sidebarMenu.id}

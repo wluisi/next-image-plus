@@ -69,7 +69,7 @@ export default async function DocsPage() {
       <GridItem
         id="left-sidebar"
         as="aside"
-        className="md:col-span-2 md:h-screen md:sticky md:top-[var(--docs-navbar-height)]"
+        className="hidden md:flex md:col-span-2 md:h-screen md:sticky md:top-[var(--docs-navbar-height)]"
       >
         <SidebarMenu
           id={sidebarMenu.id}
@@ -77,7 +77,10 @@ export default async function DocsPage() {
           menuItems={sidebarMenu.items}
         />
       </GridItem>
-      <GridItem id="main-content" className="md:col-span-8 pb-10 md:px-10">
+      <GridItem
+        id="main-content"
+        className="md:col-span-10 lg:col-span-8 pb-10 md:px-10"
+      >
         <article className="space-y-5 prose">
           <Breadcrumb className="m-auto max-w-xxl">
             {breadcrumbs.map((item) => {
@@ -100,7 +103,7 @@ export default async function DocsPage() {
       <GridItem
         id="right-sidebar"
         as="aside"
-        className="md:col-span-2 md:h-screen md:sticky md:top-[var(--docs-navbar-height)]"
+        className="hidden lg:flex lg:col-span-2 md:h-screen md:sticky md:top-[var(--docs-navbar-height)]"
       >
         <TableOfContents data={page.toc} />
       </GridItem>
