@@ -87,15 +87,6 @@ export default async function ExamplesPicture() {
             </TabsContent>
           </Tabs>
         </article>
-
-        {/* <section className="prose">
-          <p>
-            Responsive images with art direction, using different images and
-            ratios per breakpoint.
-          </p>
-        </section>
-        {/* <CardGrid /> */}
-        {/* <article className="space-y-5 prose">{mdx.content}</article> */}
       </GridItem>
     </Grid>
   );

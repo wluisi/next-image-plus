@@ -41,10 +41,6 @@ export default async function ExamplesBackgroundImagePage() {
 
   return (
     <>
-      {/* <Hero
-        title="Background image example"
-        description="Create stunning websites and applications with our powerful platform. Get started today and bring your ideas to life."
-      /> */}
       <Grid
         id="grid"
         className="md:grid md:grid-cols-12 md:grid-flow-col gap-5 pb-10"
