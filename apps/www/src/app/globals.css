@@ -18,3 +18,8 @@
 /* .prose p {
   margin-bottom: 1.25rem;
 } */
+
+/* With fixed header, add spacing so scroll goes to anchor link heading. */
+html {
+  scroll-padding-top: 65px;
+}

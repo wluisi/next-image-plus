@@ -44,7 +44,7 @@ export function Header({ id, menuItems }: HeaderProps) {
   return (
     <header
       role="banner"
-      className="border-b-[1px] border-b-gray-300 py-3 items-center"
+      className="border-b-[1px] border-b-gray-300 py-3 items-center sticky top-0 bg-white z-50"
     >
       <div className="container mx-auto px-3">
         <div className="flex justify-between">
