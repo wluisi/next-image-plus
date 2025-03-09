@@ -56,7 +56,7 @@ export default async function ExamplesBackgroundImagePage() {
             menuItems={sidebarMenu.items}
           />
         </GridItem>
-        <GridItem id="main-content" className="md:col-span-8 pb-10 md:px-10">
+        <GridItem id="main-content" className="md:col-span-10 pb-10 md:px-10">
           <article className="space-y-5 prose">
             <Breadcrumb className="m-auto max-w-xxl">
               {breadcrumbs.map((item) => {
@@ -76,6 +76,9 @@ export default async function ExamplesBackgroundImagePage() {
             <h1 className="text-4xl font-bold mb-5">
               Background image example
             </h1>
+            <p>
+              This is an exmaple of a Hero component with a background image.
+            </p>
             <Tabs defaultValue="preview">
               <TabsList>
                 <TabsTrigger value="preview">Preview</TabsTrigger>
