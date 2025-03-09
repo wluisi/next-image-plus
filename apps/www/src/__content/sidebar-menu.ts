@@ -22,5 +22,10 @@ export const sidebarMenu = {
       url: "/docs/background-image",
       title: "Background Image Component",
     },
+    {
+      id: "sidebar-menu-item-5",
+      url: "/examples/background-image",
+      title: "Background Image Example",
+    },
   ],
 };

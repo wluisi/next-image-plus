@@ -1,34 +1,40 @@
 import * as React from "react";
 import CardGrid from "./../../../components/examples/CardGrid";
-import { CodeSnippet, Grid, GridItem } from "./../../../components/ui";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Grid,
+  GridItem,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "./../../../components/ui";
 import SidebarMenu from "../../../components/SidebarMenu";
+import Link from "next/link";
+
 import { sidebarMenu } from "./../../../__content/sidebar-menu";
 // mdx
 import { getContent } from "./../../../utils/get-content";
 
-// const codeExample = `<Picture preload={preload} fallbackMedia="(max-width: 430px)">
-//   <Source
-//     media="(min-width: 431px) and (max-width: 1023px)"
-//     src={image.medium.url}
-//     sizes="100vw"
-//     width={image.medium.width}
-//     height={image.medium.height}
-//   />
-//   <Source
-//     media="(min-width: 1024px)"
-//     src={image.large.url}
-//     width={image.large.width}
-//     height={image.large.height}
-//   />
-//   <Image
-//     src="https://picsum.photos/id/32/430/215"
-//     width={430}
-//     height={215}
-//     alt="whatever"
-//     className="object-cover"
-//   />
-// </Picture>
-// `;
+const breadcrumbs = [
+  {
+    title: "Home",
+    url: "/",
+    isCurrentPage: false,
+  },
+  {
+    title: "Examples",
+    url: "/examples",
+    isCurrentPage: false,
+  },
+  {
+    title: "Picture Component",
+    url: "/examples/picture",
+    isCurrentPage: true,
+  },
+];
 
 export default async function ExamplesPicture() {
   const mdx = await getContent("picture-example");
@@ -46,15 +52,46 @@ export default async function ExamplesPicture() {
         />
       </GridItem>
       <GridItem id="main-content" className="md:col-span-8 pb-10 md:px-10">
-        <h1 className="text-4xl font-bold mb-5">Picture Component Example</h1>
-        <section className="prose">
+        <article className="space-y-5 prose">
+          <Breadcrumb className="m-auto max-w-xxl">
+            {breadcrumbs.map((item) => {
+              return (
+                <BreadcrumbItem key={item.url}>
+                  <BreadcrumbLink
+                    as={Link}
+                    href={item.url}
+                    isCurrentPage={item.isCurrentPage}
+                  >
+                    {item.title}
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+              );
+            })}
+          </Breadcrumb>
+          <h1 className="text-4xl font-bold mb-5">Picture Component Example</h1>
+
+          <Tabs defaultValue="preview">
+            <TabsList>
+              <TabsTrigger value="preview">Preview</TabsTrigger>
+              <TabsTrigger value="code">Code</TabsTrigger>
+            </TabsList>
+            <TabsContent value="preview">
+              <CardGrid />
+            </TabsContent>
+            <TabsContent value="code">
+              <div className="md:my-10">{mdx.content}</div>
+            </TabsContent>
+          </Tabs>
+        </article>
+
+        {/* <section className="prose">
           <p>
             Responsive images with art direction, using different images and
             ratios per breakpoint.
           </p>
         </section>
-        <CardGrid />
-        <article className="space-y-5 prose">{mdx.content}</article>
+        {/* <CardGrid /> */}
+        {/* <article className="space-y-5 prose">{mdx.content}</article> */}
       </GridItem>
     </Grid>
   );
