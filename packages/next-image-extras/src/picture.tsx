@@ -28,12 +28,15 @@ export function Source(props: Omit<SourceProps, "srcSet">) {
   return <source {...props} />;
 }
 
-export type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
+export type ImgProps = React.ImgHTMLAttributes<HTMLImageElement> & {
   /** The media query to be used for the fallback image, if preload is true. */
   media?: string;
 };
 
-export function Image({ src, width, height, alt, className }: ImageProps) {
+/**
+ * Img component for use inside `<Picture>`. Renders a `<img>` element.
+ */
+export function Img({ src, width, height, alt, className }: ImgProps) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
@@ -53,7 +56,7 @@ export type PictureProps = React.ComponentPropsWithRef<"picture"> & {
   preload?: boolean;
   /** The media query to be used for the fallback image, if preload is true. */
   fallbackMedia?: string;
-  children: React.ReactElement<SourceProps>[] | React.ReactElement<ImageProps>;
+  children: React.ReactElement<SourceProps>[] | React.ReactElement<ImgProps>;
 };
 
 export function Picture({
@@ -66,12 +69,12 @@ export function Picture({
   const childrenValidated = getValidReactChildren(children);
 
   // Find the Image component passed as a child.
-  const imgElement = childrenValidated.find((child) => child.type === Image);
+  const imgElement = childrenValidated.find((child) => child.type === Img);
   if (!imgElement) {
     throw new Error("Image component not found in children");
   }
 
-  const imgChildProps: ImageProps = imgElement.props;
+  const imgChildProps: ImgProps = imgElement.props;
   const { props: imageProps } = getNextImageProps({
     src: imgChildProps.src,
     alt: imgChildProps.alt,
@@ -85,7 +88,7 @@ export function Picture({
     ...imageProps,
   });
 
-  const imgClone: React.ReactElement<ImageProps> = React.cloneElement(
+  const imgClone: React.ReactElement<ImgProps> = React.cloneElement(
     imgElement,
     {
       ...imageProps,

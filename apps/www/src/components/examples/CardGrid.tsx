@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Picture, Source, Image } from "next-image-extras";
+import { Picture, Source, Img } from "next-image-extras";
 
 const FALLBACK_WIDTH = 430;
 const FALLBACK_HEIGHT = 215;
@@ -219,7 +219,7 @@ export default function CardGrid() {
                   width={image.large.width}
                   height={image.large.height}
                 />
-                <Image
+                <Img
                   src={image.fallback.url}
                   width={image.fallback.width}
                   height={image.fallback.height}

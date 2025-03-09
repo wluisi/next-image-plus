@@ -8,7 +8,7 @@ import "@testing-library/jest-dom";
 
 import { render, screen } from "@testing-library/react";
 
-import { Picture, Image, Source } from "./picture";
+import { Picture, Img, Source } from "./picture";
 
 const PictureComponentMock = (
   <Picture preload={true}>
@@ -24,7 +24,7 @@ const PictureComponentMock = (
       height={600}
       media="(min-width: 960px)"
     />
-    <Image
+    <Img
       src="/images/fallback.jpg"
       width={600}
       height={600}
