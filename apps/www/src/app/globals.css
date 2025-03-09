@@ -2,6 +2,10 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+:root {
+  --docs-navbar-height: 65px;
+}
+
 .prose ul {
   margin-top: 0.5em !important;
   margin-bottom: 0;
@@ -21,5 +25,5 @@
 
 /* With fixed header, add spacing so scroll goes to anchor link heading. */
 html {
-  scroll-padding-top: 65px;
+  scroll-padding-top: var(--docs-navbar-height);
 }
