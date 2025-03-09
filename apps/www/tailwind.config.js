@@ -62,6 +62,20 @@ module.exports = {
         //   marginBottom: config("theme.spacing.3"),
         //   fontSize: config("theme.fontSize.1xl"),
         // },
+        // ".prose code": {
+        //   fontSize: config("theme.fontSize.sm"),
+        // },
+        blockquote: {
+          backgroundColor: config("theme.colors.gray.100"),
+          paddingTop: config("theme.spacing.2"),
+          paddingBottom: config("theme.spacing.2"),
+          paddingLeft: config("theme.spacing.6"),
+          paddingRight: config("theme.spacing.6"),
+          borderLeftWidth: config("theme.borderWidth.4"),
+          borderLeftColor: "var(--tw-prose-quote-borders)",
+          borderRadius: config("theme.borderRadius.sm"),
+          // fontStyle: "italic",
+        },
         table: {
           width: "100%",
           marginBottom: config("theme.spacing.7"),

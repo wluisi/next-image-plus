@@ -25,11 +25,14 @@ export default function TableOfContents({ data }: TableOfContentsProps) {
           On this page
         </Heading>
         <NavigationMenuList>
-          {data.map((item: TableOfContentsItem) => {
+          {data.map((item: TableOfContentsItem, index) => {
             const childClasses = item.level === "h3" ? "ml-5" : "ml-0";
 
             return (
-              <NavigationMenuItem key={item.id} className={childClasses}>
+              <NavigationMenuItem
+                key={`${item.id}-${index}`}
+                className={childClasses}
+              >
                 <NavigationMenuLink href={`#${item.id}`}>
                   {item.title}
                 </NavigationMenuLink>
