@@ -49,7 +49,11 @@ export default async function ExamplesBackgroundImagePage() {
         id="grid"
         className="md:grid md:grid-cols-12 md:grid-flow-col gap-5 pb-10"
       >
-        <GridItem id="left-sidebar" as="aside" className="md:col-span-2">
+        <GridItem
+          id="left-sidebar"
+          as="aside"
+          className="md:col-span-2 md:h-screen md:sticky md:top-[var(--docs-navbar-height)]"
+        >
           <SidebarMenu
             id={sidebarMenu.id}
             title={sidebarMenu.title}
