@@ -27,18 +27,18 @@ jobs:
       - name: Build next-image-extras package
         run: npm run build --workspace=packages/next-image-extras
 
-      - name: Build examples app
-        run: npm run nextjs-example:build
+      - name: Build www app
+        run: npm run www:build
 
-      - name: Start examples app in the background
-        run: npm run nextjs-example:start &
+      - name: Start wwww app in the background
+        run: npm run www:start &
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           install: false
           browser: chrome
-          working-directory: examples/nextjs
+          working-directory: apps/www
 
   jest-test:
     name: next-image-extras jest tests
