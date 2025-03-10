@@ -30,7 +30,7 @@ const routerTypes = [
   },
   {
     router: "pages",
-    slug: "/examples/background-image",
+    slug: "/examples-pages/background-image",
   },
 ];
 

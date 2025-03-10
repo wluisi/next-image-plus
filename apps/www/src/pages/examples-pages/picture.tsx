@@ -6,10 +6,6 @@ import {
   BreadcrumbLink,
   Grid,
   GridItem,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
 } from "./../../components/ui";
 import SidebarMenu from "../../components/SidebarMenu";
 import Link from "next/link";
@@ -34,7 +30,7 @@ const breadcrumbs = [
   },
 ];
 
-export default function ExamplePagesPicture() {
+export default function ExamplesPagesPicture() {
   return (
     <Grid
       id="grid"
