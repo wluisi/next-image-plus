@@ -85,7 +85,7 @@ export default async function DocsSlugPage({
       <GridItem
         id="left-sidebar"
         as="aside"
-        className="hidden md:flex md:col-span-2 md:h-screen md:sticky md:top-[var(--docs-navbar-height)]"
+        className="hidden md:flex md:col-span-2 md:h-screen md:sticky md:top-[var(--navbar-height)]"
       >
         <SidebarMenu
           id={sidebarMenu.id}
@@ -119,7 +119,7 @@ export default async function DocsSlugPage({
       <GridItem
         id="right-sidebar"
         as="aside"
-        className="hidden lg:flex lg:col-span-2 md:h-screen md:sticky md:top-[var(--docs-navbar-height)]"
+        className="hidden lg:flex lg:col-span-2 md:h-screen md:sticky md:top-[var(--navbar-height)]"
       >
         <TableOfContents data={page.toc} />
       </GridItem>

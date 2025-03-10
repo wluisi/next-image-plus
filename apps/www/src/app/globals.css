@@ -2,16 +2,16 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-:root {
-  --docs-navbar-height: 65px;
-}
-
-/* With fixed header, add spacing so scroll goes to anchor link heading. */
-html {
-  scroll-padding-top: var(--docs-navbar-height);
-}
-
 @layer base {
+  :root {
+    --navbar-height: 65px;
+  }
+
+  /* With fixed header, add spacing so scroll goes to anchor link heading. */
+  html {
+    scroll-padding-top: var(--navbar-height);
+  }
+
   /* Typography */
   p {
     @apply my-2 mx-0;
