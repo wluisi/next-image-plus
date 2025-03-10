@@ -1,4 +1,4 @@
-import { getBackgroundImageProps, BackgroundImage } from "next-image-extras";
+import { BackgroundImage } from "next-image-extras";
 
 interface HeroProps {
   title: string;
@@ -6,30 +6,6 @@ interface HeroProps {
 }
 
 export default function Hero({ title, description }: HeroProps) {
-  const bgImageProps = getBackgroundImageProps([
-    {
-      breakpoint: "fallback",
-      media: "(max-width: 430px)",
-      url: "https://picsum.photos/id/870/430/466",
-      width: 430,
-      height: 466,
-    },
-    {
-      breakpoint: "md",
-      media: "(min-width: 768px) and (max-width: 1023px)",
-      url: "https://picsum.photos/id/870/768/512",
-      width: 768,
-      height: 512,
-    },
-    {
-      breakpoint: "lg",
-      media: "(min-width: 1024px)",
-      url: "https://picsum.photos/id/870/2560/800",
-      width: 2560,
-      height: 800,
-    },
-  ]);
-
   const bgImgBaseClasses = "absolute inset-0 bg-cover bg-center bg-no-repeat";
 
   const bgImgBreakpointClasses =
@@ -39,7 +15,29 @@ export default function Hero({ title, description }: HeroProps) {
     <section className="relative w-full h-[50vh] lg:h-[800px] overflow-hidden rounded-xl">
       <BackgroundImage
         preload={true}
-        images={bgImageProps.images}
+        images={[
+          {
+            breakpoint: "fallback",
+            media: "(max-width: 430px)",
+            url: "https://picsum.photos/id/870/430/466",
+            width: 430,
+            height: 466,
+          },
+          {
+            breakpoint: "md",
+            media: "(min-width: 768px) and (max-width: 1023px)",
+            url: "https://picsum.photos/id/870/768/512",
+            width: 768,
+            height: 512,
+          },
+          {
+            breakpoint: "lg",
+            media: "(min-width: 1024px)",
+            url: "https://picsum.photos/id/870/2560/800",
+            width: 2560,
+            height: 800,
+          },
+        ]}
         className={`${bgImgBaseClasses} ${bgImgBreakpointClasses}`}
       >
         <div className="absolute inset-0 bg-black bg-opacity-50" />
