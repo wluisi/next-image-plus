@@ -74,9 +74,9 @@ export const homeContent = {
       items: [
         {
           id: "faq-1",
-          question: "Can I use next-image-extras with the app router ?",
+          question: "Can I use next-image-plus with the app router ?",
           answer:
-            "Yes, next-image-extras is compatible with Nextjs pages and app routers.",
+            "Yes, next-image-plus is compatible with Nextjs pages and app routers.",
         },
         {
           id: "faq-2",

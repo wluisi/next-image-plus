@@ -1,1 +1,1 @@
-# next-image-extras
+# next-image-plus

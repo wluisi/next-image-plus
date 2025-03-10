@@ -24,8 +24,8 @@ jobs:
       - name: Install
         run: npm install
 
-      - name: Build next-image-extras package
-        run: npm run build --workspace=packages/next-image-extras
+      - name: Build next-image-plus package
+        run: npm run build --workspace=packages/next-image-plus
 
       - name: Build www app
         run: npm run www:build
@@ -41,7 +41,7 @@ jobs:
           working-directory: apps/www
 
   jest-test:
-    name: next-image-extras jest tests
+    name: next-image-plus jest tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout branch
@@ -55,8 +55,8 @@ jobs:
       - name: Install
         run: npm install
 
-      - name: Build next-image-extras
-        run: npm run build --workspace=packages/next-image-extras
+      - name: Build next-image-plus
+        run: npm run build --workspace=packages/next-image-plus
 
       - name: Run tests
         run: npm run test

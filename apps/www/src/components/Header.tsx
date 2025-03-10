@@ -11,8 +11,8 @@ import {
 import Link from "next/link";
 
 const githubMenuItem = {
-  url: "https://github.com/wluisi/next-image-extras",
-  ariaLabel: "Go to next-image-extras github page",
+  url: "https://github.com/wluisi/next-image-plus",
+  ariaLabel: "Go to next-image-plus github page",
 };
 
 interface MenuItem {

@@ -1,5 +1,5 @@
 {
-  "name": "@next-image-extras/www",
+  "name": "@next-image-plus/www",
   "version": "1.0.0",
   "private": true,
   "author": "William Luisi",
@@ -21,7 +21,7 @@
     "clsx": "^2.1.1",
     "mdast-util-from-markdown": "^2.0.2",
     "next": "15.1.7",
-    "next-image-extras": "*",
+    "next-image-plus": "*",
     "next-mdx-remote": "^5.0.0",
     "postcss": "^8.4.24",
     "@radix-ui/react-tabs": "^1.1.3",
