@@ -1,8 +1,3 @@
-const path = require("path");
-// import typographyPlugin from "@tailwindcss/typography";
-import typographyStyles from "./typography";
-const plugin = require("tailwindcss/plugin");
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -26,81 +21,6 @@ module.exports = {
       "8xl": ["6rem", { lineHeight: "1" }],
       "9xl": ["8rem", { lineHeight: "1" }],
     },
-    typography: typographyStyles,
     extend: {},
   },
-  plugins: [
-    plugin(function ({ addBase, config }) {
-      // Add default styles
-      addBase({
-        p: {
-          margin: `${config("theme.spacing.2")} 0`,
-        },
-        a: {
-          color: config("theme.colors.blue.500"),
-          textDecoration: "underline",
-          textUnderlineOffset: config("theme.spacing.1"),
-        },
-        hr: {
-          margin: `${config("theme.spacing.5")} 0`,
-        },
-        ul: {
-          listStyleType: "disc",
-          paddingLeft: config("theme.spacing.7"),
-        },
-        ol: {
-          listStyleType: "decimal",
-          paddingLeft: config("theme.spacing.7"),
-        },
-        h2: {
-          fontWeight: "bold",
-          marginBottom: config("theme.spacing.5"),
-          fontSize: config("theme.fontSize.2xl"),
-        },
-        // h3: {
-        //   fontWeight: "bold",
-        //   marginBottom: config("theme.spacing.3"),
-        //   fontSize: config("theme.fontSize.1xl"),
-        // },
-        ".prose code:not(.not-prose code)": {
-          fontSize: config("theme.fontSize.xs"),
-          backgroundColor: config("theme.colors.gray.200"),
-          color: config("theme.colors.black"),
-          paddingTop: config("theme.spacing.1"),
-          paddingBottom: config("theme.spacing.1"),
-          paddingLeft: config("theme.spacing.2"),
-          paddingRight: config("theme.spacing.2"),
-          borderRadius: config("theme.borderRadius.lg"),
-        },
-        blockquote: {
-          backgroundColor: config("theme.colors.gray.100"),
-          paddingTop: config("theme.spacing.2"),
-          paddingBottom: config("theme.spacing.2"),
-          paddingLeft: config("theme.spacing.6"),
-          paddingRight: config("theme.spacing.6"),
-          borderLeftWidth: config("theme.borderWidth.4"),
-          borderLeftColor: "var(--tw-prose-quote-borders)",
-          borderRadius: config("theme.borderRadius.sm"),
-          // fontStyle: "italic",
-        },
-        table: {
-          width: "100%",
-          marginBottom: config("theme.spacing.7"),
-          fontSize: config("theme.fontSize.xs"),
-          // overflowX: "auto",
-          // whiteSpace: "pre-wrap",
-        },
-        "table tr th": {
-          textAlign: "left",
-          backgroundColor: config("theme.colors.gray.700"),
-          color: config("theme.colors.white"),
-          padding: `${config("theme.spacing.3")} ${config("theme.spacing.4")}`,
-        },
-        "table tr td": {
-          borderBottom: `1px solid ${config("theme.colors.gray.500")}`,
-          padding: `${config("theme.spacing.3")} ${config("theme.spacing.4")}`,
-        },
-      });
-    }),
-  ],
 };

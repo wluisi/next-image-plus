@@ -2,28 +2,86 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-:root {
-  --docs-navbar-height: 65px;
+@layer base {
+  :root {
+    --navbar-height: 65px;
+  }
+
+  /* With fixed header, add spacing so scroll goes to anchor link heading. */
+  html {
+    scroll-padding-top: var(--navbar-height);
+  }
+
+  /* Typography */
+  p {
+    @apply my-2 mx-0;
+  }
+
+  a {
+    @apply text-blue-500 underline underline-offset-4;
+  }
+
+  hr {
+    @apply my-5 mx-0;
+  }
+
+  ul {
+    @apply list-disc pl-7;
+  }
+
+  ol {
+    @apply list-decimal pl-7;
+  }
+
+  ol > li::marker {
+    @apply text-slate-700;
+  }
+
+  ul > li::marker {
+    @apply text-slate-400;
+  }
+
+  h2 {
+    @apply font-bold mb-5 text-2xl;
+  }
+
+  /* Tables */
+  table {
+    @apply w-full mb-7 text-xs;
+  }
+
+  table tr th {
+    @apply text-left bg-[#2e3440ff] text-white py-3 px-4;
+  }
+
+  table tr td {
+    @apply border-b border-gray-500 py-3 px-4;
+  }
+
+  blockquote {
+    @apply bg-gray-100 py-2 px-6 border-l-4 border-l-[var(--tw-prose-quote-borders)] rounded-sm;
+  }
 }
 
-.prose ul {
-  margin-top: 0.5em !important;
-  margin-bottom: 0;
-}
+@layer components {
+  .prose p {
+    @apply text-slate-700;
+  }
 
-.prose ul > li {
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 0.5em;
-  margin-top: 0;
-  margin-bottom: 0.5em;
-}
+  .prose code:not(.not-prose code) {
+    @apply text-xs bg-gray-200 text-slate-700 font-semibold py-1 px-2 rounded-lg;
+  }
 
-/* .prose p {
-  margin-bottom: 1.25rem;
-} */
+  .prose ul {
+    margin-top: 0.5em !important;
+    margin-bottom: 0;
+  }
 
-/* With fixed header, add spacing so scroll goes to anchor link heading. */
-html {
-  scroll-padding-top: var(--docs-navbar-height);
+  .prose ul > li {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0.5em;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+  }
 }
