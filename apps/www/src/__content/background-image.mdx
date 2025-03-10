@@ -5,3 +5,217 @@ keywords: "next, react, nextjs, responsive images, typescript"
 ---
 
 # Background Image
+
+## Overview
+
+The **next-image-plus** `<BackgroundImage>` is a React component that extends an HTML element to provide a background image,
+using the power of the Next.js Image API.
+
+## Props
+
+| Prop      | Example                                                        | Type                     | Status   |
+| --------- | -------------------------------------------------------------- | ------------------------ | -------- |
+| images    | `images={[ ... ]}`                                             | BackgroundImageOptions[] | Required |
+| className | `className="absolute inset-0 bg-cover bg-center bg-no-repeat"` | String                   | Required |
+| preload   | `preload={true}`                                               | Boolean                  | -        |
+| as        | `as="span"`                                                    | React.ElementType        | -        |
+
+### images
+
+An array of image objects of the `BackgroundImageOptions` type.
+
+### BackgroundImageOptions Type
+
+| Property   | Description                        | Example                                  | Type   |
+| ---------- | ---------------------------------- | ---------------------------------------- | ------ |
+| breakpoint | The breakpoint name                | `fallback`                               | string |
+| media      | The media query for the breakpoint | `(max-width: 430px)`                     | string |
+| url        | The url for the background image   | `"https://picsum.photos/id/870/430/466"` | string |
+| width      | The height of the background image | `430`                                    | number |
+| height     | The width of the background image  | `466`                                    | number |
+
+Full code example:
+
+```tsx
+images={[
+  {
+    breakpoint: "fallback",
+    media: "(max-width: 430px)",
+    url: "https://picsum.photos/id/870/430/466",
+    width: 430,
+    height: 466,
+  },
+  {
+    breakpoint: "md",
+    media: "(min-width: 768px) and (max-width: 1023px)",
+    url: "https://picsum.photos/id/870/768/512",
+    width: 768,
+    height: 512,
+  },
+  {
+    breakpoint: "lg",
+    media: "(min-width: 1024px)",
+    url: "https://picsum.photos/id/870/2560/800",
+    width: 2560,
+    height: 800,
+  },
+]}
+```
+
+### className
+
+The CSS class name(s) for the background image element.
+
+### preload
+
+```ts
+priority={false} // {false} | {true}
+```
+
+Optional prop for preloading the background image. This works similar to the `priority` prop on the Next.js image.
+Should be used for any `<BackgroundImage>` component that is flagged as the Largest Contentful Paint (LCP).
+All `<BackgroundImage>` components are lazy loaded by default, but preload should be used for any image above the fold.
+
+_[TODO: Add note about preloading and overlapping breakpoints]_
+
+### as
+
+An optional prop to control the HTML element used. The default is a `<div>` element.
+
+## Usage
+
+Based on the data passed to the `images` prop, CSS variables for each breakpoint are automatically generated for you.
+
+These CSS variables will need to be applied in someway to set the correct background image per breakpoint.
+
+```css
+--bg-img-<breakpoint_name>
+```
+
+So for example, if you passed 3 breakpoints (fallback, md, lg), the following CSS variables would be generated:
+
+```css
+--bg-img-fallback
+--bg-img-md
+--bg-img-lg
+```
+
+The CSS variables and corresponding url values are added inline via the `style` attribute:
+
+```tsx
+<div
+  style="
+   --bg-img-fallback: url(/_next/image?url=https://picsum.photos/id/870/430/466&w=860&q=75);
+   --bg-img-md: url(/_next/image?url=https://picsum.photos/id/870/768/512&w=1920&q=75);
+   --bg-img-lg: url(/_next/image?url=https://picsum.photos/id/870/2560/800&w=3840&q=75);
+  "
+/>
+```
+
+### Tailwind
+
+If using tailwind, you can do the following:
+
+```tsx
+function Hero() {
+  // These are just tailwind classes for styling a hero.
+  const bgImgBaseClasses = "absolute inset-0 bg-cover bg-center bg-no-repeat";
+
+  // For each breakpoint, set a different CSS var for the background image.
+  const bgImgBreakpointClasses = "
+    bg-[image:var(--bg-img-fallback)]
+    md:bg-[image:var(--bg-img-md)]
+    lg:bg-[image:var(--bg-img-lg)]
+  ";
+
+  return (
+    <BackgroundImage
+      preload={true}
+      className={`${bgImgBaseClasses} ${bgImgBreakpointClasses}`}
+      images={[
+        {
+          breakpoint: "fallback",
+          media: "(max-width: 430px)",
+          url: "https://picsum.photos/id/870/430/466",
+          width: 430,
+          height: 466,
+        },
+        {
+          breakpoint: "md",
+          media: "(min-width: 768px) and (max-width: 1023px)",
+          url: "https://picsum.photos/id/870/768/512",
+          width: 768,
+          height: 512,
+        },
+        {
+          breakpoint: "lg",
+          media: "(min-width: 1024px)",
+          url: "https://picsum.photos/id/870/2560/800",
+          width: 2560,
+          height: 800,
+        },
+      ]}
+    />
+  );
+}
+```
+
+### Vanilla CSS
+
+If you're using vanilla css, you can add the following styles to use the CSS variables.
+
+```css
+@filename: styles.css
+.hero-bg-image {
+  background-image: var(--bg-img-fallback);
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-bg-image {
+    background-image: var(--bg-img-md);
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-bg-image {
+    background-image: var(--bg-img-lg);
+  }
+}
+```
+
+You can then just use the `.hero-bg-image` class inside your component:
+
+```tsx
+@filename: hero.tsx
+function Hero() {
+  return (
+    <BackgroundImage
+      preload={true}
+      className="hero-bg-image absolute inset-0 bg-cover bg-center bg-no-repeat"
+      images={[
+        {
+          breakpoint: "fallback",
+          media: "(max-width: 430px)",
+          url: "https://picsum.photos/id/870/430/466",
+          width: 430,
+          height: 466,
+        },
+        {
+          breakpoint: "md",
+          media: "(min-width: 768px) and (max-width: 1023px)",
+          url: "https://picsum.photos/id/870/768/512",
+          width: 768,
+          height: 512,
+        },
+        {
+          breakpoint: "lg",
+          media: "(min-width: 1024px)",
+          url: "https://picsum.photos/id/870/2560/800",
+          width: 2560,
+          height: 800,
+        },
+      ]}
+    />
+  );
+}
+```
