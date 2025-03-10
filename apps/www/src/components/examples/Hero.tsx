@@ -1,4 +1,4 @@
-import { BackgroundImage } from "next-image-extras";
+import { BackgroundImage } from "next-image-plus";
 
 interface HeroProps {
   title: string;

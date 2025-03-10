@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Picture, Source, Img } from "next-image-extras";
+import { Picture, Source, Img } from "next-image-plus";
 
 const FALLBACK_WIDTH = 430;
 const FALLBACK_HEIGHT = 215;
