@@ -31,7 +31,7 @@ const routerTypes = [
   },
   {
     router: "pages",
-    slug: "/examples/picture",
+    slug: "/examples-pages/picture",
   },
 ];
 
