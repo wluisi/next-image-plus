@@ -33,6 +33,14 @@
     @apply list-decimal pl-7;
   }
 
+  ol > li::marker {
+    @apply text-slate-700;
+  }
+
+  ul > li::marker {
+    @apply text-slate-400;
+  }
+
   h2 {
     @apply font-bold mb-5 text-2xl;
   }
@@ -56,8 +64,12 @@
 }
 
 @layer components {
+  .prose p {
+    @apply text-slate-700;
+  }
+
   .prose code:not(.not-prose code) {
-    @apply text-xs bg-gray-200 text-black font-semibold py-1 px-2 rounded-lg;
+    @apply text-xs bg-gray-200 text-slate-700 font-semibold py-1 px-2 rounded-lg;
   }
 
   .prose ul {
