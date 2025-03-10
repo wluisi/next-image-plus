@@ -18,6 +18,9 @@ import { sidebarMenu } from "./../../../__content/sidebar-menu";
 // mdx
 import { getContent } from "./../../../utils/get-content";
 
+import { metadataBase } from "./../../../__content/metadata";
+import type { Metadata } from "next";
+
 const breadcrumbs = [
   {
     title: "Home",
@@ -35,6 +38,37 @@ const breadcrumbs = [
     isCurrentPage: true,
   },
 ];
+
+export async function generateMetadata(): Promise<Metadata | undefined> {
+  const page = await getContent("picture-example");
+
+  const { title, description, keywords } = page.frontmatter;
+  const titleFinal = `${title} | ${metadataBase.siteName}`;
+
+  return {
+    title: titleFinal,
+    description: description as string,
+    abstract: description as string,
+    keywords: keywords as string,
+    alternates: {
+      canonical: metadataBase.url,
+    },
+    openGraph: {
+      title: titleFinal,
+      description: description as string,
+      type: "website",
+      siteName: metadataBase.siteName,
+      url: metadataBase.url,
+    },
+    twitter: {
+      title: titleFinal,
+      description: description as string,
+      card: "summary",
+      site: metadataBase.url,
+      creator: metadataBase.twitterHandle,
+    },
+  };
+}
 
 export default async function ExamplesPicture() {
   const mdx = await getContent("picture-example");
