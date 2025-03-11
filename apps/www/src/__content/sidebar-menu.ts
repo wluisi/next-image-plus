@@ -10,17 +10,17 @@ export const sidebarMenu = {
     {
       id: "sidebar-menu-item-2",
       url: "/docs/picture",
-      title: "Picture Component",
+      title: "Picture API Reference",
     },
     {
       id: "sidebar-menu-item-4",
       url: "/examples/picture",
-      title: "Picture Component Example",
+      title: "Picture Example",
     },
     {
       id: "sidebar-menu-item-3",
       url: "/docs/background-image",
-      title: "Background Image Component",
+      title: "Background Image API Reference",
     },
     {
       id: "sidebar-menu-item-5",
