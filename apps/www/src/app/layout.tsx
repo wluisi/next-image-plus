@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Header } from "./../components/Header";
+import { Header } from "../components/header/Header";
 
 import { mainMenu } from "./../__content/main-menu";
 
