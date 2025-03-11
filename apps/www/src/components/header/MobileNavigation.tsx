@@ -29,14 +29,13 @@ export default function MobileNavigation() {
       <Popover.Root open={open} onOpenChange={setOpen}>
         <Popover.Trigger asChild>
           <button className="popover-button align-sub" aria-label="Open menu">
-            {/* <MixerHorizontalIcon /> */}
             <HamburgerMenuIcon className="h-6 w-6" />
           </button>
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Content
             align="center"
-            className="popover-content inset-x-4 z-50 w-screen rounded-3xl p-5 ring-4 ring-zinc-900/5 bg-popover text-popover-foreground outline-none bg-white shadow-[0_0_0_12000px_rgba(0,0,0,0.85)]"
+            className="popover-content inset-x-4 z-50 w-screen rounded-3xl p-5 ring-4 ring-zinc-900/5 bg-popover text-popover-foreground outline-none bg-white shadow-[0_0_0_12000px_rgba(0,0,0,0.85)] duration-150 data-[closed]:scale-95 data-[closed]:opacity-0 data-[open]:ease-out data-[closed]:ease-in"
             // sideOffset={-10}
             // alignOffset={5}
             // style={{ boxShadow: "0 0 0 12000px rgba(0, 0, 0, 0.85)" }}
