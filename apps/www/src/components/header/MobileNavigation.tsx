@@ -5,6 +5,7 @@ import * as React from "react";
 import * as Popover from "@radix-ui/react-popover";
 import {
   CloseIcon,
+  HamburgerMenuIcon,
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
@@ -27,15 +28,15 @@ export default function MobileNavigation() {
     <div className="md:hidden">
       <Popover.Root open={open} onOpenChange={setOpen}>
         <Popover.Trigger asChild>
-          <button className="popover-button" aria-label="Open menu">
+          <button className="popover-button align-sub" aria-label="Open menu">
             {/* <MixerHorizontalIcon /> */}
-            Menu
+            <HamburgerMenuIcon className="h-6 w-6" />
           </button>
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Content
             align="center"
-            className="popover-content inset-x-4 z-50 w-screen rounded-3xl p-5 ring-4 ring-zinc-900/5 bg-popover p-4 text-popover-foreground outline-none bg-white shadow-[0_0_0_12000px_rgba(0,0,0,0.85)]"
+            className="popover-content inset-x-4 z-50 w-screen rounded-3xl p-5 ring-4 ring-zinc-900/5 bg-popover text-popover-foreground outline-none bg-white shadow-[0_0_0_12000px_rgba(0,0,0,0.85)]"
             // sideOffset={-10}
             // alignOffset={5}
             // style={{ boxShadow: "0 0 0 12000px rgba(0, 0, 0, 0.85)" }}
@@ -43,11 +44,9 @@ export default function MobileNavigation() {
             <div className="flex flex-row-reverse items-center justify-between mb-5">
               <Popover.Close className="popover-close" aria-label="Close">
                 {/* Close */}
-                <CloseIcon className="h-4 w-4 text-zinc-700" />
+                <CloseIcon className="h-4 w-4" />
               </Popover.Close>
-              <h2 className="text-sm font-medium text-zinc-600 mb-0">
-                Navigation
-              </h2>
+              <h2 className="text-sm font-medium mb-0">Navigation</h2>
             </div>
             <div>
               <NavigationMenu id="whatever">

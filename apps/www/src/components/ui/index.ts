@@ -27,6 +27,7 @@ export * from "./Icons/CodeIcon";
 export * from "./Icons/DesktopIcon";
 export * from "./Icons/GearIcon";
 export * from "./Icons/GithubIcon";
+export * from "./Icons/HamburgerMenuIcon";
 export * from "./Icons/ImageIcon";
 export * from "./Icons/LightningBoltIcon";
 export * from "./Icons/LinkIcon";
