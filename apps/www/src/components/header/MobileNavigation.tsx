@@ -49,7 +49,7 @@ export default function MobileNavigation() {
             </div>
             <div>
               <NavigationMenu id="whatever">
-                <NavigationMenuList className="list-none">
+                <NavigationMenuList className="list-none pl-0">
                   {sidebarMenu.items.map((item: MenuItem) => {
                     return (
                       <NavigationMenuItem key={item.id} className="pr-5 mb-5">
