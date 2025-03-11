@@ -25,8 +25,6 @@ function getImage({ id, breakpoint }: any) {
     url = `${url}/${LARGE_WIDTH}/${LARGE_HEIGHT}`;
   }
 
-  console.log(url);
-
   return url;
 }
 
