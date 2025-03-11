@@ -1,4 +1,5 @@
 import * as React from "react";
+import { cn } from "./../../../utils/tailwind";
 
 export interface NavigationMenuListProps
   extends React.HTMLAttributes<HTMLElement> {
@@ -10,10 +11,7 @@ export function NavigationMenuList({
   className,
   children,
 }: NavigationMenuListProps) {
-  let classNames = "pl-5";
-  if (className) {
-    classNames = `${className} ${classNames}`;
-  }
-
-  return <ul className={classNames}>{children}</ul>;
+  return (
+    <ul className={cn("navigation-menu-list pl-5", className)}>{children}</ul>
+  );
 }

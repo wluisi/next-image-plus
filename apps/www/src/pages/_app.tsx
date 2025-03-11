@@ -2,7 +2,7 @@ import * as React from "react";
 import { AppProps } from "next/app";
 import "./../global.css";
 
-import { Header } from "./../components/Header";
+import { Header } from "../components/header/Header";
 import { mainMenu } from "./../__content/main-menu";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
