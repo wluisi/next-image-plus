@@ -17,6 +17,7 @@
     "next-image-plus:build": "npm run build --workspace=packages/next-image-plus",
     "next-image-plus:dev": "npm run dev --workspace=packages/next-image-plus",
     "next-image-plus:test": "npm run test --workspace=packages/next-image-plus",
+    "postinstall": "husky install",
     "pre-commit": "lint-staged",
     "test": "npm run test --workspace=packages/next-image-plus",
     "www:build": "npm run build --workspace=apps/www",
