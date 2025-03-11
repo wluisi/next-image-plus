@@ -51,6 +51,10 @@ export async function generateMetadata({
   };
 }
 
+export async function generateStaticParams() {
+  return [{ slug: ["picture"] }, { slug: ["background-image"] }];
+}
+
 export default async function DocsSlugPage({
   params,
 }: {
