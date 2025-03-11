@@ -16,5 +16,4 @@ module.exports = {
       },
     ],
   },
-  // transpilePackages: ["next-image-plus"],
 };
