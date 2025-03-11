@@ -38,9 +38,6 @@ export default function MobileNavigation() {
             <Popover.Content
               align="center"
               className="popover-content inset-x-4 z-50 w-screen rounded-3xl p-6 ring-4 ring-zinc-900/5 bg-popover text-popover-foreground outline-none bg-white duration-600 data-[closed]:scale-95 data-[closed]:opacity-0 data-[open]:ease-in data-[closed]:ease-out"
-              // sideOffset={-10}
-              // alignOffset={5}
-              // style={{ boxShadow: "0 0 0 12000px rgba(0, 0, 0, 0.85)" }}
             >
               <div className="flex flex-row-reverse items-center justify-between mb-5">
                 <Popover.Close className="popover-close" aria-label="Close">
