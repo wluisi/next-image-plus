@@ -22,6 +22,7 @@ export * from "./Icons/ChevronDownIcon";
 export * from "./Icons/ChevronLeftIcon";
 export * from "./Icons/ChevronRightIcon";
 export * from "./Icons/ClipboardCopyIcon";
+export * from "./Icons/CloseIcon";
 export * from "./Icons/CodeIcon";
 export * from "./Icons/DesktopIcon";
 export * from "./Icons/GearIcon";
