@@ -64,7 +64,7 @@
 }
 
 @layer components {
-  .prose p {
+  .prose p:not(.not-prose p) {
     @apply text-slate-700;
   }
 

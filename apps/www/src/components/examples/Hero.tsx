@@ -12,7 +12,7 @@ export default function Hero({ title, description }: HeroProps) {
     "bg-[image:var(--bg-img-fallback)] md:bg-[image:var(--bg-img-md)] lg:bg-[image:var(--bg-img-lg)]";
 
   return (
-    <section className="relative w-full h-[50vh] lg:h-[800px] overflow-hidden rounded-xl">
+    <section className="relative w-full h-[50vh] lg:h-[800px] overflow-hidden rounded-xl not-prose">
       <BackgroundImage
         preload={true}
         images={[
