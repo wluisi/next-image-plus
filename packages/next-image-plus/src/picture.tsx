@@ -6,15 +6,21 @@ import {
   ImageAttributes as PreloadImageAttributes,
 } from "./preload";
 
-/*
+/**
+ * Filters the given React children and returns only valid React elements.
  *
+ * @param children - The React node(s) to filter.
+ * @returns An array of valid React elements.
  */
-function getValidReactChildren(children: React.ReactNode) {
+function getValidReactChildren(
+  children: React.ReactNode
+): React.ReactElement[] {
   return React.Children.toArray(children).filter((child) =>
     React.isValidElement(child)
   ) as React.ReactElement[];
 }
 
+// @todo add inline comments for fields.
 export type SourceProps = React.ComponentPropsWithRef<"source"> & {
   src: string;
   width: number | `${number}`;
@@ -22,7 +28,9 @@ export type SourceProps = React.ComponentPropsWithRef<"source"> & {
 };
 
 /**
- * Source component that renders a `<source>` element.
+ * Renders a `<source>` element with the given properties, excluding `srcSet`.
+ *
+ * @returns A React `<source>` element.
  */
 export function Source(props: Omit<SourceProps, "srcSet">) {
   return <source {...props} />;
@@ -35,6 +43,8 @@ export type ImgProps = React.ImgHTMLAttributes<HTMLImageElement> & {
 
 /**
  * Img component for use inside `<Picture>`. Renders a `<img>` element.
+ *
+ * @returns The rendered `<img>` element.
  */
 export function Img({ src, width, height, alt, className }: ImgProps) {
   return (
@@ -45,6 +55,8 @@ export function Img({ src, width, height, alt, className }: ImgProps) {
       height={height}
       alt={alt}
       className={className}
+      // @todo consider adding this back, but only if node is in dev mode ?
+      // it can get really confusing trying to figure out which srcset is getting selected by browser.
       // onLoad={(event) =>
       //   console.log("Loaded src:", event.currentTarget.currentSrc)
       // }
@@ -52,6 +64,7 @@ export function Img({ src, width, height, alt, className }: ImgProps) {
   );
 }
 
+// @todo add inline comments for fields.
 export type PictureProps = React.ComponentPropsWithRef<"picture"> & {
   preload?: boolean;
   /** The media query to be used for the fallback image, if preload is true. */
@@ -59,6 +72,11 @@ export type PictureProps = React.ComponentPropsWithRef<"picture"> & {
   children: React.ReactElement<SourceProps>[] | React.ReactElement<ImgProps>;
 };
 
+/**
+ * Renders a `<picture>` element with `<source>` and `<img>` elements with optional preload support.
+ *
+ * @returns The rendered `<picture>` element with sources and an image.
+ */
 export function Picture({
   preload = false,
   fallbackMedia,
