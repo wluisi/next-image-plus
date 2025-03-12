@@ -41,7 +41,7 @@ function getSharedOptions(attributes: ImageAttributes) {
 }
 
 /**
- * Generates preloading image links for images.
+ * Generates preloading image links for `<Picture>` and `<BackgroundImage>` components.
  *
  * Supports both Next.js app and pages routers, with a fallback for React 18.
  * Uses `ReactDOM.preload` when available in the app router.
@@ -66,6 +66,7 @@ export function PreloadImageLink({ data }: PreloadImageLinkProps) {
     return null;
   }
 
+  // App router.
   if (isAppRouter && ReactDOM.preload) {
     data.forEach((attributes) => {
       // @see https://github.com/facebook/reacxt/pull/26940
@@ -75,6 +76,7 @@ export function PreloadImageLink({ data }: PreloadImageLinkProps) {
     });
   }
 
+  // Pages router.
   return (
     <Head>
       {data.map((attributes) => {
