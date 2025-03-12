@@ -164,10 +164,7 @@ export function Card({ id, title, description, image }: CardProps) {
         </div>
 
         <div className="flex flex-col space-y-2 sm:flex-row sm:space-x-3 sm:space-y-0">
-          <a
-            href="/whatever"
-            className="text-slate-800 font-semibold text-sm hover:underline flex items-center"
-          >
+          <a className="text-slate-800 font-semibold text-sm hover:underline flex items-center">
             Learn More
             <svg
               xmlns="http://www.w3.org/2000/svg"
