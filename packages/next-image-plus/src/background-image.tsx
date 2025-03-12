@@ -130,6 +130,8 @@ function Style({ id, bgImageProps }: StyleProps) {
 }
 
 interface BackgroundImageProps {
+  /** A unique id for the background image html element. */
+  id: string;
   /** The HTML tag or React component to use as the wrapper. Defaults to `<div>`. */
   as?: React.ElementType;
   /** Whether to preload the background images. Defaults to `false`. */
@@ -148,14 +150,13 @@ interface BackgroundImageProps {
  * @returns A React component rendering the background image and optional preloading links.
  */
 export function BackgroundImage({
+  id,
   as = null,
   preload = false,
   images,
   className = null,
   children,
 }: BackgroundImageProps) {
-  // @todo id needs to  be unique. auto generate inside the component ?
-  const id = "next-image-plus__background-image";
   const bgImageProps = getBackgroundImageProps(images);
 
   // Format the data for the preloader.
@@ -168,7 +169,7 @@ export function BackgroundImage({
     });
   }
 
-  // If `as` prop is passed, create the react component, other default to `<div>`.
+  // If `as` prop is passed, create the react element, other default to `<div>`.
   const element = as ? (
     React.createElement(
       as,

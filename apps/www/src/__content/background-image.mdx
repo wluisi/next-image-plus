@@ -15,10 +15,31 @@ using the power of the Next.js Image API.
 
 | Prop      | Example                                                        | Type                     | Status   |
 | --------- | -------------------------------------------------------------- | ------------------------ | -------- |
-| images    | `images={[ ... ]}`                                             | BackgroundImageOptions[] | Required |
-| className | `className="absolute inset-0 bg-cover bg-center bg-no-repeat"` | String                   | Required |
-| preload   | `preload={true}`                                               | Boolean                  | -        |
+| id        | `id="examples__background-image"`                              | String                   | Required |
 | as        | `as="span"`                                                    | React.ElementType        | -        |
+| preload   | `preload={true}`                                               | Boolean                  | -        |
+| images    | `images={[ ... ]}`                                             | BackgroundImageOptions[] | Required |
+| className | `className="absolute inset-0 bg-cover bg-center bg-no-repeat"` | String                   | -        |
+
+### id
+
+A unique id for the background image html element.
+
+### as
+
+An optional prop to control the HTML element used. The component will default to using a `<div>` element.
+
+### preload
+
+```ts
+priority={false} // {false} | {true}
+```
+
+Optional prop for preloading the background image. This works similar to the `priority` prop on the Next.js image.
+Should be used for any `<BackgroundImage>` component that is flagged as the Largest Contentful Paint (LCP).
+All `<BackgroundImage>` components are lazy loaded by default, but preload should be used for any image above the fold.
+
+_[TODO: Add note about preloading and overlapping breakpoints]_
 
 ### images
 
@@ -65,21 +86,5 @@ images={[
 ### className
 
 The CSS class name(s) for the background image element.
-
-### preload
-
-```ts
-priority={false} // {false} | {true}
-```
-
-Optional prop for preloading the background image. This works similar to the `priority` prop on the Next.js image.
-Should be used for any `<BackgroundImage>` component that is flagged as the Largest Contentful Paint (LCP).
-All `<BackgroundImage>` components are lazy loaded by default, but preload should be used for any image above the fold.
-
-_[TODO: Add note about preloading and overlapping breakpoints]_
-
-### as
-
-An optional prop to control the HTML element used. The component will default to using a `<div>` element.
 
 ## Usage

@@ -22,7 +22,7 @@ const LG_WIDTH_1X = "3840";
 
 const BASE_URL = Cypress.config().baseUrl;
 
-const BACKGROUND_IMG_CLASS = ".next-image-plus__bg-img";
+const BACKGROUND_IMG_ID = "#examples__background-image";
 
 const routerTypes = [
   {
@@ -88,7 +88,7 @@ routerTypes.forEach((routerType) => {
       );
       const fallbackImgUrl = `${BASE_URL}/_next/image?url=${fallbackImg}`;
 
-      cy.get(BACKGROUND_IMG_CLASS).then(($element) => {
+      cy.get(BACKGROUND_IMG_ID).then(($element) => {
         // Check the computed style, to test if the css rules selected the correct background image.
         const computedStyle = window.getComputedStyle($element[0]);
         expect(computedStyle.backgroundImage).to.include(
@@ -106,7 +106,7 @@ routerTypes.forEach((routerType) => {
       const lgImg = encodeLikeNext(`${LG_IMG}&w=${LG_WIDTH_1X}&q=75`);
       const lgImgUrl = `${BASE_URL}/_next/image?url=${lgImg}`;
 
-      cy.get(BACKGROUND_IMG_CLASS).then(($element) => {
+      cy.get(BACKGROUND_IMG_ID).then(($element) => {
         // Check the computed style, to test if the css rules selected the correct background image.
         const computedStyle = window.getComputedStyle($element[0]);
         expect(computedStyle.backgroundImage).not.to.include(
@@ -165,7 +165,7 @@ routerTypes.forEach((routerType) => {
       const img = encodeLikeNext(`${MD_IMG}&w=${MD_WIDTH_2X}&q=75`);
       const imgUrl = `${BASE_URL}/_next/image?url=${img}`;
 
-      cy.get(BACKGROUND_IMG_CLASS).then(($element) => {
+      cy.get(BACKGROUND_IMG_ID).then(($element) => {
         // Check the computed style, to test if the css rules selected the correct background image.
         const computedStyle = window.getComputedStyle($element[0]);
         expect(computedStyle.backgroundImage).to.include(`url("${imgUrl}")`);
@@ -181,7 +181,7 @@ routerTypes.forEach((routerType) => {
       const lgImg = encodeLikeNext(`${LG_IMG}&w=${LG_WIDTH_1X}&q=75`);
       const lgImgUrl = `${BASE_URL}/_next/image?url=${lgImg}`;
 
-      cy.get(BACKGROUND_IMG_CLASS).then(($element) => {
+      cy.get(BACKGROUND_IMG_ID).then(($element) => {
         // Check the computed style, to test if the css rules selected the correct background image.
         const computedStyle = window.getComputedStyle($element[0]);
         expect(computedStyle.backgroundImage).not.to.include(
@@ -239,7 +239,7 @@ routerTypes.forEach((routerType) => {
       const img = encodeLikeNext(`${LG_IMG}&w=${LG_WIDTH_1X}&q=75`);
       const imgUrl = `${BASE_URL}/_next/image?url=${img}`;
 
-      cy.get(BACKGROUND_IMG_CLASS).then(($element) => {
+      cy.get(BACKGROUND_IMG_ID).then(($element) => {
         // Check the computed style, to test if the css rules selected the correct background image.
         const computedStyle = window.getComputedStyle($element[0]);
         expect(computedStyle.backgroundImage).to.include(`url("${imgUrl}")`);
@@ -255,7 +255,7 @@ routerTypes.forEach((routerType) => {
       const mdImg = encodeLikeNext(`${MD_IMG}&w=${MD_WIDTH_2X}&q=75`);
       const mdImgUrl = `${BASE_URL}/_next/image?url=${mdImg}`;
 
-      cy.get(BACKGROUND_IMG_CLASS).then(($element) => {
+      cy.get(BACKGROUND_IMG_ID).then(($element) => {
         // Check the computed style, to test if the css rules selected the correct background image.
         const computedStyle = window.getComputedStyle($element[0]);
         expect(computedStyle.backgroundImage).not.to.include(
