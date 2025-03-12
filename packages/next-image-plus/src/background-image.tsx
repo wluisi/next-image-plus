@@ -80,6 +80,8 @@ interface BackgroundImageProps {
 
 type StyleProps = {
   id: string;
+  /** A unique id for the <style> element. Allows React to de-duplicate styles that have the same href. */
+  href?: string;
   bgImageProps: BackgroundImageData;
 };
 
