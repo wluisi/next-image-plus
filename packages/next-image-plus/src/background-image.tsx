@@ -1,5 +1,3 @@
-// "use client";
-
 import * as React from "react";
 
 import {
@@ -94,12 +92,14 @@ interface StyleProps {
  * @returns A `<style>` element containing the computed background image CSS rules.
  */
 function Style({ id, bgImageProps }: StyleProps) {
+  // Get the smallest media query as the fallback.
   const mediaQueries = [];
   for (const [_key, props] of Object.entries(bgImageProps)) {
     mediaQueries.push(props.media);
   }
   const fallbackMediaQuery = getSmallestMediaQuery(mediaQueries);
 
+  // Generate the responsive styles with media queries based on the image options.
   const styles = [];
   for (const [_key, props] of Object.entries(bgImageProps)) {
     const url = props.img.src;
