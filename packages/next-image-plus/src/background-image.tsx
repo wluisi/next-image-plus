@@ -77,9 +77,11 @@ export function getBackgroundImageProps(
 
 // @todo figure out these props
 interface StyleProps {
+  /** The id of the html element, for generating the responsive styles. */
   id: string;
   /** A unique id for the <style> element. Allows React to de-duplicate styles that have the same href. */
   href?: string;
+  /** An object mapping breakpoints to their corresponding media query and image properties. */
   bgImageProps: BackgroundImageData;
 }
 
@@ -113,9 +115,15 @@ function Style({ id, bgImageProps }: StyleProps) {
 
   const stylesheet = styles.join(" ");
 
-  // href={id} precedence="high"
   return (
-    <style href={id} precedence="high">
+    <style
+      // `href` is a unique id for the <style> element. It will get added to dom as `data-href`.
+      // This allows React to de-duplicate styles that have the same href.
+      href={id}
+      // If set to "high", this tells react where to place the style sheet in the <head> element.
+      // If omitted, the <style> element will not get hoisted to the `<head>`.
+      precedence="high"
+    >
       {stylesheet}
     </style>
   );
