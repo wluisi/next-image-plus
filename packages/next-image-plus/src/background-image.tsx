@@ -1,3 +1,5 @@
+// "use client";
+
 import * as React from "react";
 
 import {
@@ -86,6 +88,47 @@ interface BackgroundImageProps {
   children?: React.ReactNode;
 }
 
+type StyleProps = {
+  id: string;
+  bgImageProps: BackgroundImageData;
+};
+
+// @see https://react.dev/reference/react-dom/components/style#rendering-an-inline-css-stylesheet
+function Style({ id, bgImageProps }: StyleProps) {
+  // const styles = "p { color: red !important; }";
+
+  // const styles = images
+  //   .map((color, index) => `#${id} .color-${index}: \{ color: "${color}"; \}`)
+  //   .join();
+
+  const stylesArray = [];
+  for (const [key, props] of Object.entries(bgImageProps)) {
+    console.log(props);
+
+    const cssVar = `--bg-img-${key}`;
+    const url = props.img.src;
+    // styles = `url(${value.img.src})`;
+
+    // const mediaQuery = `@media ${props.media} { #${id} { background-image: var(${cssVar}); } }`;
+    if (props.media === "(max-width: 430px)") {
+      const mediaQuery = `#${id} { background-image: url(${url}); }`;
+      stylesArray.push(mediaQuery);
+    } else {
+      const mediaQuery = `@media ${props.media} { #${id} { background-image: url(${url}); } }`;
+      stylesArray.push(mediaQuery);
+    }
+  }
+
+  const stylesheet = stylesArray.join(" ");
+
+  // href={id} precedence="high"
+  return (
+    <style href={id} precedence="high">
+      {stylesheet}
+    </style>
+  );
+}
+
 export function BackgroundImage({
   as = null,
   preload = false,
@@ -93,6 +136,7 @@ export function BackgroundImage({
   className,
   children,
 }: BackgroundImageProps) {
+  const id = "next-image-plus__background-image";
   const bgImageProps = getBackgroundImageProps(images);
 
   const classNames = `next-background-image ${className}`;
@@ -113,19 +157,22 @@ export function BackgroundImage({
     React.createElement(
       as,
       {
+        id: id,
         className: classNames,
-        style: styleProps,
+        // style: styleProps,
       },
       children
     )
   ) : (
-    <div className={classNames} style={styleProps}>
+    // <div id={id} className={classNames} style={styleProps}>
+    <div id={id} className={classNames}>
       {children}
     </div>
   );
 
   return (
     <>
+      <Style id={id} bgImageProps={bgImageProps.images} />
       {component}
       {preload ? <PreloadImageLink data={preloadData} /> : null}
     </>
