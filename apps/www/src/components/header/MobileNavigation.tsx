@@ -55,14 +55,11 @@ export default function MobileNavigation() {
                           key={item.id}
                           className="py-2 border-b border-slate-200"
                         >
-                          <NavigationMenuLink
-                            as={Link}
-                            href={item.url}
-                            // Close popover when link is clicked
-                            onClick={() => setOpen(false)}
-                          >
-                            {item.title}
-                          </NavigationMenuLink>
+                          <Popover.Trigger asChild key={item.url}>
+                            <NavigationMenuLink as={Link} href={item.url}>
+                              {item.title}
+                            </NavigationMenuLink>
+                          </Popover.Trigger>
                         </NavigationMenuItem>
                       );
                     })}
