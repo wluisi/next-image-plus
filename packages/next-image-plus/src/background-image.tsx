@@ -93,6 +93,7 @@ type StyleProps = {
   bgImageProps: BackgroundImageData;
 };
 
+// @todo this approach will only work w/ React 19.
 // @see https://react.dev/reference/react-dom/components/style#rendering-an-inline-css-stylesheet
 function Style({ id, bgImageProps }: StyleProps) {
   // const styles = "p { color: red !important; }";
@@ -110,6 +111,7 @@ function Style({ id, bgImageProps }: StyleProps) {
     // styles = `url(${value.img.src})`;
 
     // const mediaQuery = `@media ${props.media} { #${id} { background-image: var(${cssVar}); } }`;
+    // @todo this has to be dynamic, figure out why the fallback doesn't work if it has a breakpoint.
     if (props.media === "(max-width: 430px)") {
       const mediaQuery = `#${id} { background-image: url(${url}); }`;
       stylesArray.push(mediaQuery);
