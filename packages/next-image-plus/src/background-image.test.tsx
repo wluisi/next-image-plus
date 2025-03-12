@@ -6,11 +6,7 @@ import * as React from "react";
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
 
-import {
-  BackgroundImage,
-  getBackgroundImageProps,
-  getTailwindCssClassNames,
-} from "./background-image";
+import { BackgroundImage, getBackgroundImageProps } from "./background-image";
 
 const backgroundImageDataMock = [
   {
@@ -38,21 +34,10 @@ const backgroundImageDataMock = [
   },
 ];
 
-describe("getTailwindCssClassNames tests", () => {
-  it("should return correct class name string for background images.", () => {
-    const classes = getTailwindCssClassNames(backgroundImageDataMock);
-
-    expect(classes).toEqual(
-      "bg-[image:var(--bg-img-fallback)] md:bg-[image:var(--bg-img-md)] lg:bg-[image:var(--bg-img-lg)]"
-    );
-  });
-});
-
 describe("getBackgroundImageProps tests", () => {
   it("should do something cool", () => {
     const bgImageProps = getBackgroundImageProps(backgroundImageDataMock);
 
-    expect(bgImageProps).toHaveProperty("classNames");
     expect(bgImageProps).toHaveProperty("images");
 
     expect(bgImageProps.images).toHaveProperty("fallback");

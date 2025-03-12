@@ -46,28 +46,10 @@ export function getSmallestMediaQuery(queries: string[]) {
   );
 }
 
-export function getTailwindCssClassNames(options: BackgroundImageOptions[]) {
-  let classNames = "";
-
-  for (const { breakpoint } of options) {
-    const cssVar = `--bg-img-${breakpoint}`;
-    // If fallback, then don't add prefix to class name.
-    if (breakpoint === "fallback") {
-      classNames = `bg-[image:var(${cssVar})]`;
-    } else {
-      classNames = `${classNames} ${breakpoint}:bg-[image:var(${cssVar})]`;
-    }
-  }
-
-  return classNames;
-}
-
 export function getBackgroundImageProps(options: BackgroundImageOptions[]): {
-  classNames: string;
   images: BackgroundImageData;
 } {
   const props: any = {
-    classNames: getTailwindCssClassNames(options),
     images: {},
   };
 
@@ -86,22 +68,6 @@ export function getBackgroundImageProps(options: BackgroundImageOptions[]): {
   }
 
   return props;
-}
-
-// {
-//   "--bg-img-fallback": `url(${backgroundImageProps.fallback.src})`,
-//   "--bg-img-md": `url(${backgroundImageProps.md.src})`,
-//   "--bg-img-lg": `url(${backgroundImageProps.lg.src})`,
-// } as React.CSSProperties
-function getStyleProps(data: BackgroundImageData): React.CSSProperties {
-  const cssVars: React.CSSProperties = {};
-
-  for (const [key, value] of Object.entries(data)) {
-    const name = `--bg-img-${key}`;
-    cssVars[name] = `url(${value.img.src})`;
-  }
-
-  return cssVars;
 }
 
 interface BackgroundImageProps {
@@ -126,23 +92,20 @@ function Style({ id, bgImageProps }: StyleProps) {
   }
   const fallbackMediaQuery = getSmallestMediaQuery(mediaQueries);
 
-  const stylesArray = [];
-  for (const [key, props] of Object.entries(bgImageProps)) {
-    // console.log(props);
-
-    const cssVar = `--bg-img-${key}`;
+  const styles = [];
+  for (const [_key, props] of Object.entries(bgImageProps)) {
     const url = props.img.src;
 
     if (props.media === fallbackMediaQuery) {
       const mediaQuery = `#${id} { background-image: url(${url}); }`;
-      stylesArray.push(mediaQuery);
+      styles.push(mediaQuery);
     } else {
       const mediaQuery = `@media ${props.media} { #${id} { background-image: url(${url}); } }`;
-      stylesArray.push(mediaQuery);
+      styles.push(mediaQuery);
     }
   }
 
-  const stylesheet = stylesArray.join(" ");
+  const stylesheet = styles.join(" ");
 
   // href={id} precedence="high"
   return (
@@ -163,7 +126,6 @@ export function BackgroundImage({
   const bgImageProps = getBackgroundImageProps(images);
 
   const classNames = `next-background-image ${className}`;
-  const styleProps = getStyleProps(bgImageProps.images);
 
   // Format the in the format needed for the preloaded.
   const preloadData = [];
@@ -182,12 +144,10 @@ export function BackgroundImage({
       {
         id: id,
         className: classNames,
-        // style: styleProps,
       },
       children
     )
   ) : (
-    // <div id={id} className={classNames} style={styleProps}>
     <div id={id} className={classNames}>
       {children}
     </div>
