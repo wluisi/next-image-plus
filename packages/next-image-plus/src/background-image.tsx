@@ -22,6 +22,30 @@ type BackgroundImageData = {
   };
 };
 
+/**
+ * Finds the media query that applies to the smallest viewport.
+ * Prioritizes `max-width` values when available; otherwise, falls back to `min-width`.
+ *
+ * @param {string[]} queries - An array of valid CSS media query strings.
+ * @returns {string|null} The smallest media query or `null` if none are valid.
+ */
+export function getSmallestMediaQuery(queries: string[]) {
+  return (
+    queries
+      .map((query) => {
+        const maxMatch = query.match(/max-width:\s*(\d+)px/);
+        const minMatch = query.match(/min-width:\s*(\d+)px/);
+
+        return {
+          query,
+          max: maxMatch ? Number(maxMatch[1]) : Infinity,
+          min: minMatch ? Number(minMatch[1]) : 0,
+        };
+      })
+      .sort((a, b) => a.max - b.max || a.min - b.min)[0]?.query || null
+  );
+}
+
 export function getTailwindCssClassNames(options: BackgroundImageOptions[]) {
   let classNames = "";
 
@@ -96,23 +120,20 @@ type StyleProps = {
 // @todo this approach will only work w/ React 19.
 // @see https://react.dev/reference/react-dom/components/style#rendering-an-inline-css-stylesheet
 function Style({ id, bgImageProps }: StyleProps) {
-  // const styles = "p { color: red !important; }";
-
-  // const styles = images
-  //   .map((color, index) => `#${id} .color-${index}: \{ color: "${color}"; \}`)
-  //   .join();
+  const mediaQueries = [];
+  for (const [_key, props] of Object.entries(bgImageProps)) {
+    mediaQueries.push(props.media);
+  }
+  const fallbackMediaQuery = getSmallestMediaQuery(mediaQueries);
 
   const stylesArray = [];
   for (const [key, props] of Object.entries(bgImageProps)) {
-    console.log(props);
+    // console.log(props);
 
     const cssVar = `--bg-img-${key}`;
     const url = props.img.src;
-    // styles = `url(${value.img.src})`;
 
-    // const mediaQuery = `@media ${props.media} { #${id} { background-image: var(${cssVar}); } }`;
-    // @todo this has to be dynamic, figure out why the fallback doesn't work if it has a breakpoint.
-    if (props.media === "(max-width: 430px)") {
+    if (props.media === fallbackMediaQuery) {
       const mediaQuery = `#${id} { background-image: url(${url}); }`;
       stylesArray.push(mediaQuery);
     } else {
