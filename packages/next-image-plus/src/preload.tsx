@@ -5,23 +5,32 @@ import ReactDOM from "react-dom";
 
 import Head from "next/head";
 import { type ImageProps as NextImageProps } from "next/image";
-
 import { useRouter } from "next/compat/router";
 
 export type ImageAttributes = Omit<NextImageProps, "src" | "loader"> & {
+  /** The sizes attribute defining image display sizes for different viewports. */
   sizes: string | undefined;
+  /** The srcset attribute specifying multiple image sources for responsive loading. */
   srcSet: string | undefined;
+  /** The image source URL. */
   src: string;
+  /** Optional media query. */
   media?: string;
 };
 
 export interface PreloadImageLinkProps {
+  /** An array of image attributes. */
   data: ImageAttributes[];
 }
 
-export function getSharedOptions(attributes: ImageAttributes) {
+/**
+ * Returns a set of shared options derived from image attributes.
+ *
+ * @returns An object containing shared options.
+ */
+function getSharedOptions(attributes: ImageAttributes) {
   return {
-    as: "image",
+    as: "image" as ReactDOM.PreloadAs,
     imageSrcSet: attributes.srcSet,
     imageSizes: attributes.sizes,
     crossOrigin: attributes.crossOrigin,
@@ -31,16 +40,23 @@ export function getSharedOptions(attributes: ImageAttributes) {
   };
 }
 
+/**
+ * Generates preloading image links for `<Picture>` and `<BackgroundImage>` components.
+ *
+ * Supports both Next.js app and pages routers, with a fallback for React 18.
+ * Uses `ReactDOM.preload` when available in the app router.
+ *
+ * @returns A set of `<link rel="preload" as="image" ... />` elements.
+ */
 export function PreloadImageLink({ data }: PreloadImageLinkProps) {
-  // We use an alternate version of useRouter() provided by next/compat/router
-  // This version doens't throw but returns null for the app router.
-  // This allows us to know if the route is app or pages.
+  // We use an alternate version of useRouter() provided by next/compat/router.
+  // This version doesn't throw, but returns null for the app router.
   // @see https://github.com/vercel/next.js/blob/canary/packages/next/src/client/compat/router.ts
   const router = useRouter();
   const isAppRouter = router === null ? true : false;
 
   // Check if React 19 and app router.
-  // ReactDOM.preload() did not support media attribute until 19.
+  // `ReactDOM.preload()` did not support media attribute until 19.
   // @see https://github.com/facebook/react/pull/28635
   if (!Boolean(React.use) && isAppRouter) {
     console.warn(
@@ -50,30 +66,29 @@ export function PreloadImageLink({ data }: PreloadImageLinkProps) {
     return null;
   }
 
+  // App router.
   if (isAppRouter && ReactDOM.preload) {
     data.forEach((attributes) => {
-      // See https://github.com/facebook/react/pull/26940
-      // @ts-expect-error TODO: upgrade to `@types/react-dom@18.3.x`
+      // @see https://github.com/facebook/reacxt/pull/26940
       // @see https://react.dev/reference/react-dom/preload#parameters
       ReactDOM.preload(attributes.src, getSharedOptions(attributes));
       return null;
     });
   }
 
+  // Pages router.
   return (
     <Head>
       {data.map((attributes) => {
         return (
           <link
             key={
-              "__nimg-" + attributes.src + attributes.srcSet + attributes.sizes
+              "__next-image-plus-preload" +
+              attributes.src +
+              attributes.srcSet +
+              attributes.sizes
             }
             rel="preload"
-            // Note how we omit the `href` attribute, as it would only be relevant
-            // for browsers that do not support `imagesrcset`, and in those cases
-            // it would cause the incorrect image to be preloaded.
-            //
-            // https://html.spec.whatwg.org/multipage/semantics.html#attr-link-imagesrcset
             href={attributes.srcSet ? undefined : attributes.src}
             {...getSharedOptions(attributes)}
           />
