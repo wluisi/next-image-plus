@@ -64,11 +64,12 @@ export function Img({ src, width, height, alt, className }: ImgProps) {
   );
 }
 
-// @todo add inline comments for fields.
 export type PictureProps = React.ComponentPropsWithRef<"picture"> & {
+  /** Whether to preload the picture image. Defaults to `false`. */
   preload?: boolean;
   /** The media query to be used for the fallback image, if preload is true. */
   fallbackMedia?: string;
+  /** Optional child elements to render inside the component. */
   children: React.ReactElement<SourceProps>[] | React.ReactElement<ImgProps>;
 };
 
