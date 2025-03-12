@@ -31,9 +31,9 @@ function getImage({ id, breakpoint }: any) {
 export const cardsContent = [
   {
     id: "abcd-1234",
-    title: "Deploy your site with confidence",
+    title: "Preloading the LCP can improve performance",
     description:
-      "Get blazing fast performance with automatic CI/CD pipelines, built-in CDN, and serverless functions. Scale globally with zero configuration and enjoy 99.99% uptime for all your projects. Experience the future of web deployment today.",
+      "LCP, or the largest contenful paint, is a web core vital metric. Improve your LCP score, by properly preloading the image that is the LCP",
     image: {
       fallback: {
         alt: "fallback",
@@ -57,9 +57,9 @@ export const cardsContent = [
   },
   {
     id: "efgh-5678",
-    title: "Build amazing experiences",
+    title: "Visual stability to improve your CLS score",
     description:
-      "Create stunning websites and applications with our powerful platform. Get started today and bring your ideas to life.",
+      "Improve your Core Web Vitals score, by preventing against layout shifts caused by lazy loaded images.",
     image: {
       fallback: {
         alt: "fallback",
@@ -83,9 +83,10 @@ export const cardsContent = [
   },
   {
     id: "ijkl-91011",
-    title: "Responsive images with preloading",
+    title:
+      "Lazy loading images to improve web performance and Core Web Vital scores",
     description:
-      "Easily create responsive images that improve your web core vitals.",
+      "Any image that is not the Largest Contentful Paint, or is below the fold should be lazy loaded.",
     image: {
       fallback: {
         alt: "fallback",
@@ -109,9 +110,10 @@ export const cardsContent = [
   },
   {
     id: "mnop-1213",
-    title: "The 4th Card",
+    title:
+      "Responsive images that require Art Direction, should use the Picture component",
     description:
-      "Easily create responsive images that improve your web core vitals.",
+      "Easily create responsive images that improve your Core Web Vital scores.",
     image: {
       fallback: {
         alt: "fallback",
