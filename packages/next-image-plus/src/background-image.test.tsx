@@ -55,6 +55,7 @@ describe("BackgroundImage component tests", () => {
   it("should render a div.", () => {
     const componentMock = (
       <BackgroundImage
+        id="examples__background-image"
         preload={true}
         images={backgroundImageDataMock}
         className="bg-image"
@@ -71,6 +72,7 @@ describe("BackgroundImage component tests", () => {
   it("should render a span if as prop is set to span.", () => {
     const componentMock = (
       <BackgroundImage
+        id="examples__background-image"
         as="span"
         preload={true}
         images={backgroundImageDataMock}
