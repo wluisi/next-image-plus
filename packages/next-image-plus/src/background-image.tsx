@@ -15,21 +15,21 @@ type BackgroundImageOptions = Omit<NextImageProps, "alt" | "src"> & {
   url: string;
 };
 
-type BackgroundImageData = {
+interface BackgroundImageData {
   [key: string]: {
     media: string;
     img: NextImageProps;
   };
-};
+}
 
 /**
  * Finds the media query that applies to the smallest viewport.
  * Prioritizes `max-width` values when available; otherwise, falls back to `min-width`.
  *
- * @param {string[]} queries - An array of valid CSS media query strings.
- * @returns {string|null} The smallest media query or `null` if none are valid.
+ * @param queries - An array of valid CSS media query strings.
+ * @returns The smallest media query or `null` if none are valid.
  */
-export function getSmallestMediaQuery(queries: string[]) {
+export function getSmallestMediaQuery(queries: string[]): string | null {
   return (
     queries
       .map((query) => {
@@ -46,22 +46,27 @@ export function getSmallestMediaQuery(queries: string[]) {
   );
 }
 
-export function getBackgroundImageProps(options: BackgroundImageOptions[]): {
-  images: BackgroundImageData;
-} {
-  const props: any = {
-    images: {},
-  };
+/**
+ * Generates background image properties for different breakpoints.
+ *
+ * @param options - An array of background image options.
+ * @returns An object mapping breakpoints to their corresponding media query and image properties.
+ */
+export function getBackgroundImageProps(
+  options: BackgroundImageOptions[]
+): BackgroundImageData {
+  const props: BackgroundImageData = {};
 
   for (const { breakpoint, media, url, width, height } of options) {
     const nextImage = getNextImageProps({
-      alt: "background-image",
+      // Background images don't need an alt, but is required.
+      alt: "",
       src: url,
       width: width,
       height: height,
     });
 
-    props.images[breakpoint] = {
+    props[breakpoint] = {
       media,
       img: nextImage.props,
     };
@@ -70,24 +75,22 @@ export function getBackgroundImageProps(options: BackgroundImageOptions[]): {
   return props;
 }
 
-interface BackgroundImageProps {
-  as?: React.ElementType;
-  images: BackgroundImageOptions[];
-  preload?: boolean;
-  className: string;
-  children?: React.ReactNode;
-}
-
-type StyleProps = {
+// @todo figure out these props
+interface StyleProps {
   id: string;
   /** A unique id for the <style> element. Allows React to de-duplicate styles that have the same href. */
   href?: string;
   bgImageProps: BackgroundImageData;
-};
+}
 
-// @todo this approach will only work w/ React 19.
-// @see https://react.dev/reference/react-dom/components/style
-// @see https://react.dev/reference/react-dom/components/style#rendering-an-inline-css-stylesheet
+/**
+ * Generates and applies responsive background image styles. Only supported in React 19.
+ *
+ * @see https://react.dev/reference/react-dom/components/style
+ * @see https://react.dev/reference/react-dom/components/style#rendering-an-inline-css-stylesheet
+ *
+ * @returns A `<style>` element containing the computed background image CSS rules.
+ */
 function Style({ id, bgImageProps }: StyleProps) {
   const mediaQueries = [];
   for (const [_key, props] of Object.entries(bgImageProps)) {
@@ -118,21 +121,38 @@ function Style({ id, bgImageProps }: StyleProps) {
   );
 }
 
+interface BackgroundImageProps {
+  /** The HTML tag or React component to use as the wrapper. Defaults to `<div>`. */
+  as?: React.ElementType;
+  /** Whether to preload the background images. Defaults to `false`. */
+  preload?: boolean;
+  /** An array of background image options for different breakpoints. */
+  images: BackgroundImageOptions[];
+  /** An optional class name for styling. */
+  className?: string;
+  /** Optional child elements to render inside the component. */
+  children?: React.ReactNode;
+}
+
+/**
+ * Renders a background image component with support for responsive images and optional preloading.
+ *
+ * @returns A React component rendering the background image and optional preloading links.
+ */
 export function BackgroundImage({
   as = null,
   preload = false,
   images,
-  className,
+  className = null,
   children,
 }: BackgroundImageProps) {
+  // @todo id needs to  be unique. auto generate inside the component ?
   const id = "next-image-plus__background-image";
   const bgImageProps = getBackgroundImageProps(images);
 
-  const classNames = `next-background-image ${className}`;
-
-  // Format the in the format needed for the preloaded.
+  // Format the data for the preloader.
   const preloadData = [];
-  for (const [_key, value] of Object.entries(bgImageProps.images)) {
+  for (const [_key, value] of Object.entries(bgImageProps)) {
     preloadData.push({
       ...value.img,
       media: value.media,
@@ -140,26 +160,26 @@ export function BackgroundImage({
     });
   }
 
-  // If as prop is passed, create the react component, other default to div.
-  const component = as ? (
+  // If `as` prop is passed, create the react component, other default to `<div>`.
+  const element = as ? (
     React.createElement(
       as,
       {
         id: id,
-        className: classNames,
+        className: className,
       },
       children
     )
   ) : (
-    <div id={id} className={classNames}>
+    <div id={id} className={className}>
       {children}
     </div>
   );
 
   return (
     <>
-      <Style id={id} bgImageProps={bgImageProps.images} />
-      {component}
+      <Style id={id} bgImageProps={bgImageProps} />
+      {element}
       {preload ? <PreloadImageLink data={preloadData} /> : null}
     </>
   );
