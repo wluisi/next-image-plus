@@ -28,9 +28,9 @@ export interface PreloadImageLinkProps {
  *
  * @returns An object containing shared options.
  */
-export function getSharedOptions(attributes: ImageAttributes) {
+function getSharedOptions(attributes: ImageAttributes) {
   return {
-    as: "image",
+    as: "image" as ReactDOM.PreloadAs,
     imageSrcSet: attributes.srcSet,
     imageSizes: attributes.sizes,
     crossOrigin: attributes.crossOrigin,
@@ -46,7 +46,7 @@ export function getSharedOptions(attributes: ImageAttributes) {
  * Supports both Next.js app and pages routers, with a fallback for React 18.
  * Uses `ReactDOM.preload` when available in the app router.
  *
- * @returns A set of `<link rel="preload" as="image" ... />` elements for preloading images.
+ * @returns A set of `<link rel="preload" as="image" ... />` elements.
  */
 export function PreloadImageLink({ data }: PreloadImageLinkProps) {
   // We use an alternate version of useRouter() provided by next/compat/router.
@@ -68,8 +68,7 @@ export function PreloadImageLink({ data }: PreloadImageLinkProps) {
 
   if (isAppRouter && ReactDOM.preload) {
     data.forEach((attributes) => {
-      // See https://github.com/facebook/react/pull/26940
-      // @ts-expect-error - fml
+      // @see https://github.com/facebook/reacxt/pull/26940
       // @see https://react.dev/reference/react-dom/preload#parameters
       ReactDOM.preload(attributes.src, getSharedOptions(attributes));
       return null;
