@@ -73,7 +73,6 @@ export function getBackgroundImageProps(
   return props;
 }
 
-// @todo figure out these props
 interface StyleProps {
   /** The id of the html element, for generating the responsive styles. */
   id: string;
