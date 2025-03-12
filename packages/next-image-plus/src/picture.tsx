@@ -20,10 +20,12 @@ function getValidReactChildren(
   ) as React.ReactElement[];
 }
 
-// @todo add inline comments for fields.
 export type SourceProps = React.ComponentPropsWithRef<"source"> & {
+  /** The URL of the image source. */
   src: string;
+  /** The width of the source, can be a number or a string representing a number. */
   width: number | `${number}`;
+  /** The height of the source, can be a number or a string representing a number. */
   height: number | `${number}`;
 };
 
@@ -56,7 +58,8 @@ export function Img({ src, width, height, alt, className }: ImgProps) {
       alt={alt}
       className={className}
       // @todo consider adding this back, but only if node is in dev mode ?
-      // it can get really confusing trying to figure out which srcset is getting selected by browser.
+      // when debugging, it can get really confusing trying to figure out
+      // which srcset is getting selected by browser.
       // onLoad={(event) =>
       //   console.log("Loaded src:", event.currentTarget.currentSrc)
       // }
