@@ -1,3 +1,5 @@
+// "use client";
+
 import * as React from "react";
 
 import {
@@ -20,28 +22,34 @@ type BackgroundImageData = {
   };
 };
 
-export function getTailwindCssClassNames(options: BackgroundImageOptions[]) {
-  let classNames = "";
+/**
+ * Finds the media query that applies to the smallest viewport.
+ * Prioritizes `max-width` values when available; otherwise, falls back to `min-width`.
+ *
+ * @param {string[]} queries - An array of valid CSS media query strings.
+ * @returns {string|null} The smallest media query or `null` if none are valid.
+ */
+export function getSmallestMediaQuery(queries: string[]) {
+  return (
+    queries
+      .map((query) => {
+        const maxMatch = query.match(/max-width:\s*(\d+)px/);
+        const minMatch = query.match(/min-width:\s*(\d+)px/);
 
-  for (const { breakpoint } of options) {
-    const cssVar = `--bg-img-${breakpoint}`;
-    // If fallback, then don't add prefix to class name.
-    if (breakpoint === "fallback") {
-      classNames = `bg-[image:var(${cssVar})]`;
-    } else {
-      classNames = `${classNames} ${breakpoint}:bg-[image:var(${cssVar})]`;
-    }
-  }
-
-  return classNames;
+        return {
+          query,
+          max: maxMatch ? Number(maxMatch[1]) : Infinity,
+          min: minMatch ? Number(minMatch[1]) : 0,
+        };
+      })
+      .sort((a, b) => a.max - b.max || a.min - b.min)[0]?.query || null
+  );
 }
 
 export function getBackgroundImageProps(options: BackgroundImageOptions[]): {
-  classNames: string;
   images: BackgroundImageData;
 } {
   const props: any = {
-    classNames: getTailwindCssClassNames(options),
     images: {},
   };
 
@@ -62,28 +70,52 @@ export function getBackgroundImageProps(options: BackgroundImageOptions[]): {
   return props;
 }
 
-// {
-//   "--bg-img-fallback": `url(${backgroundImageProps.fallback.src})`,
-//   "--bg-img-md": `url(${backgroundImageProps.md.src})`,
-//   "--bg-img-lg": `url(${backgroundImageProps.lg.src})`,
-// } as React.CSSProperties
-function getStyleProps(data: BackgroundImageData): React.CSSProperties {
-  const cssVars: React.CSSProperties = {};
-
-  for (const [key, value] of Object.entries(data)) {
-    const name = `--bg-img-${key}`;
-    cssVars[name] = `url(${value.img.src})`;
-  }
-
-  return cssVars;
-}
-
 interface BackgroundImageProps {
   as?: React.ElementType;
   images: BackgroundImageOptions[];
   preload?: boolean;
   className: string;
   children?: React.ReactNode;
+}
+
+type StyleProps = {
+  id: string;
+  /** A unique id for the <style> element. Allows React to de-duplicate styles that have the same href. */
+  href?: string;
+  bgImageProps: BackgroundImageData;
+};
+
+// @todo this approach will only work w/ React 19.
+// @see https://react.dev/reference/react-dom/components/style
+// @see https://react.dev/reference/react-dom/components/style#rendering-an-inline-css-stylesheet
+function Style({ id, bgImageProps }: StyleProps) {
+  const mediaQueries = [];
+  for (const [_key, props] of Object.entries(bgImageProps)) {
+    mediaQueries.push(props.media);
+  }
+  const fallbackMediaQuery = getSmallestMediaQuery(mediaQueries);
+
+  const styles = [];
+  for (const [_key, props] of Object.entries(bgImageProps)) {
+    const url = props.img.src;
+
+    if (props.media === fallbackMediaQuery) {
+      const mediaQuery = `#${id} { background-image: url(${url}); }`;
+      styles.push(mediaQuery);
+    } else {
+      const mediaQuery = `@media ${props.media} { #${id} { background-image: url(${url}); } }`;
+      styles.push(mediaQuery);
+    }
+  }
+
+  const stylesheet = styles.join(" ");
+
+  // href={id} precedence="high"
+  return (
+    <style href={id} precedence="high">
+      {stylesheet}
+    </style>
+  );
 }
 
 export function BackgroundImage({
@@ -93,10 +125,10 @@ export function BackgroundImage({
   className,
   children,
 }: BackgroundImageProps) {
+  const id = "next-image-plus__background-image";
   const bgImageProps = getBackgroundImageProps(images);
 
   const classNames = `next-background-image ${className}`;
-  const styleProps = getStyleProps(bgImageProps.images);
 
   // Format the in the format needed for the preloaded.
   const preloadData = [];
@@ -113,19 +145,20 @@ export function BackgroundImage({
     React.createElement(
       as,
       {
+        id: id,
         className: classNames,
-        style: styleProps,
       },
       children
     )
   ) : (
-    <div className={classNames} style={styleProps}>
+    <div id={id} className={classNames}>
       {children}
     </div>
   );
 
   return (
     <>
+      <Style id={id} bgImageProps={bgImageProps.images} />
       {component}
       {preload ? <PreloadImageLink data={preloadData} /> : null}
     </>

@@ -13,15 +13,11 @@ interface HeroProps {
 }
 
 export default function Hero({ title, description }: HeroProps) {
-  const bgImgBaseClasses = "absolute inset-0 bg-cover bg-center bg-no-repeat";
-
-  const bgImgBreakpointClasses =
-    "bg-[image:var(--bg-img-fallback)] md:bg-[image:var(--bg-img-md)] lg:bg-[image:var(--bg-img-lg)]";
-
   return (
-    <section className="relative w-full h-[50vh] lg:h-[800px] overflow-hidden">
+    <section className="relative w-full h-[50vh] lg:h-[800px] overflow-hidden rounded-xl not-prose">
       <BackgroundImage
         preload={true}
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         images={[
           {
             breakpoint: "fallback",
@@ -45,7 +41,6 @@ export default function Hero({ title, description }: HeroProps) {
             height: 800,
           },
         ]}
-        className={`${bgImgBaseClasses} ${bgImgBreakpointClasses}`}
       >
         <div className="absolute inset-0 bg-black bg-opacity-50" />
         <div className="relative h-full w-full flex items-center justify-center">
@@ -57,10 +52,16 @@ export default function Hero({ title, description }: HeroProps) {
               {description}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="#" className="primary-button">
+              <a
+                href="/whatever"
+                className="inline-flex h-12 items-center no-underline hover:underline justify-center rounded-md bg-white px-6 py-3 text-base font-medium text-gray-900 shadow transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
                 Primary button text
               </a>
-              <a href="#" className="secondary-button">
+              <a
+                href="/whatever"
+                className="inline-flex h-12 items-center no-underline hover:underline justify-center rounded-md border border-white bg-transparent px-6 py-3 text-base font-medium text-white shadow-sm transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
                 Secondary button text
               </a>
             </div>

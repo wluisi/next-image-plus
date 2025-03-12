@@ -6,15 +6,11 @@ interface HeroProps {
 }
 
 export default function Hero({ title, description }: HeroProps) {
-  const bgImgBaseClasses = "absolute inset-0 bg-cover bg-center bg-no-repeat";
-
-  const bgImgBreakpointClasses =
-    "bg-[image:var(--bg-img-fallback)] md:bg-[image:var(--bg-img-md)] lg:bg-[image:var(--bg-img-lg)]";
-
   return (
     <section className="relative w-full h-[50vh] lg:h-[800px] overflow-hidden rounded-xl not-prose">
       <BackgroundImage
         preload={true}
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         images={[
           {
             breakpoint: "fallback",
@@ -38,7 +34,6 @@ export default function Hero({ title, description }: HeroProps) {
             height: 800,
           },
         ]}
-        className={`${bgImgBaseClasses} ${bgImgBreakpointClasses}`}
       >
         <div className="absolute inset-0 bg-black bg-opacity-50" />
         <div className="relative h-full w-full flex items-center justify-center">
