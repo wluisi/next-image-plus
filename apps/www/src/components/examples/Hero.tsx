@@ -10,7 +10,7 @@ export default function Hero({ title, description }: HeroProps) {
     <section className="relative w-full h-[50vh] lg:h-[800px] overflow-hidden rounded-xl not-prose">
       <BackgroundImage
         preload={true}
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        className="next-image-plus__bg-img absolute inset-0 bg-cover bg-center bg-no-repeat"
         images={[
           {
             breakpoint: "fallback",
