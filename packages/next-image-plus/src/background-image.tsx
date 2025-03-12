@@ -86,6 +86,7 @@ type StyleProps = {
 };
 
 // @todo this approach will only work w/ React 19.
+// @see https://react.dev/reference/react-dom/components/style
 // @see https://react.dev/reference/react-dom/components/style#rendering-an-inline-css-stylesheet
 function Style({ id, bgImageProps }: StyleProps) {
   const mediaQueries = [];
