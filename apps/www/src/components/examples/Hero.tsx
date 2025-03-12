@@ -9,8 +9,9 @@ export default function Hero({ title, description }: HeroProps) {
   return (
     <section className="relative w-full h-[50vh] lg:h-[800px] overflow-hidden rounded-xl not-prose">
       <BackgroundImage
+        id="examples__background-image"
         preload={true}
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        className="next-image-plus__bg-img absolute inset-0 bg-cover bg-center bg-no-repeat"
         images={[
           {
             breakpoint: "fallback",

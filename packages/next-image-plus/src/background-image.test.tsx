@@ -38,18 +38,16 @@ describe("getBackgroundImageProps tests", () => {
   it("should do something cool", () => {
     const bgImageProps = getBackgroundImageProps(backgroundImageDataMock);
 
-    expect(bgImageProps).toHaveProperty("images");
+    expect(bgImageProps).toHaveProperty("fallback");
+    expect(bgImageProps).toHaveProperty("md");
+    expect(bgImageProps).toHaveProperty("lg");
 
-    expect(bgImageProps.images).toHaveProperty("fallback");
-    expect(bgImageProps.images).toHaveProperty("md");
-    expect(bgImageProps.images).toHaveProperty("lg");
+    expect(bgImageProps.fallback).toHaveProperty("media");
+    expect(bgImageProps.fallback).toHaveProperty("img");
 
-    expect(bgImageProps.images.fallback).toHaveProperty("media");
-    expect(bgImageProps.images.fallback).toHaveProperty("img");
+    expect(bgImageProps.fallback.media).toEqual("(max-width: 400px)");
 
-    expect(bgImageProps.images.fallback.media).toEqual("(max-width: 400px)");
-
-    console.log(bgImageProps.images.fallback);
+    console.log(bgImageProps.fallback);
   });
 });
 
@@ -57,6 +55,7 @@ describe("BackgroundImage component tests", () => {
   it("should render a div.", () => {
     const componentMock = (
       <BackgroundImage
+        id="examples__background-image"
         preload={true}
         images={backgroundImageDataMock}
         className="bg-image"
@@ -73,6 +72,7 @@ describe("BackgroundImage component tests", () => {
   it("should render a span if as prop is set to span.", () => {
     const componentMock = (
       <BackgroundImage
+        id="examples__background-image"
         as="span"
         preload={true}
         images={backgroundImageDataMock}
