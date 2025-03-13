@@ -4,6 +4,7 @@
   "packageManager": "npm@8.1.0",
   "workspaces": [
     "apps/*",
+    "examples/*",
     "packages/*"
   ],
   "scripts": {
@@ -11,6 +12,7 @@
     "cypress:open": "npm run cypress:open --workspace=apps/www",
     "cypress:run": "npm run cypress:run --workspace=apps/www -- --browser chrome",
     "dev": "concurrently \"npm:next-image-plus:dev\" \"npm:www:dev\"",
+    "examples:dev": "concurrently \"npm:next-image-plus:dev\" \"npm:next14:dev\"",
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
     "lint": "eslint --ignore-path .eslintignore \"**/src/**/*.+(ts|js|tsx)\"",
     "lint:quiet": "eslint --ignore-path .eslintignore \"**/src/**/*.+(ts|js|tsx)\" --quiet",
@@ -19,6 +21,7 @@
     "next-image-plus:test": "npm run test --workspace=packages/next-image-plus",
     "postinstall": "husky install",
     "pre-commit": "lint-staged",
+    "next14:dev": "npm run dev --workspace=examples/next14",
     "test": "npm run test --workspace=packages/next-image-plus",
     "www:build": "npm run build --workspace=apps/www",
     "www:dev": "npm run dev --workspace=apps/www",

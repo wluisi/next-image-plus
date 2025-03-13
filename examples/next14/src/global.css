@@ -1,0 +1,5 @@
+#examples__background-image {
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
