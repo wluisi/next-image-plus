@@ -8,22 +8,22 @@ export default async function PictureApp() {
       <h1>Picture Example (App Router)</h1>
       <Picture preload={true} fallbackMedia="(max-width: 430px)">
         <Source
-          src="https://picsum.photos/id/59/430/215"
-          width={600}
-          height={600}
-          media="(min-width: 960px)"
+          media="(min-width: 1024px)"
+          src="https://picsum.photos/id/59/220/220"
+          width={220}
+          height={220}
         />
-        {/* <Source
-          src="/images/medium.jpg"
-          width={400}
-          height={200}
-          media="(min-width: 600px) and (max-width:959px)"
-        /> */}
+        <Source
+          media="(min-width: 431px) and (max-width: 1023px)"
+          src="https://picsum.photos/id/59/860/430"
+          width={860}
+          height={430}
+        />
         <Img
           src="https://picsum.photos/id/59/430/215"
-          width={600}
-          height={600}
-          alt="Mountains and a river"
+          width={430}
+          height={215}
+          alt="Fencing"
         />
       </Picture>
     </div>

@@ -3,3 +3,9 @@
   background-position: center;
   height: 100vh;
 }
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
