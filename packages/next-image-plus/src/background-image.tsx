@@ -16,7 +16,7 @@ type BackgroundImageOptions = Omit<NextImageProps, "alt" | "src"> & {
 interface BackgroundImageData {
   [key: string]: {
     media: string;
-    img: NextImageProps;
+    img: NextImageProps & { srcSet: string };
   };
 }
 
