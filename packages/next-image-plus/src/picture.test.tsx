@@ -3,26 +3,23 @@
  */
 
 import * as React from "react";
-
 import "@testing-library/jest-dom";
-
-import { render, screen } from "@testing-library/react";
-
+import { render } from "@testing-library/react";
 import { Picture, Img, Source } from "./picture";
 
 const PictureComponentMock = (
   <Picture preload={true}>
     <Source
+      media="(min-width: 600px) and (max-width:959px)"
       src="/images/medium.jpg"
       width={400}
       height={200}
-      media="(min-width: 600px) and (max-width:959px)"
     />
     <Source
+      media="(min-width: 960px)"
       src="/images/large.jpg"
       width={600}
       height={600}
-      media="(min-width: 960px)"
     />
     <Img
       src="/images/fallback.jpg"
@@ -43,8 +40,6 @@ describe("Picture component tests", () => {
       "src",
       "/_next/image?url=%2Fimages%2Ffallback.jpg&w=1200&q=75"
     );
-
-    // screen.debug();
   });
 
   it("should generate correct attributes for source elements.", () => {
@@ -71,7 +66,7 @@ describe("Picture component tests", () => {
     expect(sourceLarge).toHaveAttribute("height");
   });
 
-  it("should generate srcset from source src.", () => {
+  it("should generate srcset from <Source> src prop.", () => {
     const { container } = render(PictureComponentMock);
 
     const sourceMd = container.querySelector(
