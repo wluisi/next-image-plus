@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/wluisi/next-image-plus/issues"
   },
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "license": "MIT",
   "source": "./src/index.ts",
   "main": "./dist/index.js",
