@@ -10,7 +10,8 @@ export const homeContent = {
       __typename: "Hero",
       id: "homepage-hero",
       title: "next-image-plus",
-      description: "Turbocharge responsive images in your Nextjs app",
+      description:
+        "Primitive React components, that extend Next.js Image, to turbocharge your site's performance.",
       link: {
         url: "/docs",
         text: "Get started",
@@ -26,51 +27,37 @@ export const homeContent = {
           id: "feature-1",
           title: "Preloading",
           description:
-            "Optimize loading of your images to get a perfect lighthouse score.",
+            "Optimize loading of your images to boost your Core Web Vitals.",
           icon: "lightning-bolt",
         },
         {
           id: "feature-2",
-          title: "Open Source",
+          title: "Responsive Images",
           description:
-            "Yes, but out of the box, it does not directly support the picture element or background images.",
+            "Fully responsive components for picture and background images, built on top of Next.js Image API and React 19.",
           icon: "image",
         },
         {
           id: "feature-3",
-          title: "Background Images",
+          title: "Visual Stability",
           description:
-            "Get started in no time! Explore comprehensive documentation and rich examples.",
+            "Prevent Cumulative Layout Shift (CLS) and improve your Core Web Vitals score.",
           icon: "rocketship",
         },
         {
           id: "feature-4",
-          title: "Preloading",
+          title: "Fully Compatible",
           description:
-            "Yes, but out of the box, it does not directly support the picture element or background images.",
+            "All components are unstyled and compatible with any React styling framework.",
           icon: "code",
         },
-        // {
-        //   id: "feature-5",
-        //   title: "Open Source",
-        //   description:
-        //     "Yes, but out of the box, it does not directly support the picture element or background images.",
-        //   icon: "desktop",
-        // },
-        // {
-        //   id: "feature-6",
-        //   title: "Background Images",
-        //   description:
-        //     "Get started in no time! Explore comprehensive documentation and rich examples.",
-        //   icon: "gear",
-        // },
       ],
     },
     {
       __typename: "Accordion",
       id: "homepage-accordion",
       title: "FAQ",
-      description: "Turbocharge responsive images in your Nextjs app",
+      description: "Turbocharge your site's performance",
       items: [
         {
           id: "faq-1",
@@ -80,15 +67,15 @@ export const homeContent = {
         },
         {
           id: "faq-2",
-          question: "Doesn't next already have an image component?",
+          question: "Doesn't Next.js already have an Image component ?",
           answer:
-            "Yes, but out of the box, it does not directly support the picture element or background images.",
+            "Yes, but the Next.js Image component only works for <img> element. next-image-plus introduces two new React components, that does the heavy lifting for using <picture> element and responsive background images",
         },
         {
           id: "faq-3",
-          question: "Doesn't next already have an image component?",
+          question: "What versions of React and Next.js are supported ?",
           answer:
-            "Yes, but out of the box, it does not directly support the picture element or background images.",
+            "Currently, only React 19 and Next.js 15 are supported. If support for React 18 and/or Next.js 14 is something you'd like to see added, please open an issue on github and we can discuss.",
         },
       ],
     },
