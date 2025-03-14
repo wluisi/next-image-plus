@@ -57,19 +57,19 @@ export const homeContent = {
       __typename: "Accordion",
       id: "homepage-accordion",
       title: "FAQ",
-      description: "Turbocharge your site's performance",
+      description: "Answers to common questions",
       items: [
         {
           id: "faq-1",
-          question: "Can I use next-image-plus with the app router ?",
+          question: "Can I use next-image-plus with the Next.js app router ?",
           answer:
-            "Yes, next-image-plus is compatible with Nextjs pages and app routers.",
+            "Yes, next-image-plus is compatible with Next.js pages and app routers.",
         },
         {
           id: "faq-2",
           question: "Doesn't Next.js already have an Image component ?",
           answer:
-            "Yes, but the Next.js Image component only works for <img> element. next-image-plus introduces two new React components, that does the heavy lifting for using <picture> element and responsive background images",
+            "Yes, but the Next.js Image component only works for <img> element. next-image-plus introduces two new React components, that does the heavy lifting for using <picture> element and responsive background images.",
         },
         {
           id: "faq-3",
