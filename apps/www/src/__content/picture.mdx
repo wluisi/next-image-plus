@@ -9,12 +9,7 @@ keywords: "next, react, nextjs, responsive images, typescript"
 ## Overview
 
 The **next-image-plus** `<Picture>` is a React component extends the HTML `<picture>` element to provide features for automatic image optimization,
-using the power of the Next.js Image API.
-
-- item 1
-- item 2
-- item 3
-- item 4
+using the power of the Next.js Image API and React 19.
 
 **next-image-plus** provides 3 components for creating responsive images with art direction:
 
@@ -22,38 +17,39 @@ using the power of the Next.js Image API.
 - `<Source>` component specifies an image and a media query.
 - `<Img>` component provides a fallback image
 
-A **responsive image** loads different sizes of the same image. The next.js Image component handles this already.
+A **responsive image** loads different sizes of the same image. The Next.js Image component handles this already.
 
-**Art direction** shows different images for different display sizes, and takes it a step further, by loading completely different images depending on the display.
+A responsive image with **Art Direction**, will show different images for different display sizes, and takes it a step further, by loading completely different images depending on the display.
 
-The **next-image-plus** Picture component allows developers to provide multple different images for different display sizes.
+The **next-image-plus** `Picture` component allows developers to provide multiple different images for different display sizes.
 
-The browser uses the first Source component with a media query that returns true.
-If none of the media queries match, the browser falls back to loading the image specified by the Image component
+The browser uses the first Source component with a media query that returns true. If none of the media queries match, the browser falls back to loading the image specified by the Image component.
+
+Basic example:
 
 ```tsx
 import { Picture, Source, Img } from "next-image-plus";
 
 export default function Page() {
   return (
-    <Picture>
+    <Picture preload={true} fallbackMedia="(max-width: 430px)">
       <Source
+        media="(min-width: 431px) and (max-width: 1023px)"
         src="/images/medium.jpg"
-        width={400}
-        height={200}
-        media="(min-width: 600px) and (max-width:959px)"
+        width={860}
+        height={430}
       />
       <Source
+        media="(min-width: 1024px)"
         src="/images/large.jpg"
-        width={600}
-        height={600}
-        media="(min-width: 960px)"
+        width={220}
+        height={220}
       />
       <Img
         src="/images/fallback.jpg"
-        width={600}
-        height={600}
-        alt="Mountains and a river"
+        width={430}
+        height={215}
+        alt="mountains"
       />
     </Picture>
   );
@@ -72,16 +68,27 @@ export default function Page() {
 ### preload
 
 ```ts
-priority={false} // {false} | {true}
+preload={false} // {false} | {true}
 ```
 
 Optional prop for preloading the image. This works similar to the `priority` prop on the Next.js image.
-Should be used for any `<Picture>` component that is flagged as the Largest Contentful Paint (LCP).
-All images inside picture are lazy loaded by default, but preload should be used for any image above the fold.
+Should be used for any `<Picture>` component that is above the fold, and flagged as the Largest Contentful Paint (LCP).
 
-[todo add more here]
+> For preloading to work properly, media queries cannot overlap. This is not a limitation of the component per se, but how browser's parse `<link rel="preload">` elements in `<head>`.
+> Media queries on `<link rel="preload">` do not function the way they do on HTML elements.
+>
+> The user agent will look at multiple `<link rel="preload">` elements and find multiple matches if there is any overlap in the media queries.
+> This can lead to performance issues, where multiple images are preloaded, so when setting media queries, make sure each one targets a unique range.
+>
+> i.e, for your medium breakpoint, if your fallback is `max-width: 430px`
+>
+> _don't do this_ ~~`(min-width: 430px) and (max-width: 1023px)`~~
+>
+> **do this** `(min-width: 431px) and (max-width: 1023px)`
 
 ### fallbackMedia
+
+An optional prop, to set the fallback media query for preloading.
 
 ## Source Props
 
