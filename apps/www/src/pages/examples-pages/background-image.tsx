@@ -19,8 +19,8 @@ const breadcrumbs = [
     isCurrentPage: false,
   },
   {
-    title: "Examples (Pages Router)",
-    url: "/examples-pages",
+    title: "Examples",
+    url: "/examples",
     isCurrentPage: false,
   },
   {

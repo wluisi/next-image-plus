@@ -1,5 +1,4 @@
 import * as React from "react";
-import CardGrid from "./../../components/examples/CardGrid";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -11,6 +10,37 @@ import SidebarMenu from "../../components/SidebarMenu";
 import Link from "next/link";
 
 import { sidebarMenu } from "./../../__content/sidebar-menu";
+import { metadataBase } from "./../../__content/metadata";
+
+const content = {
+  title: "Examples",
+  description: "Component examples for next-image-plus",
+};
+
+const metaTitle = `${content.title} | ${metadataBase.siteName}`;
+export const metadata = {
+  title: metaTitle,
+  description: content.description,
+  abstract: content.description,
+  keywords: "next, react, nextjs, responsive images, typescript",
+  alternates: {
+    canonical: metadataBase.url,
+  },
+  openGraph: {
+    title: metaTitle,
+    description: content.description,
+    type: "website",
+    siteName: metadataBase.siteName,
+    url: metadataBase.url,
+  },
+  twitter: {
+    title: metaTitle,
+    description: content.description,
+    card: "summary",
+    site: metadataBase.url,
+    creator: metadataBase.twitterHandle,
+  },
+};
 
 const breadcrumbs = [
   {
@@ -21,16 +51,11 @@ const breadcrumbs = [
   {
     title: "Examples",
     url: "/examples",
-    isCurrentPage: false,
-  },
-  {
-    title: "Picture Component (Pages Router)",
-    url: "/examples-pages/picture",
     isCurrentPage: true,
   },
 ];
 
-export default function ExamplesPagesPicture() {
+export default async function ExamplesPage() {
   return (
     <Grid
       id="grid"
@@ -64,10 +89,24 @@ export default function ExamplesPagesPicture() {
               );
             })}
           </Breadcrumb>
-          <h1 className="text-4xl font-bold mb-5">
-            Picture Component Example (Pages Router)
-          </h1>
-          <CardGrid />
+          <h1 className="text-4xl font-bold mb-5">{content.title}</h1>
+          <p>{content.description}</p>
+          <ul>
+            <li>
+              <Link href="/examples/picture">Picture</Link>
+            </li>
+            <li>
+              <Link href="/examples/background-image">Background Image</Link>
+            </li>
+            <li>
+              <Link href="/examples-pages/picture">Picture (Pages router)</Link>
+            </li>
+            <li>
+              <Link href="/examples-pages/background-image">
+                Background Image (Pages router)
+              </Link>
+            </li>
+          </ul>
         </article>
       </GridItem>
     </Grid>
