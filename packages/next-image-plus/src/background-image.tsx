@@ -16,7 +16,7 @@ type BackgroundImageOptions = Omit<NextImageProps, "alt" | "src"> & {
 interface BackgroundImageData {
   [key: string]: {
     media: string;
-    img: NextImageProps;
+    img: NextImageProps & { srcSet: string };
   };
 }
 
@@ -90,7 +90,7 @@ interface StyleProps {
  *
  * @returns A `<style>` element containing the computed background image CSS rules.
  */
-function Style({ id, bgImageProps }: StyleProps) {
+export function Style({ id, bgImageProps }: StyleProps) {
   // Get the smallest media query as the fallback.
   const mediaQueries = [];
   for (const [_key, props] of Object.entries(bgImageProps)) {
