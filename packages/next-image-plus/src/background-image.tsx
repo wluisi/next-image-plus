@@ -90,7 +90,7 @@ interface StyleProps {
  *
  * @returns A `<style>` element containing the computed background image CSS rules.
  */
-export function Style({ id, bgImageProps }: StyleProps) {
+function Style({ id, bgImageProps }: StyleProps) {
   // Get the smallest media query as the fallback.
   const mediaQueries = [];
   for (const [_key, props] of Object.entries(bgImageProps)) {
