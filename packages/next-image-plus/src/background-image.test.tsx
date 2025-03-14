@@ -86,4 +86,23 @@ describe("BackgroundImage component tests", () => {
     expect(element).toBeInTheDocument();
     expect(element?.tagName.toLowerCase()).toBe("span");
   });
+
+  it("should render a div with style prop", () => {
+    const componentMock = (
+      <BackgroundImage
+        id="bg-img-test"
+        preload={true}
+        images={backgroundImageDataMock}
+        style={{ color: "red" }}
+      />
+    );
+
+    const { container } = render(componentMock);
+    const element = container.querySelector("#bg-img-test") as HTMLElement;
+
+    expect(element).toBeInTheDocument();
+    expect(element?.tagName.toLowerCase()).toBe("div");
+
+    expect(element?.style.color).toBe("red");
+  });
 });
