@@ -128,7 +128,7 @@ function Style({ id, bgImageProps }: StyleProps) {
   );
 }
 
-interface BackgroundImageProps {
+export interface BackgroundImageProps {
   /** A unique id for the background image html element. */
   id: string;
   /** The HTML tag or React component to use as the wrapper. Defaults to `<div>`. */
@@ -139,6 +139,8 @@ interface BackgroundImageProps {
   images: BackgroundImageOptions[];
   /** An optional class name for styling. */
   className?: string;
+  /** An optional style prop, for passing css properties. */
+  style?: React.CSSProperties;
   /** Optional child elements to render inside the component. */
   children?: React.ReactNode;
 }
@@ -153,7 +155,8 @@ export function BackgroundImage({
   as = null,
   preload = false,
   images,
-  className = null,
+  className,
+  style,
   children,
 }: BackgroundImageProps) {
   const bgImageProps = getBackgroundImageProps(images);
@@ -175,11 +178,12 @@ export function BackgroundImage({
       {
         id: id,
         className: className,
+        style: style,
       },
       children
     )
   ) : (
-    <div id={id} className={className}>
+    <div id={id} className={className} style={style}>
       {children}
     </div>
   );
