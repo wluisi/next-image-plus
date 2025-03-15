@@ -7,7 +7,7 @@ interface HeroProps {
 
 export default function Hero({ title, description }: HeroProps) {
   return (
-    <section className="relative w-full h-[50vh] lg:h-[800px] overflow-hidden rounded-xl not-prose">
+    <section className="relative w-full h-[60vh] lg:h-[800px] overflow-hidden rounded-xl not-prose">
       <BackgroundImage
         id="examples__background-image"
         preload={true}
