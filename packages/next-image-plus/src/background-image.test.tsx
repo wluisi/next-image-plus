@@ -79,7 +79,7 @@ describe("BackgroundImage component tests", () => {
     expect(element).toBeInTheDocument();
     expect(element?.tagName.toLowerCase()).toBe("div");
 
-    const style = window.getComputedStyle(element);
+    const style = window.getComputedStyle(element as Element);
 
     expect(style.backgroundImage).toBe(
       "url(/_next/image?url=https%3A%2F%2Fpicsum.photos%2Fid%2F10%2F400%2F143&w=828&q=75)"
@@ -102,7 +102,7 @@ describe("BackgroundImage component tests", () => {
     expect(element).toBeInTheDocument();
     expect(element?.tagName.toLowerCase()).toBe("span");
 
-    const style = window.getComputedStyle(element);
+    const style = window.getComputedStyle(element as Element);
     expect(style.backgroundImage).toBe(
       "url(/_next/image?url=https%3A%2F%2Fpicsum.photos%2Fid%2F10%2F400%2F143&w=828&q=75)"
     );
