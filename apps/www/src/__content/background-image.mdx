@@ -8,17 +8,91 @@ keywords: "next, react, nextjs, responsive images, typescript"
 
 ## Overview
 
-The **next-image-plus** `<BackgroundImage>` is a React component that extends an HTML element to provide a background image,
-using the power of the Next.js Image API.
+The **next-image-plus** `<BackgroundImage>` is a primitive React component that extends any HTML element, to add a background image,
+using the power of the Next.js Image API and React 19.
+
+The component does not provide any styles and is fully compatible with any React styling framework.
+
+It can handle a single image, or be used for responsive background images. The correct `background-image` url based on the image options passed to `images` prop will be automatically rendered.
+
+### Basic usage:
+
+```tsx
+import { BackgroundImage } from "next-image-plus";
+
+export default function Page() {
+  return (
+    <BackgroundImage
+      id="examples__background-image"
+      preload={true}
+      images={[
+        {
+          breakpoint: "fallback",
+          media: "(max-width: 430px)",
+          url: "https://picsum.photos/id/870/430/466",
+          width: 430,
+          height: 466,
+        },
+        {
+          breakpoint: "md",
+          media: "(min-width: 768px) and (max-width: 1023px)",
+          url: "https://picsum.photos/id/870/768/512",
+          width: 768,
+          height: 512,
+        },
+        {
+          breakpoint: "lg",
+          media: "(min-width: 1024px)",
+          url: "https://picsum.photos/id/870/2560/800",
+          width: 2560,
+          height: 800,
+        },
+      ]}
+    >
+  );
+}
+```
 
 ## Props
 
 | Prop      | Example                                                        | Type                     | Status   |
 | --------- | -------------------------------------------------------------- | ------------------------ | -------- |
-| images    | `images={[ ... ]}`                                             | BackgroundImageOptions[] | Required |
-| className | `className="absolute inset-0 bg-cover bg-center bg-no-repeat"` | String                   | Required |
-| preload   | `preload={true}`                                               | Boolean                  | -        |
+| id        | `id="examples__background-image"`                              | String                   | Required |
 | as        | `as="span"`                                                    | React.ElementType        | -        |
+| preload   | `preload={true}`                                               | Boolean                  | -        |
+| images    | `images={[ ... ]}`                                             | BackgroundImageOptions[] | Required |
+| className | `className="absolute inset-0 bg-cover bg-center bg-no-repeat"` | String                   | -        |
+| style     | `style={{ color: "red" }}`                                     | React.CSSProperties      | -        |
+
+### id
+
+A unique id for the background image html element.
+
+### as
+
+An optional prop to control the HTML element used. The component will default to using a `<div>` element.
+
+### preload
+
+```ts
+preload={false} // {false} | {true}
+```
+
+Optional prop for preloading the background image. This works similar to the `priority` prop on the Next.js image.
+
+Should be used for any `<BackgroundImage>` component that is above the fold, and flagged as the Largest Contentful Paint (LCP).
+
+> For preloading to work properly, media queries cannot overlap. This is not a limitation of the component per se, but how browser's parse `<link rel="preload">` elements in `<head>`.
+> Media queries on `<link rel="preload">` do not function the way they do on HTML elements.
+>
+> The user agent will look at multiple `<link rel="preload">` elements and find multiple matches if there is any overlap in the media queries.
+> This can lead to performance issues, where multiple images are preloaded, so when setting media queries, make sure each one targets a unique range.
+>
+> i.e, for your medium breakpoint, if your fallback is `max-width: 430px`
+>
+> _don't do this_ ~~`(min-width: 430px) and (max-width: 1023px)`~~
+>
+> **do this** `(min-width: 431px) and (max-width: 1023px)`
 
 ### images
 
@@ -31,55 +105,13 @@ An array of image objects of the `BackgroundImageOptions` type.
 | breakpoint | The breakpoint name                | `fallback`                               | string |
 | media      | The media query for the breakpoint | `(max-width: 430px)`                     | string |
 | url        | The url for the background image   | `"https://picsum.photos/id/870/430/466"` | string |
-| width      | The height of the background image | `430`                                    | number |
-| height     | The width of the background image  | `466`                                    | number |
-
-Full code example:
-
-```tsx
-images={[
-  {
-    breakpoint: "fallback",
-    media: "(max-width: 430px)",
-    url: "https://picsum.photos/id/870/430/466",
-    width: 430,
-    height: 466,
-  },
-  {
-    breakpoint: "md",
-    media: "(min-width: 768px) and (max-width: 1023px)",
-    url: "https://picsum.photos/id/870/768/512",
-    width: 768,
-    height: 512,
-  },
-  {
-    breakpoint: "lg",
-    media: "(min-width: 1024px)",
-    url: "https://picsum.photos/id/870/2560/800",
-    width: 2560,
-    height: 800,
-  },
-]}
-```
+| width      | The width of the background image  | `430`                                    | number |
+| height     | The height of the background image | `466`                                    | number |
 
 ### className
 
-The CSS class name(s) for the background image element.
+Optional prop for any CSS class name(s) for the background image element.
 
-### preload
+### style
 
-```ts
-priority={false} // {false} | {true}
-```
-
-Optional prop for preloading the background image. This works similar to the `priority` prop on the Next.js image.
-Should be used for any `<BackgroundImage>` component that is flagged as the Largest Contentful Paint (LCP).
-All `<BackgroundImage>` components are lazy loaded by default, but preload should be used for any image above the fold.
-
-_[TODO: Add note about preloading and overlapping breakpoints]_
-
-### as
-
-An optional prop to control the HTML element used. The component will default to using a `<div>` element.
-
-## Usage
+Optional prop for any CSS style properties for the background image element.

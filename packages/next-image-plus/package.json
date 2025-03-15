@@ -1,6 +1,21 @@
 {
   "name": "next-image-plus",
-  "version": "0.0.0",
+  "description": "Primitive React components, built on top of the Next.js Image API, which adds support for picture and background images.",
+  "author": "William Luisi",
+  "keywords": [
+    "nextjs",
+    "react",
+    "typescript"
+  ],
+  "homepage": "https://next-image-plus.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wluisi/next-image-plus"
+  },
+  "bugs": {
+    "url": "https://github.com/wluisi/next-image-plus/issues"
+  },
+  "version": "1.0.0-beta.2",
   "license": "MIT",
   "source": "./src/index.ts",
   "main": "./dist/index.js",
@@ -48,5 +63,8 @@
       "/node_modules/",
       "/dist"
     ]
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
