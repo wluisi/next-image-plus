@@ -1,5 +1,7 @@
 import { defineConfig, Format } from "tsup";
 
+const isWatchMode = process.env.TSUP_MODE === "watch";
+
 // Shared config.
 const config = {
   dts: true,
@@ -9,7 +11,7 @@ const config = {
   // This is a workaround because the tsup --watch flag,
   // typically used in dev script does not properly hot reload.
   // @see https://github.com/egoist/tsup/issues/1245#issuecomment-2610240295
-  watch: ["src/**/*.{ts,tsx}"],
+  ...(isWatchMode && { watch: ["src/**/*.{ts,tsx}"] }),
 };
 
 export default defineConfig([

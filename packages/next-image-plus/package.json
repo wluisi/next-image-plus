@@ -31,7 +31,7 @@
   },
   "scripts": {
     "build": "tsup",
-    "dev": "tsup",
+    "dev": "TSUP_MODE=watch tsup",
     "lint": "TIMING=1 eslint src --fix",
     "test": "jest --verbose"
   },
