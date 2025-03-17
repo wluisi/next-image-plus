@@ -89,8 +89,6 @@ export function Picture({
 
   const childrenValidated = getValidReactChildren(children);
 
-  console.log(childrenValidated);
-
   // Find the Image component passed as a child.
   const imgElement = childrenValidated.find((child) => child.type === Img);
   if (!imgElement) {
