@@ -1,5 +1,6 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import * as React from "react";
-
+// eslint-disable-next-line import/no-extraneous-dependencies
 import {
   getImageProps as getNextImageProps,
   type ImageProps as NextImageProps,

@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import { getImageProps as getNextImageProps } from "next/image";
 import {
   PreloadImageLink,
@@ -90,6 +89,8 @@ export function Picture({
 
   const childrenValidated = getValidReactChildren(children);
 
+  console.log(childrenValidated);
+
   // Find the Image component passed as a child.
   const imgElement = childrenValidated.find((child) => child.type === Img);
   if (!imgElement) {
@@ -147,6 +148,8 @@ export function Picture({
           height: sourceProps.height,
         });
       }
+
+      return null;
     }
   );
 

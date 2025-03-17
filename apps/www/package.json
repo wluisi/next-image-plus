@@ -42,7 +42,7 @@
     "cypress-axe": "^1.5.0",
     "cypress-set-device-pixel-ratio": "^1.0.7",
     "cypress-terminal-report": "^7.1.0",
-    "typescript": "4.9.4"
+    "typescript": "^5.8.2"
   },
   "lint-staged": {
     "./src/**/*.{ts,js,jsx,tsx}": [

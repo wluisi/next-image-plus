@@ -54,6 +54,7 @@ export function PreloadImageLink({ data }: PreloadImageLinkProps) {
   // @see https://github.com/vercel/next.js/blob/canary/packages/next/src/client/compat/router.ts
   const router = useRouter();
   const isAppRouter = router === null ? true : false;
+  // const isAppRouter = true;
 
   // Check if React 19 and app router.
   // `ReactDOM.preload()` did not support media attribute until 19.
