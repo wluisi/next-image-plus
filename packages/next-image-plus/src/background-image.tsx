@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import {
   getImageProps as getNextImageProps,
   type ImageProps as NextImageProps,
