@@ -5,6 +5,10 @@ const config = {
   format: ["esm", "cjs"] as Format[],
   sourcemap: true,
   clean: true,
+  // This is a workaround because the tsup --watch flag,
+  // typically used in dev script does not properly hot reload.
+  // @see https://github.com/egoist/tsup/issues/1245#issuecomment-2610240295
+  watch: ["src/**/*.{ts,tsx}"],
 };
 
 export default defineConfig([
