@@ -1,5 +1,6 @@
 import { defineConfig, Format } from "tsup";
 
+// Shared config.
 const config = {
   dts: true,
   format: ["esm", "cjs"] as Format[],
@@ -31,6 +32,7 @@ export default defineConfig([
       ];
     },
   },
+  // Keep preload seperate because it needs `use client` directive.
   {
     ...config,
     entry: ["src/preload.tsx"],
