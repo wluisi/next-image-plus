@@ -49,7 +49,6 @@ export const componentMap = {
     } else {
       codeFinal = code;
     }
-    // @ts-expect-error - fixes `Type error: 'CodeSnippet' cannot be used as a JSX component.`
     return <CodeSnippet title={title} language={language} code={codeFinal} />;
   },
 };

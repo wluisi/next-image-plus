@@ -147,6 +147,8 @@ export function Picture({
           height: sourceProps.height,
         });
       }
+
+      return null;
     }
   );
 

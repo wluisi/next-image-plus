@@ -1,3 +1,2 @@
-export * from "./background-image";
-export * from "./picture";
-export * from "./preload";
+export { BackgroundImage } from "./background-image";
+export { Picture, Source, Img } from "./picture";
