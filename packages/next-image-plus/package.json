@@ -5,7 +5,21 @@
   "author": "William Luisi",
   "keywords": [
     "nextjs",
+    "next",
     "react",
+    "responsive",
+    "image",
+    "images",
+    "responsive images",
+    "picture",
+    "srcset",
+    "performance",
+    "web vitals",
+    "cls",
+    "fcp",
+    "fid",
+    "lcp",
+    "component",
     "typescript"
   ],
   "license": "MIT",
@@ -33,6 +47,7 @@
     "build": "tsup",
     "dev": "TSUP_MODE=watch tsup",
     "lint": "TIMING=1 eslint src --fix",
+    "prepare": "cp ../../README.md ./README.md",
     "test": "jest --verbose"
   },
   "devDependencies": {
