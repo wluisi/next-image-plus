@@ -2,6 +2,7 @@ import "./globals.css";
 import { Header } from "../components/header/Header";
 
 import { mainMenu } from "./../__content/main-menu";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {
   title: "Next.js",
@@ -20,6 +21,7 @@ export default function RootLayout({
         <div id="page-layout" className="container mx-auto px-3 py-4">
           <main role="main">{children}</main>
         </div>
+        <Analytics />
       </body>
     </html>
   );
