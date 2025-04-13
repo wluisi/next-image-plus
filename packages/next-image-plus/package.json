@@ -33,6 +33,7 @@
     "build": "tsup",
     "dev": "TSUP_MODE=watch tsup",
     "lint": "TIMING=1 eslint src --fix",
+    "prepare": "cp ../../README.md ./README.md",
     "test": "jest --verbose"
   },
   "devDependencies": {
