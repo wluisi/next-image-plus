@@ -1,6 +1,6 @@
 {
   "name": "next-image-plus",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0-beta.4",
   "description": "Primitive React components, built on top of the Next.js Image API, which adds support for picture and background images.",
   "author": "William Luisi",
   "keywords": [
