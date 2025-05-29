@@ -7,8 +7,8 @@ import {
   BreadcrumbLink,
   Grid,
   GridItem,
-} from "./../../../components/ui";
-import TableOfContents from "./../../../components/table-of-contents";
+  TableOfContents,
+} from "@graphinery/ui";
 import SidebarMenu from "../../../components/SidebarMenu";
 import Link from "next/link";
 

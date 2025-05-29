@@ -6,7 +6,7 @@ import {
   BreadcrumbLink,
   Grid,
   GridItem,
-} from "./../../components/ui";
+} from "@graphinery/ui";
 import SidebarMenu from "../../components/SidebarMenu";
 import Link from "next/link";
 

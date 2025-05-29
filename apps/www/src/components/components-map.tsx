@@ -6,7 +6,7 @@ import {
   CodeSnippet,
   Heading,
   HeadingAnchorLink,
-} from "./../components/ui";
+} from "@graphinery/ui";
 
 /**
  * Build a components map for use in compileMDX().

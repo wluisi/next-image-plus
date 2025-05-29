@@ -10,7 +10,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "./../../../components/ui";
+} from "@graphinery/ui";
 import SidebarMenu from "../../../components/SidebarMenu";
 import Link from "next/link";
 

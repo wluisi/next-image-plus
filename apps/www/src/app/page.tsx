@@ -1,5 +1,5 @@
 import { homeContent } from "./../__content/home";
-import { Grid, GridItem } from "./../components/ui";
+import { Grid, GridItem } from "@graphinery/ui";
 import { ContentComponents } from "./../components/content-components";
 import Hero from "./../components/Hero";
 import Accordion from "./../components/content-components/Accordion";

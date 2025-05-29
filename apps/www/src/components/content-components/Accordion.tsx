@@ -4,7 +4,7 @@ import {
   AccordionButton,
   AccordionPanel,
   Heading,
-} from "./../../components/ui";
+} from "@graphinery/ui";
 
 interface AccordionProps {
   id: string;
