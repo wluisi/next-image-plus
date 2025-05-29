@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { ImageIcon } from "../ui";
+import { ImageIcon } from "@graphinery/ui";
 import Link from "next/link";
 
 import DesktopNavigation from "./DesktopNavigation";

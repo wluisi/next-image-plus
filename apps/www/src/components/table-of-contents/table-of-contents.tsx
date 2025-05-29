@@ -5,7 +5,7 @@ import {
   NavigationMenuItem,
   NavigationMenuList,
   NavigationMenuLink,
-} from "./../ui";
+} from "@graphinery/ui";
 
 export type TableOfContentsItem = {
   id: string;

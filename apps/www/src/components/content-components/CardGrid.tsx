@@ -12,7 +12,7 @@ import {
   ImageIcon,
   LightningBoltIcon,
   RocketshipIcon,
-} from "./../ui";
+} from "@graphinery/ui";
 
 export interface CardProps {
   id: string;

@@ -4,7 +4,7 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from "../ui";
+} from "@graphinery/ui";
 import Link from "next/link";
 
 interface MenuItem {

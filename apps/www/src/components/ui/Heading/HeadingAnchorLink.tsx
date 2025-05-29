@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Heading, LinkIcon } from "./../../ui";
+import { Heading, LinkIcon } from "@graphinery/ui";
 import getSlug from "./../../../utils/get-slug";
 
 interface HeadingAnchorLinkProps

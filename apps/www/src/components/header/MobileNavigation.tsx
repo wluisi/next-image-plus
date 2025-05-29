@@ -10,7 +10,7 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from "../ui";
+} from "@graphinery/ui";
 import Link from "next/link";
 
 import { sidebarMenu } from "../../__content/sidebar-menu";
