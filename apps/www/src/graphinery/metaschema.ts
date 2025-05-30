@@ -37,6 +37,10 @@ export const metaschema: EntityMetaschema[] = [
           fieldType: "string",
         },
       },
+      {
+        name: "keywords",
+        type: "string",
+      },
     ],
   },
 ];

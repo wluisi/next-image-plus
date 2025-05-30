@@ -22,12 +22,16 @@ import {
 import SidebarMenu from "./../../components/SidebarMenu";
 
 import { sidebarMenu } from "../../__content-og/sidebar-menu";
+// Metadata
+import { metadata as layoutMetadata } from "../layout";
+import { Metadata } from "next";
 
 const PAGE_QUERY = gql`
   query PageQuery($id: String) {
     page(id: $id) {
       title
       description
+      keywords
       path
       activeTrail {
         items {
@@ -60,6 +64,41 @@ async function getPage(path: string) {
   });
 
   return data.page;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata | undefined> {
+  const path = getPathFromParams({ params: await params });
+  const page = await getPage(path);
+
+  if (!page) {
+    return;
+  }
+
+  return {
+    title: page.title,
+    description: page.description,
+    abstract: page.description,
+    keywords: page.keywords,
+    // This sets the `<link rel="canonical">`.
+    alternates: {
+      canonical: page.path,
+    },
+    openGraph: {
+      ...layoutMetadata.openGraph,
+      title: page.title,
+      description: page.description,
+      url: page.path,
+    },
+    twitter: {
+      ...layoutMetadata.twitter,
+      title: page.title,
+      description: page.description,
+    },
+  };
 }
 
 export async function generateStaticParams() {
