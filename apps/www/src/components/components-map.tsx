@@ -18,6 +18,7 @@ import {
   Steps,
 } from "@graphinery/ui";
 import NextLink from "next/link";
+import PictureExampleTabs from "./examples/picture-tabs";
 
 const createComponentMap = <T extends Record<string, React.ComponentType<any>>>(
   map: T
@@ -42,6 +43,7 @@ export const componentsMap = createComponentMap({
   FileTree,
   Folder,
   File,
+  PictureExampleTabs,
   Steps,
   SimpleGrid,
   // Overrides
