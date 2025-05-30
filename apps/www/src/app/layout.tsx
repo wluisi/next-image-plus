@@ -1,7 +1,5 @@
 import "./globals.css";
 import { Header } from "../components/header/Header";
-
-import { mainMenu } from "../__content-og/main-menu";
 import { Analytics } from "@vercel/analytics/next";
 
 const siteName = "next-image-plus";
@@ -41,7 +39,7 @@ export default function RootLayout({
     <html lang="en" className="h-full antialiased">
       <body className="dark:bg-zinc-900 dark:text-zinc-100">
         <Header />
-        <div id="page-layout" className="container mx-auto px-3 py-4">
+        <div id="page-layout" className="container mx-auto px-4 py-4">
           <main role="main">{children}</main>
         </div>
         <Analytics />

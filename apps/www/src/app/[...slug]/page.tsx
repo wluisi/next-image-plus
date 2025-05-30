@@ -21,7 +21,6 @@ import {
 // import PackagesCardGrid from "./../../components/doc-api/packages-card-grid";
 import SidebarMenu from "./../../components/SidebarMenu";
 
-import { sidebarMenu } from "../../__content-og/sidebar-menu";
 // Metadata
 import { metadata as layoutMetadata } from "../layout";
 import { Metadata } from "next";
@@ -151,11 +150,7 @@ export default async function CatchAllSlugPage({
         as="aside"
         className="hidden md:flex md:col-span-2 md:h-screen md:sticky md:top-[var(--navbar-height)]"
       >
-        <SidebarMenu
-          id={sidebarMenu.id}
-          title={sidebarMenu.title}
-          menuItems={sidebarMenu.items}
-        />
+        <SidebarMenu currentPath={path} />
       </GridItem>
       <GridItem
         id="main-content"

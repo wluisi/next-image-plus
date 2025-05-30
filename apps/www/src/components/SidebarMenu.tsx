@@ -1,54 +1,64 @@
-import * as React from "react";
-import {
-  Heading,
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuList,
-  NavigationMenuLink,
-} from "@graphinery/ui";
-import { SidebarMenu as GraphineryUiSidebarMenu } from "@graphinery/ui";
+"use server";
 
+import { gql } from "@graphinery/client";
+import { client } from "./../graphinery";
+import { SidebarMenu as GraphineryUiSidebarMenu } from "@graphinery/ui";
 import Link from "next/link";
 
-interface MenuItem {
-  id: string;
-  title: string;
-  url: string;
+const SIDEBAR_MENU_QUERY = gql`
+  query SidebarMenuQuery($filter: MdxMenuQueryFilter, $sort: _QuerySort) {
+    mdxMenu(filter: $filter, sort: $sort) {
+      id
+      title
+      items {
+        id
+        title
+        url
+        parent
+        items {
+          id
+          title
+          url
+          parent
+          items {
+            id
+            title
+            url
+            parent
+          }
+        }
+      }
+    }
+  }
+`;
+
+async function getSidebarMenu() {
+  const { data } = await client.request({
+    query: SIDEBAR_MENU_QUERY,
+    variables: {
+      // filter: { status: { _eq: true } },
+      sort: { field: "weight", direction: "ASC" },
+    },
+  });
+
+  return data.mdxMenu;
 }
 
-interface SidebarMenuProps {
-  id: string;
-  title: string;
-  menuItems: MenuItem[];
-}
+export default async function SidebarMenu({
+  currentPath,
+}: {
+  currentPath: string;
+}) {
+  const menu = await getSidebarMenu();
+  // Only get menu items starting at 2nd level.
+  const menuItems = menu?.items;
 
-export default function SidebarMenu({
-  id,
-  title,
-  menuItems,
-}: SidebarMenuProps) {
   return (
     <GraphineryUiSidebarMenu
-      id="test"
-      currentPath={"whatever"}
+      id={menu.id}
+      currentPath={currentPath}
       menuItems={menuItems}
       linkAs={Link}
     />
-    // <NavigationMenu id={id} className="mt-3">
-    //   <Heading level="h3" className="text-1xl mb-1">
-    //     {title}
-    //   </Heading>
-    //   <NavigationMenuList>
-    //     {menuItems.map((item: MenuItem) => {
-    //       return (
-    //         <NavigationMenuItem key={item.id} className="pr-5">
-    //           <NavigationMenuLink as={Link} href={item.url}>
-    //             {item.title}
-    //           </NavigationMenuLink>
-    //         </NavigationMenuItem>
-    //       );
-    //     })}
-    //   </NavigationMenuList>
-    // </NavigationMenu>
   );
 }
