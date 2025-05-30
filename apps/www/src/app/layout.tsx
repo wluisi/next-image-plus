@@ -1,7 +1,7 @@
 import "./globals.css";
 import { Header } from "../components/header/Header";
 
-import { mainMenu } from "./../__content/main-menu";
+import { mainMenu } from "../__content-og/main-menu";
 import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {

@@ -13,7 +13,7 @@ import {
 } from "@graphinery/ui";
 import Link from "next/link";
 
-import { sidebarMenu } from "../../__content/sidebar-menu";
+import { sidebarMenu } from "../../__content-og/sidebar-menu";
 
 interface MenuItem {
   id: string;

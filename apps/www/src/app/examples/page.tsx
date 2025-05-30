@@ -9,8 +9,8 @@ import {
 import SidebarMenu from "../../components/SidebarMenu";
 import Link from "next/link";
 
-import { sidebarMenu } from "./../../__content/sidebar-menu";
-import { metadataBase } from "./../../__content/metadata";
+import { sidebarMenu } from "../../__content-og/sidebar-menu";
+import { metadataBase } from "../../__content-og/metadata";
 
 const content = {
   title: "Examples",

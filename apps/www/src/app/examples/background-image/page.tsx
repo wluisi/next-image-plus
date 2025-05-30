@@ -14,11 +14,11 @@ import {
 import SidebarMenu from "../../../components/SidebarMenu";
 import Link from "next/link";
 
-import { sidebarMenu } from "./../../../__content/sidebar-menu";
+import { sidebarMenu } from "../../../__content-og/sidebar-menu";
 // mdx
 import { getContent } from "./../../../utils/get-content";
 
-import { metadataBase } from "./../../../__content/metadata";
+import { metadataBase } from "../../../__content-og/metadata";
 import type { Metadata } from "next";
 
 const breadcrumbs = [

@@ -1,11 +1,11 @@
-import { homeContent } from "./../__content/home";
+import { homeContent } from "../__content-og/home";
 import { Grid, GridItem } from "@graphinery/ui";
 import { ContentComponents } from "./../components/content-components";
 import Hero from "./../components/Hero";
 import Accordion from "./../components/content-components/Accordion";
 import CardGrid from "./../components/content-components/CardGrid";
 
-import { metadataBase } from "./../__content/metadata";
+import { metadataBase } from "../__content-og/metadata";
 import type { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata | undefined> {

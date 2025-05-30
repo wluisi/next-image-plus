@@ -3,7 +3,7 @@ import { AppProps } from "next/app";
 import "./../global.css";
 
 import { Header } from "../components/header/Header";
-import { mainMenu } from "./../__content/main-menu";
+import { mainMenu } from "../__content-og/main-menu";
 import { Analytics } from "@vercel/analytics/next";
 
 export default function MyApp({ Component, pageProps }: AppProps) {

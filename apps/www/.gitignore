@@ -42,3 +42,6 @@ yarn-error.log*
 /cypress/downloads
 /cypress/videos
 /cypress/screenshots
+
+# graphinery
+.graphinery

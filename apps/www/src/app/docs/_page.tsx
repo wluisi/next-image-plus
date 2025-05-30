@@ -1,5 +1,5 @@
-import { getContent } from "./../../../utils/get-content";
-import { sidebarMenu } from "./../../../__content/sidebar-menu";
+import { getContent } from "./../../utils/get-content";
+import { sidebarMenu } from "../../__content-og/sidebar-menu";
 
 import {
   Breadcrumb,
@@ -9,21 +9,28 @@ import {
   GridItem,
   TableOfContents,
 } from "@graphinery/ui";
-import SidebarMenu from "../../../components/SidebarMenu";
+import SidebarMenu from "../../components/SidebarMenu";
 import Link from "next/link";
 
-import { metadataBase } from "./../../../__content/metadata";
 import type { Metadata } from "next";
+import { metadataBase } from "../../__content-og/metadata";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata | undefined> {
-  const slug = (await params).slug[0];
-  const page = await getContent(slug);
+const breadcrumbs = [
+  {
+    title: "Home",
+    url: "/",
+    isCurrentPage: false,
+  },
+  {
+    title: "Docs",
+    url: "/docs",
+    isCurrentPage: true,
+  },
+];
 
-  const { title, description, keywords } = page.frontmatter;
+export async function generateMetadata(): Promise<Metadata | undefined> {
+  const docsPage = await getContent("docs");
+  const { title, description, keywords } = docsPage.frontmatter;
   const titleFinal = `${title} | ${metadataBase.siteName}`;
 
   return {
@@ -51,35 +58,8 @@ export async function generateMetadata({
   };
 }
 
-export async function generateStaticParams() {
-  return [{ slug: ["picture"] }, { slug: ["background-image"] }];
-}
-
-export default async function DocsSlugPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const slug = (await params).slug[0];
-  const page = await getContent(slug);
-
-  const breadcrumbs = [
-    {
-      title: "Home",
-      url: "/",
-      isCurrentPage: false,
-    },
-    {
-      title: "Docs",
-      url: "/docs",
-      isCurrentPage: false,
-    },
-    {
-      title: page.frontmatter.title as string,
-      url: `/docs/${slug}`,
-      isCurrentPage: true,
-    },
-  ];
+export default async function DocsPage() {
+  const page = await getContent("docs");
 
   return (
     <Grid
