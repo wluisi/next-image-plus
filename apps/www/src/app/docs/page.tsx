@@ -81,7 +81,7 @@ export default async function DocsPage() {
         id="main-content"
         className="md:col-span-10 lg:col-span-8 pb-10 md:px-10"
       >
-        <article className="space-y-5 prose">
+        <article className="space-y-5 prose dark:prose-invert">
           <Breadcrumb className="m-auto max-w-xxl">
             {breadcrumbs.map((item) => {
               return (

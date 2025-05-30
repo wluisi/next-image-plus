@@ -1,10 +1,14 @@
 import * as React from "react";
 
-import { ImageIcon } from "@graphinery/ui";
+import {
+  GithubIcon,
+  ImageIcon,
+  DesktopNavigation,
+  Header as GraphineryUiHeader,
+  MobileNavigation,
+  ThemeToggle,
+} from "@graphinery/ui";
 import Link from "next/link";
-
-import DesktopNavigation from "./DesktopNavigation";
-import MobileNavigation from "./MobileNavigation";
 
 interface MenuItem {
   id: string;
@@ -17,14 +21,18 @@ interface HeaderProps {
   menuItems: MenuItem[];
 }
 
+const iconMap: Record<string, React.JSX.Element> = {
+  github: <GithubIcon className="h-6 w-6" />,
+};
+
 function Logo() {
   return (
     <div className="logo flex">
       <Link
         href="/"
-        className="text-black text-l font-extrabold no-underline hover:underline"
+        className="text-black dark:text-zinc-100 text-l font-extrabold no-underline hover:underline"
       >
-        <ImageIcon className="h-6 w-6 text-red-500 float-left mr-1" />
+        <ImageIcon className="h-6 w-6 text-red-500 dark:text-red-400 float-left mr-1" />
         <span>next-image-plus</span>
       </Link>
     </div>
@@ -33,17 +41,30 @@ function Logo() {
 
 export function Header({ id, menuItems }: HeaderProps) {
   return (
-    <header
-      role="banner"
-      className="border-b-[1px] border-b-gray-300 py-3 items-center sticky top-0 bg-white z-50"
-    >
-      <div className="container mx-auto px-3">
-        <div className="flex justify-between">
+    <GraphineryUiHeader
+      main={
+        <>
           <Logo />
-          <DesktopNavigation id={`desktop-nav__${id}`} menuItems={menuItems} />
-          <MobileNavigation />
-        </div>
-      </div>
-    </header>
+          <DesktopNavigation
+            id={id}
+            menuItems={menuItems}
+            menuLinkAs={Link}
+            iconMap={iconMap}
+          />
+        </>
+      }
+      utility={
+        <>
+          <ThemeToggle />
+          <Link
+            href="https://github.com/wluisi/graphinery"
+            className="text-black dark:text-zinc-100 p-2 rounded-md no-underline hover:bg-zinc-200 dark:hover:bg-zinc-700"
+          >
+            <GithubIcon className="h-5 w-5" />
+          </Link>
+          <MobileNavigation id={id} menuItems={menuItems} menuLinkAs={Link} />
+        </>
+      }
+    />
   );
 }
