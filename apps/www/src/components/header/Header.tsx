@@ -1,4 +1,9 @@
+"use server";
+
 import * as React from "react";
+
+import { gql } from "@graphinery/client";
+import { client } from "./../../graphinery";
 
 import {
   GithubIcon,
@@ -10,15 +15,43 @@ import {
 } from "@graphinery/ui";
 import Link from "next/link";
 
-interface MenuItem {
-  id: string;
-  title: string;
-  url: string;
-}
+const HEADER_MENU_QUERY = gql`
+  query HeaderMenuQuery($filter: MdxMenuQueryFilter, $sort: _QuerySort) {
+    mdxMenu(filter: $filter, sort: $sort) {
+      id
+      title
+      items {
+        id
+        title
+        url
+        parent
+        items {
+          id
+          title
+          url
+          parent
+          items {
+            id
+            title
+            url
+            parent
+          }
+        }
+      }
+    }
+  }
+`;
 
-interface HeaderProps {
-  id: string;
-  menuItems: MenuItem[];
+async function getHeaderMenu() {
+  const { data } = await client.request({
+    query: HEADER_MENU_QUERY,
+    variables: {
+      // filter: { status: { _eq: true } },
+      sort: { field: "weight", direction: "ASC" },
+    },
+  });
+
+  return data.mdxMenu;
 }
 
 const iconMap: Record<string, React.JSX.Element> = {
@@ -39,7 +72,11 @@ function Logo() {
   );
 }
 
-export function Header({ id, menuItems }: HeaderProps) {
+export async function Header() {
+  const id = "next-image-plus-docs__header";
+  const menu = await getHeaderMenu();
+  const menuItems = menu?.items;
+
   return (
     <GraphineryUiHeader
       main={
@@ -57,7 +94,7 @@ export function Header({ id, menuItems }: HeaderProps) {
         <>
           <ThemeToggle />
           <Link
-            href="https://github.com/wluisi/graphinery"
+            href="https://github.com/wluisi/next-image-plus"
             className="text-black dark:text-zinc-100 p-2 rounded-md no-underline hover:bg-zinc-200 dark:hover:bg-zinc-700"
           >
             <GithubIcon className="h-5 w-5" />

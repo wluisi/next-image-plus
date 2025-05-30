@@ -14,7 +14,7 @@ import remarkGfm from "remark-gfm";
 // Utils
 import getTableOfContents from "./get-table-of-contents";
 // Components
-import { componentMap } from "./../components/components-map";
+import { componentsMap } from "./../components/components-map";
 
 import { notFound } from "next/navigation";
 
@@ -26,7 +26,7 @@ export async function getContent(slug: string) {
 
     const { content, frontmatter } = await compileMDX({
       source: mdxSource,
-      components: componentMap,
+      components: componentsMap,
       options: {
         parseFrontmatter: true,
         mdxOptions: {
