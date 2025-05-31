@@ -78,10 +78,8 @@ function Logo() {
 
 export async function Header() {
   const id = "next-image-plus-docs__header";
+
   const menu = await getHeaderMenu();
-
-  console.log("menu items", menu.items);
-
   const menuItems = menu?.items;
 
   return (
