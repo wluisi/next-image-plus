@@ -46,7 +46,11 @@ async function getHeaderMenu() {
   const { data } = await client.request({
     query: HEADER_MENU_QUERY,
     variables: {
-      // filter: { status: { _eq: true } },
+      filter: {
+        path: { _neq: "/examples-pages" },
+        parent: { _neq: "/examples-pages" },
+        // status: { _eq: true }
+      },
       sort: { field: "weight", direction: "ASC" },
     },
   });
@@ -75,6 +79,9 @@ function Logo() {
 export async function Header() {
   const id = "next-image-plus-docs__header";
   const menu = await getHeaderMenu();
+
+  console.log("menu items", menu.items);
+
   const menuItems = menu?.items;
 
   return (

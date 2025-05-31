@@ -193,7 +193,11 @@ export const getStaticProps = async (context: any) => {
     query: SIDEBAR_MENU_QUERY,
     queryKey: ["pages-sidebar-menu"],
     variables: {
-      // filter: { status: { _eq: true } },
+      filter: {
+        // path: { _neq: "/examples-pages" },
+        // parent: { _neq: "/examples-pages" },
+        // status: { _eq: true }
+      },
       sort: { field: "weight", direction: "ASC" },
     },
   });
@@ -203,7 +207,11 @@ export const getStaticProps = async (context: any) => {
     query: HEADER_MENU_QUERY,
     queryKey: ["pages-header-menu"],
     variables: {
-      // filter: { status: { _eq: true } },
+      filter: {
+        path: { _neq: "/examples-pages" },
+        parent: { _neq: "/examples-pages" },
+        // status: { _eq: true }
+      },
       sort: { field: "weight", direction: "ASC" },
     },
   });

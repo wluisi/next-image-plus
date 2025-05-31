@@ -65,7 +65,11 @@ export default function Header() {
   const { isLoading, isError, data } = useQuery(HEADER_MENU_QUERY, {
     queryKey: ["pages-header-menu"],
     variables: {
-      // filter: { status: { _eq: true } },
+      filter: {
+        path: { _neq: "/examples-pages" },
+        parent: { _neq: "/examples-pages" },
+        // status: { _eq: true }
+      },
       sort: { field: "weight", direction: "ASC" },
     },
   });

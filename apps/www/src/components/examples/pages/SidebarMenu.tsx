@@ -35,7 +35,11 @@ export default function SidebarMenu({ currentPath }: { currentPath: string }) {
   const { isLoading, isError, data } = useQuery(SIDEBAR_MENU_QUERY, {
     queryKey: ["pages-sidebar-menu"],
     variables: {
-      // filter: { status: { _eq: true } },
+      filter: {
+        path: { _neq: "/examples-pages" },
+        parent: { _neq: "/examples-pages" },
+        // status: { _eq: true }
+      },
       sort: { field: "weight", direction: "ASC" },
     },
   });

@@ -36,7 +36,11 @@ async function getSidebarMenu() {
   const { data } = await client.request({
     query: SIDEBAR_MENU_QUERY,
     variables: {
-      // filter: { status: { _eq: true } },
+      filter: {
+        path: { _neq: "/examples-pages" },
+        parent: { _neq: "/examples-pages" },
+        // status: { _eq: true }
+      },
       sort: { field: "weight", direction: "ASC" },
     },
   });
