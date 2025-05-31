@@ -21,6 +21,19 @@ const nextConfig = {
       },
     ],
   },
+  // Temp fix fs not found error
+  // @see https://stackoverflow.com/questions/64926174/module-not-found-cant-resolve-fs-in-next-js-application/74139318#74139318
+  webpack: (config: any, { isServer }: any) => {
+    // If client-side, don't polyfill `fs`
+    if (!isServer) {
+      config.resolve.fallback = {
+        fs: false,
+      };
+    }
+
+    return config;
+  },
+  transpilePackages: ["@graphinery/ui"],
 };
 
 // Apply your plugin

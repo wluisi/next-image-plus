@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@graphinery/ui";
-import CardGrid from "./CardGrid";
+import { default as ExamplesCardGrid } from "./CardGrid";
 
 export default function PictureExampleTabs({ children }: { children: any }) {
   return (
@@ -9,7 +9,7 @@ export default function PictureExampleTabs({ children }: { children: any }) {
         <TabsTrigger value="code">Code</TabsTrigger>
       </TabsList>
       <TabsContent value="preview">
-        <CardGrid />
+        <ExamplesCardGrid />
       </TabsContent>
       <TabsContent value="code">
         <div className="md:my-10">{children}</div>

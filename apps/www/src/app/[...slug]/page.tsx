@@ -102,9 +102,12 @@ export async function generateMetadata({
 
 export async function generateStaticParams() {
   const PAGE_SLUGS_QUERY = gql`
-    query PageQuery($limit: Int) {
-      pageCollection(limit: $limit) {
+    query PageQuery($limit: Int, $filter: PageQueryFilter) {
+      pageCollection(limit: $limit, filter: $filter) {
         items {
+          id
+          uuid
+          path
           slug
         }
       }
@@ -115,6 +118,9 @@ export async function generateStaticParams() {
     query: PAGE_SLUGS_QUERY,
     variables: {
       limit: 400,
+      filter: {
+        slug: { _in: "examples" },
+      },
     },
   });
 

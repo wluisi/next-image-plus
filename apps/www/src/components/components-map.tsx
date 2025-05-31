@@ -18,7 +18,11 @@ import {
   Steps,
 } from "@graphinery/ui";
 import NextLink from "next/link";
+
+import { default as ExamplesCardGrid } from "./examples/CardGrid";
+import { default as ExamplesHero } from "./examples/Hero";
 import PictureExampleTabs from "./examples/picture-tabs";
+import BackgroundImageExampleTabs from "./examples/background-image-tabs";
 
 const createComponentMap = <T extends Record<string, React.ComponentType<any>>>(
   map: T
@@ -43,7 +47,10 @@ export const componentsMap = createComponentMap({
   FileTree,
   Folder,
   File,
+  ExamplesCardGrid,
+  ExamplesHero,
   PictureExampleTabs,
+  BackgroundImageExampleTabs,
   Steps,
   SimpleGrid,
   // Overrides
