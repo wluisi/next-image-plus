@@ -9,10 +9,10 @@ import {
 } from "@graphinery/client/react";
 import { config } from "./../graphinery";
 
-import "./../global.css";
+// Components
+import { default as PagesHeader } from "./../components/examples/pages/Header";
 
-// import { Header } from "../components/header/Header";
-// import { mainMenu } from "../__content-og/main-menu";
+import "./../global.css";
 import { Analytics } from "@vercel/analytics/next";
 
 export default function MyApp({
@@ -23,8 +23,8 @@ export default function MyApp({
 
   return (
     <GraphineryProvider client={client} state={pageProps.initialState}>
-      {/* <Header id={mainMenu.id} menuItems={mainMenu.items} /> */}
-      <div id="page-layout" className="container mx-auto px-3 py-4">
+      <PagesHeader />
+      <div id="page-layout" className="container mx-auto px-4 py-4">
         <Component {...pageProps} />
       </div>
       <Analytics />

@@ -21,6 +21,7 @@ import {
 import SidebarMenu, {
   SIDEBAR_MENU_QUERY,
 } from "./../../components/examples/pages/SidebarMenu";
+import { HEADER_MENU_QUERY } from "./../../components/examples/pages/Header";
 
 // Mdx
 import { serialize } from "next-mdx-remote/serialize";
@@ -191,6 +192,16 @@ export const getStaticProps = async (context: any) => {
   await client.request({
     query: SIDEBAR_MENU_QUERY,
     queryKey: ["pages-sidebar-menu"],
+    variables: {
+      // filter: { status: { _eq: true } },
+      sort: { field: "weight", direction: "ASC" },
+    },
+  });
+
+  // Prefetch header
+  await client.request({
+    query: HEADER_MENU_QUERY,
+    queryKey: ["pages-header-menu"],
     variables: {
       // filter: { status: { _eq: true } },
       sort: { field: "weight", direction: "ASC" },
