@@ -42,7 +42,7 @@ export default function Hero({ title, description }: HeroProps) {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
               {title}
             </h1>
-            <p className="text-lg md:text-xl text-white/90 mb-8">
+            <p className="text-lg md:text-xl !text-white/90 mb-8">
               {description}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

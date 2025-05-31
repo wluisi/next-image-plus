@@ -1,6 +1,6 @@
 ---
 title: "Picture Component"
-description: "This is an example MDX file."
+description: "The Picture component is a primitive React component that extends the HTML <picture> element to provide features for automatic image optimization, using Next.js Image API and React 19."
 keywords: "next, react, nextjs, responsive images, typescript"
 weight: 1
 ---
@@ -75,17 +75,19 @@ preload={false} // {false} | {true}
 Optional prop for preloading the image. This works similar to the `priority` prop on the Next.js image.
 Should be used for any `<Picture>` component that is above the fold, and flagged as the Largest Contentful Paint (LCP).
 
-> For preloading to work properly, media queries cannot overlap. This is not a limitation of the component per se, but how browser's parse `<link rel="preload">` elements in `<head>`.
-> Media queries on `<link rel="preload">` do not function the way they do on HTML elements.
->
-> The user agent will look at multiple `<link rel="preload">` elements and find multiple matches if there is any overlap in the media queries.
-> This can lead to performance issues, where multiple images are preloaded, so when setting media queries, make sure each one targets a unique range.
->
-> i.e, for your medium breakpoint, if your fallback is `max-width: 430px`
->
-> _don't do this_ ~~`(min-width: 430px) and (max-width: 1023px)`~~
->
-> **do this** `(min-width: 431px) and (max-width: 1023px)`
+<Callout type="important">
+For preloading to work properly, media queries cannot overlap. This is not a limitation of the component per se, but how browser's parse `<link rel="preload">` elements in `<head>`.
+Media queries on `<link rel="preload">` do not function the way they do on HTML elements.
+
+The user agent will look at multiple `<link rel="preload">` elements and find multiple matches if there is any overlap in the media queries.
+This can lead to performance issues, where multiple images are preloaded, so when setting media queries, make sure each one targets a unique range.
+
+i.e, for your medium breakpoint, if your fallback is `max-width: 430px`
+
+- _don't do this_ ~~`(min-width: 430px) and (max-width: 1023px)`~~
+- **do this** `(min-width: 431px) and (max-width: 1023px)`
+
+</Callout>
 
 ### fallbackMedia
 
@@ -115,9 +117,12 @@ import myImage from './image.jpg'
 <Source src={myImage} />
 ```
 
-> A key difference between the native html element for `<source>` and the `<Source>` component, is the html element does not accept a `src` attribute, but uses `srcset` instead.
->
-> The value for `srcset` will get automatically generated for you, using the Next.js Image API, based on the `src` prop value.
+<Callout type="info">
+A key difference between the native html element for `<source>` and the `<Source>` component, is the html element does not accept a `src` attribute, but uses `srcset` instead.
+
+The value for `srcset` will get automatically generated for you, using the Next.js Image API, based on the `src` prop value.
+
+</Callout>
 
 ### media
 
@@ -175,3 +180,12 @@ The height prop functions the same way as it does on the Next.js `<Image>` compo
 > It does not determine the rendered size of the image, which is controlled by CSS, similar to the height attribute in the HTML `<img>` tag._
 >
 > [ Source: Next.js <a href="https://nextjs.org/docs/pages/api-reference/components/image#height" target="_blank">Image API Reference</a> ]
+
+<PageNav>
+  <PageNavItem href="/docs/getting-started" direction="prev">
+    Getting Started
+  </PageNavItem>
+  <PageNavItem href="/docs/background-image" direction="next">
+    Background Image: API Reference
+  </PageNavItem>
+</PageNav>
