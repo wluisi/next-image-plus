@@ -16,6 +16,7 @@ import {
   Grid,
   GridItem,
   HomeIcon,
+  cn,
 } from "@graphinery/ui";
 
 import SidebarMenu, {
@@ -89,7 +90,10 @@ export default function ExamplePagesSlug({ mdx }: { mdx: any }) {
       </GridItem>
       <GridItem
         id="main-content"
-        className="md:col-span-10 lg:col-span-8 pb-10 md:px-10"
+        className={cn(
+          "md:col-span-10 lg:col-span-8 pb-10 md:px-10",
+          page.path === "/examples-pages/background-image" && "lg:col-span-10"
+        )}
       >
         <article className="space-y-5 prose dark:prose-invert">
           <Breadcrumb className="m-auto max-w-xxl">
@@ -125,13 +129,6 @@ export default function ExamplePagesSlug({ mdx }: { mdx: any }) {
             }}
           />
         </article>
-      </GridItem>
-      <GridItem
-        id="right-sidebar"
-        as="aside"
-        className="hidden lg:flex lg:col-span-2 md:h-screen md:sticky md:top-[var(--navbar-height)]"
-      >
-        NO
       </GridItem>
     </Grid>
   );

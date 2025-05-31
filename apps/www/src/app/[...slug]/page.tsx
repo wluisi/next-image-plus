@@ -17,6 +17,7 @@ import {
   GridItem,
   HomeIcon,
   TableOfContents,
+  cn,
 } from "@graphinery/ui";
 // import PackagesCardGrid from "./../../components/doc-api/packages-card-grid";
 import SidebarMenu from "./../../components/SidebarMenu";
@@ -160,7 +161,10 @@ export default async function CatchAllSlugPage({
       </GridItem>
       <GridItem
         id="main-content"
-        className="md:col-span-10 lg:col-span-8 pb-10 md:px-10"
+        className={cn(
+          "md:col-span-10 lg:col-span-8 pb-10 md:px-10",
+          path === "/examples/background-image" && "lg:col-span-10"
+        )}
       >
         <article className="space-y-5 prose dark:prose-invert">
           <Breadcrumb className="m-auto max-w-xxl">
@@ -198,7 +202,11 @@ export default async function CatchAllSlugPage({
       <GridItem
         id="right-sidebar"
         as="aside"
-        className="hidden lg:flex lg:col-span-2 md:h-screen md:sticky md:top-[var(--navbar-height)]"
+        className={cn(
+          "hidden lg:flex lg:col-span-2 md:h-screen md:sticky md:top-[var(--navbar-height)]",
+          path === "/examples/picture" && "!hidden",
+          path === "/examples/background-image" && "!hidden"
+        )}
       >
         <TableOfContents data={page.toc.items} />
       </GridItem>
