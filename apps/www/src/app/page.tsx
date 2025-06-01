@@ -7,7 +7,7 @@ import { Grid, GridItem } from "@graphinery/ui";
 import { GraphineryMdx } from "@graphinery/mdx";
 import Hero from "./../components/home/hero";
 import FeaturedCardGrid from "./../components/home/featured-card-grid";
-import Accordion from "./../components/home/accordion";
+import Accordion from "../components/home/AccordionNew";
 
 // Metadata
 import { metadata as layoutMetadata } from "./layout";
