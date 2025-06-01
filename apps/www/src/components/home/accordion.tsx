@@ -1,4 +1,4 @@
-import { default as SharedAccordion } from "../shared/Accordion";
+import { default as SharedAccordion } from "../shared/accordion";
 
 const content = {
   id: "homepage-accordion",

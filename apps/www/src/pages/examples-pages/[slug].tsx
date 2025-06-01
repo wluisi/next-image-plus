@@ -21,8 +21,8 @@ import {
 
 import SidebarMenu, {
   SIDEBAR_MENU_QUERY,
-} from "../../components/examples/pages/sidebar-menu";
-import { HEADER_MENU_QUERY } from "../../components/examples/pages/header";
+} from "../../components/examples-pages/sidebar-menu";
+import { HEADER_MENU_QUERY } from "../../components/examples-pages/header";
 
 // Mdx
 import { serialize } from "next-mdx-remote/serialize";
