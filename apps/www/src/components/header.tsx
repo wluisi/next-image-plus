@@ -3,7 +3,7 @@
 import * as React from "react";
 
 import { gql } from "@graphinery/client";
-import { client } from "./../../graphinery";
+import { client } from "../graphinery";
 
 import {
   GithubIcon,

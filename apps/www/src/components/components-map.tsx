@@ -19,8 +19,8 @@ import {
 } from "@graphinery/ui";
 import NextLink from "next/link";
 
-import { default as ExamplesCardGrid } from "./examples/CardGrid";
-import { default as ExamplesHero } from "./examples/Hero";
+import { default as ExamplesCardGrid } from "./examples/card-grid";
+import { default as ExamplesHero } from "./examples/hero";
 import PictureExampleTabs from "./examples/picture-tabs";
 import BackgroundImageExampleTabs from "./examples/background-image-tabs";
 

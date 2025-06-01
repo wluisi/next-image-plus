@@ -21,15 +21,15 @@ import {
 
 import SidebarMenu, {
   SIDEBAR_MENU_QUERY,
-} from "./../../components/examples/pages/SidebarMenu";
-import { HEADER_MENU_QUERY } from "./../../components/examples/pages/Header";
+} from "../../components/examples-pages/sidebar-menu";
+import { HEADER_MENU_QUERY } from "../../components/examples-pages/header";
 
 // Mdx
 import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemote } from "next-mdx-remote";
 import { componentsMap } from "../../components/components-map";
-import { default as ExamplesCardGrid } from "./../../components/examples/CardGrid";
-import { default as ExamplesHero } from "./../../components/examples/Hero";
+import { default as ExamplesCardGrid } from "../../components/examples/card-grid";
+import { default as ExamplesHero } from "../../components/examples/hero";
 
 const PAGE_QUERY = gql`
   query PageQuery($id: String) {

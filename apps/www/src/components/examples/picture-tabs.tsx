@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@graphinery/ui";
-import { default as ExamplesCardGrid } from "./CardGrid";
+import { default as ExamplesCardGrid } from "./card-grid";
 
 export default function PictureExampleTabs({ children }: { children: any }) {
   return (

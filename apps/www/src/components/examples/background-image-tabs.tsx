@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@graphinery/ui";
-import { default as ExamplesHero } from "./../../components/examples/Hero";
+import { default as ExamplesHero } from "./hero";
 
 export default function BackgroundImageExampleTabs({
   children,
