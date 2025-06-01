@@ -63,6 +63,7 @@ export default async function SidebarMenu({
       currentPath={currentPath}
       menuItems={menuItems}
       linkAs={Link}
+      linkClassNames="decoration-red-400 hover:decoration-red-400"
     />
   );
 }

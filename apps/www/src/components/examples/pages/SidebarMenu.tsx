@@ -60,6 +60,7 @@ export default function SidebarMenu({ currentPath }: { currentPath: string }) {
       currentPath={currentPath}
       menuItems={menu.items}
       linkAs={Link}
+      linkClassNames="decoration-red-400 hover:decoration-red-400"
     />
   );
 }
