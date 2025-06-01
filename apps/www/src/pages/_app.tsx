@@ -10,7 +10,7 @@ import {
 import { config } from "./../graphinery";
 
 // Components
-import { default as PagesHeader } from "./../components/examples/pages/Header";
+import { default as PagesHeader } from "../components/examples/pages/HeaderNew";
 
 import "./../global.css";
 import { Analytics } from "@vercel/analytics/next";

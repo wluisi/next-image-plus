@@ -22,7 +22,7 @@ import {
 import SidebarMenu, {
   SIDEBAR_MENU_QUERY,
 } from "../../components/examples/pages/sidebar-menu";
-import { HEADER_MENU_QUERY } from "./../../components/examples/pages/Header";
+import { HEADER_MENU_QUERY } from "../../components/examples/pages/HeaderNew";
 
 // Mdx
 import { serialize } from "next-mdx-remote/serialize";
