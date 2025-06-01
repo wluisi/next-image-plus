@@ -1,15 +1,15 @@
 ---
-title: "Background Image"
+title: "Background Image Component"
 description: "The BackgroundImage component is a primitive React component that extends any HTML element, to add a background image, using the power of the Next.js Image API and React 19."
 keywords: "next, react, nextjs, responsive images, typescript"
 weight: 2
 ---
 
-# Background Image
+# Background Image Component
 
 ## Overview
 
-The **next-image-plus** `<BackgroundImage>` is a primitive React component that extends any HTML element, to add a background image,
+The **next-image-plus** `<BackgroundImage>` component is a primitive React component that extends any HTML element, to add a background image,
 using the power of the Next.js Image API and React 19.
 
 The component does not provide any styles and is fully compatible with any React styling framework.
@@ -84,11 +84,11 @@ Optional prop for preloading the background image. This works similar to the `pr
 Should be used for any `<BackgroundImage>` component that is above the fold, and flagged as the Largest Contentful Paint (LCP).
 
 <Callout type="important">
-For preloading to work properly, media queries cannot overlap. This is not a limitation of the component per se, but how browser's parse `<link rel="preload">` elements in `<head>`.
 Media queries on `<link rel="preload">` do not function the way they do on HTML elements.
-
 The user agent will look at multiple `<link rel="preload">` elements and find multiple matches if there is any overlap in the media queries.
 This can lead to performance issues, where multiple images are preloaded, so when setting media queries, make sure each one targets a unique range.
+
+For preloading to work properly, media queries cannot overlap. This is not a limitation of the component per se, but how browser's parse `<link rel="preload">` elements in `<head>`.
 
 i.e, for your medium breakpoint, if your fallback is `max-width: 430px`
 
@@ -121,9 +121,9 @@ Optional prop for any CSS style properties for the background image element.
 
 <PageNav>
   <PageNavItem href="/docs/picture" direction="prev">
-    Picture: API Reference
+    Picture Component
   </PageNavItem>
   <PageNavItem href="/examples/picture" direction="next">
-    Picture: Examples
+    Examples: Picture
   </PageNavItem>
 </PageNav>
