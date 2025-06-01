@@ -87,6 +87,18 @@ export const componentsMap = createComponentMap({
       codeFinal = code;
     }
 
-    return <CodeSnippet title={title} language={language} code={codeFinal} />;
+    return (
+      <CodeSnippet
+        title={title}
+        language={language}
+        code={codeFinal}
+        // theme="github-dark-dimmed"
+        theme="material-theme-palenight"
+        // theme="poimandres"
+        // colorReplacements={{
+        //   "#22272e": "#27272a",
+        // }}
+      />
+    );
   },
 });
