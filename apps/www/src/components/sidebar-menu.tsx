@@ -1,7 +1,7 @@
 "use server";
 
 import { gql } from "@graphinery/client";
-import { client } from "./../graphinery";
+import { client } from "../graphinery";
 import { SidebarMenu as GraphineryUiSidebarMenu } from "@graphinery/ui";
 import Link from "next/link";
 

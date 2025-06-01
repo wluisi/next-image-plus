@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Header } from "../components/header/Header";
+import { Header } from "../components/header";
 import { Analytics } from "@vercel/analytics/next";
 
 const siteName = "next-image-plus";

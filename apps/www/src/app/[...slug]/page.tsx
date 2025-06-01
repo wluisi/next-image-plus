@@ -20,7 +20,7 @@ import {
   cn,
 } from "@graphinery/ui";
 // import PackagesCardGrid from "./../../components/doc-api/packages-card-grid";
-import SidebarMenu from "./../../components/SidebarMenu";
+import SidebarMenu from "../../components/sidebar-menu";
 
 // Metadata
 import { metadata as layoutMetadata } from "../layout";

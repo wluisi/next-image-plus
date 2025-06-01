@@ -1,4 +1,4 @@
-import CardGrid from "../shared/CardGrid";
+import CardGrid from "../shared/card-grid";
 
 const content = {
   id: "homepage-card-grid",
