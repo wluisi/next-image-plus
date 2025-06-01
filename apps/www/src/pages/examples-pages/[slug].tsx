@@ -29,7 +29,7 @@ import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemote } from "next-mdx-remote";
 import { componentsMap } from "../../components/components-map";
 import { default as ExamplesCardGrid } from "../../components/examples/card-grid";
-import { default as ExamplesHero } from "../../components/examples/Hero";
+import { default as ExamplesHero } from "../../components/examples/HeroNew";
 
 const PAGE_QUERY = gql`
   query PageQuery($id: String) {
