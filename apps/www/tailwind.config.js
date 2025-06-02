@@ -1,26 +1,31 @@
+const path = require("path");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    // Set glob pattern to find the @graphinery/ui components.
+    // This tells tailwind where to look for react components and find class names.
+    path.join(
+      path.dirname(require.resolve("@graphinery/ui")),
+      "**/*.{js, jsx, ts, tsx}"
+    ),
   ],
   theme: {
-    fontSize: {
-      xs: ["0.8125rem", { lineHeight: "1.5rem" }],
-      sm: ["0.875rem", { lineHeight: "1.5rem" }],
-      base: ["1rem", { lineHeight: "1.75rem" }],
-      lg: ["1.125rem", { lineHeight: "1.75rem" }],
-      xl: ["1.25rem", { lineHeight: "2rem" }],
-      "2xl": ["1.5rem", { lineHeight: "2rem" }],
-      "3xl": ["1.875rem", { lineHeight: "2.25rem" }],
-      "4xl": ["2rem", { lineHeight: "2.5rem" }],
-      "5xl": ["3rem", { lineHeight: "3.5rem" }],
-      "6xl": ["3.75rem", { lineHeight: "1" }],
-      "7xl": ["4.5rem", { lineHeight: "1" }],
-      "8xl": ["6rem", { lineHeight: "1" }],
-      "9xl": ["8rem", { lineHeight: "1" }],
+    container: {
+      screens: {
+        sm: "640px",
+        // Default is 768px.
+        md: "740px",
+        lg: "1024px",
+        xl: "1280px",
+        // Default is 1536px.
+        "2xl": "1440px",
+      },
     },
-    extend: {},
   },
+  darkMode: "selector",
+  presets: [require("@graphinery/ui/tailwind-preset")],
 };
