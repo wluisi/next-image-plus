@@ -43,4 +43,46 @@ export const metaschema: EntityMetaschema[] = [
       },
     ],
   },
+  {
+    name: "Blog",
+    type: "type",
+    datasource: {
+      entityType: "content",
+      bundle: "blog",
+      directory: "[blog]",
+      pathPrefix: "/blog",
+    },
+    fields: [
+      {
+        name: "title",
+        type: "string",
+        required: true,
+      },
+      {
+        name: "description",
+        type: "string",
+        required: true,
+      },
+      {
+        name: "activeTrail",
+        type: "activeTrail",
+      },
+      {
+        name: "content",
+        type: "string",
+      },
+      {
+        name: "toc",
+        type: "toc",
+        datasource: {
+          name: "content",
+          fieldType: "string",
+        },
+      },
+      {
+        name: "keywords",
+        type: "string",
+      },
+    ],
+  },
 ];
