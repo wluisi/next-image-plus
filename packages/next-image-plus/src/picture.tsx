@@ -105,7 +105,9 @@ export function Picture({
   });
 
   preloadData.push({
-    id: `img-${imgChildProps.src}`,
+    uuid: `img-${imgChildProps.src}`,
+    elementType: "img",
+    originalSrc: imgChildProps.src,
     media: fallbackMedia,
     fetchPriority: preload ? "high" : "auto",
     ...imageProps,
@@ -132,7 +134,9 @@ export function Picture({
         });
 
         preloadData.push({
-          id: `source-${child.props.src}`,
+          uuid: `source-${child.props.src}`,
+          elementType: "source",
+          originalSrc: child.props.src,
           media: child.props.media,
           fetchPriority: preload ? "high" : "auto",
           ...sourceProps,

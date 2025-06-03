@@ -16,7 +16,13 @@ export type ImageAttributes = Omit<NextImageProps, "src" | "loader"> & {
   /** The image source URL. */
   src: string;
   /** Optional media query. */
-  media?: string;
+  media: string;
+  /** */
+  uuid: string;
+  /** */
+  elementType: "img" | "source";
+  /** */
+  originalSrc: string;
 };
 
 export interface PreloadImageLinkProps {
@@ -29,7 +35,13 @@ export interface PreloadImageLinkProps {
  *
  * @returns An object containing shared options.
  */
-function getSharedOptions(attributes: ImageAttributes) {
+function getSharedOptions(attributes: ImageAttributes, mediaQueries?: any) {
+  let media: string;
+  if (mediaQueries) {
+    const uuid = `${attributes.elementType}-${attributes.originalSrc}`;
+    media = mediaQueries[uuid];
+  }
+
   return {
     as: "image" as ReactDOM.PreloadAs,
     imageSrcSet: attributes.srcSet,
@@ -37,7 +49,7 @@ function getSharedOptions(attributes: ImageAttributes) {
     crossOrigin: attributes.crossOrigin,
     referrerPolicy: attributes.referrerPolicy,
     fetchPriority: attributes.fetchPriority,
-    media: attributes.media,
+    media: media ? media : attributes.media,
   };
 }
 
@@ -67,17 +79,19 @@ export function PreloadImageLink({ data }: PreloadImageLinkProps) {
     return null;
   }
 
-  console.log("PreloadImageLink > data", data);
-
-  // const mediaQueries = getMediaQueries(data as any);
-  // console.log("mediaQueries", mediaQueries);
+  const mediaQueries = getMediaQueries(
+    data satisfies Array<Pick<ImageAttributes, "uuid" | "media">>
+  );
 
   // App router.
   if (isAppRouter && ReactDOM.preload) {
     data.forEach((attributes) => {
       // @see https://github.com/facebook/reacxt/pull/26940
       // @see https://react.dev/reference/react-dom/preload#parameters
-      ReactDOM.preload(attributes.src, getSharedOptions(attributes));
+      ReactDOM.preload(
+        attributes.src,
+        getSharedOptions(attributes, mediaQueries)
+      );
       return null;
     });
   }
@@ -96,7 +110,7 @@ export function PreloadImageLink({ data }: PreloadImageLinkProps) {
             }
             rel="preload"
             href={attributes.srcSet ? undefined : attributes.src}
-            {...getSharedOptions(attributes)}
+            {...getSharedOptions(attributes, mediaQueries)}
           />
         );
       })}

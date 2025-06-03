@@ -1,9 +1,11 @@
-// import { ImageAttributes } from "./../preload";
+// @todo
+// - figure out how to generate the fallback media query from the source media queries.
+// - test functions in preload.
+// - update picture example to use new function (in component media queries can overlap) and add 2nd example pg where fallbackMedia and non-overlapping media queries are used.
 
 export type MediaQueryItem = {
-  id: string;
+  uuid: string;
   media: string;
-  [field: string]: string;
 };
 
 // (min-width: 431px) and (max-width: 1023px) -> { min: 431, max: 1023 }
@@ -30,28 +32,25 @@ export function buildMediaQuery(min: number, max: number): string | null {
 }
 
 export function getMediaQueries(items: MediaQueryItem[]): {
-  [id: string]: { media: string };
+  [uuid: string]: { media: string };
 } {
-  const ranges = items.map(({ id, media }) => {
+  const ranges = items.map(({ uuid, media }) => {
     const { min, max } = parseMediaQuery(media);
-    return { id, min, max, media };
+    return { uuid, min, max, media };
   });
 
   // Sort by smallest min first.
   ranges.sort((a, b) => a.min - b.min || a.max - b.max);
 
-  // console.log("ranges", ranges);
-
   let lastMax = -1;
-  const modified: MediaQueryItem[] = [];
+  const modified: { uuid: string; media: string }[] = [];
 
   for (const range of ranges) {
-    // const min = lastMax + 1;
     const min = Math.max(range.min, lastMax + 1);
     const max = range.max;
 
     modified.push({
-      id: range.id,
+      uuid: range.uuid,
       media: buildMediaQuery(min, max),
     });
 
@@ -60,7 +59,7 @@ export function getMediaQueries(items: MediaQueryItem[]): {
 
   const result = {};
   modified.forEach((item) => {
-    result[item.id] = item.media;
+    result[item.uuid] = item.media;
   });
 
   return result;
