@@ -83,6 +83,29 @@ export const metaschema: EntityMetaschema[] = [
         name: "keywords",
         type: "string",
       },
+      {
+        name: "tags",
+        type: "list",
+        datasource: {
+          name: "tags",
+          fieldType: "reference",
+          allowedTypes: ["tag"],
+        },
+      },
+      {
+        name: "publishedDate",
+        type: "string",
+      },
     ],
+  },
+  {
+    name: "Tag",
+    type: "type",
+    datasource: {
+      entityType: "taxonomyTerm",
+      bundle: "tag",
+      directory: "[tag]",
+      pathPrefix: "/tag",
+    },
   },
 ];

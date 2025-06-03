@@ -18,11 +18,12 @@ import {
   Heading,
   HomeIcon,
   TableOfContents,
-  Tag,
   cn,
 } from "@graphinery/ui";
 import SidebarMenu from "../../../components/sidebar-menu";
-import { Avatar, AvatarContainer } from "./../../../components/blog/avatar";
+import Tag from "./../../../components/shared/tag";
+import AuthorInfo from "./../../../components/shared/author-info";
+import formatDate from "./../../../utils/format-date";
 
 // Metadata
 import { metadata as layoutMetadata } from "../../layout";
@@ -49,6 +50,12 @@ const BLOG_QUERY = gql`
           title
           level
         }
+      }
+      publishedDate
+      tags {
+        id
+        path
+        title
       }
     }
   }
@@ -192,34 +199,15 @@ export default async function BlogSlug({
           </Breadcrumb>
 
           <div className="flex items-center">
-            <div className="bg-red-200 text-red-900 px-3 rounded-lg text-sm font-bold leading-7">
-              Article
-            </div>
+            {blog.tags.length > 0 && <Tag>{blog.tags[0].title}</Tag>}
             <div className="pl-3 text-sm text-zinc-700 dark:text-zinc-300">
-              January 9, 2025
+              {formatDate(blog.publishedDate)}
             </div>
           </div>
-
           <Heading level="h1" className="!mt-3 !mb-6">
             {blog.title}
           </Heading>
-
-          <div className="flex items-center  !mb-10">
-            <AvatarContainer>
-              <Avatar large={false} />
-            </AvatarContainer>
-            <div className="pl-2">
-              <div className="flex flex-col leading-tight">
-                <span className="author-name text-sm leading-tight font-bold">
-                  William Luisi
-                </span>
-                <span className="author-handle text-xs text-zinc-700 dark:text-zinc-300 leading-tight">
-                  @wluisi
-                </span>
-              </div>
-            </div>
-          </div>
-          {/* <hr className="pb-5" /> */}
+          <AuthorInfo fullName="William Luisi" handle="@wluisi" />
 
           <GraphineryMdx
             mdx={blog.content}

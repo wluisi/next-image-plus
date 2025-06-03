@@ -23,6 +23,7 @@
     "@graphinery/ui": "file:./../../local-packages/graphinery-ui-1.0.0-beta.4.tgz",
     "@vercel/analytics": "^1.5.0",
     "autoprefixer": "^10.4.14",
+    "dayjs": "^1.11.13",
     "next": "15.1.7",
     "next-image-plus": "*",
     "next-mdx-remote": "^5.0.0",
