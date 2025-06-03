@@ -16,7 +16,7 @@ export default function AuthorInfo({ fullName, handle }: AuthorInfoProps) {
           <span className="author-name text-sm leading-tight font-bold">
             {fullName}
           </span>
-          <span className="author-handle text-xs text-zinc-700 dark:text-zinc-300 leading-tight">
+          <span className="author-handle text-xs text-zinc-400 dark:text-zinc-500 leading-tight">
             {handle}
           </span>
         </div>

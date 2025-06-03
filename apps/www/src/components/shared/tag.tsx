@@ -6,7 +6,7 @@ export default function Tag({ className, children }: TagProps) {
   return (
     <div
       className={cn(
-        "bg-red-200 text-red-900 px-3 rounded-lg text-sm font-bold leading-7",
+        "bg-red-200 text-red-900 px-3 rounded-lg text-xs font-bold",
         className
       )}
     >

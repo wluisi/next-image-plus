@@ -204,7 +204,8 @@ export default async function BlogSlug({
 
           <div className="flex items-center">
             {blog.tags.length > 0 && <Tag>{blog.tags[0].title}</Tag>}
-            <div className="pl-3 text-sm text-zinc-700 dark:text-zinc-300">
+            <div className="h-4 w-[2px] bg-zinc-300 dark:bg-zinc-500 ml-3"></div>
+            <div className="text-sm text-zinc-400 dark:text-zinc-500 pr-5 pl-3">
               {formatDate(blog.publishedDate)}
             </div>
           </div>
