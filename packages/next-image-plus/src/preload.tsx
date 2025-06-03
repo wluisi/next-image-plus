@@ -6,6 +6,7 @@ import ReactDOM from "react-dom";
 import Head from "next/head";
 import { type ImageProps as NextImageProps } from "next/image";
 import { useRouter } from "next/compat/router";
+import { getMediaQueries } from "./utils/media";
 
 export type ImageAttributes = Omit<NextImageProps, "src" | "loader"> & {
   /** The sizes attribute defining image display sizes for different viewports. */
@@ -65,6 +66,11 @@ export function PreloadImageLink({ data }: PreloadImageLinkProps) {
 
     return null;
   }
+
+  console.log("PreloadImageLink > data", data);
+
+  // const mediaQueries = getMediaQueries(data as any);
+  // console.log("mediaQueries", mediaQueries);
 
   // App router.
   if (isAppRouter && ReactDOM.preload) {

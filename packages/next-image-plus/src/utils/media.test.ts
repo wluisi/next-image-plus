@@ -4,24 +4,24 @@ describe("getMediaQueries() tests", () => {
   it("should do something.", () => {
     const items = [
       {
-        key: "source-https://picsum.photos/id/59/860/430",
+        id: "source-https://picsum.photos/id/59/860/430",
         media: "(min-width: 430px) and (max-width: 1024px)",
       },
       {
-        key: "source-https://picsum.photos/id/59/220/220",
+        id: "source-https://picsum.photos/id/59/220/220",
         media: "(min-width: 1024px)",
       },
       {
-        key: "img-https://picsum.photos/id/59/430/215",
+        id: "img-https://picsum.photos/id/59/430/215",
         media: "(max-width: 430px)",
       },
     ];
 
-    const whatever = getMediaQueries(items);
+    const mediaQueries = getMediaQueries(items);
 
-    console.log(whatever);
+    console.log(mediaQueries);
 
-    expect(whatever).toEqual({
+    expect(mediaQueries).toEqual({
       "img-https://picsum.photos/id/59/430/215": "(max-width: 430px)",
       "source-https://picsum.photos/id/59/860/430":
         "(min-width: 431px) and (max-width: 1024px)",
@@ -29,3 +29,8 @@ describe("getMediaQueries() tests", () => {
     });
   });
 });
+
+// @todo
+// - figure out how to generate the fallback media query from the source media queries.
+// - test functions in preload.
+// - update picture example to use new function (in component media queries can overlap) and add 2nd example pg where fallbackMedia and non-overlapping media queries are used.

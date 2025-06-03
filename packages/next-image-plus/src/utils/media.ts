@@ -1,10 +1,13 @@
-type MediaQueryItem = {
-  key: string;
+// import { ImageAttributes } from "./../preload";
+
+export type MediaQueryItem = {
+  id: string;
   media: string;
+  [field: string]: string;
 };
 
 // (min-width: 431px) and (max-width: 1023px) -> { min: 431, max: 1023 }
-function parseMediaQuery(media: string): { min: number; max: number } {
+export function parseMediaQuery(media: string): { min: number; max: number } {
   const min = media.match(/min-width:\s*(\d+)px/);
   const max = media.match(/max-width:\s*(\d+)px/);
 
@@ -14,7 +17,7 @@ function parseMediaQuery(media: string): { min: number; max: number } {
   };
 }
 
-function buildMediaQuery(min: number, max: number): string | null {
+export function buildMediaQuery(min: number, max: number): string | null {
   if (min === 0 && max !== Infinity) {
     return `(max-width: ${max}px)`;
   }
@@ -27,25 +30,28 @@ function buildMediaQuery(min: number, max: number): string | null {
 }
 
 export function getMediaQueries(items: MediaQueryItem[]): {
-  [key: string]: { media: string };
+  [id: string]: { media: string };
 } {
-  const ranges = items.map(({ key, media }) => {
+  const ranges = items.map(({ id, media }) => {
     const { min, max } = parseMediaQuery(media);
-    return { key, min, max, media };
+    return { id, min, max, media };
   });
 
-  // Sort by min then max
+  // Sort by smallest min first.
   ranges.sort((a, b) => a.min - b.min || a.max - b.max);
+
+  // console.log("ranges", ranges);
 
   let lastMax = -1;
   const modified: MediaQueryItem[] = [];
 
   for (const range of ranges) {
-    const min = lastMax + 1;
+    // const min = lastMax + 1;
+    const min = Math.max(range.min, lastMax + 1);
     const max = range.max;
 
     modified.push({
-      key: range.key,
+      id: range.id,
       media: buildMediaQuery(min, max),
     });
 
@@ -54,7 +60,7 @@ export function getMediaQueries(items: MediaQueryItem[]): {
 
   const result = {};
   modified.forEach((item) => {
-    result[item.key] = item.media;
+    result[item.id] = item.media;
   });
 
   return result;

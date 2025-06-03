@@ -105,6 +105,7 @@ export function Picture({
   });
 
   preloadData.push({
+    id: `img-${imgChildProps.src}`,
     media: fallbackMedia,
     fetchPriority: preload ? "high" : "auto",
     ...imageProps,
@@ -131,6 +132,7 @@ export function Picture({
         });
 
         preloadData.push({
+          id: `source-${child.props.src}`,
           media: child.props.media,
           fetchPriority: preload ? "high" : "auto",
           ...sourceProps,
