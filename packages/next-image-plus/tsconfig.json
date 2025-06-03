@@ -1,15 +1,10 @@
 {
+  "extends": "./../../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "module": "esnext",
-    "declaration": true,
-    "strict": false,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "sourceMap": true,
-    "jsx": "react",
-    "moduleResolution": "node",
-    "resolveJsonModule": true
+    "jsx": "react-jsx",
+    "outDir": "./dist",
+    "rootDir": "./src"
   },
-  "exclude": ["node_modules", "dist", "src/**/*.test.ts", "src/**/*.test.tsx"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"]
 }
