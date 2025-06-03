@@ -36,6 +36,7 @@ const BLOG_QUERY = gql`
       description
       keywords
       path
+      status
       activeTrail {
         items {
           id
@@ -83,7 +84,7 @@ export async function generateMetadata({
   const path = getPathFromParams({ pathPrefix: "blog", params: await params });
   const blog = await getBlog(path);
 
-  if (!blog) {
+  if (!blog || blog.status === false) {
     return;
   }
 
@@ -128,6 +129,9 @@ export async function generateStaticParams() {
     query: BLOG_SLUGS_QUERY,
     variables: {
       limit: 400,
+      filter: {
+        status: { _eq: true },
+      },
     },
   });
 
@@ -149,7 +153,7 @@ export default async function BlogSlug({
   const path = getPathFromParams({ pathPrefix: "blog", params: await params });
   const blog = await getBlog(path);
 
-  if (!blog) {
+  if (!blog || blog.status === false) {
     notFound();
   }
 

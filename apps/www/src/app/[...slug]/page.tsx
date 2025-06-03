@@ -32,6 +32,7 @@ const PAGE_QUERY = gql`
       description
       keywords
       path
+      status
       activeTrail {
         items {
           id
@@ -73,7 +74,7 @@ export async function generateMetadata({
   const path = getPathFromParams({ params: await params });
   const page = await getPage(path);
 
-  if (!page) {
+  if (!page || page.status === false) {
     return;
   }
 
@@ -119,7 +120,8 @@ export async function generateStaticParams() {
     variables: {
       limit: 400,
       filter: {
-        slug: { _in: "examples" },
+        status: { _eq: true },
+        slug: { _nin: "examples-pages" },
       },
     },
   });
@@ -142,7 +144,7 @@ export default async function CatchAllSlugPage({
   const path = getPathFromParams({ params: await params });
   const page = await getPage(path);
 
-  if (!page) {
+  if (!page || page.status === false) {
     notFound();
   }
 

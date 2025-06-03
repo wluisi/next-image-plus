@@ -43,6 +43,9 @@ async function getBlogCollection() {
     query: BLOG_COLLECTION_QUERY,
     variables: {
       limit: 10,
+      filter: {
+        status: { _eq: true },
+      },
     },
   });
 
