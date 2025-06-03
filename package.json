@@ -4,6 +4,7 @@
   "packageManager": "npm@8.1.0",
   "workspaces": [
     "apps/*",
+    "examples/*",
     "packages/*"
   ],
   "scripts": {
