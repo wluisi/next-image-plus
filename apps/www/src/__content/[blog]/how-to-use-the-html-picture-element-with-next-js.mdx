@@ -1,0 +1,216 @@
+---
+title: "How to use the HTML Picture element with Next.js"
+description: "Using next-image-plus Picture component to render HTML picture element in a Next.js app."
+keywords: "next, react, nextjs, HTML picture, art direction, typescript"
+tags: ["article"]
+publishedDate: "2025-04-25T21:48:02.487Z"
+status: false
+---
+
+In this blog post, I'm going to show you how to use the HTML picture element in a <Link href="https://nextjs.org">Next.js</Link> app, using the **next-image-plus** package.
+
+**next-image-plus** is a set of primitive React components, built on top of the <Link href="https://nextjs.org/docs/pages/api-reference/components/image">Next.js Image API</Link> and <Link href="https://react.dev/blog/2024/12/05/react-19">React 19</Link>, which adds support for picture and background images.
+
+## Getting started
+
+First we need to install <Link href="https://www.npmjs.com/package/next-image-plus">next-image-plus</Link> package from npm:
+
+```shell
+npm install next-image-plus
+```
+
+## Using the Picture, Source, and Img components
+
+**next-image-plus** provides 3 components for creating responsive images with art direction:
+
+- `<Picture>` component provides a wrapper for zero or more Source components and one Img component.
+- `<Source>` component specifies an image and a media query.
+- `<Img>` component provides a fallback image
+
+To set up the `Picture` component, we'll need to import the following inside our Next.js component:
+
+```tsx
+import { Picture, Source, Img } from "next-image-plus";
+```
+
+The <Link href="https://web.dev/learn/design/picture-element">HTML picture element</Link> allows for multiple source images, for our demo here, we're going to use 3 different sized images: medium, large, and a fallback.
+
+| Breakpoint | Image                               | Media                                      | Width | Height |
+| ---------- | ----------------------------------- | ------------------------------------------ | ----- | ------ |
+| medium     | https://picsum.photos/id/59/860/430 | (min-width: 431px) and (max-width: 1023px) | 860px | 430px  |
+| large      | https://picsum.photos/id/59/220/220 | (min-width: 1024px)                        | 220px | 220px  |
+| fallback   | https://picsum.photos/id/59/430/215 | (max-width: 430px)                         | 430px | 215px  |
+
+Using the components, we can create a `picture` element with 2 sources and a fallback image.
+
+```tsx
+<Picture>
+  {/* Medium */}
+  <Source
+    media="(min-width: 431px) and (max-width: 1023px)"
+    src="https://picsum.photos/id/59/860/430"
+    width={860}
+    height={430}
+  />
+  {/* Large */}
+  <Source
+    media="(min-width: 1024px)"
+    src="https://picsum.photos/id/59/220/220"
+    width={220}
+    height={220}
+  />
+  {/* Fallback */}
+  <Img
+    src="https://picsum.photos/id/59/430/215"
+    width={430}
+    height={215}
+    alt="Mountains and a river"
+  />
+</Picture>
+```
+
+In the browser, this will render the following HTML:
+
+```html
+<html>
+  <picture>
+    <source
+      media="(min-width: 431px) and (max-width: 1023px)"
+      width="860"
+      height="430"
+      srcset="
+        /_next/image?url=https://picsum.photos/id/59/860/430&w=860&q=75  1x,
+        /_next/image?url=https://picsum.photos/id/59/860/430&w=1920&q=75 2x
+      "
+    />
+    <source
+      media="(min-width: 1024px)"
+      width="220"
+      height="220"
+      srcset="
+        /_next/image?url=https://picsum.photos/id/59/220/220&w=256&q=75 1x,
+        /_next/image?url=https://picsum.photos/id/59/220/220&w=640&q=75 2x
+      "
+    />
+    <img
+      src="/_next/image?url=https://picsum.photos/id/59/430/215&w=860&q=75"
+      width="430"
+      height="215"
+      alt="Mountains and a river"
+    />
+  </picture>
+</html>
+```
+
+<Callout type="info">
+A key difference between the native html element for `<source>` and the `<Source>` component, is the html element does not accept a `src` attribute, but uses `srcset` instead.
+
+The value for `srcset` will get automatically generated for you, using the Next.js Image API, based on the `src` prop value.
+
+</Callout>
+
+## Preloading
+
+If your image is flagged as the <Link href="https://web.dev/articles/lcp#what-elements-are-considered">Largest Contentful Paint (LCP)</Link>, preloading can improve your web core vitals score. The `<Picture>` component
+has built-in support for preloading images.
+
+```tsx
+<Picture preload={true} fallbackMedia="(max-width: 430px)">
+```
+
+In the browser, this will render the following HTML:
+
+```html
+<html>
+  <head>
+    <link
+      rel="preload"
+      as="image"
+      fetchpriority="high"
+      imagesrcset="/_next/image?url=https://picsum.photos/id/59/430/215&w=430&q=75 1x, /_next/image?url=https://picsum.photos/id/59/430/215&w=860&q=75 2x"
+      media="(max-width: 430px)"
+    />
+    <link
+      rel="preload"
+      as="image"
+      fetchpriority="high"
+      imagesrcset="/_next/image?url=https://picsum.photos/id/59/860/430&w=860&q=75 1x, /_next/image?url=https://picsum.photos/id/59/860/430&w=1920&q=75 2x"
+      media="(min-width: 431px) and (max-width: 1023px)"
+    />
+    <link
+      rel="preload"
+      as="image"
+      fetchpriority="high"
+      imagesrcset="/_next/image?url=https://picsum.photos/id/59/220/220&w=256&q=75 1x, /_next/image?url=https://picsum.photos/id/59/220/220&w=640&q=75 2x"
+      media="(min-width: 1024px)"
+    />
+  </head>
+</html>
+```
+
+<Callout type="important">
+Media queries on `<link rel="preload">` do not function the way they do on HTML elements.
+The user agent will look at multiple `<link rel="preload">` elements and find multiple matches if there is any overlap in the media queries.
+This can lead to performance issues, where multiple images are preloaded, so when setting media queries, make sure each one targets a unique range.
+
+For preloading to work properly, media queries cannot overlap. This is not a limitation of the component per se, but how browser's parse `<link rel="preload">` elements in `<head>`.
+
+i.e, for your medium breakpoint, if your fallback is `max-width: 430px`
+
+- _don't do this_ ~~`(min-width: 430px) and (max-width: 1023px)`~~
+- **do this** `(min-width: 431px) and (max-width: 1023px)`
+
+</Callout>
+
+All together, the page template would look something like this:
+
+```tsx
+@filename: /app/page.tsx
+import { Picture, Source, Img } from "next-image-plus";
+
+export default function Home() {
+  return (
+    <div className="grid">
+      <main className="flex flex-col gap-8">
+        <Picture preload={true} fallbackMedia="(max-width: 430px)">
+          {/* Medium */}
+          <Source
+            media="(min-width: 431px) and (max-width: 1023px)"
+            src="https://picsum.photos/id/59/860/430"
+            width={860}
+            height={430}
+          />
+          {/* Large */}
+          <Source
+            media="(min-width: 1024px)"
+            src="https://picsum.photos/id/59/220/220"
+            width={220}
+            height={220}
+          />
+          {/* Fallback */}
+          <Img
+            src="https://picsum.photos/id/59/430/215"
+            width={430}
+            height={215}
+            alt="Mountains and a river"
+          />
+        </Picture>
+      </main>
+    </div>
+  );
+}
+```
+
+This is obviously a very basic example, but I hope it demonstrates the power of the **next-image-plus** `<Picture />` component.
+
+To see a more advanced example, you can check out the examples page on the <Link href="https://next-image-plus.vercel.app/examples/picture"> next-image-plus website</Link>
+
+To learn more about the `<Picture />` component, you can check out the <Link href="https://next-image-plus.vercel.app/docs/picture">API documentation</Link>
+
+And if you find this package useful, please give us a star on <Link href="https://github.com/wluisi/next-image-plus">GitHub</Link>
+
+<PageNav>
+  <PageNavItem href="/whatever" direction="next">
+    How to do X
+  </PageNavItem>
+</PageNav>

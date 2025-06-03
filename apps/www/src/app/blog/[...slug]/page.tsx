@@ -3,11 +3,11 @@ import * as React from "react";
 import { gql } from "@graphinery/client";
 import { getPathFromParams } from "@graphinery/core";
 
-import { client } from "../../graphinery";
+import { client } from "../../../graphinery";
 import { notFound } from "next/navigation";
 
 import { GraphineryMdx } from "@graphinery/mdx";
-import { componentsMap } from "../../components/components-map";
+import { componentsMap } from "../../../components/components-map";
 import Link from "next/link";
 import {
   Breadcrumb,
@@ -15,19 +15,23 @@ import {
   BreadcrumbLink,
   Grid,
   GridItem,
+  Heading,
   HomeIcon,
   TableOfContents,
   cn,
 } from "@graphinery/ui";
-import SidebarMenu from "../../components/sidebar-menu";
+import SidebarMenu from "../../../components/sidebar-menu";
+import Tag from "./../../../components/shared/tag";
+import AuthorInfo from "./../../../components/shared/author-info";
+import formatDate from "./../../../utils/format-date";
 
 // Metadata
-import { metadata as layoutMetadata } from "../layout";
+import { metadata as layoutMetadata } from "../../layout";
 import { Metadata } from "next";
 
-const PAGE_QUERY = gql`
-  query PageQuery($id: String) {
-    page(id: $id) {
+const BLOG_QUERY = gql`
+  query BlogQuery($id: String) {
+    blog(id: $id) {
       title
       description
       keywords
@@ -48,13 +52,19 @@ const PAGE_QUERY = gql`
           level
         }
       }
+      publishedDate
+      tags {
+        id
+        path
+        title
+      }
     }
   }
 `;
 
-async function getPage(path: string) {
+async function getBlog(path: string) {
   const { data } = await client.request({
-    query: PAGE_QUERY,
+    query: BLOG_QUERY,
     variables: {
       id: path,
     },
@@ -63,7 +73,7 @@ async function getPage(path: string) {
     },
   });
 
-  return data.page;
+  return data.blog;
 }
 
 export async function generateMetadata({
@@ -71,40 +81,40 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata | undefined> {
-  const path = getPathFromParams({ params: await params });
-  const page = await getPage(path);
+  const path = getPathFromParams({ pathPrefix: "blog", params: await params });
+  const blog = await getBlog(path);
 
-  if (!page || page.status === false) {
+  if (!blog || blog.status === false) {
     return;
   }
 
   return {
-    title: page.title,
-    description: page.description,
-    abstract: page.description,
-    keywords: page.keywords,
+    title: blog.title,
+    description: blog.description,
+    abstract: blog.description,
+    keywords: blog.keywords,
     // This sets the `<link rel="canonical">`.
     alternates: {
-      canonical: page.path,
+      canonical: blog.path,
     },
     openGraph: {
       ...layoutMetadata.openGraph,
-      title: page.title,
-      description: page.description,
-      url: page.path,
+      title: blog.title,
+      description: blog.description,
+      url: blog.path,
     },
     twitter: {
       ...layoutMetadata.twitter,
-      title: page.title,
-      description: page.description,
+      title: blog.title,
+      description: blog.description,
     },
   };
 }
 
 export async function generateStaticParams() {
-  const PAGE_SLUGS_QUERY = gql`
-    query PageQuery($limit: Int, $filter: PageQueryFilter) {
-      pageCollection(limit: $limit, filter: $filter) {
+  const BLOG_SLUGS_QUERY = gql`
+    query BlogSlugsQuery($limit: Int, $filter: BlogQueryFilter) {
+      blogCollection(limit: $limit, filter: $filter) {
         items {
           id
           uuid
@@ -116,37 +126,39 @@ export async function generateStaticParams() {
   `;
 
   const { data } = await client.request({
-    query: PAGE_SLUGS_QUERY,
+    query: BLOG_SLUGS_QUERY,
     variables: {
       limit: 400,
       filter: {
         status: { _eq: true },
-        slug: { _nin: "examples-pages" },
       },
     },
   });
 
   const slugs: { slug: string[] }[] = [];
-  data.pageCollection?.items?.forEach((page: { slug: string[] }) => {
+  data.blogCollection?.items?.forEach((blog: { slug: string[] }) => {
     slugs.push({
-      slug: page.slug,
+      slug: blog.slug,
     });
   });
 
   return slugs;
 }
 
-export default async function CatchAllSlugPage({
+export default async function BlogSlug({
   params,
 }: {
   params: Promise<{ slug: string[] }>;
 }) {
-  const path = getPathFromParams({ params: await params });
-  const page = await getPage(path);
+  const path = getPathFromParams({ pathPrefix: "blog", params: await params });
+  const blog = await getBlog(path);
 
-  if (!page || page.status === false) {
+  if (!blog || blog.status === false) {
     notFound();
   }
+
+  const activeTrail = blog.activeTrail.items;
+  activeTrail.pop();
 
   return (
     <Grid
@@ -158,19 +170,15 @@ export default async function CatchAllSlugPage({
         as="aside"
         className="hidden md:flex md:col-span-2 md:h-screen md:sticky md:top-[var(--navbar-height)]"
       >
-        <SidebarMenu currentPath={path} />
+        <SidebarMenu currentPath="/blog" />
       </GridItem>
       <GridItem
         id="main-content"
-        className={cn(
-          "md:col-span-10 lg:col-span-8 pb-10 md:px-10",
-          path === "/examples/background-image" && "lg:col-span-10",
-          path === "/blog" && "lg:col-span-8"
-        )}
+        className={cn("md:col-span-10 lg:col-span-8 pb-10 md:px-10")}
       >
         <article className="space-y-5 prose dark:prose-invert">
           <Breadcrumb className="m-auto max-w-xxl">
-            {page?.activeTrail?.items?.map(
+            {activeTrail.map(
               (item: { id: string; path: string; title: string }) => {
                 const itemTitle =
                   item.path === "/" ? (
@@ -184,7 +192,7 @@ export default async function CatchAllSlugPage({
                     <BreadcrumbLink
                       as={Link}
                       href={item.path}
-                      isCurrentPage={item.path === page.path}
+                      isCurrentPage={item.path === blog.path}
                     >
                       {itemTitle}
                     </BreadcrumbLink>
@@ -193,8 +201,21 @@ export default async function CatchAllSlugPage({
               }
             )}
           </Breadcrumb>
+
+          <div className="flex items-center">
+            {blog.tags.length > 0 && <Tag>{blog.tags[0].title}</Tag>}
+            <div className="h-4 w-[2px] bg-zinc-300 dark:bg-zinc-500 ml-3"></div>
+            <div className="text-sm text-zinc-400 dark:text-zinc-500 pr-5 pl-3">
+              {formatDate(blog.publishedDate)}
+            </div>
+          </div>
+          <Heading level="h1" className="!mt-3 !mb-6">
+            {blog.title}
+          </Heading>
+          <AuthorInfo fullName="William Luisi" handle="@wluisi" />
+
           <GraphineryMdx
-            mdx={page.content}
+            mdx={blog.content}
             components={{
               ...componentsMap,
             }}
@@ -205,13 +226,10 @@ export default async function CatchAllSlugPage({
         id="right-sidebar"
         as="aside"
         className={cn(
-          "hidden lg:flex lg:col-span-2 md:h-screen md:sticky md:top-[var(--navbar-height)]",
-          path === "/examples/picture" && "!hidden",
-          path === "/examples/background-image" && "!hidden",
-          path === "/blog" && "!hidden"
+          "hidden lg:flex lg:col-span-2 md:h-screen md:sticky md:top-[var(--navbar-height)]"
         )}
       >
-        <TableOfContents data={page.toc.items} />
+        <TableOfContents data={blog.toc.items} />
       </GridItem>
     </Grid>
   );

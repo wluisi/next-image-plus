@@ -12,6 +12,7 @@ import {
   Folder,
   Heading,
   HeadingAnchorLink,
+  Link,
   PageNav,
   PageNavItem,
   SimpleGrid,
@@ -23,6 +24,8 @@ import { default as ExamplesCardGrid } from "./examples/card-grid";
 import { default as ExamplesHero } from "./examples/hero";
 import PictureExampleTabs from "./examples/picture-tabs";
 import BackgroundImageExampleTabs from "./examples/background-image-tabs";
+//
+import BlogCollection from "./../components/blog/blog-collection";
 
 const createComponentMap = <T extends Record<string, React.ComponentType<any>>>(
   map: T
@@ -36,6 +39,7 @@ export const componentsMap = createComponentMap({
   AccordionButton,
   AccordionItem,
   AccordionPanel,
+  BlogCollection,
   Callout,
   FeaturedLink: (props) => {
     return <FeaturedLink as={NextLink} {...props} />;
@@ -50,6 +54,9 @@ export const componentsMap = createComponentMap({
   ExamplesCardGrid,
   ExamplesHero,
   PictureExampleTabs,
+  Link: (props) => {
+    return <Link as={NextLink} {...props} />;
+  },
   BackgroundImageExampleTabs,
   Steps,
   SimpleGrid,
