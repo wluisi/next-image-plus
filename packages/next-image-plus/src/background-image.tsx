@@ -4,7 +4,7 @@ import {
   getImageProps as getNextImageProps,
   type ImageProps as NextImageProps,
 } from "next/image";
-
+import { getMediaQueries } from "./utils/media";
 import { PreloadImageLink } from "./preload";
 
 type BackgroundImageOptions = Omit<NextImageProps, "alt" | "src"> & {
@@ -51,11 +51,23 @@ export function getSmallestMediaQuery(queries: string[]): string | null {
  * @returns An object mapping breakpoints to their corresponding media query and image properties.
  */
 export function getBackgroundImageProps(
-  options: BackgroundImageOptions[]
+  options: BackgroundImageOptions[],
+  modifyMediaQueries?: boolean
 ): BackgroundImageData {
   const props: BackgroundImageData = {};
 
-  for (const { breakpoint, media, url, width, height } of options) {
+  const mediaQueries = [];
+  for (const { breakpoint, media, url } of options) {
+    mediaQueries.push({
+      uuid: `${breakpoint}-${url}`,
+      media: media,
+    });
+  }
+  const mediaQueriesFinal = getMediaQueries(mediaQueries, {
+    modify: modifyMediaQueries,
+  });
+
+  for (const { breakpoint, url, width, height } of options) {
     const nextImage = getNextImageProps({
       // Background images don't need an alt, but is required.
       alt: "",
@@ -65,7 +77,7 @@ export function getBackgroundImageProps(
     });
 
     props[breakpoint] = {
-      media,
+      media: mediaQueriesFinal[`${breakpoint}-${url}`],
       img: nextImage.props,
     };
   }
@@ -143,6 +155,8 @@ export interface BackgroundImageProps {
   style?: React.CSSProperties;
   /** Optional child elements to render inside the component. */
   children?: React.ReactNode;
+  /** Enables or disables the modification of media queries to prevent overlap. Defaults to `true`. */
+  modifyMediaQueries?: boolean;
 }
 
 /**
@@ -158,8 +172,9 @@ export function BackgroundImage({
   className,
   style,
   children,
+  modifyMediaQueries = true,
 }: BackgroundImageProps) {
-  const bgImageProps = getBackgroundImageProps(images);
+  const bgImageProps = getBackgroundImageProps(images, modifyMediaQueries);
 
   // Format the data for the preloader.
   const preloadData = [];

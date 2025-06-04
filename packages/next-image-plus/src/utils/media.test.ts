@@ -75,6 +75,31 @@ describe("getMediaQueries() tests", () => {
   //   const mediaQueries = getMediaQueries(items);
   //   console.log("mediaQueries edge", mediaQueries);
   // });
+
+  it("should return modified media queries for hero example.", () => {
+    const items = [
+      {
+        uuid: "fallback-https://picsum.photos/id/870/430/466",
+        media: "(max-width: 430px)",
+      },
+      {
+        uuid: "md-https://picsum.photos/id/870/768/512",
+        media: "(min-width: 430px) and (max-width: 1024px)",
+      },
+      {
+        uuid: "lg-https://picsum.photos/id/870/2560/800",
+        media: "(min-width: 1024px)",
+      },
+    ];
+
+    const mediaQueries = getMediaQueries(items);
+    expect(mediaQueries).toEqual({
+      "fallback-https://picsum.photos/id/870/430/466": "(max-width: 430px)",
+      "md-https://picsum.photos/id/870/768/512":
+        "(min-width: 431px) and (max-width: 1023px)",
+      "lg-https://picsum.photos/id/870/2560/800": "(min-width: 1024px)",
+    });
+  });
 });
 
 describe("getFallbackMediaQuery() tests", () => {

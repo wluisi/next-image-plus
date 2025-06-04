@@ -22,13 +22,15 @@ export default function Hero({ title, description }: HeroProps) {
           },
           {
             breakpoint: "md",
-            media: "(min-width: 768px) and (max-width: 1023px)",
+            // @todo shouldnt this be (min-width: 430px) and (max-width: 768px) ?
+            media: "(min-width: 430px) and (max-width: 1024px)",
             url: "https://picsum.photos/id/870/768/512",
             width: 768,
             height: 512,
           },
           {
             breakpoint: "lg",
+            // @todo and then this should be (min-width: 768px) ?
             media: "(min-width: 1024px)",
             url: "https://picsum.photos/id/870/2560/800",
             width: 2560,

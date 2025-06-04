@@ -10,7 +10,7 @@ const LG_IMG = "https://picsum.photos/id/870/2560/800";
 
 // Breakpoints
 const FALLBACK_BREAKPOINT = "(max-width: 430px)";
-const MD_BREAKPOINT = "(min-width: 768px) and (max-width: 1023px)";
+const MD_BREAKPOINT = "(min-width: 431px) and (max-width: 1023px)";
 const LG_BREAKPOINT = "(min-width: 1024px)";
 
 // Image density
