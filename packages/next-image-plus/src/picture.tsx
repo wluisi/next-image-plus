@@ -86,7 +86,7 @@ export type PictureProps = React.ComponentPropsWithRef<"picture"> & {
  */
 export function Picture({
   preload = false,
-  fallbackMedia,
+  fallbackMedia = null,
   modifyMediaQueries = true,
   children,
 }: PictureProps) {
@@ -110,14 +110,6 @@ export function Picture({
 
   // Build an array of media queries for use with getMediaQueries().
   const mediaQueries = [];
-  // Handle the img media query.
-  const imgUuid = `img-${imgChildProps.src}`;
-  // Push the fallback media query.
-  mediaQueries.push({
-    uuid: imgUuid,
-    media: fallbackMedia,
-  });
-
   // Handle the source media queries.
   childrenValidated.map((child: React.ReactElement<SourceProps>) => {
     if (child.type === Source) {
@@ -130,10 +122,11 @@ export function Picture({
 
   const mediaQueriesFinal = getMediaQueries(mediaQueries, {
     modify: modifyMediaQueries,
+    fallback: fallbackMedia,
   });
 
   preloadData.push({
-    media: mediaQueriesFinal[imgUuid],
+    media: mediaQueriesFinal["img-fallback"],
     fetchPriority: preload ? "high" : "auto",
     ...imageProps,
   });

@@ -60,8 +60,49 @@ function getMediaQuery(
   return result;
 }
 
+/**
+ * Generate a fallback media query covering everything below the smallest min-width.
+ *
+ * @param items - Array of media query items.
+ * @returns A fallback media query item or null if none needed.
+ */
+export function getFallbackMediaQuery(
+  items: MediaQueryItem[]
+): MediaQueryItem | null {
+  // Parse all min-width values from media queries
+  const ranges = items
+    .map((item) => {
+      const parsed = parseMediaQuery(item.media);
+      if (parsed === null) return null;
+      return { min: parsed.min ?? 0 }; // Default min to 0 if missing
+    })
+    .filter(Boolean) as { min: number }[];
+
+  // If no valid media queries, no fallback needed
+  if (ranges.length === 0) {
+    return null;
+  }
+
+  // Find the smallest min-width among all sources
+  const smallestMin = Math.min(...ranges.map((r) => r.min));
+
+  // If smallest min-width is greater than 0,
+  // create fallback for all widths up to smallestMin
+  if (smallestMin > 0) {
+    return {
+      uuid: "img-fallback",
+      media: `(max-width: ${smallestMin}px)`, // e.g. (max-width: 430px)
+    };
+  }
+
+  // Otherwise no fallback needed (e.g. some source already covers 0+)
+  return null;
+}
+
 type GetMediaQueryOptions = {
   modify?: boolean;
+  /** Optional fallback media query. */
+  fallback?: string;
 };
 
 /**
@@ -78,7 +119,20 @@ export function getMediaQueries(
 ): {
   [uuid: string]: string;
 } {
-  const { modify = true } = options;
+  const { modify = true, fallback = null } = options ?? {};
+
+  // Handle fallback media query.
+  if (!fallback) {
+    const fallbackItem = getFallbackMediaQuery(items);
+    if (fallbackItem) {
+      items.push(fallbackItem);
+    }
+  } else {
+    items.push({
+      uuid: "img-fallback",
+      media: fallback,
+    });
+  }
 
   // If modify is false, then just return the items unchanged.
   if (!modify) {
