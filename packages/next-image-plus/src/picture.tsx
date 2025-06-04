@@ -73,7 +73,7 @@ export type PictureProps = React.ComponentPropsWithRef<"picture"> & {
   preload?: boolean;
   /** The media query to be used for the fallback image, if preload is true. */
   fallbackMedia?: string;
-  /** Enables or disables the modification of media queries for preload link. */
+  /** Enables or disables the modification of media queries to prevent overlap. Defaults to `true`. */
   modifyMediaQueries?: boolean;
   /** Optional child elements to render inside the component. */
   children: React.ReactElement<SourceProps>[] | React.ReactElement<ImgProps>;

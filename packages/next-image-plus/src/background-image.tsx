@@ -51,7 +51,8 @@ export function getSmallestMediaQuery(queries: string[]): string | null {
  * @returns An object mapping breakpoints to their corresponding media query and image properties.
  */
 export function getBackgroundImageProps(
-  options: BackgroundImageOptions[]
+  options: BackgroundImageOptions[],
+  modifyMediaQueries?: boolean
 ): BackgroundImageData {
   const props: BackgroundImageData = {};
 
@@ -62,11 +63,9 @@ export function getBackgroundImageProps(
       media: media,
     });
   }
-  const mediaQueriesFinal = getMediaQueries(mediaQueries);
-
-  console.log("mediaQueriesFinal", mediaQueriesFinal);
-
-  // console.log("getBackgroundImageProps > options", options);
+  const mediaQueriesFinal = getMediaQueries(mediaQueries, {
+    modify: modifyMediaQueries,
+  });
 
   for (const { breakpoint, url, width, height } of options) {
     const nextImage = getNextImageProps({
@@ -156,6 +155,8 @@ export interface BackgroundImageProps {
   style?: React.CSSProperties;
   /** Optional child elements to render inside the component. */
   children?: React.ReactNode;
+  /** Enables or disables the modification of media queries to prevent overlap. Defaults to `true`. */
+  modifyMediaQueries?: boolean;
 }
 
 /**
@@ -171,8 +172,9 @@ export function BackgroundImage({
   className,
   style,
   children,
+  modifyMediaQueries = true,
 }: BackgroundImageProps) {
-  const bgImageProps = getBackgroundImageProps(images);
+  const bgImageProps = getBackgroundImageProps(images, modifyMediaQueries);
 
   // Format the data for the preloader.
   const preloadData = [];
