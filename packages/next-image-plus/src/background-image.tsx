@@ -4,7 +4,7 @@ import {
   getImageProps as getNextImageProps,
   type ImageProps as NextImageProps,
 } from "next/image";
-
+import { getMediaQueries } from "./utils/media";
 import { PreloadImageLink } from "./preload";
 
 type BackgroundImageOptions = Omit<NextImageProps, "alt" | "src"> & {
@@ -55,7 +55,20 @@ export function getBackgroundImageProps(
 ): BackgroundImageData {
   const props: BackgroundImageData = {};
 
-  for (const { breakpoint, media, url, width, height } of options) {
+  const mediaQueries = [];
+  for (const { breakpoint, media, url } of options) {
+    mediaQueries.push({
+      uuid: `${breakpoint}-${url}`,
+      media: media,
+    });
+  }
+  const mediaQueriesFinal = getMediaQueries(mediaQueries);
+
+  console.log("mediaQueriesFinal", mediaQueriesFinal);
+
+  // console.log("getBackgroundImageProps > options", options);
+
+  for (const { breakpoint, url, width, height } of options) {
     const nextImage = getNextImageProps({
       // Background images don't need an alt, but is required.
       alt: "",
@@ -65,7 +78,7 @@ export function getBackgroundImageProps(
     });
 
     props[breakpoint] = {
-      media,
+      media: mediaQueriesFinal[`${breakpoint}-${url}`],
       img: nextImage.props,
     };
   }
