@@ -60,6 +60,10 @@ function getMediaQuery(
   return result;
 }
 
+type GetMediaQueryOptions = {
+  modify?: boolean;
+};
+
 /**
  * Adjust original media query sources to avoid overlapping ranges:
  * - Bump first source's min-width by 1 to prevent overlap with fallback
@@ -68,9 +72,24 @@ function getMediaQuery(
  * @param items - Array of media query items.
  * @returns Adjusted array with modified media queries.
  */
-export function getMediaQueries(items: MediaQueryItem[]): {
+export function getMediaQueries(
+  items: MediaQueryItem[],
+  options?: GetMediaQueryOptions
+): {
   [uuid: string]: string;
 } {
+  const { modify = true } = options;
+
+  // If modify is false, then just return the items unchanged.
+  if (!modify) {
+    const result = {};
+    items.forEach((item) => {
+      result[item.uuid] = item.media;
+    });
+
+    return result;
+  }
+
   const parsed = items
     .map((item) => {
       const result = parseMediaQuery(item.media);

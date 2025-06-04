@@ -128,8 +128,9 @@ export function Picture({
     }
   });
 
-  const mediaQueriesFinal = getMediaQueries(mediaQueries);
-  // console.log("mediaQueriesFinal", mediaQueriesFinal);
+  const mediaQueriesFinal = getMediaQueries(mediaQueries, {
+    modify: modifyMediaQueries,
+  });
 
   preloadData.push({
     media: mediaQueriesFinal[imgUuid],
