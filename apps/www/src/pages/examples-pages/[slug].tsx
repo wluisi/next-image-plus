@@ -191,9 +191,8 @@ export const getStaticProps = async (context: any) => {
     queryKey: ["pages-sidebar-menu"],
     variables: {
       filter: {
-        // path: { _neq: "/examples-pages" },
-        // parent: { _neq: "/examples-pages" },
-        // status: { _eq: true }
+        status: { _eq: true },
+        bundle: { _all_in: ["page"] },
       },
       sort: { field: "weight", direction: "ASC" },
     },
@@ -205,9 +204,10 @@ export const getStaticProps = async (context: any) => {
     queryKey: ["pages-header-menu"],
     variables: {
       filter: {
+        status: { _eq: true },
+        bundle: { _all_in: ["page"] },
         path: { _neq: "/examples-pages" },
         parent: { _neq: "/examples-pages" },
-        // status: { _eq: true }
       },
       sort: { field: "weight", direction: "ASC" },
     },

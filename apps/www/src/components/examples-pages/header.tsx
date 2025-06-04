@@ -52,7 +52,7 @@ function Logo() {
         href="/"
         className="text-black dark:text-zinc-100 text-l font-extrabold no-underline hover:underline"
       >
-        <ImageIcon className="h-6 w-6 text-red-500 dark:text-red-400 float-left mr-1" />
+        <ImageIcon className="h-6 w-6 text-red-500 dark:text-red-400 float-left mr-2" />
         <span>next-image-plus</span>
       </Link>
     </div>
@@ -66,9 +66,10 @@ export default function Header() {
     queryKey: ["pages-header-menu"],
     variables: {
       filter: {
+        status: { _eq: true },
+        bundle: { _all_in: ["page"] },
         path: { _neq: "/examples-pages" },
         parent: { _neq: "/examples-pages" },
-        // status: { _eq: true }
       },
       sort: { field: "weight", direction: "ASC" },
     },
