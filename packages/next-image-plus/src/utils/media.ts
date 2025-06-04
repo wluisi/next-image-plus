@@ -32,7 +32,7 @@ export function buildMediaQuery(min: number, max: number): string | null {
 }
 
 export function getMediaQueries(items: MediaQueryItem[]): {
-  [uuid: string]: { media: string };
+  [uuid: string]: string;
 } {
   const ranges = items.map(({ uuid, media }) => {
     const { min, max } = parseMediaQuery(media);

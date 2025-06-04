@@ -28,6 +28,8 @@ export type ImageAttributes = Omit<NextImageProps, "src" | "loader"> & {
 export interface PreloadImageLinkProps {
   /** An array of image attributes. */
   data: ImageAttributes[];
+  /** Enables or disables the modification of media queries for preload link. */
+  modifyMediaQueries?: boolean;
 }
 
 /**
@@ -35,8 +37,13 @@ export interface PreloadImageLinkProps {
  *
  * @returns An object containing shared options.
  */
-function getSharedOptions(attributes: ImageAttributes, mediaQueries?: any) {
-  let media: string;
+function getSharedOptions(
+  attributes: ImageAttributes,
+  mediaQueries?: {
+    [uuid: string]: string;
+  }
+) {
+  let media = null;
   if (mediaQueries) {
     const uuid = `${attributes.elementType}-${attributes.originalSrc}`;
     media = mediaQueries[uuid];
@@ -61,7 +68,10 @@ function getSharedOptions(attributes: ImageAttributes, mediaQueries?: any) {
  *
  * @returns A set of `<link rel="preload" as="image" ... />` elements.
  */
-export function PreloadImageLink({ data }: PreloadImageLinkProps) {
+export function PreloadImageLink({
+  data,
+  modifyMediaQueries = true,
+}: PreloadImageLinkProps) {
   // We use an alternate version of useRouter() provided by next/compat/router.
   // This version doesn't throw, but returns null for the app router.
   // @see https://github.com/vercel/next.js/blob/canary/packages/next/src/client/compat/router.ts
@@ -79,9 +89,11 @@ export function PreloadImageLink({ data }: PreloadImageLinkProps) {
     return null;
   }
 
-  const mediaQueries = getMediaQueries(
-    data satisfies Array<Pick<ImageAttributes, "uuid" | "media">>
-  );
+  const mediaQueries = modifyMediaQueries
+    ? getMediaQueries(
+        data satisfies Array<Pick<ImageAttributes, "uuid" | "media">>
+      )
+    : null;
 
   // App router.
   if (isAppRouter && ReactDOM.preload) {

@@ -72,6 +72,8 @@ export type PictureProps = React.ComponentPropsWithRef<"picture"> & {
   preload?: boolean;
   /** The media query to be used for the fallback image, if preload is true. */
   fallbackMedia?: string;
+  /** Enables or disables the modification of media queries for preload link. */
+  modifyMediaQueries?: boolean;
   /** Optional child elements to render inside the component. */
   children: React.ReactElement<SourceProps>[] | React.ReactElement<ImgProps>;
 };
@@ -84,6 +86,7 @@ export type PictureProps = React.ComponentPropsWithRef<"picture"> & {
 export function Picture({
   preload = false,
   fallbackMedia,
+  modifyMediaQueries = true,
   children,
 }: PictureProps) {
   const preloadData: PreloadImageAttributes[] = [];
@@ -164,7 +167,12 @@ export function Picture({
         {sourceClones}
         {imgClone}
       </picture>
-      {preload ? <PreloadImageLink data={preloadData} /> : null}
+      {preload ? (
+        <PreloadImageLink
+          data={preloadData}
+          modifyMediaQueries={modifyMediaQueries}
+        />
+      ) : null}
     </>
   );
 }
