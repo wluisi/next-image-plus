@@ -8,7 +8,7 @@ import { render } from "@testing-library/react";
 import { Picture, Img, Source } from "./picture";
 
 const PictureComponentMock = (
-  <Picture preload={true}>
+  <Picture preload={true} modifyMediaQueries={false}>
     <Source
       media="(min-width: 600px) and (max-width:959px)"
       src="/images/medium.jpg"
@@ -48,6 +48,8 @@ describe("Picture component tests", () => {
     const sourceMd = container.querySelector(
       "picture source[media='(min-width: 600px) and (max-width:959px)']"
     );
+
+    console.log("sourceMd", sourceMd);
 
     expect(sourceMd).not.toHaveAttribute("src");
     expect(sourceMd).toHaveAttribute("srcSet");

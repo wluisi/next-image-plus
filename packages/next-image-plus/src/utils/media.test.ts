@@ -55,6 +55,26 @@ describe("getMediaQueries() tests", () => {
       "img-https://picsum.photos/id/59/430/215": "(max-width: 430px)",
     });
   });
+
+  // it("should something something edge case.", () => {
+  //   const items = [
+  //     {
+  //       uuid: "/images/medium.jpg",
+  //       media: "(min-width: 600px) and (max-width:959px)",
+  //     },
+  //     {
+  //       uuid: "/images/large.jpg",
+  //       media: "(min-width: 960px)",
+  //     },
+  //     // {
+  //     //   uuid: "img-https://picsum.photos/id/59/430/215",
+  //     //   media: "(max-width: 430px)",
+  //     // },
+  //   ];
+
+  //   const mediaQueries = getMediaQueries(items);
+  //   console.log("mediaQueries edge", mediaQueries);
+  // });
 });
 
 describe("getFallbackMediaQuery() tests", () => {
