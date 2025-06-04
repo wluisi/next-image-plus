@@ -205,7 +205,11 @@ export default function CardGrid() {
             title={item.title}
             description={item.description}
             image={
-              <Picture preload={preload} fallbackMedia="(max-width: 430px)">
+              <Picture
+                preload={preload}
+                fallbackMedia="(max-width: 430px)"
+                // modifyMediaQueries={false}
+              >
                 <Source
                   // Original: (min-width: 431px) and (max-width: 1023px)
                   // Fails: (min-width: 430px) and (max-width: 1024px)
