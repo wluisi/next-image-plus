@@ -6,7 +6,6 @@ import ReactDOM from "react-dom";
 import Head from "next/head";
 import { type ImageProps as NextImageProps } from "next/image";
 import { useRouter } from "next/compat/router";
-import { getMediaQueries } from "./utils/media";
 
 export type ImageAttributes = Omit<NextImageProps, "src" | "loader"> & {
   /** The sizes attribute defining image display sizes for different viewports. */
@@ -17,19 +16,11 @@ export type ImageAttributes = Omit<NextImageProps, "src" | "loader"> & {
   src: string;
   /** Optional media query. */
   media: string;
-  /** */
-  uuid: string;
-  /** */
-  elementType: "img" | "source";
-  /** */
-  originalSrc: string;
 };
 
 export interface PreloadImageLinkProps {
   /** An array of image attributes. */
   data: ImageAttributes[];
-  /** Enables or disables the modification of media queries for preload link. */
-  modifyMediaQueries?: boolean;
 }
 
 /**
@@ -37,18 +28,7 @@ export interface PreloadImageLinkProps {
  *
  * @returns An object containing shared options.
  */
-function getSharedOptions(
-  attributes: ImageAttributes,
-  mediaQueries?: {
-    [uuid: string]: string;
-  }
-) {
-  let media = null;
-  if (mediaQueries) {
-    const uuid = `${attributes.elementType}-${attributes.originalSrc}`;
-    media = mediaQueries[uuid];
-  }
-
+function getSharedOptions(attributes: ImageAttributes) {
   return {
     as: "image" as ReactDOM.PreloadAs,
     imageSrcSet: attributes.srcSet,
@@ -56,7 +36,7 @@ function getSharedOptions(
     crossOrigin: attributes.crossOrigin,
     referrerPolicy: attributes.referrerPolicy,
     fetchPriority: attributes.fetchPriority,
-    media: media ? media : attributes.media,
+    media: attributes.media,
   };
 }
 
@@ -68,10 +48,7 @@ function getSharedOptions(
  *
  * @returns A set of `<link rel="preload" as="image" ... />` elements.
  */
-export function PreloadImageLink({
-  data,
-  modifyMediaQueries = true,
-}: PreloadImageLinkProps) {
+export function PreloadImageLink({ data }: PreloadImageLinkProps) {
   // We use an alternate version of useRouter() provided by next/compat/router.
   // This version doesn't throw, but returns null for the app router.
   // @see https://github.com/vercel/next.js/blob/canary/packages/next/src/client/compat/router.ts
@@ -89,21 +66,12 @@ export function PreloadImageLink({
     return null;
   }
 
-  const mediaQueries = modifyMediaQueries
-    ? getMediaQueries(
-        data satisfies Array<Pick<ImageAttributes, "uuid" | "media">>
-      )
-    : null;
-
   // App router.
   if (isAppRouter && ReactDOM.preload) {
     data.forEach((attributes) => {
       // @see https://github.com/facebook/reacxt/pull/26940
       // @see https://react.dev/reference/react-dom/preload#parameters
-      ReactDOM.preload(
-        attributes.src,
-        getSharedOptions(attributes, mediaQueries)
-      );
+      ReactDOM.preload(attributes.src, getSharedOptions(attributes));
       return null;
     });
   }
@@ -122,7 +90,7 @@ export function PreloadImageLink({
             }
             rel="preload"
             href={attributes.srcSet ? undefined : attributes.src}
-            {...getSharedOptions(attributes, mediaQueries)}
+            {...getSharedOptions(attributes)}
           />
         );
       })}
