@@ -76,7 +76,7 @@ describe("getMediaQueries() tests", () => {
   //   console.log("mediaQueries edge", mediaQueries);
   // });
 
-  it("should something something hero edge case.", () => {
+  it("should return modified media queries for hero example.", () => {
     const items = [
       {
         uuid: "fallback-https://picsum.photos/id/870/430/466",
@@ -93,7 +93,12 @@ describe("getMediaQueries() tests", () => {
     ];
 
     const mediaQueries = getMediaQueries(items);
-    console.log("mediaQueries hero edge", mediaQueries);
+    expect(mediaQueries).toEqual({
+      "fallback-https://picsum.photos/id/870/430/466": "(max-width: 430px)",
+      "md-https://picsum.photos/id/870/768/512":
+        "(min-width: 431px) and (max-width: 1023px)",
+      "lg-https://picsum.photos/id/870/2560/800": "(min-width: 1024px)",
+    });
   });
 });
 

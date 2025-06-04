@@ -166,7 +166,6 @@ export function getMediaQueries(
   });
 
   // console.log("parsed", parsed);
-  // max-width matches another min-width
 
   // Early return if no overlap exists.
   const hasOverlap = parsed.some((current, i) => {
