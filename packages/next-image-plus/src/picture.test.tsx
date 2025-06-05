@@ -49,8 +49,6 @@ describe("Picture component tests", () => {
       "picture source[media='(min-width: 600px) and (max-width:959px)']"
     );
 
-    console.log("sourceMd", sourceMd);
-
     expect(sourceMd).not.toHaveAttribute("src");
     expect(sourceMd).toHaveAttribute("srcSet");
     expect(sourceMd).toHaveAttribute("media");

@@ -1,8 +1,3 @@
-// @todo
-// - figure out how to generate the fallback media query from the source media queries.
-// - test functions in preload.
-// - update picture example to use new function (in component media queries can overlap) and add 2nd example pg where fallbackMedia and non-overlapping media queries are used.
-
 export type MediaQueryItem = {
   uuid: string;
   media: string;
@@ -164,8 +159,6 @@ export function getMediaQueries(
     const bMin = b.min ?? -Infinity;
     return aMin - bMin;
   });
-
-  // console.log("parsed", parsed);
 
   // Early return if no overlap exists.
   const hasOverlap = parsed.some((current, i) => {
