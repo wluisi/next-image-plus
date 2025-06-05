@@ -208,7 +208,7 @@ export default function CardGrid() {
               <Picture
                 preload={preload}
                 fallbackMedia="(max-width: 430px)"
-                // modifyMediaQueries={false}
+                // normalizeMediaQueries={false}
               >
                 <Source
                   // Original: (min-width: 431px) and (max-width: 1023px)

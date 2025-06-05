@@ -62,11 +62,11 @@ export default function Page() {
 
 ## Picture Props
 
-| Prop               | Example                              | Type    | Status |
-| ------------------ | ------------------------------------ | ------- | ------ |
-| preload            | `preload={true}`                     | Boolean | -      |
-| fallbackMedia      | `fallbackMedia="(max-width: 430px)"` | String  | -      |
-| modifyMediaQueries | `modifyMediaQueries={true}`          | Boolean | -      |
+| Prop                  | Example                              | Type    | Status |
+| --------------------- | ------------------------------------ | ------- | ------ |
+| preload               | `preload={true}`                     | Boolean | -      |
+| fallbackMedia         | `fallbackMedia="(max-width: 430px)"` | String  | -      |
+| normalizeMediaQueries | `normalizeMediaQueries={true}`       | Boolean | -      |
 
 ### preload
 
@@ -85,7 +85,7 @@ The user agent will look at multiple `<link rel="preload">` elements and find mu
 This can lead to performance issues, where multiple images are preloaded.
 
 To avoid this, the `<Picture />` component will automatically adjust the media queries set on Source to remove any overlap, by adding or subtracting 1 px.
-If this functionality causes any issues, it can be disabled with the `modifyMediaQueries` prop.
+If this functionality causes any issues, it can be disabled with the `normalizeMediaQueries` prop.
 
 </Callout>
 
@@ -93,9 +93,9 @@ If this functionality causes any issues, it can be disabled with the `modifyMedi
 
 An optional prop, to set the fallback media query for preloading.
 
-### modifyMediaQueries
+### normalizeMediaQueries
 
-An optional prop to disable **next-image-plus** from modifying the media queries to remove overlap.
+An optional prop to disable **next-image-plus** from normalizeing the media queries to remove overlap.
 
 ## Source Props
 

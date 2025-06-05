@@ -1,7 +1,7 @@
 import { getMediaQueries, getFallbackMediaQuery } from "./media";
 
 describe("getMediaQueries() tests", () => {
-  it("should modify media queries with single overlap.", () => {
+  it("should normalize media queries with single overlap.", () => {
     const items = [
       {
         uuid: "source-https://picsum.photos/id/59/860/430",
@@ -23,7 +23,7 @@ describe("getMediaQueries() tests", () => {
     });
   });
 
-  it("should not modify media queries if there's no overlap.", () => {
+  it("should not normalize media queries if there's no overlap.", () => {
     const items = [
       {
         uuid: "source-https://picsum.photos/id/59/860/430",
@@ -49,7 +49,7 @@ describe("getMediaQueries() tests", () => {
     });
   });
 
-  it("should modify media queries with multiple overlaps", () => {
+  it("should normalize media queries with multiple overlaps", () => {
     const items = [
       {
         uuid: "fallback-https://picsum.photos/id/870/430/466",
@@ -75,7 +75,7 @@ describe("getMediaQueries() tests", () => {
     });
   });
 
-  it("should not modify media queries with overlap if options: `modify` false.", () => {
+  it("should not normalize media queries with overlap if options: `normalize` false.", () => {
     const items = [
       {
         uuid: "fallback-https://picsum.photos/id/870/430/466",
@@ -91,7 +91,7 @@ describe("getMediaQueries() tests", () => {
       },
     ];
 
-    const mediaQueries = getMediaQueries(items, { modify: false });
+    const mediaQueries = getMediaQueries(items, { normalize: false });
 
     expect(mediaQueries).toEqual({
       "fallback-https://picsum.photos/id/870/430/466": "(max-width: 430px)",
@@ -101,7 +101,7 @@ describe("getMediaQueries() tests", () => {
     });
   });
 
-  it("should modify media queries with single overlap and options: `fallback` media query.", () => {
+  it("should normalize media queries with single overlap and options: `fallback` media query.", () => {
     const items = [
       {
         uuid: "source-https://picsum.photos/id/59/860/430",

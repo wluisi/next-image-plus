@@ -95,7 +95,7 @@ export function getFallbackMediaQuery(
 }
 
 type GetMediaQueryOptions = {
-  modify?: boolean;
+  normalize?: boolean;
   /** Optional fallback media query. */
   fallback?: string;
 };
@@ -114,7 +114,7 @@ export function getMediaQueries(
 ): {
   [uuid: string]: string;
 } {
-  const { modify = true, fallback = null } = options ?? {};
+  const { normalize = true, fallback = null } = options ?? {};
 
   // Handle fallback media query.
   if (!fallback) {
@@ -129,8 +129,8 @@ export function getMediaQueries(
     });
   }
 
-  // If modify is false, then just return the items unchanged.
-  if (!modify) {
+  // If normalize is false, then just return the items unchanged.
+  if (!normalize) {
     const result = {};
     items.forEach((item) => {
       result[item.uuid] = item.media;

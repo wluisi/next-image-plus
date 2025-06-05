@@ -52,7 +52,7 @@ export function getSmallestMediaQuery(queries: string[]): string | null {
  */
 export function getBackgroundImageProps(
   options: BackgroundImageOptions[],
-  modifyMediaQueries?: boolean
+  normalizeMediaQueries?: boolean
 ): BackgroundImageData {
   const props: BackgroundImageData = {};
 
@@ -64,7 +64,7 @@ export function getBackgroundImageProps(
     });
   }
   const mediaQueriesFinal = getMediaQueries(mediaQueries, {
-    modify: modifyMediaQueries,
+    normalize: normalizeMediaQueries,
   });
 
   for (const { breakpoint, url, width, height } of options) {
@@ -155,8 +155,8 @@ export interface BackgroundImageProps {
   style?: React.CSSProperties;
   /** Optional child elements to render inside the component. */
   children?: React.ReactNode;
-  /** Enables or disables the modification of media queries to prevent overlap. Defaults to `true`. */
-  modifyMediaQueries?: boolean;
+  /** Enables or disables media query normalization to remove overlaps Defaults to `true`. */
+  normalizeMediaQueries?: boolean;
 }
 
 /**
@@ -172,9 +172,9 @@ export function BackgroundImage({
   className,
   style,
   children,
-  modifyMediaQueries = true,
+  normalizeMediaQueries = true,
 }: BackgroundImageProps) {
-  const bgImageProps = getBackgroundImageProps(images, modifyMediaQueries);
+  const bgImageProps = getBackgroundImageProps(images, normalizeMediaQueries);
 
   // Format the data for the preloader.
   const preloadData = [];
