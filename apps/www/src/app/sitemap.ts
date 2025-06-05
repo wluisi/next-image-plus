@@ -97,9 +97,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   });
 
   return [
-    // Homepage.
+    // Homepage
     {
       url: BASE_URL,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 1,
+    },
+    // Docs
+    {
+      url: `${BASE_URL}/docs`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 1,
+    },
+    // Examples
+    {
+      url: `${BASE_URL}/examples`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 1,
