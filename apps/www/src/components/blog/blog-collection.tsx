@@ -38,7 +38,7 @@ const BLOG_COLLECTION_QUERY = gql`
   }
 `;
 
-async function getBlogCollection() {
+export async function getBlogCollection() {
   const { data } = await client.request({
     query: BLOG_COLLECTION_QUERY,
     variables: {
