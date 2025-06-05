@@ -2,25 +2,48 @@ import type { MetadataRoute } from "next";
 
 import { gql } from "@graphinery/client";
 import { client } from "./../graphinery";
-import { getBlogCollection } from "./../components/blog/blog-collection";
 
 const BASE_URL = "https://next-image-plus.vercel.app";
 
-export const PAGE_COLLECTION_QUERY = gql`
-  query PageCollectionQuery(
+const SITEMAP_QUERY = gql`
+  query SitemapQuery(
     $limit: Int
     $pageNumber: Int
     $sort: _QuerySort
-    $filter: PageQueryFilter
+    $pageFilter: PageQueryFilter
+    $blogFilter: BlogQueryFilter
   ) {
     pageCollection(
       limit: $limit
       pageNumber: $pageNumber
       sort: $sort
-      filter: $filter
+      filter: $pageFilter
     ) {
       items {
         id
+        uuid
+        title
+        path
+        bundle
+        description
+        status
+      }
+      pageInfo {
+        totalItems
+        limit
+        pageCount
+        pageNumber
+      }
+    }
+    blogCollection(
+      limit: $limit
+      pageNumber: $pageNumber
+      sort: $sort
+      filter: $blogFilter
+    ) {
+      items {
+        id
+        uuid
         title
         path
         bundle
@@ -37,29 +60,21 @@ export const PAGE_COLLECTION_QUERY = gql`
   }
 `;
 
-async function getPageCollection() {
+async function getSitemap() {
   const { data } = await client.request({
-    query: PAGE_COLLECTION_QUERY,
+    query: SITEMAP_QUERY,
     variables: {
       limit: 500,
       sort: {
         field: "title",
         direction: "DESC",
       },
-      filter: {
-        status: { _eq: true },
-      },
+      blogFilter: { status: { _eq: true } },
+      pageFilter: { status: { _eq: true } },
     },
   });
 
-  return data.pageCollection;
-}
-
-async function getSitemap() {
-  const pageCollection = await getPageCollection();
-  const blogCollection = await getBlogCollection();
-
-  return [...pageCollection.items, ...blogCollection.items];
+  return [...data?.pageCollection?.items, ...data?.blogCollection?.items];
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
