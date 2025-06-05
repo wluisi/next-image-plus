@@ -3,7 +3,12 @@ export type MediaQueryItem = {
   media: string;
 };
 
-// (min-width: 431px) and (max-width: 1023px) -> { min: 431, max: 1023 }
+/**
+ * Parses a media query to get it's min and max values as numbers.
+ *
+ * @param media - The media query string to parse.
+ * @returns An object with min and max values.
+ */
 export function parseMediaQuery(media: string): { min: number; max: number } {
   const minMatch = media.match(/min-width:\s*(\d+)px/);
   const maxMatch = media.match(/max-width:\s*(\d+)px/);
@@ -19,36 +24,31 @@ export function parseMediaQuery(media: string): { min: number; max: number } {
 }
 
 /**
- * Adjust min-width and/or max-width values inside a media query string.
+ * Normalize min-width and/or max-width values inside a media query string.
  *
- * @param media - The media query string to adjust.
- * @param adjustments - Object with optional `min` and `max` number values:
+ * @param media - The media query string to normalize.
+ * @param offset - Object with optional `min` and `max` number values:
  *   - `min`: amount to add to all min-width values (positive or negative).
  *   - `max`: amount to add to all max-width values (positive or negative).
- *
- * Example:
- *   changeWidths("(min-width: 430px) and (max-width: 1024px)", { min: 1, max: -1 })
- *   // returns "(min-width: 431px) and (max-width: 1023px)"
+ * @returns A normalized media query.
  */
 function getMediaQuery(
   media: string,
-  adjustments: { min?: number; max?: number }
+  offset: { min?: number; max?: number }
 ): string {
   let result = media;
 
-  if (typeof adjustments.min === "number") {
-    const minAdjustment = adjustments.min;
+  if (typeof offset.min === "number") {
     result = result.replace(/min-width:\s*(\d+)px/g, (_, num) => {
-      const newVal = parseInt(num, 10) + minAdjustment;
-      return `min-width: ${newVal}px`;
+      const newValue = parseInt(num, 10) + offset.min;
+      return `min-width: ${newValue}px`;
     });
   }
 
-  if (typeof adjustments.max === "number") {
-    const maxAdjustment = adjustments.max;
+  if (typeof offset.max === "number") {
     result = result.replace(/max-width:\s*(\d+)px/g, (_, num) => {
-      const newVal = parseInt(num, 10) + maxAdjustment;
-      return `max-width: ${newVal}px`;
+      const newValue = parseInt(num, 10) + offset.max;
+      return `max-width: ${newValue}px`;
     });
   }
 
@@ -59,54 +59,55 @@ function getMediaQuery(
  * Generate a fallback media query covering everything below the smallest min-width.
  *
  * @param items - Array of media query items.
- * @returns A fallback media query item or null if none needed.
+ * @returns A fallback media query item or null.
  */
 export function getFallbackMediaQuery(
   items: MediaQueryItem[]
 ): MediaQueryItem | null {
-  // Parse all min-width values from media queries
+  // Parse all min-width values from media queries.
   const ranges = items
     .map((item) => {
       const parsed = parseMediaQuery(item.media);
       if (parsed === null) return null;
-      return { min: parsed.min ?? 0 }; // Default min to 0 if missing
+      return { min: parsed.min ?? 0 }; // Default min to 0 if missing.
     })
     .filter(Boolean) as { min: number }[];
 
-  // If no valid media queries, no fallback needed
+  // If no valid media queries, no fallback needed.
   if (ranges.length === 0) {
     return null;
   }
 
-  // Find the smallest min-width among all sources
+  // Find the smallest min-width among all sources.
   const smallestMin = Math.min(...ranges.map((r) => r.min));
 
   // If smallest min-width is greater than 0,
-  // create fallback for all widths up to smallestMin
+  // create fallback for all widths up to smallestMin.
   if (smallestMin > 0) {
     return {
       uuid: "img-fallback",
-      media: `(max-width: ${smallestMin}px)`, // e.g. (max-width: 430px)
+      media: `(max-width: ${smallestMin}px)`, // e.g. (max-width: 430px).
     };
   }
 
-  // Otherwise no fallback needed (e.g. some source already covers 0+)
+  // Otherwise no fallback needed (e.g. some source already covers 0+).
   return null;
 }
 
 type GetMediaQueryOptions = {
+  /** Enables or disables media query normalization to remove overlaps. Defaults to `true`. */
   normalize?: boolean;
   /** Optional fallback media query. */
   fallback?: string;
 };
 
 /**
- * Adjust original media query sources to avoid overlapping ranges:
- * - Bump first source's min-width by 1 to prevent overlap with fallback
- * - For adjacent sources, reduce max-width by 1 if it overlaps next's min-width
+ * Normalize media queries to remove overlapping ranges:
+ * - Bump first source's min-width by 1 to prevent overlap with fallback.
+ * - For adjacent sources, reduce max-width by 1 if it overlaps the next min-width.
  *
  * @param items - Array of media query items.
- * @returns Adjusted array with modified media queries.
+ * @returns Normalized object of objects, keyed by uuid.
  */
 export function getMediaQueries(
   items: MediaQueryItem[],
@@ -180,36 +181,36 @@ export function getMediaQueries(
     return result;
   }
 
-  // There's overlap, so we proceed with adjusting the media queries.
-  const adjusted = new Map<string, string>();
+  // There's overlap, so we proceed with normalizing the media queries.
+  const normalized = new Map<string, string>();
 
-  // Adjust first non-fallback min-width.
+  // Normalize the first non-fallback min-width.
   for (const item of parsed) {
     if (item.min !== null && item.min > 0) {
-      adjusted.set(item.uuid, getMediaQuery(item.media, { min: 1 }));
+      normalized.set(item.uuid, getMediaQuery(item.media, { min: 1 }));
       item.min += 1;
       break;
     }
   }
 
-  // Adjust overlapping max-widths.
+  // Normalize overlapping max-widths.
   for (let i = 0; i < parsed.length - 1; i++) {
     const current = parsed[i];
     const next = parsed[i + 1];
 
     if (current.max !== null && next.min !== null && current.max === next.min) {
       const updated = getMediaQuery(
-        adjusted.get(current.uuid) ?? current.media,
+        normalized.get(current.uuid) ?? current.media,
         { max: -1 }
       );
-      adjusted.set(current.uuid, updated);
+      normalized.set(current.uuid, updated);
       current.max -= 1;
     }
   }
 
   const result = {};
   items.forEach((item) => {
-    result[item.uuid] = adjusted.get(item.uuid) ?? item.media;
+    result[item.uuid] = normalized.get(item.uuid) ?? item.media;
   });
 
   return result;
