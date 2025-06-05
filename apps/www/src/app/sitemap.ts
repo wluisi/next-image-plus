@@ -26,6 +26,7 @@ const SITEMAP_QUERY = gql`
         path
         bundle
         description
+        publishedDate
         status
       }
       pageInfo {
@@ -49,6 +50,7 @@ const SITEMAP_QUERY = gql`
         bundle
         description
         status
+        publishedDate
       }
       pageInfo {
         totalItems
@@ -81,9 +83,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const content = await getSitemap();
 
   const urlset: MetadataRoute.Sitemap = content.map((item) => {
+    const lastModified =
+      item.publishedDate !== null ? item.publishedDate : new Date();
+
+    // @todo figure out how to handle priority or make it diff per bundle ?
+
     return {
       url: `${BASE_URL}${item.path}`,
-      lastModified: new Date(),
+      lastModified: lastModified,
       changeFrequency: "yearly",
       priority: 0.8,
     };

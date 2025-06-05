@@ -41,6 +41,10 @@ export const metaschema: EntityMetaschema[] = [
         name: "keywords",
         type: "string",
       },
+      {
+        name: "publishedDate",
+        type: "string",
+      },
     ],
   },
   {
