@@ -8,7 +8,7 @@ import { render } from "@testing-library/react";
 import { Picture, Img, Source } from "./picture";
 
 const PictureComponentMock = (
-  <Picture preload={true}>
+  <Picture preload={true} normalizeMediaQueries={false}>
     <Source
       media="(min-width: 600px) and (max-width:959px)"
       src="/images/medium.jpg"

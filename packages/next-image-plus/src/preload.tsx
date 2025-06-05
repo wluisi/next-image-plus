@@ -15,7 +15,7 @@ export type ImageAttributes = Omit<NextImageProps, "src" | "loader"> & {
   /** The image source URL. */
   src: string;
   /** Optional media query. */
-  media?: string;
+  media: string;
 };
 
 export interface PreloadImageLinkProps {
