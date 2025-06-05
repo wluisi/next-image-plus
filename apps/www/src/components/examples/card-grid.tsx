@@ -205,14 +205,8 @@ export default function CardGrid() {
             title={item.title}
             description={item.description}
             image={
-              <Picture
-                preload={preload}
-                fallbackMedia="(max-width: 430px)"
-                // normalizeMediaQueries={false}
-              >
+              <Picture preload={preload}>
                 <Source
-                  // Original: (min-width: 431px) and (max-width: 1023px)
-                  // Fails: (min-width: 430px) and (max-width: 1024px)
                   media="(min-width: 430px) and (max-width: 1024px)"
                   src={image.medium.url}
                   sizes="100vw"
@@ -220,7 +214,6 @@ export default function CardGrid() {
                   height={image.medium.height}
                 />
                 <Source
-                  // Original: (min-width: 1024px)
                   media="(min-width: 1024px)"
                   src={image.large.url}
                   width={image.large.width}
