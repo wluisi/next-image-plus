@@ -68,8 +68,8 @@ async function getSitemap() {
     variables: {
       limit: 500,
       sort: {
-        field: "title",
-        direction: "DESC",
+        field: "path",
+        direction: "ASC",
       },
       blogFilter: { status: { _eq: true } },
       pageFilter: { status: { _eq: true } },
@@ -85,39 +85,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const urlset: MetadataRoute.Sitemap = content.map((item) => {
     const lastModified =
       item.publishedDate !== null ? item.publishedDate : new Date();
-
-    // @todo figure out how to handle priority or make it diff per bundle ?
+    const priority = item.path === "/" ? 1 : 0.8;
 
     return {
       url: `${BASE_URL}${item.path}`,
       lastModified: lastModified,
-      changeFrequency: "yearly",
-      priority: 0.8,
+      changeFrequency: "monthly",
+      priority: priority,
     };
   });
 
-  return [
-    // Homepage
-    {
-      url: BASE_URL,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1,
-    },
-    // Docs
-    {
-      url: `${BASE_URL}/docs`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1,
-    },
-    // Examples
-    {
-      url: `${BASE_URL}/examples`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1,
-    },
-    ...urlset,
-  ];
+  return urlset;
 }
