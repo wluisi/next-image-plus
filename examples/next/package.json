@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "next": "15.3.3",
-    "next-image-plus": "1.0.0-beta.5",
+    "next-image-plus": "1.0.0-beta.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
