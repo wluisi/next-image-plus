@@ -153,6 +153,7 @@ export async function getStaticPaths() {
     variables: {
       limit: 400,
       filter: {
+        path: { _neq: "/examples-pages" },
         slug: { _in: "examples-pages" },
       },
     },
