@@ -121,6 +121,7 @@ export async function generateStaticParams() {
       limit: 400,
       filter: {
         status: { _eq: true },
+        path: { _neq: "/" },
         slug: { _nin: "examples-pages" },
       },
     },
