@@ -7,9 +7,29 @@ export default function BackgroundImagePage() {
 
       <div className="mb-10">
         <h2>BackgroundImage Component</h2>
-        <div className="relative w-full h-[60vh] lg:h-[800px] overflow-hidden">
+        <div className="relative w-full h-[60vh] lg:h-[300px] overflow-hidden">
           <BackgroundImage
             id="examples__background-image"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            preload={true}
+            images={[
+              {
+                breakpoint: "default",
+                media: "(min-width: 0px)",
+                url: "https://picsum.photos/id/502/2560/800",
+                width: 2560,
+                height: 800,
+              },
+            ]}
+          />
+        </div>
+      </div>
+
+      <div className="mb-10">
+        <h2>BackgroundImage Component (Responsive)</h2>
+        <div className="relative w-full h-[60vh] lg:h-[800px] overflow-hidden">
+          <BackgroundImage
+            id="examples__background-image-responsive"
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             preload={true}
             images={[
@@ -40,10 +60,13 @@ export default function BackgroundImagePage() {
       </div>
 
       <div className="mb-10">
-        <h2>BackgroundImage Component with normalizeMediaQueries disabled.</h2>
+        <h2>
+          BackgroundImage Component (Responsive) with normalizeMediaQueries
+          disabled.
+        </h2>
         <div className="relative w-full h-[60vh] lg:h-[800px] overflow-hidden">
           <BackgroundImage
-            id="examples__background-image-two"
+            id="examples__background-image-responsive-two"
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             preload={true}
             normalizeMediaQueries={false}

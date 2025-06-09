@@ -8,6 +8,9 @@ export default function Home() {
         <li>
           <Link href="/picture">Picture Component</Link>
         </li>
+        <li>
+          <Link href="/background-image">BackgroundImage Component</Link>
+        </li>
       </ul>
     </div>
   );

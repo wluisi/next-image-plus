@@ -3,6 +3,42 @@ title: "How to Add a Background Image in Next.js ?"
 description: "Using next-image-plus Background Image component to render a background image in Next.js"
 keywords: "next, react, nextjs, HTML picture, art direction, typescript"
 tags: ["article"]
-publishedDate: "2025-01-25T21:48:02Z"
-status: false
+publishedDate: "2025-06-09T21:48:02Z"
+status: true
 ---
+
+## Introduction
+
+This guide will show you how to add a background image to a HTML element in your Next.js app.
+
+## HTML background image
+
+## Next Image Plus
+
+**next-image-plus** is a set of primitive React components, built on top of the <Link href="https://nextjs.org/docs/pages/api-reference/components/image">Next.js Image API</Link> and <Link href="https://react.dev/blog/2024/12/05/react-19">React 19</Link>, which adds support for picture and background images.
+
+### Install the package
+
+First we need to install <Link href="https://www.npmjs.com/package/next-image-plus">next-image-plus</Link> package from npm:
+
+```shell
+npm install next-image-plus
+```
+
+### Using the BackgroundImage component
+
+```tsx
+import { BackgroundImage } from "next-image-plus";
+
+<BackgroundImage
+  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+  preload={true}
+  images={[
+    {
+      url: "https://picsum.photos/id/502/2560/800",
+      width: 2560,
+      height: 800,
+    },
+  ]}
+/>;
+```
