@@ -2,10 +2,10 @@ import { Avatar, AvatarContainer } from "./../../components/blog/avatar";
 
 type AuthorInfoProps = {
   fullName: string;
-  handle: string;
+  date: string;
 };
 
-export default function AuthorInfo({ fullName, handle }: AuthorInfoProps) {
+export default function AuthorInfo({ fullName, date }: AuthorInfoProps) {
   return (
     <div className="flex items-center !mb-8">
       <AvatarContainer>
@@ -16,8 +16,8 @@ export default function AuthorInfo({ fullName, handle }: AuthorInfoProps) {
           <span className="author-name text-sm leading-none font-bold">
             {fullName}
           </span>
-          <span className="author-handle text-zinc-500 text-xs leading-none">
-            {handle}
+          <span className="post-date text-zinc-500 text-xs leading-none">
+            {date}
           </span>
         </div>
       </div>

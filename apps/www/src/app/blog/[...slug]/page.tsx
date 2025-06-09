@@ -160,8 +160,6 @@ export default async function BlogSlug({
   const activeTrail = blog.activeTrail.items;
   activeTrail.pop();
 
-  // const tag = blog.tags.length > 0 ? blog.tags[0].title : null;
-
   return (
     <Grid
       id="grid"
@@ -211,11 +209,6 @@ export default async function BlogSlug({
             <Heading level="h1" className="!mt-0 !mb-2">
               {blog.title}
             </Heading>
-            {/* <span className="bg-red-400 text-red-50 text-xs font-bold px-2.5 py-1 rounded-sm">
-              {tag}
-            </span> */}
-            {/* <Tag>{tag}</Tag> */}
-
             {blog?.tags && (
               <div className="mb-5 flex gap-3">
                 <ul className="list-none flex gap-y-3 flex-wrap pl-0">
@@ -229,7 +222,7 @@ export default async function BlogSlug({
             )}
             <AuthorInfo
               fullName="William Luisi"
-              handle={formatDate(blog.publishedDate)}
+              date={formatDate(blog.publishedDate)}
             />
           </header>
           <div className="space-y-5">
