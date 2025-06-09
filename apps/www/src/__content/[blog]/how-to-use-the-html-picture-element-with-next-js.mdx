@@ -1,17 +1,41 @@
 ---
-title: "How to use the HTML Picture element with Next.js"
+title: "How to use the HTML Picture element with Next.js?"
 description: "Using next-image-plus Picture component to render HTML picture element in a Next.js app."
 keywords: "next, react, nextjs, HTML picture, art direction, typescript"
-tags: ["article"]
+tags: ["article", "release"]
 publishedDate: "2025-04-25T21:48:02Z"
 status: false
 ---
 
-In this blog post, I'm going to show you how to use the HTML picture element in a <Link href="https://nextjs.org">Next.js</Link> app, using the **next-image-plus** package.
+## Introduction
+
+This guide will show you how to use the HTML `<picture>` element with a Next.js app.
+
+## HTML picture element
+
+The HTML `<picture>` element allows developers to display different images for different devices or screen sizes. It enables art direction, where you serve entirely different images depending on the context, not just resized versions of the same image.
+
+This is especially useful when different crops or compositions are better suited to different screen sizes — for example, a wide landscape on desktop and a centered square on mobile.
+
+```html
+<picture>
+  <source media="(min-width: 1024px)" srcset="/images/hero-desktop.jpg" />
+  <source media="(min-width: 431px)" srcset="/images/hero-tablet.jpg" />
+  <img src="/images/hero-mobile.jpg" alt="Scenic view of mountains and river" />
+</picture>
+```
+
+## Limitations of Next.js Image Component
+
+The built-in Next.js `<Image>` component doesn’t support the `<picture>` element. It's optimized for responsive image sizing via srcSet and sizes, but it doesn't allow for art direction — you can't define separate images for different breakpoints or aspect ratios. You're limited to automatic resizing of a single source image.
+
+If you need art direction or want to use `<source>` elements directly, you'll need a different approach — which is where **next-image-plus** comes in.
+
+## Next Image Plus
 
 **next-image-plus** is a set of primitive React components, built on top of the <Link href="https://nextjs.org/docs/pages/api-reference/components/image">Next.js Image API</Link> and <Link href="https://react.dev/blog/2024/12/05/react-19">React 19</Link>, which adds support for picture and background images.
 
-## Getting started
+### Install the package
 
 First we need to install <Link href="https://www.npmjs.com/package/next-image-plus">next-image-plus</Link> package from npm:
 
@@ -19,7 +43,7 @@ First we need to install <Link href="https://www.npmjs.com/package/next-image-pl
 npm install next-image-plus
 ```
 
-## Using the Picture, Source, and Img components
+### Using the Picture, Source, and Img components
 
 **next-image-plus** provides 3 components for creating responsive images with art direction:
 
@@ -109,7 +133,7 @@ The value for `srcset` will get automatically generated for you, using the Next.
 
 </Callout>
 
-## Preloading
+### Preloading
 
 If your image is flagged as the <Link href="https://web.dev/articles/lcp#what-elements-are-considered">Largest Contentful Paint (LCP)</Link>, preloading can improve your web core vitals score. The `<Picture>` component
 has built-in support for preloading images.
@@ -149,16 +173,14 @@ In the browser, this will render the following HTML:
 ```
 
 <Callout type="important">
-Media queries on `<link rel="preload">` do not function the way they do on HTML elements.
+For preloading to work properly, media queries cannot overlap.
+
+Media queries on `<link rel="preload">` elements do not function the way they do on HTML elements.
 The user agent will look at multiple `<link rel="preload">` elements and find multiple matches if there is any overlap in the media queries.
-This can lead to performance issues, where multiple images are preloaded, so when setting media queries, make sure each one targets a unique range.
+This can lead to performance issues, where multiple images are preloaded.
 
-For preloading to work properly, media queries cannot overlap. This is not a limitation of the component per se, but how browser's parse `<link rel="preload">` elements in `<head>`.
-
-i.e, for your medium breakpoint, if your fallback is `max-width: 430px`
-
-- _don't do this_ ~~`(min-width: 430px) and (max-width: 1023px)`~~
-- **do this** `(min-width: 431px) and (max-width: 1023px)`
+To avoid this, the `<Picture />` component will automatically adjust the media queries set on Source to remove any overlap, by adding or subtracting 1 px.
+If this functionality causes any issues, it can be disabled with the `normalizeMediaQueries` prop.
 
 </Callout>
 
@@ -201,11 +223,13 @@ export default function Home() {
 }
 ```
 
+## Conclusion
+
 This is obviously a very basic example, but I hope it demonstrates the power of the **next-image-plus** `<Picture />` component.
 
-To see a more advanced example, you can check out the examples page on the <Link href="https://next-image-plus.vercel.app/examples/picture"> next-image-plus website</Link>
+To see a more advanced example, you can check out the <Link href="/examples/picture">examples page</Link>
 
-To learn more about the `<Picture />` component, you can check out the <Link href="https://next-image-plus.vercel.app/docs/picture">API documentation</Link>
+To learn more about the `<Picture />` component, you can check out the <Link href="/docs/picture">API documentation</Link>
 
 And if you find this package useful, please give us a star on <Link href="https://github.com/wluisi/next-image-plus">GitHub</Link>
 

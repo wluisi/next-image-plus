@@ -176,7 +176,7 @@ export default async function BlogSlug({
         id="main-content"
         className={cn("md:col-span-10 lg:col-span-8 pb-10 md:px-10")}
       >
-        <article className="space-y-5 prose dark:prose-invert">
+        <article className="prose dark:prose-invert">
           <Breadcrumb className="m-auto max-w-xxl">
             {activeTrail.map(
               (item: { id: string; path: string; title: string }) => {
@@ -202,24 +202,37 @@ export default async function BlogSlug({
             )}
           </Breadcrumb>
 
-          <div className="flex items-center">
-            {blog.tags.length > 0 && <Tag>{blog.tags[0].title}</Tag>}
-            <div className="h-4 w-[2px] bg-zinc-300 dark:bg-zinc-500 ml-3"></div>
-            <div className="text-sm text-zinc-400 dark:text-zinc-500 pr-5 pl-3">
-              {formatDate(blog.publishedDate)}
+          <header className="not-prose space-y-4 mt-5 mb-6 border-b dark:border-zinc-600">
+            <div className="text-xs text-zinc-500">
+              Last updated: {formatDate(blog.publishedDate)}
             </div>
+            <Heading level="h1" className="!mt-0 !mb-2">
+              {blog.title}
+            </Heading>
+            {blog?.tags && (
+              <div className="mb-5 flex gap-3">
+                <ul className="list-none flex gap-y-3 flex-wrap pl-0">
+                  {blog.tags.map((tag: any) => (
+                    <li key={tag.id} className="!pl-0 pr-3">
+                      <Tag>{tag.title.toLowerCase()}</Tag>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <AuthorInfo
+              fullName="William Luisi"
+              date={formatDate(blog.publishedDate)}
+            />
+          </header>
+          <div className="space-y-5">
+            <GraphineryMdx
+              mdx={blog.content}
+              components={{
+                ...componentsMap,
+              }}
+            />
           </div>
-          <Heading level="h1" className="!mt-3 !mb-6">
-            {blog.title}
-          </Heading>
-          <AuthorInfo fullName="William Luisi" handle="@wluisi" />
-
-          <GraphineryMdx
-            mdx={blog.content}
-            components={{
-              ...componentsMap,
-            }}
-          />
         </article>
       </GridItem>
       <GridItem
