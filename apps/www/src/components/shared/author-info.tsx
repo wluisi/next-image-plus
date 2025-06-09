@@ -7,7 +7,7 @@ type AuthorInfoProps = {
 
 export default function AuthorInfo({ fullName, handle }: AuthorInfoProps) {
   return (
-    <div className="flex items-center !mb-10">
+    <div className="flex items-center !mb-8">
       <AvatarContainer>
         <Avatar large={false} />
       </AvatarContainer>
