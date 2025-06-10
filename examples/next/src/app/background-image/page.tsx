@@ -108,6 +108,37 @@ export default function BackgroundImagePage() {
           />
         </div>
       </div>
+
+      <div className="mb-10">
+        <h2>BackgroundImage Component Responsive</h2>
+        <p></p>
+        <div className="relative w-full h-[30vh] overflow-hidden">
+          <BackgroundImage
+            id="examples__responsive-background-image"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            images={[
+              {
+                url: "https://picsum.photos/id/502/430/430",
+                media: "(max-width: 430px)",
+                width: 430,
+                height: 430,
+              },
+              {
+                url: "https://picsum.photos/id/502/768/768",
+                media: "(min-width: 430px) and (max-width: 768px)",
+                width: 768,
+                height: 768,
+              },
+              {
+                url: "https://picsum.photos/id/502/1024/1024",
+                media: "(min-width: 768px)",
+                width: 1024,
+                height: 1024,
+              },
+            ]}
+          />
+        </div>
+      </div>
     </div>
   );
 }
