@@ -9,13 +9,13 @@ import { PreloadImageLink } from "./preload";
 
 type BackgroundImageOptions = Omit<NextImageProps, "alt" | "src"> & {
   breakpoint: string;
-  media: string;
+  media?: string;
   url: string;
 };
 
 interface BackgroundImageData {
   [key: string]: {
-    media: string;
+    media?: string;
     img: NextImageProps & { srcSet: string };
   };
 }
@@ -56,16 +56,20 @@ export function getBackgroundImageProps(
 ): BackgroundImageData {
   const props: BackgroundImageData = {};
 
-  const mediaQueries = [];
-  for (const { breakpoint, media, url } of options) {
-    mediaQueries.push({
-      uuid: `${breakpoint}-${url}`,
-      media: media,
+  let mediaQueriesFinal = null;
+  // If there's more than 1 image in the array, then we need media queries.
+  if (options.length > 1) {
+    const mediaQueries = [];
+    for (const { breakpoint, media, url } of options) {
+      mediaQueries.push({
+        uuid: `${breakpoint}-${url}`,
+        media: media,
+      });
+    }
+    mediaQueriesFinal = getMediaQueries(mediaQueries, {
+      normalize: normalizeMediaQueries,
     });
   }
-  const mediaQueriesFinal = getMediaQueries(mediaQueries, {
-    normalize: normalizeMediaQueries,
-  });
 
   for (const { breakpoint, url, width, height } of options) {
     const nextImage = getNextImageProps({
@@ -77,7 +81,9 @@ export function getBackgroundImageProps(
     });
 
     props[breakpoint] = {
-      media: mediaQueriesFinal[`${breakpoint}-${url}`],
+      ...(mediaQueriesFinal && {
+        media: mediaQueriesFinal[`${breakpoint}-${url}`],
+      }),
       img: nextImage.props,
     };
   }
@@ -102,22 +108,27 @@ interface StyleProps {
  *
  * @returns A `<style>` element containing the computed background image CSS rules.
  */
-function Style({ id, bgImageProps }: StyleProps) {
-  // Get the smallest media query as the fallback.
-  const mediaQueries = [];
-  for (const [_key, props] of Object.entries(bgImageProps)) {
-    mediaQueries.push(props.media);
+export function Style({ id, bgImageProps }: StyleProps) {
+  const isSingle = Object.keys(bgImageProps).length > 1;
+
+  let fallbackMediaQuery = null;
+  if (isSingle) {
+    // Get the smallest media query as the fallback.
+    const mediaQueries = [];
+    for (const [_key, props] of Object.entries(bgImageProps)) {
+      mediaQueries.push(props.media);
+    }
+    fallbackMediaQuery = getSmallestMediaQuery(mediaQueries);
   }
-  const fallbackMediaQuery = getSmallestMediaQuery(mediaQueries);
 
   // Generate the responsive styles with media queries based on the image options.
   const styles = [];
   for (const [_key, props] of Object.entries(bgImageProps)) {
     const url = props.img.src;
 
-    if (props.media === fallbackMediaQuery) {
-      const mediaQuery = `#${id} { background-image: url(${url}); }`;
-      styles.push(mediaQuery);
+    if (fallbackMediaQuery === null || props.media === fallbackMediaQuery) {
+      const fallbackStyle = `#${id} { background-image: url(${url}); }`;
+      styles.push(fallbackStyle);
     } else {
       const mediaQuery = `@media ${props.media} { #${id} { background-image: url(${url}); } }`;
       styles.push(mediaQuery);
@@ -181,7 +192,7 @@ export function BackgroundImage({
   for (const [_key, value] of Object.entries(bgImageProps)) {
     preloadData.push({
       ...value.img,
-      media: value.media,
+      media: value.media ? value.media : null,
       fetchPriority: preload ? "high" : "auto",
     });
   }

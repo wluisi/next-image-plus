@@ -3,9 +3,21 @@
  */
 
 import * as React from "react";
+import ReactDOM from "react-dom";
+
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
 import { BackgroundImage, getBackgroundImageProps } from "./background-image";
+
+// Mock next/compat/router before importing the tested component.
+jest.mock("next/compat/router", () => ({
+  useRouter: jest.fn(() => null),
+}));
+
+// Spy on ReactDOM.preload
+const preloadSpy = jest
+  .spyOn(ReactDOM, "preload")
+  .mockImplementation(() => null);
 
 const backgroundImageDataMock = [
   {
@@ -63,7 +75,11 @@ describe("getBackgroundImageProps tests", () => {
   });
 });
 
-describe("BackgroundImage component tests", () => {
+describe("BackgroundImage component tests.", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("should render a div with a background image.", () => {
     const componentMock = (
       <BackgroundImage
@@ -147,7 +163,25 @@ describe("BackgroundImage component tests", () => {
   });
 
   it("should render a div with an id prop.", () => {
-    const componentMock = (
+    const { container } = render(
+      <BackgroundImage
+        id="bg-img-test-id"
+        preload={true}
+        images={backgroundImageDataMock}
+      />
+    );
+
+    const element = container.querySelector("#bg-img-test-id") as HTMLElement;
+
+    expect(element).toBeInTheDocument();
+    expect(element?.tagName.toLowerCase()).toBe("div");
+    expect(element?.id).toBe("bg-img-test-id");
+
+    expect(preloadSpy).toHaveBeenCalledTimes(3);
+  });
+
+  it("should add preload links to document head if preload is true.", () => {
+    render(
       <BackgroundImage
         id="bg-img-test"
         preload={true}
@@ -155,12 +189,46 @@ describe("BackgroundImage component tests", () => {
       />
     );
 
-    const { container } = render(componentMock);
-    const element = container.querySelector("#bg-img-test") as HTMLElement;
+    expect(preloadSpy).toHaveBeenCalledTimes(3);
+  });
+
+  it("should not add preload links to document head if preload is false.", () => {
+    render(
+      <BackgroundImage
+        id="bg-img-test-no-preload"
+        preload={false}
+        images={backgroundImageDataMock}
+      />
+    );
+
+    expect(preloadSpy).not.toHaveBeenCalled();
+  });
+
+  it("should render background image with single image and no media query.", () => {
+    const { container } = render(
+      <BackgroundImage
+        id="bg-img-single"
+        preload={false}
+        images={[
+          {
+            breakpoint: "fallback",
+            url: "https://picsum.photos/id/10/400/143",
+            width: 400,
+            height: 143,
+          },
+        ]}
+      />
+    );
+
+    const element = container.querySelector("#bg-img-single") as HTMLElement;
 
     expect(element).toBeInTheDocument();
     expect(element?.tagName.toLowerCase()).toBe("div");
+    expect(element?.id).toBe("bg-img-single");
 
-    expect(element?.id).toBe("bg-img-test");
+    const style = window.getComputedStyle(element as Element);
+    expect(style.backgroundImage).toBe(
+      "url(/_next/image?url=https%3A%2F%2Fpicsum.photos%2Fid%2F10%2F400%2F143&w=828&q=75)"
+    );
   });
 });
