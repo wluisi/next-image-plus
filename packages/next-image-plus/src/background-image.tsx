@@ -57,7 +57,7 @@ export function getBackgroundImageProps(
   const props: BackgroundImageData = {};
 
   let mediaQueriesFinal = null;
-  // If there's more than 1 image in the array, then we need media queries.
+  // We only need media queries if there's more than 1 image.
   if (options.length > 1) {
     const mediaQueries = [];
     for (const { breakpoint, media, url } of options) {
@@ -109,10 +109,9 @@ interface StyleProps {
  * @returns A `<style>` element containing the computed background image CSS rules.
  */
 export function Style({ id, bgImageProps }: StyleProps) {
-  const isSingle = Object.keys(bgImageProps).length > 1;
-
   let fallbackMediaQuery = null;
-  if (isSingle) {
+  // We only need media queries if there's more than 1 image.
+  if (Object.keys(bgImageProps).length > 1) {
     // Get the smallest media query as the fallback.
     const mediaQueries = [];
     for (const [_key, props] of Object.entries(bgImageProps)) {
