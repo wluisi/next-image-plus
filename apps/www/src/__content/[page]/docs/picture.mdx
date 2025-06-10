@@ -29,33 +29,30 @@ The browser uses the first `<Source />` component with a media query that return
 
 Basic example:
 
+{/* prettier-ignore */}
 ```tsx
 import { Picture, Source, Img } from "next-image-plus";
 
-export default function Page() {
-  return (
-    <Picture preload={true}>
-      <Source
-        media="(min-width: 430px) and (max-width: 1024px)"
-        src="/images/medium.jpg"
-        width={860}
-        height={430}
-      />
-      <Source
-        media="(min-width: 1024px)"
-        src="/images/large.jpg"
-        width={220}
-        height={220}
-      />
-      <Img
-        src="/images/fallback.jpg"
-        width={430}
-        height={215}
-        alt="mountains and a river"
-      />
-    </Picture>
-  );
-}
+<Picture preload={true}>
+  <Source
+    media="(min-width: 430px) and (max-width: 1024px)"
+    src="/images/medium.jpg"
+    width={860}
+    height={430}
+  />
+  <Source
+    media="(min-width: 1024px)"
+    src="/images/large.jpg"
+    width={220}
+    height={220}
+  />
+  <Img
+    src="/images/fallback.jpg"
+    width={430}
+    height={215}
+    alt="mountains and a river"
+  />
+</Picture>
 ```
 
 ---

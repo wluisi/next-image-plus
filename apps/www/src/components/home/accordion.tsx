@@ -27,7 +27,7 @@ const content = {
       id: "faq-3",
       question: "What versions of React and Next.js are supported ?",
       answer:
-        "Currently, only React 19 and Next.js 15 are supported. If support for React 18 and/or Next.js 14 is something you'd like to see added, please open an issue on github and we can discuss.",
+        "Currently, only React 19 and Next.js 15 are supported. If support for React 18 and/or Next.js 14 is something you'd like to see added, please open an issue on github.",
     },
   ],
 };
