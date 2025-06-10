@@ -73,6 +73,26 @@ describe("getBackgroundImageProps tests", () => {
     expect(fallbackImg.width).toEqual(400);
     expect(fallbackImg.height).toEqual(143);
   });
+
+  it("should return background img props for single image with no media prop.", () => {
+    const bgImageProps = getBackgroundImageProps([
+      {
+        breakpoint: "fallback",
+        url: "https://picsum.photos/id/10/400/143",
+        width: 400,
+        height: 143,
+      },
+    ]);
+
+    const fallbackImg = bgImageProps.fallback.img;
+    expect(fallbackImg).not.toHaveProperty("media");
+
+    expect(fallbackImg.src).toEqual(
+      "/_next/image?url=https%3A%2F%2Fpicsum.photos%2Fid%2F10%2F400%2F143&w=828&q=75"
+    );
+    expect(fallbackImg.width).toEqual(400);
+    expect(fallbackImg.height).toEqual(143);
+  });
 });
 
 describe("BackgroundImage component tests.", () => {
@@ -208,7 +228,7 @@ describe("BackgroundImage component tests.", () => {
     const { container } = render(
       <BackgroundImage
         id="bg-img-single"
-        preload={false}
+        preload={true}
         images={[
           {
             breakpoint: "fallback",
@@ -230,5 +250,7 @@ describe("BackgroundImage component tests.", () => {
     expect(style.backgroundImage).toBe(
       "url(/_next/image?url=https%3A%2F%2Fpicsum.photos%2Fid%2F10%2F400%2F143&w=828&q=75)"
     );
+
+    expect(preloadSpy).toHaveBeenCalledTimes(1);
   });
 });
