@@ -11,7 +11,7 @@ status: true
 
 ## Overview
 
-The **next-image-plus** `<BackgroundImage>` component is a primitive React component that extends any HTML element, to add a background image,
+The **next-image-plus** `<BackgroundImage />` component is a primitive React component that extends any HTML element, to add a background image,
 using the power of the Next.js Image API and React 19.
 
 The component does not provide any styles and is fully compatible with any React styling framework.
@@ -27,7 +27,6 @@ import { BackgroundImage } from "next-image-plus";
   id="examples__background-image"
   images={[
     {
-      breakpoint: "fallback",
       url: "https://picsum.photos/id/870/430/466",
       width: 430,
       height: 466,
@@ -38,49 +37,48 @@ import { BackgroundImage } from "next-image-plus";
 
 ### Advanced usage: Responsive Background Image
 
+{/* prettier-ignore */}
 ```tsx
 import { BackgroundImage } from "next-image-plus";
 
 <BackgroundImage
-  id="examples__background-image"
+  id="examples__background-image-responsive"
   className="absolute inset-0 bg-cover bg-center bg-no-repeat"
   preload={true}
   images={[
     {
-      breakpoint: "fallback",
       media: "(max-width: 430px)",
       url: "https://picsum.photos/id/870/430/466",
       width: 430,
       height: 466,
     },
     {
-      breakpoint: "md",
       media: "(min-width: 430px) and (max-width: 768px)",
       url: "https://picsum.photos/id/870/768/512",
       width: 768,
       height: 512,
     },
     {
-      breakpoint: "lg",
       media: "(min-width: 768px)",
       url: "https://picsum.photos/id/870/2560/800",
       width: 2560,
       height: 800,
     },
   ]}
-/>;
+/>
 ```
 
 ## Props
 
-| Prop      | Example                                                        | Type                     | Status   |
-| --------- | -------------------------------------------------------------- | ------------------------ | -------- |
-| id        | `id="examples__background-image"`                              | String                   | Required |
-| as        | `as="span"`                                                    | React.ElementType        | -        |
-| preload   | `preload={true}`                                               | Boolean                  | -        |
-| images    | `images={[ ... ]}`                                             | BackgroundImageOptions[] | Required |
-| className | `className="absolute inset-0 bg-cover bg-center bg-no-repeat"` | String                   | -        |
-| style     | `style={{ color: "red" }}`                                     | React.CSSProperties      | -        |
+| Prop                  | Example                                                        | Type                     | Status   |
+| --------------------- | -------------------------------------------------------------- | ------------------------ | -------- |
+| id                    | `id="examples__background-image"`                              | String                   | Required |
+| as                    | `as="span"`                                                    | React.ElementType        | -        |
+| preload               | `preload={true}`                                               | Boolean                  | -        |
+| images                | `images={[ ... ]}`                                             | BackgroundImageOptions[] | Required |
+| className             | `className="absolute inset-0 bg-cover bg-center bg-no-repeat"` | String                   | -        |
+| style                 | `style={{ color: "red" }}`                                     | React.CSSProperties      | -        |
+| normalizeMediaQueries | `normalizeMediaQueries={false}`                                | Boolean                  | -        |
 
 ### id
 
@@ -98,19 +96,17 @@ preload={false} // {false} | {true}
 
 Optional prop for preloading the background image. This works similar to the `priority` prop on the Next.js image.
 
-Should be used for any `<BackgroundImage>` component that is above the fold, and flagged as the Largest Contentful Paint (LCP).
+Should be used for any `<BackgroundImage />` component that is above the fold, and flagged as the Largest Contentful Paint (LCP).
 
 <Callout type="important">
-Media queries on `<link rel="preload">` do not function the way they do on HTML elements.
-The user agent will look at multiple `<link rel="preload">` elements and find multiple matches if there is any overlap in the media queries.
-This can lead to performance issues, where multiple images are preloaded, so when setting media queries, make sure each one targets a unique range.
+For preloading to work properly, media queries on `<link rel="preload">` elements cannot overlap.
 
-For preloading to work properly, media queries cannot overlap. This is not a limitation of the component per se, but how browser's parse `<link rel="preload">` elements in `<head>`.
+Media queries on `<link rel="preload">` elements do not function the way they do on HTML elements.
+The user agent will look at multiple `<link rel="preload">` media queries and find multiple matches if there is any overlap in the media queries.
+This can lead to performance issues, where multiple images are preloaded.
 
-i.e, for your medium breakpoint, if your fallback is `max-width: 430px`
-
-- _don't do this_ ~~`(min-width: 430px) and (max-width: 1023px)`~~
-- **do this** `(min-width: 431px) and (max-width: 1023px)`
+To avoid this, the `<BackgroundImage />` component will automatically adjust the media queries set on the preload links, by adding or subtracting 1 px.
+If this functionality causes any issues, it can be disabled with the `normalizeMediaQueries` prop.
 
 </Callout>
 
@@ -122,7 +118,7 @@ An array of image objects of the `BackgroundImageOptions` type.
 
 | Property   | Description                        | Example                                  | Type   | Status   |
 | ---------- | ---------------------------------- | ---------------------------------------- | ------ | -------- |
-| breakpoint | The breakpoint name                | `fallback`                               | string | Required |
+| breakpoint | Optional breakpoint name           | `fallback`                               | string | -        |
 | media      | The media query for the breakpoint | `(max-width: 430px)`                     | string | -        |
 | url        | The url for the background image   | `"https://picsum.photos/id/870/430/466"` | string | Required |
 | width      | The width of the background image  | `430`                                    | number | Required |
@@ -135,6 +131,14 @@ Optional prop for any CSS class name(s) for the background image element.
 ### style
 
 Optional prop for any CSS style properties for the background image element.
+
+### normalizeMediaQueries
+
+```ts
+normalizeMediaQueries={false} // {false} | {true}
+```
+
+An optional prop to disable the component from normalizeing the media queries to remove overlap.
 
 <PageNav>
   <PageNavItem href="/docs/picture" direction="prev">
