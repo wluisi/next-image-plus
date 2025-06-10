@@ -23,37 +23,52 @@ It can handle a single image, or be used for responsive background images. The c
 ```tsx
 import { BackgroundImage } from "next-image-plus";
 
-export default function Page() {
-  return (
-    <BackgroundImage
-      id="examples__background-image"
-      preload={true}
-      images={[
-        {
-          breakpoint: "fallback",
-          media: "(max-width: 430px)",
-          url: "https://picsum.photos/id/870/430/466",
-          width: 430,
-          height: 466,
-        },
-        {
-          breakpoint: "md",
-          media: "(min-width: 768px) and (max-width: 1023px)",
-          url: "https://picsum.photos/id/870/768/512",
-          width: 768,
-          height: 512,
-        },
-        {
-          breakpoint: "lg",
-          media: "(min-width: 1024px)",
-          url: "https://picsum.photos/id/870/2560/800",
-          width: 2560,
-          height: 800,
-        },
-      ]}
-    >
-  );
-}
+<BackgroundImage
+  id="examples__background-image"
+  images={[
+    {
+      breakpoint: "fallback",
+      url: "https://picsum.photos/id/870/430/466",
+      width: 430,
+      height: 466,
+    },
+  ]}
+>
+```
+
+### Advanced usage: Responsive Background Image
+
+```tsx
+import { BackgroundImage } from "next-image-plus";
+
+<BackgroundImage
+  id="examples__background-image"
+  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+  preload={true}
+  images={[
+    {
+      breakpoint: "fallback",
+      media: "(max-width: 430px)",
+      url: "https://picsum.photos/id/870/430/466",
+      width: 430,
+      height: 466,
+    },
+    {
+      breakpoint: "md",
+      media: "(min-width: 430px) and (max-width: 768px)",
+      url: "https://picsum.photos/id/870/768/512",
+      width: 768,
+      height: 512,
+    },
+    {
+      breakpoint: "lg",
+      media: "(min-width: 768px)",
+      url: "https://picsum.photos/id/870/2560/800",
+      width: 2560,
+      height: 800,
+    },
+  ]}
+/>;
 ```
 
 ## Props
@@ -105,13 +120,13 @@ An array of image objects of the `BackgroundImageOptions` type.
 
 ### BackgroundImageOptions Type
 
-| Property   | Description                        | Example                                  | Type   |
-| ---------- | ---------------------------------- | ---------------------------------------- | ------ |
-| breakpoint | The breakpoint name                | `fallback`                               | string |
-| media      | The media query for the breakpoint | `(max-width: 430px)`                     | string |
-| url        | The url for the background image   | `"https://picsum.photos/id/870/430/466"` | string |
-| width      | The width of the background image  | `430`                                    | number |
-| height     | The height of the background image | `466`                                    | number |
+| Property   | Description                        | Example                                  | Type   | Status   |
+| ---------- | ---------------------------------- | ---------------------------------------- | ------ | -------- |
+| breakpoint | The breakpoint name                | `fallback`                               | string | Required |
+| media      | The media query for the breakpoint | `(max-width: 430px)`                     | string | -        |
+| url        | The url for the background image   | `"https://picsum.photos/id/870/430/466"` | string | Required |
+| width      | The width of the background image  | `430`                                    | number | Required |
+| height     | The height of the background image | `466`                                    | number | Required |
 
 ### className
 
