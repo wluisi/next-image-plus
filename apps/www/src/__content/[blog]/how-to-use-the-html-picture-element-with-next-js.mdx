@@ -4,7 +4,7 @@ description: "Using next-image-plus Picture component to render HTML picture ele
 keywords: "next, react, nextjs, HTML picture, art direction, typescript"
 tags: ["article", "release"]
 publishedDate: "2025-04-25T21:48:02Z"
-status: false
+status: true
 ---
 
 ## Introduction
@@ -13,7 +13,7 @@ This guide will show you how to use the HTML `<picture>` element with a Next.js 
 
 ## HTML picture element
 
-The HTML `<picture>` element allows developers to display different images for different devices or screen sizes. It enables art direction, where you serve entirely different images depending on the context, not just resized versions of the same image.
+The HTML `<picture>` element allows developers to display different images for different devices or screen sizes. It enables **art direction**, where you serve entirely different images depending on the context, not just resized versions of the same image.
 
 This is especially useful when different crops or compositions are better suited to different screen sizes — for example, a wide landscape on desktop and a centered square on mobile.
 
@@ -25,11 +25,14 @@ This is especially useful when different crops or compositions are better suited
 </picture>
 ```
 
-## Limitations of Next.js Image Component
+## Next.js Image Component
 
-The built-in Next.js `<Image>` component doesn’t support the `<picture>` element. It's optimized for responsive image sizing via srcSet and sizes, but it doesn't allow for art direction — you can't define separate images for different breakpoints or aspect ratios. You're limited to automatic resizing of a single source image.
+The built-in Next.js <Link href="https://nextjs.org/docs/app/api-reference/components/image">Image component </Link> doesn't support the `<picture>` element. It's optimized for responsive image sizing via srcSet and sizes, but it doesn't allow for art direction — you can't define separate images for different breakpoints or aspect ratios.
 
-If you need art direction or want to use `<source>` elements directly, you'll need a different approach — which is where **next-image-plus** comes in.
+With the release of <Link href="https://nextjs.org/blog/next-14-1">v14.1.0</Link>, Next.js added a new function called `getImageProps()`.
+This function exposes some of the under the hood Image API and allows you to get props to pass to an HTML `<img>` element.
+
+While this can be used to generate the markup needed to support `<picture>`, preloading of images is not supported, as setting `priority` to `true` has no effect, and does not add `<link rel="preload" as="image">` tag to the document's `<head>`.
 
 ## Next Image Plus
 
@@ -47,11 +50,11 @@ npm install next-image-plus
 
 **next-image-plus** provides 3 components for creating responsive images with art direction:
 
-- `<Picture>` component provides a wrapper for zero or more Source components and one Img component.
-- `<Source>` component specifies an image and a media query.
-- `<Img>` component provides a fallback image
+- `<Picture />` component provides a wrapper for zero or more Source components and one Img component.
+- `<Source />` component specifies an image and a media query.
+- `<Img />` component provides a fallback image
 
-To set up the `Picture` component, we'll need to import the following inside our Next.js component:
+To set up the `<Picture />` component, we'll need to import the following inside our Next.js component:
 
 ```tsx
 import { Picture, Source, Img } from "next-image-plus";
