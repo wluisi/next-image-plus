@@ -253,4 +253,33 @@ describe("BackgroundImage component tests.", () => {
 
     expect(preloadSpy).toHaveBeenCalledTimes(1);
   });
+
+  it("should throw an error if multiple images are missing required media property.", () => {
+    expect(() =>
+      render(
+        <BackgroundImage
+          id="bg-img-throw"
+          preload={true}
+          images={[
+            {
+              breakpoint: "fallback",
+              url: "https://picsum.photos/id/10/500/250",
+              width: 500,
+              height: 250,
+            },
+            {
+              breakpoint: "md",
+              url: "https://picsum.photos/id/10/768/900",
+              width: 768,
+              height: 900,
+            },
+          ]}
+        />
+      )
+    ).toThrow(
+      'Background image with url "https://picsum.photos/id/10/500/250" is missing required "media" property. Either use a single background image, or add a media query.'
+    );
+
+    expect(preloadSpy).not.toHaveBeenCalled();
+  });
 });

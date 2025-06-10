@@ -61,6 +61,12 @@ export function getBackgroundImageProps(
   if (options.length > 1) {
     const mediaQueries = [];
     for (const { breakpoint, media, url } of options) {
+      if (!media) {
+        throw new Error(
+          `Background image with url "${url}" is missing required "media" property. Either use a single background image, or add a media query.`
+        );
+      }
+
       mediaQueries.push({
         uuid: `${breakpoint}-${url}`,
         media: media,
@@ -115,6 +121,12 @@ export function Style({ id, bgImageProps }: StyleProps) {
     // Get the smallest media query as the fallback.
     const mediaQueries = [];
     for (const [_key, props] of Object.entries(bgImageProps)) {
+      if (!props.media) {
+        throw new Error(
+          `Background image with src "${props.img.src}" is missing required "media" property. Either use a single background image, or add a media query.`
+        );
+      }
+
       mediaQueries.push(props.media);
     }
     fallbackMediaQuery = getSmallestMediaQuery(mediaQueries);
