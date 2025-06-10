@@ -93,6 +93,46 @@ describe("getBackgroundImageProps tests", () => {
     expect(fallbackImg.width).toEqual(400);
     expect(fallbackImg.height).toEqual(143);
   });
+
+  it("should return background img props for single image with no breakpoint prop.", () => {
+    const bgImageProps = getBackgroundImageProps([
+      {
+        url: "https://picsum.photos/id/10/400/143",
+        width: 400,
+        height: 143,
+      },
+    ]);
+
+    // If no breakpoint prop is passed, component will use the image url.
+    const image = bgImageProps["https://picsum.photos/id/10/400/143"].img;
+    expect(image).not.toHaveProperty("media");
+
+    expect(image.src).toEqual(
+      "/_next/image?url=https%3A%2F%2Fpicsum.photos%2Fid%2F10%2F400%2F143&w=828&q=75"
+    );
+    expect(image.width).toEqual(400);
+    expect(image.height).toEqual(143);
+  });
+
+  it("should return background img props for single image with breakpoint prop.", () => {
+    const bgImageProps = getBackgroundImageProps([
+      {
+        breakpoint: "test",
+        url: "https://picsum.photos/id/10/400/143",
+        width: 400,
+        height: 143,
+      },
+    ]);
+
+    const image = bgImageProps["test"].img;
+    expect(image).not.toHaveProperty("media");
+
+    expect(image.src).toEqual(
+      "/_next/image?url=https%3A%2F%2Fpicsum.photos%2Fid%2F10%2F400%2F143&w=828&q=75"
+    );
+    expect(image.width).toEqual(400);
+    expect(image.height).toEqual(143);
+  });
 });
 
 describe("BackgroundImage component tests.", () => {
@@ -281,5 +321,46 @@ describe("BackgroundImage component tests.", () => {
     );
 
     expect(preloadSpy).not.toHaveBeenCalled();
+  });
+
+  it("should render a div with background image when images have no breakpoint properties.", () => {
+    const { container } = render(
+      <BackgroundImage
+        id="bg-img-no-breakpoint"
+        preload={true}
+        images={[
+          {
+            media: "(max-width: 400px)",
+            url: "https://picsum.photos/id/10/400/143",
+            width: 400,
+            height: 143,
+            priority: true,
+          },
+          {
+            media: "(min-width: 431px) and (max-width: 767px)",
+            url: "https://picsum.photos/id/10/767/274",
+            width: 767,
+            height: 274,
+          },
+          {
+            media: "(min-width: 768px)",
+            url: "https://picsum.photos/id/10/3360/1200",
+            width: 3360,
+            height: 1200,
+            priority: true,
+          },
+        ]}
+      />
+    );
+
+    const element = container.querySelector(
+      "#bg-img-no-breakpoint"
+    ) as HTMLElement;
+
+    expect(element).toBeInTheDocument();
+    expect(element?.tagName.toLowerCase()).toBe("div");
+    expect(element?.id).toBe("bg-img-no-breakpoint");
+
+    expect(preloadSpy).toHaveBeenCalledTimes(3);
   });
 });

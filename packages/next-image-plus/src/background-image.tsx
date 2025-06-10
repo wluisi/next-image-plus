@@ -8,7 +8,7 @@ import { getMediaQueries } from "./utils/media";
 import { PreloadImageLink } from "./preload";
 
 type BackgroundImageOptions = Omit<NextImageProps, "alt" | "src"> & {
-  breakpoint: string;
+  breakpoint?: string;
   media?: string;
   url: string;
 };
@@ -67,8 +67,10 @@ export function getBackgroundImageProps(
         );
       }
 
+      const uuid = breakpoint ? `${breakpoint}-${url}` : url;
+
       mediaQueries.push({
-        uuid: `${breakpoint}-${url}`,
+        uuid: uuid,
         media: media,
       });
     }
@@ -86,9 +88,12 @@ export function getBackgroundImageProps(
       height: height,
     });
 
-    props[breakpoint] = {
+    const key = breakpoint ? breakpoint : url;
+    const uuid = breakpoint ? `${breakpoint}-${url}` : url;
+
+    props[key] = {
       ...(mediaQueriesFinal && {
-        media: mediaQueriesFinal[`${breakpoint}-${url}`],
+        media: mediaQueriesFinal[uuid],
       }),
       img: nextImage.props,
     };
