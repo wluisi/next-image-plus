@@ -7,20 +7,37 @@ export default function BackgroundImagePage() {
 
       <div className="mb-10">
         <h2>BackgroundImage Component</h2>
-        <div className="relative w-full h-[60vh] lg:h-[300px] overflow-hidden">
+        <p>Single background image with no media and no breakpoint.</p>
+        <div className="relative w-full h-[30vh] overflow-hidden">
           <BackgroundImage
             id="examples__background-image"
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            preload={true}
             images={[
               {
-                breakpoint: "default",
-                media: "(min-width: 0px)",
                 url: "https://picsum.photos/id/502/2560/800",
                 width: 2560,
                 height: 800,
               },
             ]}
+          />
+        </div>
+      </div>
+
+      <div className="mb-10">
+        <h2>BackgroundImage Component With Preload</h2>
+        <p>Single background image with no media and no breakpoint.</p>
+        <div className="relative w-full h-[30vh] overflow-hidden">
+          <BackgroundImage
+            id="examples__background-image-preload"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            images={[
+              {
+                url: "https://picsum.photos/id/502/2560/800",
+                width: 2560,
+                height: 800,
+              },
+            ]}
+            preload={true}
           />
         </div>
       </div>
@@ -34,23 +51,21 @@ export default function BackgroundImagePage() {
             preload={true}
             images={[
               {
-                breakpoint: "fallback",
-                media: "(max-width: 430px)",
                 url: "https://picsum.photos/id/870/430/466",
+                media: "(max-width: 430px)",
                 width: 430,
                 height: 466,
               },
               {
-                breakpoint: "md",
-                media: "(min-width: 430px) and (max-width: 768px)",
                 url: "https://picsum.photos/id/870/768/512",
+                media: "(min-width: 430px) and (max-width: 768px)",
                 width: 768,
                 height: 512,
               },
               {
-                breakpoint: "lg",
-                media: "(min-width: 768px)",
+                // breakpoint: "lg",
                 url: "https://picsum.photos/id/870/2560/800",
+                media: "(min-width: 768px)",
                 width: 2560,
                 height: 800,
               },
@@ -72,21 +87,18 @@ export default function BackgroundImagePage() {
             normalizeMediaQueries={false}
             images={[
               {
-                breakpoint: "fallback",
                 media: "(max-width: 430px)",
                 url: "https://picsum.photos/id/700/430/466",
                 width: 430,
                 height: 466,
               },
               {
-                breakpoint: "md",
                 media: "(min-width: 430px) and (max-width: 768px)",
                 url: "https://picsum.photos/id/700/768/512",
                 width: 768,
                 height: 512,
               },
               {
-                breakpoint: "lg",
                 media: "(min-width: 768px)",
                 url: "https://picsum.photos/id/700/2560/800",
                 width: 2560,

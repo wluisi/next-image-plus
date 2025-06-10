@@ -11,11 +11,24 @@ status: true
 
 This guide will show you how to add a background image to a HTML element in your Next.js app.
 
-## HTML background image
+A background image is a decorative image placed behind other content within an HTML element. This is typically done using CSS's `background-image` property.
+
+```css
+background-image: url("/images/background.jpg");
+```
+
+## Next.js Image Component
+
+The Next.js `<Image />` component renders a single `<img>` element, which unfortunately cannot support adding a background image via CSS styles to another element.
+
+With the release of `v14.1.0`, Next.js added a new function called `getImageProps()`.
+
+This function exposes some of the under the hood Image API and allows you to get props to pass to an HTML `<img>` element.
+The problem with using this function for background images is that you cannot preload the image, as setting `priority` to `true` has no effect, and does not add `<link rel="preload" as="image">` tag to the document's `<head>`.
 
 ## Next Image Plus
 
-**next-image-plus** is a set of primitive React components, built on top of the <Link href="https://nextjs.org/docs/pages/api-reference/components/image">Next.js Image API</Link> and <Link href="https://react.dev/blog/2024/12/05/react-19">React 19</Link>, which adds support for picture and background images.
+**next-image-plus** is a set of primitive React components, built on top of the <Link href="https://nextjs.org/docs/pages/api-reference/components/image">Next.js Image API</Link> and <Link href="https://react.dev/blog/2024/12/05/react-19">React 19</Link>, which adds full support for picture and background images, including preloading for images flagged as the LCP.
 
 ### Install the package
 
@@ -27,12 +40,14 @@ npm install next-image-plus
 
 ### Using the BackgroundImage component
 
+To use the `BackgroundImage` component, import it and set the id, className and images props:
+
 ```tsx
 import { BackgroundImage } from "next-image-plus";
 
 <BackgroundImage
+  id="examples__background-image"
   className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-  preload={true}
   images={[
     {
       url: "https://picsum.photos/id/502/2560/800",
@@ -42,3 +57,94 @@ import { BackgroundImage } from "next-image-plus";
   ]}
 />;
 ```
+
+Under the hood the component will handle rendering the HTML markup, as well as applying the necessary CSS styles to set the background image.
+
+Render the HTML markup with your id and class name:
+
+{/* prettier-ignore */}
+```html
+<div id="examples__background-image" class="absolute inset-0 bg-cover bg-center bg-no-repeat"></div>
+```
+
+Add a `<style>` tag to the document `<head>` that generates the css for your background image:
+
+```html
+<style data-href="examples__background-image" data-precedence="high">
+  #examples__background-image {
+    background-image: url(/_next/image?url=https://picsum.photos/id/502/2560/800&w=3840&q=75);
+  }
+</style>
+```
+
+The `<BackgroundImage />` component is not limited to just `<div>` elements, but can be configured to render any HTML element, using the `as` prop.
+
+```tsx
+import { BackgroundImage } from "next-image-plus";
+
+<BackgroundImage
+  id="examples__background-image"
+  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+  images={[
+    {
+      url: "https://picsum.photos/id/502/2560/800",
+      width: 2560,
+      height: 800,
+    },
+  ]}
+  as="span"
+/>;
+```
+
+This will render the following HTML:
+
+{/* prettier-ignore */}
+```html
+<span id="examples__background-image" class="absolute inset-0 bg-cover bg-center bg-no-repeat"></span>
+```
+
+### Preloading for LCP
+
+If your `<BackgroundImage />` component is above the fold, or flagged as the Largest Contentful Paint (LCP), it should be preloaded to improve performance.
+
+Setting the `preload` prop to `true` will automatically handle this for you:
+
+```tsx
+import { BackgroundImage } from "next-image-plus";
+
+<BackgroundImage
+  id="examples__background-image-preload"
+  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+  images={[
+    {
+      url: "https://picsum.photos/id/502/2560/800",
+      width: 2560,
+      height: 800,
+    },
+  ]}
+  preload={true}
+/>;
+```
+
+When `preload` is set to true, the component will add a `<link rel="preload" as="image">` tag to the document's `<head>`
+
+```html
+<head>
+  <link
+    rel="preload"
+    as="image"
+    fetchpriority="high"
+    imagesrcset="/_next/image?url=https://picsum.photos/id/502/2560/800&w=3840&q=75 1x"
+  />
+</head>
+```
+
+This tells the browser that this image is a critical resource, which should be fetched as soon as possible. You can read more about preloading <Link href="https://web.dev/articles/preload-responsive-images#preload">here</Link>
+
+## Conclusion
+
+To see a more advanced example, you can check out the <Link href="/examples/background-image">examples page</Link>
+
+To learn more about the `<BackgroundImage />` component, you can check out the <Link href="/docs/background-image">API documentation</Link>
+
+And if you find this package useful, please give us a star on <Link href="https://github.com/wluisi/next-image-plus">GitHub</Link>
