@@ -1,4 +1,5 @@
-import { Avatar, AvatarContainer } from "./../../components/blog/avatar";
+import Image from "next/image";
+import avatarImage from "./../../images/wluisi-headshot-square.jpg";
 
 type AuthorInfoProps = {
   fullName: string;
@@ -8,9 +9,14 @@ type AuthorInfoProps = {
 export default function AuthorInfo({ fullName, date }: AuthorInfoProps) {
   return (
     <div className="flex items-center !mb-8">
-      <AvatarContainer>
-        <Avatar large={false} />
-      </AvatarContainer>
+      <Image
+        src={avatarImage}
+        alt=""
+        className="h-9 w-9 rounded-full bg-zinc-100 object-cover dark:bg-zinc-800 grayscale brightness-110"
+        width={72}
+        height={72}
+        priority
+      />
       <div className="pl-2">
         <div className="flex flex-col gap-1.5">
           <span className="author-name text-sm leading-none font-bold">
