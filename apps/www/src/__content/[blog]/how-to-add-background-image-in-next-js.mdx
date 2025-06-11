@@ -19,16 +19,47 @@ background-image: url("/images/background.jpg");
 
 ## Next.js Image Component
 
-The Next.js `<Image />` component renders a single `<img>` element, which unfortunately cannot support adding a background image via CSS styles to another element.
+The Next.js <Link href="https://nextjs.org/docs/app/api-reference/components/image">Image component </Link> renders a single `<img>` element, which unfortunately cannot support adding a background image via CSS styles to another element.
 
-With the release of `v14.1.0`, Next.js added a new function called `getImageProps()`.
+With the release of <Link href="https://nextjs.org/blog/next-14-1">v14.1.0</Link>, Next.js added a new function called <Link href="https://nextjs.org/docs/app/api-reference/components/image#getimageprops">getImageProps( )</Link>
 
 This function exposes some of the under the hood Image API and allows you to get props to pass to an HTML `<img>` element.
+
+**[@todo] -- add example code of how to use `getImageProps()` to render a background image on a div.**
+
+This function could be used to get the image props and apply it via inline CSS styles added to the `styles` prop:
+
+```tsx
+const bgImage = getImageProps({
+  alt: "",
+  src: "https://picsum.photos/id/502/2560/800",
+  width: 2560,
+  height: 800,
+  // Has no effect.
+  priority: true,
+});
+
+return (
+  <div className="relative w-full h-[50vh] overflow-hidden">
+    <div
+      className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `url(${bgImage.props.src})`,
+      }}
+    />
+  </div>
+);
+```
+
 However, preloading of background images is not supported, as setting `priority` to `true` has no effect, and does not add `<link rel="preload" as="image">` tag to the document's `<head>`.
+
+Under the hood of the Next.js Image API, `priority` prop _only adds preload links to `<head>` if it's used in combination with the `<img>` element_.
+
+This is not ideal, and can create a performance problem if using a background image above the fold, and the image is flagged as the <Link href="https://web.dev/articles/lcp#what-elements-are-considered">Largest Contentful Paint (LCP)</Link>
 
 ## Next Image Plus
 
-**next-image-plus** is a set of primitive React components, built on top of the <Link href="https://nextjs.org/docs/pages/api-reference/components/image">Next.js Image API</Link> and <Link href="https://react.dev/blog/2024/12/05/react-19">React 19</Link>, which adds full support for picture and background images, including preloading for background images flagged as the Largest Contentful Paint (LCP).
+**next-image-plus** is a set of primitive React components, built on top of the <Link href="https://nextjs.org/docs/pages/api-reference/components/image">Next.js Image API</Link> and <Link href="https://react.dev/blog/2024/12/05/react-19">React 19</Link>, which adds full support for picture and background images, including preloading for background images flagged as the **Largest Contentful Paint (LCP)**.
 
 ### Install the package
 
