@@ -1,4 +1,3 @@
-import { cn } from "@graphinery/ui";
 import Image from "next/image";
 import avatarImage from "./../../images/wluisi-headshot-square.jpg";
 
@@ -13,9 +12,7 @@ export default function AuthorInfo({ fullName, date }: AuthorInfoProps) {
       <Image
         src={avatarImage}
         alt=""
-        className={cn(
-          "h-9 w-9 rounded-full bg-zinc-100 object-cover dark:bg-zinc-800 grayscale brightness-110"
-        )}
+        className="h-9 w-9 rounded-full bg-zinc-100 object-cover dark:bg-zinc-800 grayscale brightness-110"
         width={72}
         height={72}
         priority
