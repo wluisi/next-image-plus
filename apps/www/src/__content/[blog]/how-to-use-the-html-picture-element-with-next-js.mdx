@@ -25,13 +25,38 @@ This is especially useful when different crops or compositions are better suited
 
 ## Next.js Image Component
 
-The built-in Next.js <Link href="https://nextjs.org/docs/app/api-reference/components/image">Image component </Link> doesn't support the `<picture>` element. It's optimized for responsive image sizing via srcSet and sizes, but it doesn't allow for art direction — you can't define separate images for different breakpoints or aspect ratios.
+The built-in Next.js <Link href="https://nextjs.org/docs/app/api-reference/components/image">Image component </Link> doesn't support the `<picture>` element. It's optimized for responsive image sizing via `srcSet` and `sizes`, but it doesn't allow for art direction — you can't define separate images for different breakpoints or aspect ratios.
 
-With the release of <Link href="https://nextjs.org/blog/next-14-1">v14.1.0</Link>, Next.js added a new function called `getImageProps()`.
+With the release of <Link href="https://nextjs.org/blog/next-14-1">v14.1.0</Link>, Next.js added a new function called <Link href="https://nextjs.org/docs/app/api-reference/components/image#getimageprops">getImageProps( )</Link>
 This function exposes some of the under the hood Image API and allows you to get props to pass to an HTML `<img>` element.
 
 While this can be used to generate the markup needed to support `<picture>`, preloading of images is not supported.
-The typical way to do this with the Image component, is setting `priority` to `true`. However, this has no effect when using `getImageProps()`, and does not add `<link rel="preload" as="image">` tag to the document's `<head>`.
+The typical way to do this with the Image component or `getImageProps()` with a `<img>` element, is setting `priority` to `true`.
+
+```tsx
+import { getImageProps } from "next/image";
+
+const { props: desktopProps, ...desktopPropsRest } = getImageProps({
+  width: 1440,
+  height: 875,
+  quality: 80,
+  src: "https://picsum.photos/id/502/1440/875",
+  // Has no effect, and does not add preload links to `<head>`.
+  priority: true,
+});
+
+<picture>
+  <source
+    media="(min-width: 1000px)"
+    {...desktopPropsRest}
+    srcSet={desktopProps.srcSet}
+  />
+</picture>;
+```
+
+However, this has no effect when using `getImageProps()` with the HTML `<source>` element, and does not add `<link rel="preload" as="image">` tag to the document's `<head>`. It seems
+under the hood of the Next.js Image API, `priority` prop _only triggers adding preload links to the `<head>` if it's used in conjunction with the `<img>` element_.
+
 This can present a performance hurdle if you are using responsive images above the fold, and they are flagged as the <Link href="https://web.dev/articles/lcp#what-elements-are-considered">Largest Contentful Paint (LCP)</Link>
 
 ## Next Image Plus
@@ -177,7 +202,7 @@ This tells the browser what images are critical resources, and which should be f
 
 ## Conclusion
 
-While the examples here were basic, I hope it demonstrates the power of the **next-image-plus** `<Picture />` component.
+While the examples here are introductory, I hope it demonstrates the power of the **next-image-plus** `<Picture />` component.
 
 To see a more advanced example, you can check out the <Link href="/examples/picture">examples page</Link>
 

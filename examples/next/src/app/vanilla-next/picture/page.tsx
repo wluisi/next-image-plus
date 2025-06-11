@@ -6,9 +6,7 @@ export default function VanillaNextPicturePage() {
     sizes: "100vw",
   };
 
-  const {
-    props: { srcSet: desktop },
-  } = getImageProps({
+  const { props: desktopProps, ...desktopRest } = getImageProps({
     ...common,
     width: 1440,
     height: 875,
@@ -18,9 +16,7 @@ export default function VanillaNextPicturePage() {
     priority: true,
   });
 
-  const {
-    props: { srcSet: mobile, ...rest },
-  } = getImageProps({
+  const { props: mobileProps, ...mobileRest } = getImageProps({
     ...common,
     width: 750,
     height: 1334,
@@ -34,9 +30,17 @@ export default function VanillaNextPicturePage() {
     <div className="grid p-10 m-auto max-w-3xl">
       <h1 className="mb-10">Vanilla Next.js: Picture</h1>
       <picture>
-        <source media="(min-width: 1000px)" srcSet={desktop} />
-        <source media="(min-width: 500px)" srcSet={mobile} />
-        <img {...rest} style={{ width: "100%", height: "auto" }} />
+        <source
+          media="(min-width: 1000px)"
+          {...desktopRest}
+          srcSet={desktopProps.srcSet}
+        />
+        <source
+          media="(min-width: 500px)"
+          {...mobileRest}
+          srcSet={mobileProps.srcSet}
+        />
+        <img {...mobileRest} style={{ width: "100%", height: "auto" }} />
       </picture>
     </div>
   );
