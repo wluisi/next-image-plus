@@ -46,7 +46,11 @@ export const componentsMap = createComponentMap({
   },
   PageNav,
   PageNavItem: (props) => {
-    return <PageNavItem as={NextLink} {...props} />;
+    return (
+      // The classname `[&_svg]:shrink-0` is a temporary workaround to fix the icon shrinking if text wraps
+      // @todo this should get added to the `<PageNavItem />` component.
+      <PageNavItem as={NextLink} className="[&_svg]:shrink-0" {...props} />
+    );
   },
   FileTree,
   Folder,
