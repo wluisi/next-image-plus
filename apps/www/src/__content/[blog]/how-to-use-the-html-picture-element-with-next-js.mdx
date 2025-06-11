@@ -10,7 +10,8 @@ status: true
 ## Introduction
 
 This guide will show you how to use the HTML `<picture>` element with a Next.js app. It will also go into detail on how to optimize performance, using advanced preloading techniques.
-The HTML `<picture>` element allows developers to display different images for different devices or screen sizes. It enables **art direction**, where you serve entirely different images depending on the context, not just resized versions of the same image.
+
+The <Link href="https://web.dev/learn/design/picture-element">HTML picture element</Link> allows developers to display different images for different devices or screen sizes. It enables **art direction**, where you serve entirely different images depending on the context, not just resized versions of the same image.
 
 This is especially useful when different crops or compositions are better suited to different screen sizes — for example, a wide landscape on desktop and a centered square on mobile.
 
@@ -31,11 +32,11 @@ This function exposes some of the under the hood Image API and allows you to get
 
 While this can be used to generate the markup needed to support `<picture>`, preloading of images is not supported.
 The typical way to do this with the Image component, is setting `priority` to `true`. However, this has no effect when using `getImageProps()`, and does not add `<link rel="preload" as="image">` tag to the document's `<head>`.
-This can present a performance hurdle if you are using responsive images above the fold, and they are flagged as the Largest Contentful Paint (LCP)
+This can present a performance hurdle if you are using responsive images above the fold, and they are flagged as the <Link href="https://web.dev/articles/lcp#what-elements-are-considered">Largest Contentful Paint (LCP)</Link>
 
 ## Next Image Plus
 
-**next-image-plus** is a set of primitive React components, built on top of the <Link href="https://nextjs.org/docs/pages/api-reference/components/image">Next.js Image API</Link> and <Link href="https://react.dev/blog/2024/12/05/react-19">React 19</Link>, which adds full support for picture and background images, including full support for preloading any `<picture>` elements flagged as the Largest Contentful Paint (LCP).
+**next-image-plus** is a set of primitive React components, built on top of the <Link href="https://nextjs.org/docs/pages/api-reference/components/image">Next.js Image API</Link> and <Link href="https://react.dev/blog/2024/12/05/react-19">React 19</Link>, which adds full support for picture and background images, including preloading any `<picture>` elements flagged as the Largest Contentful Paint (LCP).
 
 ### Install the package
 
@@ -59,7 +60,7 @@ To set up the `<Picture />` component, we'll need to import the following inside
 import { Picture, Source, Img } from "next-image-plus";
 ```
 
-The <Link href="https://web.dev/learn/design/picture-element">HTML picture element</Link> allows for multiple source images, for our demo here, we're going to use 3 different sized images: medium, large, and a fallback.
+The HTML `<picture>` element allows for multiple source images, for our demo here, we're going to use 3 different sized images: medium, large, and a fallback.
 
 This table maps out our different breakpoints, images, and media queries we'll use:
 
@@ -137,8 +138,8 @@ The value for `srcset` will get automatically generated for you, using the Next.
 
 ### Preloading for LCP
 
-If your image is flagged as the <Link href="https://web.dev/articles/lcp#what-elements-are-considered">Largest Contentful Paint (LCP)</Link>, preloading can improve performance and your core web vitals score.
-The `<Picture>` component has built-in support for preloading images via the preload prop:
+If your image is flagged as the <Link href="https://web.dev/articles/lcp#what-elements-are-considered">Largest Contentful Paint (LCP)</Link>, preloading can speed up performance and improve your <Link href="https://developers.google.com/search/docs/appearance/core-web-vitals">Core Web Vitals</Link> score.
+The `<Picture />` component has built-in support for preloading images via the preload prop:
 
 ```tsx
 <Picture preload={true}>
@@ -176,7 +177,7 @@ This tells the browser what images are critical resources, and which should be f
 
 ## Conclusion
 
-This is obviously a very basic example, but I hope it demonstrates the power of the **next-image-plus** `<Picture />` component.
+While the examples here were basic, I hope it demonstrates the power of the **next-image-plus** `<Picture />` component.
 
 To see a more advanced example, you can check out the <Link href="/examples/picture">examples page</Link>
 
@@ -185,7 +186,10 @@ To learn more about the `<Picture />` component, you can check out the <Link hre
 And if you find this package useful, please give us a star on <Link href="https://github.com/wluisi/next-image-plus">GitHub</Link>
 
 <PageNav>
-  <PageNavItem href="/whatever" direction="next">
-    How to do X
+  <PageNavItem
+    href="/blog/how-to-add-background-image-in-next-js"
+    direction="next"
+  >
+    How to Add a Background Image in Next.js?
   </PageNavItem>
 </PageNav>
