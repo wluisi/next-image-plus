@@ -86,7 +86,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const urlset: MetadataRoute.Sitemap = content.map((item) => {
     const lastModified =
-      item.updatedDate !== null ? item.updatedDate : new Date();
+      item.updatedDate !== null ? item.updatedDate : item.publishedDate;
     const priority = item.path === "/" ? 1 : 0.8;
 
     return {

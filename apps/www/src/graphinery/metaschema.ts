@@ -44,6 +44,7 @@ export const metaschema: EntityMetaschema[] = [
       {
         name: "publishedDate",
         type: "string",
+        required: true,
       },
       {
         name: "updatedDate",
@@ -103,6 +104,7 @@ export const metaschema: EntityMetaschema[] = [
       {
         name: "publishedDate",
         type: "string",
+        required: true,
       },
       {
         name: "updatedDate",
