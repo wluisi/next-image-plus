@@ -5,7 +5,7 @@ import { Analytics } from "@vercel/analytics/next";
 const siteName = "next-image-plus";
 export const metadata = {
   // This sets the base url for metatags that use urls.
-  metadataBase: new URL("https://next-image-plus.vercel.app"),
+  metadataBase: new URL("https://www.next-image-plus.com"),
   title: {
     template: `%s | ${siteName}`,
     default: siteName,

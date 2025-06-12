@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 import { gql } from "@graphinery/client";
 import { client } from "./../graphinery";
 
-const BASE_URL = "https://next-image-plus.vercel.app";
+const BASE_URL = "https://www.next-image-plus.com";
 
 const SITEMAP_QUERY = gql`
   query SitemapQuery(

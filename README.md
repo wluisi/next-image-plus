@@ -25,6 +25,6 @@ To start using **next-image-plus**, install the package using your favorite pack
 npm install next-image-plus
 ```
 
-To learn more about the `Picture` component, see the [API Reference](https://next-image-plus.vercel.app/docs/picture)
+To learn more about the `Picture` component, see the [API Reference](https://www.next-image-plus.com/docs/picture)
 
-To learn more about the `BackgroundImage` component, see the [API Reference](https://next-image-plus.vercel.app/docs/background-image)
+To learn more about the `BackgroundImage` component, see the [API Reference](https://www.next-image-plus.com/docs/background-image)
