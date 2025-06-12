@@ -19,13 +19,11 @@ background-image: url("/images/background.jpg");
 
 ## Next.js Image Component
 
-The Next.js <Link href="https://nextjs.org/docs/app/api-reference/components/image">Image component </Link> renders a single `<img>` element, which unfortunately cannot support adding a background image via CSS styles to another element.
+The Next.js <Link href="https://nextjs.org/docs/app/api-reference/components/image">Image component </Link> renders a single `<img>` element, which means you cannot use it to apply a background image to a different element using CSS.
 
 With the release of <Link href="https://nextjs.org/blog/next-14-1">v14.1.0</Link>, Next.js added a new function called <Link href="https://nextjs.org/docs/app/api-reference/components/image#getimageprops">getImageProps( )</Link>
 
-This function exposes some of the under the hood Image API and allows you to get props to pass to an HTML `<img>` element.
-
-These props can then be used to apply inline CSS styles via the `styles` prop:
+This function gives you access to some of the Next Image API and allows you to get props to pass to an HTML `<img>` element. These props can then be used to apply inline CSS styles via the `styles` prop:
 
 ```tsx
 const bgImage = getImageProps({
