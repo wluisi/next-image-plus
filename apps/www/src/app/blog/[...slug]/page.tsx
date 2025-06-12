@@ -53,6 +53,7 @@ const BLOG_QUERY = gql`
         }
       }
       publishedDate
+      updatedDate
       tags {
         id
         path
@@ -160,6 +161,10 @@ export default async function BlogSlug({
   const activeTrail = blog.activeTrail.items;
   activeTrail.pop();
 
+  const lastUpdatedDate = blog.updatedDate
+    ? blog.updatedDate
+    : blog.publishedDate;
+
   return (
     <Grid
       id="grid"
@@ -204,7 +209,7 @@ export default async function BlogSlug({
 
           <header className="not-prose space-y-4 mt-5 mb-6 border-b dark:border-zinc-600">
             <div className="text-xs text-zinc-500">
-              Last updated: {formatDate(blog.publishedDate)}
+              Last updated: {formatDate(lastUpdatedDate)}
             </div>
             <Heading level="h1" className="!mt-0 !mb-2">
               {blog.title}
