@@ -1,10 +1,10 @@
 ---
-title: "How to Add a Background Image in Next.js ?"
+title: "How to Add a Background Image in Next.js?"
 description: "Using next-image-plus Background Image component to render a background image in Next.js"
 keywords: "next, react, nextjs, HTML picture, art direction, typescript"
 tags: ["article"]
 publishedDate: "2025-06-09T21:48:02Z"
-status: false
+status: true
 ---
 
 ## Introduction
@@ -19,16 +19,43 @@ background-image: url("/images/background.jpg");
 
 ## Next.js Image Component
 
-The Next.js `<Image />` component renders a single `<img>` element, which unfortunately cannot support adding a background image via CSS styles to another element.
+The Next.js <Link href="https://nextjs.org/docs/app/api-reference/components/image">Image component </Link> renders a single `<img>` element, which means you cannot use it to apply a background image to a different element using CSS.
 
-With the release of `v14.1.0`, Next.js added a new function called `getImageProps()`.
+With the release of <Link href="https://nextjs.org/blog/next-14-1">v14.1.0</Link>, Next.js added a new function called <Link href="https://nextjs.org/docs/app/api-reference/components/image#getimageprops">getImageProps( )</Link>
 
-This function exposes some of the under the hood Image API and allows you to get props to pass to an HTML `<img>` element.
+This function gives you access to some of the Next Image API and allows you to get props to pass to an HTML `<img>` element. These props can then be used to apply inline CSS styles via the `styles` prop:
+
+```tsx
+const bgImage = getImageProps({
+  alt: "",
+  src: "https://picsum.photos/id/502/2560/800",
+  width: 2560,
+  height: 800,
+  // Has no effect, and does not add preload links to `<head>`.
+  priority: true,
+});
+
+return (
+  <div className="relative w-full h-[50vh] overflow-hidden">
+    <div
+      className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `url(${bgImage.props.src})`,
+      }}
+    />
+  </div>
+);
+```
+
 However, preloading of background images is not supported, as setting `priority` to `true` has no effect, and does not add `<link rel="preload" as="image">` tag to the document's `<head>`.
+
+Under the hood of the Next.js Image API, `priority` prop _only adds preload links to `<head>` if it's used in combination with the `<img>` element_.
+
+This is not ideal, and can create a performance problem if using a background image above the fold, and the image is flagged as the <Link href="https://web.dev/articles/lcp#what-elements-are-considered">Largest Contentful Paint (LCP)</Link>
 
 ## Next Image Plus
 
-**next-image-plus** is a set of primitive React components, built on top of the <Link href="https://nextjs.org/docs/pages/api-reference/components/image">Next.js Image API</Link> and <Link href="https://react.dev/blog/2024/12/05/react-19">React 19</Link>, which adds full support for picture and background images, including preloading for background images flagged as the Largest Contentful Paint (LCP).
+**next-image-plus** is a set of primitive React components, built on top of the <Link href="https://nextjs.org/docs/pages/api-reference/components/image">Next.js Image API</Link> and <Link href="https://react.dev/blog/2024/12/05/react-19">React 19</Link>, which adds full support for picture and background images, including preloading for background images flagged as the **Largest Contentful Paint (LCP)**.
 
 ### Install the package
 
@@ -165,7 +192,7 @@ This will generate a `<style>` tag and add it the document `<head>`, including m
 
 ### Preloading for LCP
 
-If your `<BackgroundImage />` component is above the fold, or flagged as the Largest Contentful Paint (LCP), it should be preloaded to improve performance.
+If your `<BackgroundImage />` component is above the fold, or flagged as the <Link href="https://web.dev/articles/lcp#what-elements-are-considered">Largest Contentful Paint (LCP)</Link>, it should be preloaded to improve performance.
 
 Setting the `preload` prop to `true` will automatically handle this for you:
 
@@ -208,3 +235,12 @@ To see a more advanced example, you can check out the <Link href="/examples/back
 To learn more about the `<BackgroundImage />` component, you can check out the <Link href="/docs/background-image">API documentation</Link>
 
 And if you find this package useful, please give us a star on <Link href="https://github.com/wluisi/next-image-plus">GitHub</Link>
+
+<PageNav>
+  <PageNavItem
+    href="/blog/how-to-use-the-html-picture-element-with-next-js"
+    direction="next"
+  >
+    How to Use the HTML Picture Element with Next.js?
+  </PageNavItem>
+</PageNav>

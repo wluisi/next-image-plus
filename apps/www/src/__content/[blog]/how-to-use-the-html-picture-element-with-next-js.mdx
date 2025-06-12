@@ -1,19 +1,17 @@
 ---
-title: "How to use the HTML Picture element with Next.js?"
+title: "How to Use the HTML Picture Element with Next.js?"
 description: "Using next-image-plus Picture component to render HTML picture element in a Next.js app."
 keywords: "next, react, nextjs, HTML picture, art direction, typescript"
-tags: ["article", "release"]
+tags: ["article"]
 publishedDate: "2025-04-25T21:48:02Z"
-status: false
+status: true
 ---
 
 ## Introduction
 
-This guide will show you how to use the HTML `<picture>` element with a Next.js app.
+This guide will show you how to use the HTML `<picture>` element with a Next.js app. It will also go into detail on how to optimize performance, using advanced preloading techniques.
 
-## HTML picture element
-
-The HTML `<picture>` element allows developers to display different images for different devices or screen sizes. It enables art direction, where you serve entirely different images depending on the context, not just resized versions of the same image.
+The <Link href="https://web.dev/learn/design/picture-element">HTML picture element</Link> allows developers to display different images for different devices or screen sizes. It enables **art direction**, where you serve entirely different images depending on the context, not just resized versions of the same image.
 
 This is especially useful when different crops or compositions are better suited to different screen sizes — for example, a wide landscape on desktop and a centered square on mobile.
 
@@ -25,15 +23,45 @@ This is especially useful when different crops or compositions are better suited
 </picture>
 ```
 
-## Limitations of Next.js Image Component
+## Next.js Image Component
 
-The built-in Next.js `<Image>` component doesn’t support the `<picture>` element. It's optimized for responsive image sizing via srcSet and sizes, but it doesn't allow for art direction — you can't define separate images for different breakpoints or aspect ratios. You're limited to automatic resizing of a single source image.
+The built-in Next.js <Link href="https://nextjs.org/docs/app/api-reference/components/image">Image component </Link> doesn't support the `<picture>` element. It's optimized for responsive image sizing via `srcSet` and `sizes`, but it doesn't allow for art direction — you can't define separate images for different breakpoints or aspect ratios.
 
-If you need art direction or want to use `<source>` elements directly, you'll need a different approach — which is where **next-image-plus** comes in.
+With the release of <Link href="https://nextjs.org/blog/next-14-1">v14.1.0</Link>, Next.js added a new function called <Link href="https://nextjs.org/docs/app/api-reference/components/image#getimageprops">getImageProps( )</Link>
+This function exposes some of the under the hood Image API and allows you to get props to pass to an HTML `<img>` element.
+
+While this can be used to generate the markup needed to support `<picture>`, preloading of images is not supported.
+The typical way to do this with the Image component or `getImageProps()` with a `<img>` element, is setting `priority` to `true`.
+
+```tsx
+import { getImageProps } from "next/image";
+
+const { props: desktopProps, ...desktopPropsRest } = getImageProps({
+  width: 1440,
+  height: 875,
+  quality: 80,
+  src: "https://picsum.photos/id/502/1440/875",
+  // Has no effect, and does not add preload links to `<head>`.
+  priority: true,
+});
+
+<picture>
+  <source
+    media="(min-width: 1000px)"
+    {...desktopPropsRest}
+    srcSet={desktopProps.srcSet}
+  />
+</picture>;
+```
+
+However, this has no effect when using `getImageProps()` with the HTML `<source>` element, and does not add `<link rel="preload" as="image">` tag to the document's `<head>`. It seems
+under the hood of the Next.js Image API, `priority` prop _only triggers adding preload links to the `<head>` if it's used in conjunction with the `<img>` element_.
+
+This can present a performance hurdle if you are using responsive images above the fold, and they are flagged as the <Link href="https://web.dev/articles/lcp#what-elements-are-considered">Largest Contentful Paint (LCP)</Link>
 
 ## Next Image Plus
 
-**next-image-plus** is a set of primitive React components, built on top of the <Link href="https://nextjs.org/docs/pages/api-reference/components/image">Next.js Image API</Link> and <Link href="https://react.dev/blog/2024/12/05/react-19">React 19</Link>, which adds support for picture and background images.
+**next-image-plus** is a set of primitive React components, built on top of the <Link href="https://nextjs.org/docs/pages/api-reference/components/image">Next.js Image API</Link> and <Link href="https://react.dev/blog/2024/12/05/react-19">React 19</Link>, which adds full support for picture and background images, including preloading any `<picture>` elements flagged as the Largest Contentful Paint (LCP).
 
 ### Install the package
 
@@ -47,21 +75,23 @@ npm install next-image-plus
 
 **next-image-plus** provides 3 components for creating responsive images with art direction:
 
-- `<Picture>` component provides a wrapper for zero or more Source components and one Img component.
-- `<Source>` component specifies an image and a media query.
-- `<Img>` component provides a fallback image
+- `<Picture />` component provides a wrapper for zero or more Source components and one Img component.
+- `<Source />` component specifies an image and a media query.
+- `<Img />` component provides a fallback image
 
-To set up the `Picture` component, we'll need to import the following inside our Next.js component:
+To set up the `<Picture />` component, we'll need to import the following inside our Next.js component:
 
 ```tsx
 import { Picture, Source, Img } from "next-image-plus";
 ```
 
-The <Link href="https://web.dev/learn/design/picture-element">HTML picture element</Link> allows for multiple source images, for our demo here, we're going to use 3 different sized images: medium, large, and a fallback.
+The HTML `<picture>` element allows for multiple source images, for our demo here, we're going to use 3 different sized images: medium, large, and a fallback.
+
+This table maps out our different breakpoints, images, and media queries we'll use:
 
 | Breakpoint | Image                               | Media                                      | Width | Height |
 | ---------- | ----------------------------------- | ------------------------------------------ | ----- | ------ |
-| medium     | https://picsum.photos/id/59/860/430 | (min-width: 431px) and (max-width: 1023px) | 860px | 430px  |
+| medium     | https://picsum.photos/id/59/860/430 | (min-width: 430px) and (max-width: 1024px) | 860px | 430px  |
 | large      | https://picsum.photos/id/59/220/220 | (min-width: 1024px)                        | 220px | 220px  |
 | fallback   | https://picsum.photos/id/59/430/215 | (max-width: 430px)                         | 430px | 215px  |
 
@@ -69,14 +99,14 @@ Using the components, we can create a `picture` element with 2 sources and a fal
 
 ```tsx
 <Picture>
-  {/* Medium */}
+  {/* Medium breakpoint */}
   <Source
-    media="(min-width: 431px) and (max-width: 1023px)"
+    media="(min-width: 430px) and (max-width: 1024px)"
     src="https://picsum.photos/id/59/860/430"
     width={860}
     height={430}
   />
-  {/* Large */}
+  {/* Large breakpoint */}
   <Source
     media="(min-width: 1024px)"
     src="https://picsum.photos/id/59/220/220"
@@ -96,34 +126,32 @@ Using the components, we can create a `picture` element with 2 sources and a fal
 In the browser, this will render the following HTML:
 
 ```html
-<html>
-  <picture>
-    <source
-      media="(min-width: 431px) and (max-width: 1023px)"
-      width="860"
-      height="430"
-      srcset="
-        /_next/image?url=https://picsum.photos/id/59/860/430&w=860&q=75  1x,
-        /_next/image?url=https://picsum.photos/id/59/860/430&w=1920&q=75 2x
-      "
-    />
-    <source
-      media="(min-width: 1024px)"
-      width="220"
-      height="220"
-      srcset="
-        /_next/image?url=https://picsum.photos/id/59/220/220&w=256&q=75 1x,
-        /_next/image?url=https://picsum.photos/id/59/220/220&w=640&q=75 2x
-      "
-    />
-    <img
-      src="/_next/image?url=https://picsum.photos/id/59/430/215&w=860&q=75"
-      width="430"
-      height="215"
-      alt="Mountains and a river"
-    />
-  </picture>
-</html>
+<picture>
+  <source
+    media="(min-width: 431px) and (max-width: 1023px)"
+    width="860"
+    height="430"
+    srcset="
+      /_next/image?url=https://picsum.photos/id/59/860/430&w=860&q=75  1x,
+      /_next/image?url=https://picsum.photos/id/59/860/430&w=1920&q=75 2x
+    "
+  />
+  <source
+    media="(min-width: 1024px)"
+    width="220"
+    height="220"
+    srcset="
+      /_next/image?url=https://picsum.photos/id/59/220/220&w=256&q=75 1x,
+      /_next/image?url=https://picsum.photos/id/59/220/220&w=640&q=75 2x
+    "
+  />
+  <img
+    src="/_next/image?url=https://picsum.photos/id/59/430/215&w=860&q=75"
+    width="430"
+    height="215"
+    alt="Mountains and a river"
+  />
+</picture>
 ```
 
 <Callout type="info">
@@ -133,99 +161,48 @@ The value for `srcset` will get automatically generated for you, using the Next.
 
 </Callout>
 
-### Preloading
+### Preloading for LCP
 
-If your image is flagged as the <Link href="https://web.dev/articles/lcp#what-elements-are-considered">Largest Contentful Paint (LCP)</Link>, preloading can improve your web core vitals score. The `<Picture>` component
-has built-in support for preloading images.
+If your image is flagged as the <Link href="https://web.dev/articles/lcp#what-elements-are-considered">Largest Contentful Paint (LCP)</Link>, preloading can speed up performance and improve your <Link href="https://developers.google.com/search/docs/appearance/core-web-vitals">Core Web Vitals</Link> score.
+The `<Picture />` component has built-in support for preloading images via the preload prop:
 
 ```tsx
-<Picture preload={true} fallbackMedia="(max-width: 430px)">
+<Picture preload={true}>
 ```
 
-In the browser, this will render the following HTML:
+When `preload` is set to true, the component will add a `<link rel="preload" as="image">` tag to the document's `<head>`. In the browser, this will render the following HTML:
 
 ```html
-<html>
-  <head>
-    <link
-      rel="preload"
-      as="image"
-      fetchpriority="high"
-      imagesrcset="/_next/image?url=https://picsum.photos/id/59/430/215&w=430&q=75 1x, /_next/image?url=https://picsum.photos/id/59/430/215&w=860&q=75 2x"
-      media="(max-width: 430px)"
-    />
-    <link
-      rel="preload"
-      as="image"
-      fetchpriority="high"
-      imagesrcset="/_next/image?url=https://picsum.photos/id/59/860/430&w=860&q=75 1x, /_next/image?url=https://picsum.photos/id/59/860/430&w=1920&q=75 2x"
-      media="(min-width: 431px) and (max-width: 1023px)"
-    />
-    <link
-      rel="preload"
-      as="image"
-      fetchpriority="high"
-      imagesrcset="/_next/image?url=https://picsum.photos/id/59/220/220&w=256&q=75 1x, /_next/image?url=https://picsum.photos/id/59/220/220&w=640&q=75 2x"
-      media="(min-width: 1024px)"
-    />
-  </head>
-</html>
+<head>
+  <link
+    rel="preload"
+    as="image"
+    fetchpriority="high"
+    imagesrcset="/_next/image?url=https://picsum.photos/id/59/430/215&w=430&q=75 1x, /_next/image?url=https://picsum.photos/id/59/430/215&w=860&q=75 2x"
+    media="(max-width: 430px)"
+  />
+  <link
+    rel="preload"
+    as="image"
+    fetchpriority="high"
+    imagesrcset="/_next/image?url=https://picsum.photos/id/59/860/430&w=860&q=75 1x, /_next/image?url=https://picsum.photos/id/59/860/430&w=1920&q=75 2x"
+    media="(min-width: 431px) and (max-width: 1023px)"
+  />
+  <link
+    rel="preload"
+    as="image"
+    fetchpriority="high"
+    imagesrcset="/_next/image?url=https://picsum.photos/id/59/220/220&w=256&q=75 1x, /_next/image?url=https://picsum.photos/id/59/220/220&w=640&q=75 2x"
+    media="(min-width: 1024px)"
+  />
+</head>
 ```
 
-<Callout type="important">
-For preloading to work properly, media queries cannot overlap.
-
-Media queries on `<link rel="preload">` elements do not function the way they do on HTML elements.
-The user agent will look at multiple `<link rel="preload">` elements and find multiple matches if there is any overlap in the media queries.
-This can lead to performance issues, where multiple images are preloaded.
-
-To avoid this, the `<Picture />` component will automatically adjust the media queries set on Source to remove any overlap, by adding or subtracting 1 px.
-If this functionality causes any issues, it can be disabled with the `normalizeMediaQueries` prop.
-
-</Callout>
-
-All together, the page template would look something like this:
-
-```tsx
-@filename: /app/page.tsx
-import { Picture, Source, Img } from "next-image-plus";
-
-export default function Home() {
-  return (
-    <div className="grid">
-      <main className="flex flex-col gap-8">
-        <Picture preload={true} fallbackMedia="(max-width: 430px)">
-          {/* Medium */}
-          <Source
-            media="(min-width: 431px) and (max-width: 1023px)"
-            src="https://picsum.photos/id/59/860/430"
-            width={860}
-            height={430}
-          />
-          {/* Large */}
-          <Source
-            media="(min-width: 1024px)"
-            src="https://picsum.photos/id/59/220/220"
-            width={220}
-            height={220}
-          />
-          {/* Fallback */}
-          <Img
-            src="https://picsum.photos/id/59/430/215"
-            width={430}
-            height={215}
-            alt="Mountains and a river"
-          />
-        </Picture>
-      </main>
-    </div>
-  );
-}
-```
+This tells the browser what images are critical resources, and which should be fetched as soon as possible. You can read more about preloading responsive images <Link href="https://web.dev/articles/preload-responsive-images#preload">here</Link>
 
 ## Conclusion
 
-This is obviously a very basic example, but I hope it demonstrates the power of the **next-image-plus** `<Picture />` component.
+While the examples here are introductory, I hope it demonstrates the power of the **next-image-plus** `<Picture />` component.
 
 To see a more advanced example, you can check out the <Link href="/examples/picture">examples page</Link>
 
@@ -234,7 +211,10 @@ To learn more about the `<Picture />` component, you can check out the <Link hre
 And if you find this package useful, please give us a star on <Link href="https://github.com/wluisi/next-image-plus">GitHub</Link>
 
 <PageNav>
-  <PageNavItem href="/whatever" direction="next">
-    How to do X
+  <PageNavItem
+    href="/blog/how-to-add-background-image-in-next-js"
+    direction="next"
+  >
+    How to Add a Background Image in Next.js?
   </PageNavItem>
 </PageNav>

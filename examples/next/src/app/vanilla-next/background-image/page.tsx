@@ -10,14 +10,6 @@ export default function VanillaNextBackgroundImagePage() {
     priority: true,
   });
 
-  const image = getImageProps({
-    alt: "",
-    src: "https://picsum.photos/id/123/2560/800",
-    width: 2560,
-    height: 800,
-    priority: true,
-  });
-
   return (
     <div className="grid p-10 m-auto max-w-3xl">
       <h1 className="mb-10">Vanilla Next.js: Background Image</h1>
@@ -29,9 +21,6 @@ export default function VanillaNextBackgroundImagePage() {
           }}
         />
       </div>
-
-      <br />
-      <img {...image.props} />
     </div>
   );
 }
