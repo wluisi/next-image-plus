@@ -1,8 +1,115 @@
 ---
-title: "Next Image Plus v1 is Released"
+title: "Announcing Next Image Plus v1"
 description: "The v1 release is finally here. Read about all the new featured added."
 keywords: "next, react, nextjs, HTML picture, art direction, typescript"
 tags: ["release"]
 publishedDate: "2025-06-13"
-status: false
+status: true
 ---
+
+Today, I'm excited to announce the release of Next Image Plus v1.
+
+Here's what's changed since the first beta release:
+
+- Migrated from tsup to rollup
+- Improved test coverage
+- Media queries are now normalized by default, with the option to disable
+- Background image props `breakpoint` and `media` are now optional
+
+---
+
+## Media Queries Normalized by Default
+
+If preloading was enabled, the beta version required a `fallbackMedia` value and manually setting media queries to avoid overlap:
+
+### Before
+
+```tsx
+<Picture preload={true} fallbackMedia="(max-width: 430px)">
+  {/* Medium breakpoint */}
+  <Source media="(min-width: 431px) and (max-width: 1023px)" ... />
+  {/* Large breakpoint */}
+  <Source
+    media="(min-width: 1024px)" ... />
+  {/* Fallback */}
+  <Img ... />
+</Picture>
+```
+
+### After
+
+```tsx
+<Picture preload={true}>
+  {/* Medium breakpoint */}
+  <Source media="(min-width: 430px) and (max-width: 1024px)" ... />
+  {/* Large breakpoint */}
+  <Source
+    media="(min-width: 1024px)" ... />
+  {/* Fallback */}
+  <Img ... />
+</Picture>
+```
+
+The component will now automatically adjust media queries to prevent any overlap and also set a media query for fallback for preloading links. The above code will
+generate the following:
+
+```html
+<head>
+  <link rel="preload" as="image" ... media="(max-width: 430px)" />
+  <link
+    rel="preload"
+    as="image"
+    ...
+    media="(min-width: 431px) and (max-width: 1023px)"
+  />
+  <link rel="preload" as="image" ... media="(min-width: 1024px)" />
+</head>
+```
+
+This behavior can be disabled by setting `normalizeMediaQueries` to `false` and then providing a `fallbackMedia` value.
+
+---
+
+## Background Image Improvements
+
+Background image props `breakpoint` and `media` are now optional. Previous beta versions required setting these props, even for single images, which made the component awkward to use:
+
+### Before
+
+```tsx
+<BackgroundImage
+  id="examples__background-image"
+  images={[
+    {
+      breakpoint="fallback"
+      media="(min-width: 0px)"
+      url: "https://picsum.photos/id/870/430/466",
+      width: 430,
+      height: 466,
+    },
+  ]}
+>
+```
+
+### After
+
+```tsx
+<BackgroundImage
+  id="examples__background-image"
+  images={[
+    {
+      url: "https://picsum.photos/id/870/430/466",
+      width: 430,
+      height: 466,
+    },
+  ]}
+>
+```
+
+## Get Started
+
+Start using **next-image-plus** v1 today, by installing it with your favorite package manager:
+
+```shell
+npm install next-image-plus
+```
