@@ -17,6 +17,20 @@ export default defineConfig({
         }
         return launchOptions;
       });
+
+      // For cypress-axe.
+      on("task", {
+        log(message) {
+          console.log(message);
+
+          return null;
+        },
+        table(message) {
+          console.table(message);
+
+          return null;
+        },
+      });
     },
     specPattern: "**/*.test.{js,jsx,ts,tsx}",
   },
