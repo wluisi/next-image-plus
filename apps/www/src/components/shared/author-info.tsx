@@ -22,7 +22,7 @@ export default function AuthorInfo({ fullName, date }: AuthorInfoProps) {
           <span className="author-name text-sm leading-none font-bold">
             {fullName}
           </span>
-          <span className="post-date text-zinc-500 text-xs leading-none">
+          <span className="post-date text-zinc-500 dark:text-zinc-400 text-xs leading-none">
             {date}
           </span>
         </div>

@@ -173,6 +173,7 @@ export default async function BlogSlug({
       <GridItem
         id="left-sidebar"
         as="aside"
+        aria-label="Primary navigation"
         className="hidden md:flex md:col-span-2 md:h-screen md:sticky md:top-[var(--navbar-height)]"
       >
         <SidebarMenu currentPath="/blog" />
@@ -198,6 +199,7 @@ export default async function BlogSlug({
                       as={Link}
                       href={item.path}
                       isCurrentPage={item.path === blog.path}
+                      ariaLabel={item.path === "/" ? "Home" : null}
                     >
                       {itemTitle}
                     </BreadcrumbLink>
@@ -208,7 +210,7 @@ export default async function BlogSlug({
           </Breadcrumb>
 
           <header className="not-prose space-y-4 mt-5 mb-6 border-b dark:border-zinc-600">
-            <div className="text-xs text-zinc-500">
+            <div className="text-xs text-zinc-500 dark:text-zinc-400">
               Last updated: {formatDate(lastUpdatedDate)}
             </div>
             <Heading level="h1" className="!mt-0 !mb-2">

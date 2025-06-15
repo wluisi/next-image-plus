@@ -6,8 +6,9 @@ type TagProps = React.HTMLAttributes<HTMLDivElement>;
 export default function Tag({ className, children }: TagProps) {
   return (
     <div
+      // bg-red-400 | text-red-50
       className={cn(
-        "flex items-center bg-red-400 text-red-50 text-xs font-bold px-2.5 py-0 rounded-sm w-fit",
+        "flex items-center bg-red-400 text-black dark:bg-red-400 dark:text-black text-xs font-bold px-2.5 py-0 rounded-sm w-fit",
         className
       )}
     >
