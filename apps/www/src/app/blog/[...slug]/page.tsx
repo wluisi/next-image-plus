@@ -21,7 +21,7 @@ import {
   cn,
 } from "@graphinery/ui";
 import SidebarMenu from "../../../components/sidebar-menu";
-import Tag from "./../../../components/shared/tag";
+import Tag, { TagColor } from "./../../../components/shared/tag";
 import AuthorInfo from "./../../../components/shared/author-info";
 import formatDate from "./../../../utils/format-date";
 
@@ -165,7 +165,7 @@ export default async function BlogSlug({
     ? blog.updatedDate
     : blog.publishedDate;
 
-  const colorPaletteMap: Record<string, string> = {
+  const colorPaletteMap: Record<string, TagColor> = {
     article: "red",
     release: "green",
   };
