@@ -22,7 +22,7 @@ const pages = [
   {
     path: "/examples",
   },
-  // @todo these 2 fail, because of the tabs.
+  // @todo these 2 fail, because of the tabs, which needs to be fixed upstream.
   // {
   //   path: "/examples/picture",
   // },
@@ -48,59 +48,59 @@ const MD_VIEWPORT: [number, number] = [740, 1024];
 const LG_VIEWPORT: [number, number] = [1500, 900];
 
 pages.forEach((page) => {
-  // describe(`SM_VIEWPORT: accessibility tests for path: [ ${page.path} ]`, () => {
-  //   beforeEach(() => {
-  //     cy.viewport(...SM_VIEWPORT);
-  //     cy.visit(page.path);
-  //     cy.injectAxe();
-  //   });
+  describe(`SM_VIEWPORT: accessibility tests for path: [ ${page.path} ]`, () => {
+    beforeEach(() => {
+      cy.viewport(...SM_VIEWPORT);
+      cy.visit(page.path);
+      cy.injectAxe();
+    });
 
-  //   it("should have no accessibility issues.", () => {
-  //     cy.checkA11y(null, null, terminalLog);
-  //   });
-  // });
+    it("should have no accessibility issues.", () => {
+      cy.checkA11y(null, null, terminalLog);
+    });
+  });
 
-  // describe(`SM_VIEWPORT: dark mode: accessibility tests for path: [ ${page.path} ]`, () => {
-  //   beforeEach(() => {
-  //     cy.viewport(...SM_VIEWPORT);
-  //     cy.visit(page.path);
-  //     cy.injectAxe();
-  //   });
+  describe(`SM_VIEWPORT: dark mode: accessibility tests for path: [ ${page.path} ]`, () => {
+    beforeEach(() => {
+      cy.viewport(...SM_VIEWPORT);
+      cy.visit(page.path);
+      cy.injectAxe();
+    });
 
-  //   it("should have no accessibility issues.", () => {
-  //     cy.get("#theme-toggle-button").click();
-  //     cy.get("html").should("have.class", "dark");
+    it("should have no accessibility issues.", () => {
+      cy.get("#theme-toggle-button").click();
+      cy.get("html").should("have.class", "dark");
 
-  //     cy.checkA11y(null, null, terminalLog);
-  //   });
-  // });
+      cy.checkA11y(null, null, terminalLog);
+    });
+  });
 
-  // describe(`MD_VIEWPORT: accessibility tests for path: [ ${page.path} ]`, () => {
-  //   beforeEach(() => {
-  //     cy.viewport(...MD_VIEWPORT);
-  //     cy.visit(page.path);
-  //     cy.injectAxe();
-  //   });
+  describe(`MD_VIEWPORT: accessibility tests for path: [ ${page.path} ]`, () => {
+    beforeEach(() => {
+      cy.viewport(...MD_VIEWPORT);
+      cy.visit(page.path);
+      cy.injectAxe();
+    });
 
-  //   it("should have no accessibility issues.", () => {
-  //     cy.checkA11y(null, null, terminalLog);
-  //   });
-  // });
+    it("should have no accessibility issues.", () => {
+      cy.checkA11y(null, null, terminalLog);
+    });
+  });
 
-  // describe(`MD_VIEWPORT: dark mode: accessibility tests for path: [ ${page.path} ]`, () => {
-  //   beforeEach(() => {
-  //     cy.viewport(...MD_VIEWPORT);
-  //     cy.visit(page.path);
-  //     cy.injectAxe();
-  //   });
+  describe(`MD_VIEWPORT: dark mode: accessibility tests for path: [ ${page.path} ]`, () => {
+    beforeEach(() => {
+      cy.viewport(...MD_VIEWPORT);
+      cy.visit(page.path);
+      cy.injectAxe();
+    });
 
-  //   it("should have no accessibility issues.", () => {
-  //     cy.get("#theme-toggle-button").click();
-  //     cy.get("html").should("have.class", "dark");
+    it("should have no accessibility issues.", () => {
+      cy.get("#theme-toggle-button").click();
+      cy.get("html").should("have.class", "dark");
 
-  //     cy.checkA11y(null, null, terminalLog);
-  //   });
-  // });
+      cy.checkA11y(null, null, terminalLog);
+    });
+  });
 
   describe(`LG_VIEWPORT: accessibility tests for path: [ ${page.path} ]`, () => {
     beforeEach(() => {
