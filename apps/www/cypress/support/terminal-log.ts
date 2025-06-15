@@ -13,8 +13,22 @@ export function terminalLog(violations) {
       impact,
       description,
       nodes: nodes.length,
+      // targets: nodes.map((node) => node.target.join(", ")).join(" | "),
+      // html: nodes.map((node) => node.html).join("\n---\n"),
     })
   );
 
   cy.task("table", violationData);
+
+  // Extra: log each affected element
+  violations.forEach(({ id, nodes }) => {
+    nodes.forEach(({ target, html }) => {
+      cy.log("html", html);
+
+      cy.task(
+        "log",
+        `[${id}] Affected element: ${target.join(", ")}\n  HTML: ${html}`
+      );
+    });
+  });
 }

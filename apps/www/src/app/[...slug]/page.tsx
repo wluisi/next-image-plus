@@ -157,6 +157,7 @@ export default async function CatchAllSlugPage({
       <GridItem
         id="left-sidebar"
         as="aside"
+        aria-label="Primary navigation"
         className="hidden md:flex md:col-span-2 md:h-screen md:sticky md:top-[var(--navbar-height)]"
       >
         <SidebarMenu currentPath={path} />
@@ -186,6 +187,7 @@ export default async function CatchAllSlugPage({
                       as={Link}
                       href={item.path}
                       isCurrentPage={item.path === page.path}
+                      ariaLabel={item.path === "/" ? "Home" : null}
                     >
                       {itemTitle}
                     </BreadcrumbLink>
@@ -207,6 +209,8 @@ export default async function CatchAllSlugPage({
         as="aside"
         className={cn(
           "hidden lg:flex lg:col-span-2 md:h-screen md:sticky md:top-[var(--navbar-height)]",
+          path === "/docs" && "!hidden",
+          path === "/examples" && "!hidden",
           path === "/examples/picture" && "!hidden",
           path === "/examples/background-image" && "!hidden",
           path === "/blog" && "!hidden"

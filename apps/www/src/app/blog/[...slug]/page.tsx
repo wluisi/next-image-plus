@@ -21,7 +21,7 @@ import {
   cn,
 } from "@graphinery/ui";
 import SidebarMenu from "../../../components/sidebar-menu";
-import Tag from "./../../../components/shared/tag";
+import Tag, { TagColor } from "./../../../components/shared/tag";
 import AuthorInfo from "./../../../components/shared/author-info";
 import formatDate from "./../../../utils/format-date";
 
@@ -165,6 +165,11 @@ export default async function BlogSlug({
     ? blog.updatedDate
     : blog.publishedDate;
 
+  const colorPaletteMap: Record<string, TagColor> = {
+    article: "red",
+    release: "green",
+  };
+
   return (
     <Grid
       id="grid"
@@ -173,6 +178,7 @@ export default async function BlogSlug({
       <GridItem
         id="left-sidebar"
         as="aside"
+        aria-label="Primary navigation"
         className="hidden md:flex md:col-span-2 md:h-screen md:sticky md:top-[var(--navbar-height)]"
       >
         <SidebarMenu currentPath="/blog" />
@@ -198,6 +204,7 @@ export default async function BlogSlug({
                       as={Link}
                       href={item.path}
                       isCurrentPage={item.path === blog.path}
+                      ariaLabel={item.path === "/" ? "Home" : null}
                     >
                       {itemTitle}
                     </BreadcrumbLink>
@@ -208,7 +215,7 @@ export default async function BlogSlug({
           </Breadcrumb>
 
           <header className="not-prose space-y-4 mt-5 mb-6 border-b dark:border-zinc-600">
-            <div className="text-xs text-zinc-500">
+            <div className="text-xs text-zinc-500 dark:text-zinc-400">
               Last updated: {formatDate(lastUpdatedDate)}
             </div>
             <Heading level="h1" className="!mt-0 !mb-2">
@@ -217,9 +224,11 @@ export default async function BlogSlug({
             {blog?.tags && (
               <div className="mb-5 flex gap-3">
                 <ul className="list-none flex gap-y-3 flex-wrap pl-0">
-                  {blog.tags.map((tag: any) => (
+                  {blog.tags.map((tag: { id: string; title: string }) => (
                     <li key={tag.id} className="!pl-0 pr-3">
-                      <Tag>{tag.title.toLowerCase()}</Tag>
+                      <Tag colorPalette={colorPaletteMap[tag.id]}>
+                        {tag.title.toLowerCase()}
+                      </Tag>
                     </li>
                   ))}
                 </ul>

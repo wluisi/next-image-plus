@@ -158,9 +158,9 @@ export function Card({ id, title, description, image }: CardProps) {
 
       <div className="flex flex-1 flex-col p-4 lg:justify-between">
         <div>
-          <h3 className="mb-2 text-zinc-900 dark:text-zinc-100 text-lg font-semibold">
+          <h2 className="mb-2 text-zinc-900 dark:text-zinc-100 text-lg font-semibold">
             {title}
-          </h3>
+          </h2>
           <p className="mb-5 text-zinc-600 dark:text-zinc-300 leading-normal text-base font-light">
             {description}
           </p>

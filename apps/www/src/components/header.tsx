@@ -103,6 +103,7 @@ export async function Header() {
             href="https://github.com/wluisi/next-image-plus"
             target="_blank"
             className="text-black dark:text-zinc-100 p-2 rounded-md no-underline hover:bg-zinc-200 dark:hover:bg-zinc-700"
+            aria-label="github link"
           >
             <GithubIcon className="h-5 w-5" />
           </Link>
