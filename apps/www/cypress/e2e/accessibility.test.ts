@@ -38,9 +38,9 @@ const pages = [
   {
     path: "/blog/how-to-use-the-html-picture-element-with-next-js",
   },
-  // {
-  //   path: "/blog/next-image-plus-v1",
-  // },
+  {
+    path: "/blog/next-image-plus-v1",
+  },
 ];
 
 const SM_VIEWPORT: [number, number] = [430, 932];
