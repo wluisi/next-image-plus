@@ -165,6 +165,11 @@ export default async function BlogSlug({
     ? blog.updatedDate
     : blog.publishedDate;
 
+  const colorPaletteMap: Record<string, string> = {
+    article: "red",
+    release: "green",
+  };
+
   return (
     <Grid
       id="grid"
@@ -221,9 +226,23 @@ export default async function BlogSlug({
                 <ul className="list-none flex gap-y-3 flex-wrap pl-0">
                   {blog.tags.map((tag: any) => (
                     <li key={tag.id} className="!pl-0 pr-3">
-                      <Tag>{tag.title.toLowerCase()}</Tag>
+                      <Tag colorPalette={colorPaletteMap[tag.id]}>
+                        {tag.title.toLowerCase()}
+                      </Tag>
                     </li>
                   ))}
+                  {/* <li className="!pl-0 pr-3">
+                    <Tag colorPalette="green">release</Tag>
+                  </li>
+                  <li className="!pl-0 pr-3">
+                    <Tag colorPalette="blue">announcement</Tag>
+                  </li>
+                  <li className="!pl-0 pr-3">
+                    <Tag colorPalette="teal">something</Tag>
+                  </li>
+                  <li className="!pl-0 pr-3">
+                    <Tag>default</Tag>
+                  </li> */}
                 </ul>
               </div>
             )}
