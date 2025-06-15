@@ -224,25 +224,13 @@ export default async function BlogSlug({
             {blog?.tags && (
               <div className="mb-5 flex gap-3">
                 <ul className="list-none flex gap-y-3 flex-wrap pl-0">
-                  {blog.tags.map((tag: any) => (
+                  {blog.tags.map((tag: { id: string; title: string }) => (
                     <li key={tag.id} className="!pl-0 pr-3">
                       <Tag colorPalette={colorPaletteMap[tag.id]}>
                         {tag.title.toLowerCase()}
                       </Tag>
                     </li>
                   ))}
-                  {/* <li className="!pl-0 pr-3">
-                    <Tag colorPalette="green">release</Tag>
-                  </li>
-                  <li className="!pl-0 pr-3">
-                    <Tag colorPalette="blue">announcement</Tag>
-                  </li>
-                  <li className="!pl-0 pr-3">
-                    <Tag colorPalette="teal">something</Tag>
-                  </li>
-                  <li className="!pl-0 pr-3">
-                    <Tag>default</Tag>
-                  </li> */}
                 </ul>
               </div>
             )}
