@@ -48,16 +48,10 @@ export default function Hero({ title, description }: HeroProps) {
               {description}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/whatever"
-                className="inline-flex h-12 items-center no-underline hover:underline justify-center rounded-md bg-white px-6 py-3 text-base font-medium text-gray-900 shadow transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
+              <a className="inline-flex h-12 items-center no-underline hover:underline justify-center rounded-md bg-white px-6 py-3 text-base font-medium text-gray-900 shadow transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                 Primary button text
               </a>
-              <a
-                href="/whatever"
-                className="inline-flex h-12 items-center no-underline hover:underline justify-center rounded-md border border-white bg-transparent px-6 py-3 text-base font-medium text-white shadow-sm transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
+              <a className="inline-flex h-12 items-center no-underline hover:underline justify-center rounded-md border border-white bg-transparent px-6 py-3 text-base font-medium text-white shadow-sm transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                 Secondary button text
               </a>
             </div>
