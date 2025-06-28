@@ -12,15 +12,13 @@ export default function BackgroundImageExampleTabs({
         <TabsTrigger value="preview">Preview</TabsTrigger>
         <TabsTrigger value="code">Code</TabsTrigger>
       </TabsList>
-      <TabsContent value="preview" className="md:my-5">
+      <TabsContent value="preview">
         <ExamplesHero
           title="Background image example"
           description="Create stunning websites and applications with our powerful platform. Get started today and bring your ideas to life."
         />
       </TabsContent>
-      <TabsContent value="code" className="md:my-5">
-        {children}
-      </TabsContent>
+      <TabsContent value="code">{children}</TabsContent>
     </Tabs>
   );
 }

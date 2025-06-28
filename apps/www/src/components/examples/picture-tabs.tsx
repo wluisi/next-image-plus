@@ -11,9 +11,7 @@ export default function PictureExampleTabs({ children }: { children: any }) {
       <TabsContent value="preview">
         <ExamplesCardGrid />
       </TabsContent>
-      <TabsContent value="code">
-        <div className="md:my-10">{children}</div>
-      </TabsContent>
+      <TabsContent value="code">{children}</TabsContent>
     </Tabs>
   );
 }
