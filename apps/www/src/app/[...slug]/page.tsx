@@ -26,8 +26,8 @@ import { metadata as layoutMetadata } from "../layout";
 import { Metadata } from "next";
 
 const PAGE_QUERY = gql`
-  query PageQuery($id: String) {
-    page(id: $id) {
+  query PageQuery($path: String) {
+    page(path: $path) {
       title
       description
       keywords
@@ -56,7 +56,7 @@ async function getPage(path: string) {
   const { data } = await client.request({
     query: PAGE_QUERY,
     variables: {
-      id: path,
+      path: path,
     },
     options: {
       next: { tags: [path] },
@@ -107,7 +107,6 @@ export async function generateStaticParams() {
       pageCollection(limit: $limit, filter: $filter) {
         items {
           id
-          uuid
           path
           slug
         }

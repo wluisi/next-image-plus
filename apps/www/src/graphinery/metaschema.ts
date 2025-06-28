@@ -1,12 +1,12 @@
-import { EntityMetaschema } from "@graphinery/mdx";
+import { CollectionMetaschema } from "@graphinery/mdx";
 
-export const metaschema: EntityMetaschema[] = [
+export const metaschema: CollectionMetaschema[] = [
   {
     name: "Page",
-    type: "type",
+    type: "object",
     datasource: {
-      entityType: "content",
-      bundle: "page",
+      interfaceType: "content",
+      collection: "page",
       directory: "[page]",
       pathPrefix: "/",
     },
@@ -54,10 +54,10 @@ export const metaschema: EntityMetaschema[] = [
   },
   {
     name: "Blog",
-    type: "type",
+    type: "object",
     datasource: {
-      entityType: "content",
-      bundle: "blog",
+      interfaceType: "content",
+      collection: "blog",
       directory: "[blog]",
       pathPrefix: "/blog",
     },
@@ -114,10 +114,10 @@ export const metaschema: EntityMetaschema[] = [
   },
   {
     name: "Tag",
-    type: "type",
+    type: "object",
     datasource: {
-      entityType: "taxonomyTerm",
-      bundle: "tag",
+      interfaceType: "taxonomyTerm",
+      collection: "tag",
       directory: "[tag]",
       pathPrefix: "/tag",
     },

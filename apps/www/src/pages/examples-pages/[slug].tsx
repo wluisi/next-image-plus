@@ -32,10 +32,9 @@ import { default as ExamplesCardGrid } from "../../components/examples/card-grid
 import { default as ExamplesHero } from "../../components/examples/hero";
 
 const PAGE_QUERY = gql`
-  query PageQuery($id: String) {
-    page(id: $id) {
+  query PageQuery($path: String) {
+    page(path: $path) {
       id
-      uuid
       path
       title
       description
@@ -60,7 +59,7 @@ export default function ExamplePagesSlug({ mdx }: { mdx: any }) {
   const { isLoading, isError, data } = useQuery(PAGE_QUERY, {
     queryKey: ["page", "examples-pages", slug as string],
     variables: {
-      id: `/examples-pages/${slug}`,
+      path: `/examples-pages/${slug}`,
     },
   });
 
@@ -140,7 +139,7 @@ export async function getStaticPaths() {
       pageCollection(limit: $limit, filter: $filter) {
         items {
           id
-          uuid
+          internalId
           path
           slug
         }
@@ -161,8 +160,8 @@ export async function getStaticPaths() {
 
   const pageCollection = data?.pageCollection;
 
-  const paths = pageCollection?.items.map((page: { id: string[] }) => ({
-    params: { slug: page.id },
+  const paths = pageCollection?.items.map((page: { internalId: string[] }) => ({
+    params: { slug: page.internalId },
   }));
 
   return {
@@ -178,7 +177,7 @@ export const getStaticProps = async (context: any) => {
     query: PAGE_QUERY,
     queryKey: ["page", "examples-pages", slug],
     variables: {
-      id: `/examples-pages/${slug}`,
+      path: `/examples-pages/${slug}`,
     },
   });
 
@@ -193,7 +192,7 @@ export const getStaticProps = async (context: any) => {
     variables: {
       filter: {
         status: { _eq: true },
-        bundle: { _all_in: ["page"] },
+        collection: { _all_in: ["page"] },
       },
       sort: { field: "weight", direction: "ASC" },
     },
@@ -206,7 +205,7 @@ export const getStaticProps = async (context: any) => {
     variables: {
       filter: {
         status: { _eq: true },
-        bundle: { _all_in: ["page"] },
+        collection: { _all_in: ["page"] },
         path: { _neq: "/examples-pages" },
         parent: { _neq: "/examples-pages" },
       },
