@@ -7,6 +7,170 @@ updatedDate: "2025-06-11"
 status: true
 ---
 
-<Hero />
-<FeaturedCardGrid />
-<Accordion />
+<Jumbotron>
+  <JumbotronBodyLeft>
+    <JumbotronHeading>
+      <Highlight colorPalette="red">next-image-plus</Highlight> extends
+      next/image to turbocharge your site's performance.
+    </JumbotronHeading>
+    <JumbotronProse>
+      A set of primitive React components, built on top of the Next.js Image API
+      and React 19, which adds support for picture and background images.
+    </JumbotronProse>
+    <JumbotronCta>
+      <JumbotronLink href="/docs/getting-started">Get Started</JumbotronLink>
+      <Pre>npm install next-image-plus</Pre>
+    </JumbotronCta>
+  </JumbotronBodyLeft>
+  <JumbotronBodyRight>
+    <JumbotronIcon />
+  </JumbotronBodyRight>
+</Jumbotron>
+
+<PromoCard>
+  <PromoCardGridItem colSpan={5}>
+    <Badge colorPalette="red" icon="image">
+      Responsive Images
+    </Badge>
+    <PromoCardHeading>Full Support for HTML 5 Picture Element</PromoCardHeading>
+    <PromoCardProse>
+      **next-image-plus** provides 3 components for creating responsive images with art direction:
+      - `<Picture />` component provides a wrapper for zero or more Source components and one Img component.
+      - `<Source />` component specifies an image and a media query.
+      - `<Img />` component provides a fallback image
+
+      Use the HTML `<picture>` element with your Next.js app.
+    </PromoCardProse>
+
+  </PromoCardGridItem>
+
+  <PromoCardGridItem colSpan={7}>
+    <Tabs defaultValue="react">
+      <TabsList>
+        <TabsTrigger value="react">React</TabsTrigger>
+        <TabsTrigger value="html">HTML</TabsTrigger>
+      </TabsList>
+      <TabsContent value="react">
+      ```tsx
+      @filename: components/responsive-image.tsx
+      import { Picture, Source, Img } from "next-image-plus";
+
+      <Picture>
+        <Source
+          media="(min-width: 430px) and (max-width: 1024px)"
+          src="https://picsum.photos/id/59/860/430"
+          width={860}
+          height={430}
+        />
+        <Source
+          media="(min-width: 1024px)"
+          src="https://picsum.photos/id/59/220/220"
+          width={220}
+          height={220}
+        />
+        <Img
+          src="https://picsum.photos/id/59/430/215"
+          width={430}
+          height={215}
+          alt="Mountains and a river"
+        />
+      </Picture>;
+      ```
+      </TabsContent>
+        <TabsContent value="html">
+          ```html
+          @filename: responsive-image.html
+          <picture>
+            <source
+              media="(min-width: 431px) and (max-width: 1023px)"
+              width="860"
+              height="430"
+              srcset="/_next/image?url=https://picsum.photos/id/59/860/430&w=860&q=75 1x"
+            />
+            <source
+              media="(min-width: 1024px)"
+              width="220"
+              height="220"
+              srcset="/_next/image?url=https://picsum.photos/id/59/220/220&w=256&q=75 1x"
+            />
+            <img
+              src="/_next/image?url=https://picsum.photos/id/59/430/215&w=860&q=75"
+              width="430"
+              height="215"
+              alt="Mountains and a river"
+            />
+          </picture>
+          ```
+        </TabsContent>
+      </Tabs>
+    </PromoCardGridItem>
+
+</PromoCard>
+
+<PromoCard>
+  <PromoCardGridItem colSpan={5}>
+    <Badge colorPalette="red" icon="code">
+      Background Image
+    </Badge>
+    <PromoCardHeading>Easily Add Background Images to Any HTML Element</PromoCardHeading>
+    <PromoCardProse>
+      <Highlight colorPalette="red">next-image-plus</Highlight> provides 3 components for creating responsive images with art direction:
+      - `<Picture />` component provides a wrapper for zero or more Source components and one Img component.
+      - `<Source />` component specifies an image and a media query.
+      - `<Img />` component provides a fallback image
+
+      Use the HTML `<picture>` element with your Next.js app.
+    </PromoCardProse>
+
+  </PromoCardGridItem>
+
+  <PromoCardGridItem colSpan={7}>
+    <Tabs defaultValue="react">
+      <TabsList>
+        <TabsTrigger value="react">React</TabsTrigger>
+        <TabsTrigger value="html">HTML</TabsTrigger>
+      </TabsList>
+      <TabsContent value="react">
+      ```tsx
+      import { BackgroundImage } from "next-image-plus";
+
+      <BackgroundImage
+        id="examples__background-image"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        images={[
+          {
+            url: "https://picsum.photos/id/502/2560/800",
+            width: 2560,
+            height: 800,
+          },
+        ]}
+      />;
+      ```
+      </TabsContent>
+        <TabsContent value="html">
+          ```html
+          <head>
+            <style data-href="examples__background-image" data-precedence="high">
+              #examples__background-image {
+                background-image: url(/_next/image?url=https://picsum.photos/id/502/2560/800&w=3840&q=75);
+              }
+            </style>
+          </head>
+          ...
+          <div id="examples__background-image" class="absolute inset-0 bg-cover bg-center bg-no-repeat">
+          ```
+        </TabsContent>
+      </Tabs>
+    </PromoCardGridItem>
+
+</PromoCard>
+
+<PromoCard minHeight="sm">
+  <PromoCardGridItem colSpan={4}>
+    <PromoCardHeading>Frequently Asked Questions</PromoCardHeading>
+    <PromoCardProse>Answers to common questions.</PromoCardProse>
+  </PromoCardGridItem>
+  <PromoCardGridItem colSpan={8}>
+    <Accordion />
+  </PromoCardGridItem>
+</PromoCard>

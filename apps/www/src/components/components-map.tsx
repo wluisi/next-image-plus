@@ -4,6 +4,7 @@ import {
   AccordionButton,
   AccordionItem,
   AccordionPanel,
+  Badge,
   Callout,
   CodeSnippet,
   FeaturedLink,
@@ -12,13 +13,27 @@ import {
   Folder,
   Heading,
   HeadingAnchorLink,
+  Highlight,
+  // ImageIcon as TestImageIcon,
+  ImageIcon,
+  CodeIcon,
   Link,
   PageNav,
   PageNavItem,
+  Pre,
+  PromoCard,
+  PromoCardGridItem,
+  PromoCardHeading,
+  PromoCardProse,
   SimpleGrid,
   Steps,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
 } from "@graphinery/ui";
 import NextLink from "next/link";
+import JumbotronComponents from "./home/jumbotron";
 
 import { default as ExamplesCardGrid } from "./examples/card-grid";
 import { default as ExamplesHero } from "./examples/hero";
@@ -26,6 +41,9 @@ import PictureExampleTabs from "./examples/picture-tabs";
 import BackgroundImageExampleTabs from "./examples/background-image-tabs";
 //
 import BlogCollection from "./../components/blog/blog-collection";
+import Tag from "./shared/tag";
+
+// import Badge from "./../components/shared/badge";
 
 const createComponentMap = <T extends Record<string, React.ComponentType<any>>>(
   map: T
@@ -39,11 +57,16 @@ export const componentsMap = createComponentMap({
   AccordionButton,
   AccordionItem,
   AccordionPanel,
+  Badge,
   BlogCollection,
   Callout,
   FeaturedLink: (props) => {
     return <FeaturedLink as={NextLink} {...props} />;
   },
+  Highlight,
+  ImageIcon,
+  CodeIcon,
+  ...JumbotronComponents,
   PageNav,
   PageNavItem: (props) => {
     return (
@@ -52,6 +75,11 @@ export const componentsMap = createComponentMap({
       <PageNavItem as={NextLink} className="[&_svg]:shrink-0" {...props} />
     );
   },
+  Pre,
+  PromoCard,
+  PromoCardGridItem,
+  PromoCardHeading,
+  PromoCardProse,
   FileTree,
   Folder,
   File,
@@ -64,6 +92,11 @@ export const componentsMap = createComponentMap({
   BackgroundImageExampleTabs,
   Steps,
   SimpleGrid,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  Tag,
   // Overrides
   h1: (props) => {
     return <Heading level="h1" {...props} />;

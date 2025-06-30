@@ -56,6 +56,7 @@ const BLOG_QUERY = gql`
       updatedDate
       tags {
         id
+        internalId
         path
         title
       }
@@ -223,13 +224,19 @@ export default async function BlogSlug({
             {blog?.tags && (
               <div className="mb-5 flex gap-3">
                 <ul className="list-none flex gap-y-3 flex-wrap pl-0">
-                  {blog.tags.map((tag: { id: string; title: string }) => (
-                    <li key={tag.id} className="!pl-0 pr-3">
-                      <Tag colorPalette={colorPaletteMap[tag.id]}>
-                        {tag.title.toLowerCase()}
-                      </Tag>
-                    </li>
-                  ))}
+                  {blog.tags.map(
+                    (tag: {
+                      id: string;
+                      internalId: string;
+                      title: string;
+                    }) => (
+                      <li key={tag.id} className="!pl-0 pr-3">
+                        <Tag colorPalette={colorPaletteMap[tag.internalId]}>
+                          {tag.title.toLowerCase()}
+                        </Tag>
+                      </li>
+                    )
+                  )}
                 </ul>
               </div>
             )}

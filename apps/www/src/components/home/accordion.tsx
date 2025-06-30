@@ -41,10 +41,10 @@ type AccordionPropsItem = {
 export default function Accordion() {
   return (
     <div id={content.id}>
-      <Heading level="h2">{content.title}</Heading>
+      {/* <Heading level="h2">{content.title}</Heading>
       <p className="text-lg text-black/90 dark:text-zinc-100 mb-5">
         {content.description}
-      </p>
+      </p> */}
       {content.items.map((item: AccordionPropsItem) => {
         return (
           <SharedAccordion key={item.id}>
