@@ -1,38 +1,6 @@
 [
   {
-    "interfaceName": "BackgroundImageData",
-    "filePath": "packages/next-image-plus/src/background-image.tsx",
-    "props": []
-  },
-  {
-    "interfaceName": "StyleProps",
-    "filePath": "packages/next-image-plus/src/background-image.tsx",
-    "props": [
-      {
-        "name": "id",
-        "type": "string",
-        "required": true,
-        "description": "The id of the html element, for generating the responsive styles.",
-        "examples": []
-      },
-      {
-        "name": "href",
-        "type": "string",
-        "required": false,
-        "description": "A unique id for the <style> element. Allows React to de-duplicate styles that have the same href.",
-        "examples": []
-      },
-      {
-        "name": "bgImageProps",
-        "type": "BackgroundImageData",
-        "required": true,
-        "description": "An object mapping breakpoints to their corresponding media query and image properties.",
-        "examples": []
-      }
-    ]
-  },
-  {
-    "interfaceName": "BackgroundImageProps",
+    "component": "BackgroundImageProps",
     "filePath": "packages/next-image-plus/src/background-image.tsx",
     "props": [
       {
@@ -40,14 +8,18 @@
         "type": "string",
         "required": true,
         "description": "A unique id for the background image html element.",
-        "examples": []
+        "examples": [
+          "id=\"examples__background-image\""
+        ]
       },
       {
         "name": "as",
         "type": "React.ElementType<any, keyof React.JSX.IntrinsicElements>",
         "required": false,
         "description": "The HTML tag or React component to use as the wrapper. Defaults to `<div>`.",
-        "examples": []
+        "examples": [
+          "as=\"span\""
+        ]
       },
       {
         "name": "preload",
@@ -94,7 +66,155 @@
     ]
   },
   {
-    "interfaceName": "PreloadImageLinkProps",
+    "component": "getSmallestMediaQuery",
+    "filePath": "packages/next-image-plus/src/background-image.tsx",
+    "props": []
+  },
+  {
+    "component": "getBackgroundImageProps",
+    "filePath": "packages/next-image-plus/src/background-image.tsx",
+    "props": []
+  },
+  {
+    "component": "Style",
+    "filePath": "packages/next-image-plus/src/background-image.tsx",
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true,
+        "description": "The id of the html element, for generating the responsive styles.",
+        "examples": []
+      },
+      {
+        "name": "href",
+        "type": "string",
+        "required": false,
+        "description": "A unique id for the <style> element. Allows React to de-duplicate styles that have the same href.",
+        "examples": []
+      },
+      {
+        "name": "bgImageProps",
+        "type": "BackgroundImageData",
+        "required": true,
+        "description": "An object mapping breakpoints to their corresponding media query and image properties.",
+        "examples": []
+      }
+    ]
+  },
+  {
+    "component": "BackgroundImage",
+    "filePath": "packages/next-image-plus/src/background-image.tsx",
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true,
+        "description": "A unique id for the background image html element.",
+        "examples": [
+          "id=\"examples__background-image\""
+        ]
+      },
+      {
+        "name": "as",
+        "type": "React.ElementType<any, keyof React.JSX.IntrinsicElements>",
+        "required": false,
+        "description": "The HTML tag or React component to use as the wrapper. Defaults to `<div>`.",
+        "examples": [
+          "as=\"span\""
+        ]
+      },
+      {
+        "name": "preload",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to preload the background images. Defaults to `false`.",
+        "examples": []
+      },
+      {
+        "name": "images",
+        "type": "BackgroundImageOptions[]",
+        "required": true,
+        "description": "An array of background image options for different breakpoints.",
+        "examples": []
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "An optional class name for styling.",
+        "examples": []
+      },
+      {
+        "name": "style",
+        "type": "React.CSSProperties",
+        "required": false,
+        "description": "An optional style prop, for passing css properties.",
+        "examples": []
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Optional child elements to render inside the component.",
+        "examples": []
+      },
+      {
+        "name": "normalizeMediaQueries",
+        "type": "boolean",
+        "required": false,
+        "description": "Enables or disables media query normalization to remove overlaps Defaults to `true`.",
+        "examples": []
+      }
+    ]
+  },
+  {
+    "component": "Source",
+    "filePath": "packages/next-image-plus/src/picture.tsx",
+    "props": []
+  },
+  {
+    "component": "Img",
+    "filePath": "packages/next-image-plus/src/picture.tsx",
+    "props": [
+      {
+        "name": "media",
+        "type": "string",
+        "required": false,
+        "description": "The media query to be used for the fallback image, if preload is true.",
+        "examples": []
+      }
+    ]
+  },
+  {
+    "component": "Picture",
+    "filePath": "packages/next-image-plus/src/picture.tsx",
+    "props": [
+      {
+        "name": "preload",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to preload the picture image. Defaults to `false`.",
+        "examples": []
+      },
+      {
+        "name": "fallbackMedia",
+        "type": "string",
+        "required": false,
+        "description": "The media query to be used for the fallback image, if preload is true.",
+        "examples": []
+      },
+      {
+        "name": "normalizeMediaQueries",
+        "type": "boolean",
+        "required": false,
+        "description": "Enables or disables media query normalization to remove overlaps. Defaults to `true`.",
+        "examples": []
+      }
+    ]
+  },
+  {
+    "component": "PreloadImageLinkProps",
     "filePath": "packages/next-image-plus/src/preload.tsx",
     "props": [
       {
@@ -105,5 +225,53 @@
         "examples": []
       }
     ]
+  },
+  {
+    "component": "PreloadImageLink",
+    "filePath": "packages/next-image-plus/src/preload.tsx",
+    "props": [
+      {
+        "name": "data",
+        "type": "import(\"/Users/wluisi/wluisi-apps/next-image-plus/packages/next-image-plus/src/preload\").ImageAttributes[]",
+        "required": true,
+        "description": "An array of image attributes.",
+        "examples": []
+      }
+    ]
+  },
+  {
+    "component": "MediaQueryItem",
+    "filePath": "packages/next-image-plus/src/utils/media.ts",
+    "props": [
+      {
+        "name": "uuid",
+        "type": "string",
+        "required": true,
+        "description": "",
+        "examples": []
+      },
+      {
+        "name": "media",
+        "type": "string",
+        "required": true,
+        "description": "",
+        "examples": []
+      }
+    ]
+  },
+  {
+    "component": "parseMediaQuery",
+    "filePath": "packages/next-image-plus/src/utils/media.ts",
+    "props": []
+  },
+  {
+    "component": "getFallbackMediaQuery",
+    "filePath": "packages/next-image-plus/src/utils/media.ts",
+    "props": []
+  },
+  {
+    "component": "getMediaQueries",
+    "filePath": "packages/next-image-plus/src/utils/media.ts",
+    "props": []
   }
 ]

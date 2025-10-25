@@ -168,9 +168,18 @@ export function Style({ id, bgImageProps }: StyleProps) {
 }
 
 export interface BackgroundImageProps {
-  /** A unique id for the background image html element. */
+  /**
+   * A unique id for the background image html element.
+   *
+   * @example
+   * id="examples__background-image"
+   */
   id: string;
-  /** The HTML tag or React component to use as the wrapper. Defaults to `<div>`. */
+  /**
+   * The HTML tag or React component to use as the wrapper. Defaults to `<div>`.
+   * @example
+   * as="span"
+   */
   as?: React.ElementType;
   /** Whether to preload the background images. Defaults to `false`. */
   preload?: boolean;
