@@ -9,13 +9,14 @@
   ],
   "scripts": {
     "clean": "rm -rf node_modules",
+    "current:dev": "concurrently \"npm:next-image-plus:dev\" \"npm:examples:dev\" \"npm:www:dev\"",
     "cypress:open": "npm run cypress:open --workspace=apps/www",
     "cypress:run": "npm run cypress:run --workspace=apps/www -- --browser chrome",
     "dev": "concurrently \"npm:next-image-plus:dev\" \"npm:www:dev\"",
-    "current:dev": "concurrently \"npm:next-image-plus:dev\" \"npm:examples:dev\" \"npm:www:dev\"",
     "examples:dev": "npm run dev --workspace=examples/next",
     "examples:production": "npm run build --workspace=examples/next && npm run start --workspace=examples/next",
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
+    "generate:json": "node scripts/props-to-json.cjs",
     "lint": "eslint --ignore-path .eslintignore \"**/src/**/*.+(ts|js|tsx)\"",
     "lint:quiet": "eslint --ignore-path .eslintignore \"**/src/**/*.+(ts|js|tsx)\" --quiet",
     "next-image-plus:build": "npm run build --workspace=packages/next-image-plus",
@@ -42,6 +43,7 @@
     "husky": "8.0.1",
     "lint-staged": "12.4.1",
     "prettier": "^3.4.2",
+    "ts-morph": "^27.0.2",
     "typescript": "^5.8.2"
   },
   "lint-staged": {
