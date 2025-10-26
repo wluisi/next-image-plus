@@ -37,9 +37,16 @@ function extractPropsFromType(type, depth = 0) {
           .map((d) => d.getComment())
           .filter(Boolean)
           .join(" ") || "";
+
       const examples = jsDocs
         .flatMap((d) => (d.getTags ? d.getTags() : []))
         .filter((t) => t.getTagName() === "example")
+        .map((t) => t.getComment())
+        .filter(Boolean);
+
+      const remarks = jsDocs
+        .flatMap((d) => (d.getTags ? d.getTags() : []))
+        .filter((t) => t.getTagName() === "remarks")
         .map((t) => t.getComment())
         .filter(Boolean);
 
@@ -96,6 +103,7 @@ function extractPropsFromType(type, depth = 0) {
         required,
         description,
         examples,
+        remarks,
       };
 
       if (children.length) {

@@ -183,7 +183,11 @@ export interface BackgroundImageProps {
    */
   as?: React.ElementType;
   /**
-   * Whether to preload the background images. Defaults to `false`.
+   * Optional prop for preloading the background image. This works similar to the `priority` prop on the Next.js image.
+   * Should be used for any `<BackgroundImage />` component that is above the fold, and flagged as the Largest Contentful Paint (LCP).
+   *
+   * @example
+   * preload={false} // {false} | {true}
    *
    * @remarks
    * For preloading to work properly, media queries on `<link rel="preload">` elements cannot overlap.
@@ -194,18 +198,34 @@ export interface BackgroundImageProps {
    * To avoid this, the `<BackgroundImage />` component will automatically adjust the media queries set on the preload links, by adding or subtracting 1 px.
    * If this functionality causes any issues, it can be disabled with the `normalizeMediaQueries` prop.
    *
-   * */
+   *
+   */
   preload?: boolean;
-  /** An array of background image options for different breakpoints. */
+  /**
+   * An array of image objects of the `BackgroundImageOptions` type.
+   *
+   * @example
+   * images={[ ... ]}
+   */
   images: BackgroundImageOptions[];
-  /** An optional class name for styling. */
+  /**
+   * Optional prop for any CSS class name(s) for the background image element.
+   *
+   * @example
+   * className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+   */
   className?: string;
-  /** An optional style prop, for passing css properties. */
+  /**
+   * Optional prop for any CSS style properties for the background image element.
+   *
+   * @example
+   * style={{ color: "red" }}
+   */
   style?: React.CSSProperties;
   /** Optional child elements to render inside the component. */
   children?: React.ReactNode;
   /**
-   * An optional prop to disable the component from normalizing the media queries to remove overlaps. Defaults to `true`
+   * Optional prop to disable the component from normalizing the media queries to remove overlaps. Defaults to `true`
    *
    * @example
    * normalizeMediaQueries={false} // {false} | {true}

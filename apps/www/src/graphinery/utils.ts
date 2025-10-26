@@ -13,9 +13,17 @@ export function getPropsDescriptionSetMdx(name: string) {
   for (const prop of component.props) {
     lines.push(`### ${prop.name}`);
     lines.push("");
+
     lines.push(`${prop.description}`);
+
     if (prop.examples.length > 0) {
       lines.push(`\`\`\`ts\n${prop.examples[0]}\n\`\`\``);
+    }
+
+    if (prop.remarks && prop.remarks.length > 0) {
+      lines.push("<Callout type='important'>");
+      lines.push(`${prop.remarks[0]}`);
+      lines.push("</Callout>");
     }
   }
 

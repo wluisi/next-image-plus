@@ -10,7 +10,8 @@
         "description": "A unique id for the background image html element.",
         "examples": [
           "id=\"examples__background-image\""
-        ]
+        ],
+        "remarks": []
       },
       {
         "name": "as",
@@ -19,51 +20,68 @@
         "description": "The HTML tag or React component to use as the wrapper. Defaults to `<div>`.",
         "examples": [
           "as=\"span\""
-        ]
+        ],
+        "remarks": []
       },
       {
         "name": "preload",
         "type": "boolean",
         "required": false,
-        "description": "Whether to preload the background images. Defaults to `false`.",
-        "examples": []
+        "description": "Optional prop for preloading the background image. This works similar to the `priority` prop on the Next.js image.\nShould be used for any `<BackgroundImage />` component that is above the fold, and flagged as the Largest Contentful Paint (LCP).",
+        "examples": [
+          "preload={false} // {false} | {true}"
+        ],
+        "remarks": [
+          "For preloading to work properly, media queries on `<link rel=\"preload\">` elements cannot overlap.\nMedia queries on `<link rel=\"preload\">` elements do not function the way they do on HTML elements.\nThe user agent will look at multiple `<link rel=\"preload\">` media queries and find multiple matches if there is any overlap in the media queries.\nThis can lead to performance issues, where multiple images are preloaded.\n\nTo avoid this, the `<BackgroundImage />` component will automatically adjust the media queries set on the preload links, by adding or subtracting 1 px.\nIf this functionality causes any issues, it can be disabled with the `normalizeMediaQueries` prop."
+        ]
       },
       {
         "name": "images",
         "type": "BackgroundImageOptions[]",
         "required": true,
-        "description": "An array of background image options for different breakpoints.",
-        "examples": []
+        "description": "An array of image objects of the `BackgroundImageOptions` type.",
+        "examples": [
+          "images={[ ... ]}"
+        ],
+        "remarks": []
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": "An optional class name for styling.",
-        "examples": []
+        "description": "Optional prop for any CSS class name(s) for the background image element.",
+        "examples": [
+          "className=\"absolute inset-0 bg-cover bg-center bg-no-repeat\""
+        ],
+        "remarks": []
       },
       {
         "name": "style",
         "type": "React.CSSProperties",
         "required": false,
-        "description": "An optional style prop, for passing css properties.",
-        "examples": []
+        "description": "Optional prop for any CSS style properties for the background image element.",
+        "examples": [
+          "style={{ color: \"red\" }}"
+        ],
+        "remarks": []
       },
       {
         "name": "children",
         "type": "React.ReactNode",
         "required": false,
         "description": "Optional child elements to render inside the component.",
-        "examples": []
+        "examples": [],
+        "remarks": []
       },
       {
         "name": "normalizeMediaQueries",
         "type": "boolean",
         "required": false,
-        "description": "An optional prop to disable the component from normalizing the media queries to remove overlaps. Defaults to `true`",
+        "description": "Optional prop to disable the component from normalizing the media queries to remove overlaps. Defaults to `true`",
         "examples": [
           "normalizeMediaQueries={false} // {false} | {true}"
-        ]
+        ],
+        "remarks": []
       }
     ]
   },
@@ -86,21 +104,24 @@
         "type": "string",
         "required": true,
         "description": "The id of the html element, for generating the responsive styles.",
-        "examples": []
+        "examples": [],
+        "remarks": []
       },
       {
         "name": "href",
         "type": "string",
         "required": false,
         "description": "A unique id for the <style> element. Allows React to de-duplicate styles that have the same href.",
-        "examples": []
+        "examples": [],
+        "remarks": []
       },
       {
         "name": "bgImageProps",
         "type": "BackgroundImageData",
         "required": true,
         "description": "An object mapping breakpoints to their corresponding media query and image properties.",
-        "examples": []
+        "examples": [],
+        "remarks": []
       }
     ]
   },
@@ -115,7 +136,8 @@
         "description": "A unique id for the background image html element.",
         "examples": [
           "id=\"examples__background-image\""
-        ]
+        ],
+        "remarks": []
       },
       {
         "name": "as",
@@ -124,51 +146,68 @@
         "description": "The HTML tag or React component to use as the wrapper. Defaults to `<div>`.",
         "examples": [
           "as=\"span\""
-        ]
+        ],
+        "remarks": []
       },
       {
         "name": "preload",
         "type": "boolean",
         "required": false,
-        "description": "Whether to preload the background images. Defaults to `false`.",
-        "examples": []
+        "description": "Optional prop for preloading the background image. This works similar to the `priority` prop on the Next.js image.\nShould be used for any `<BackgroundImage />` component that is above the fold, and flagged as the Largest Contentful Paint (LCP).",
+        "examples": [
+          "preload={false} // {false} | {true}"
+        ],
+        "remarks": [
+          "For preloading to work properly, media queries on `<link rel=\"preload\">` elements cannot overlap.\nMedia queries on `<link rel=\"preload\">` elements do not function the way they do on HTML elements.\nThe user agent will look at multiple `<link rel=\"preload\">` media queries and find multiple matches if there is any overlap in the media queries.\nThis can lead to performance issues, where multiple images are preloaded.\n\nTo avoid this, the `<BackgroundImage />` component will automatically adjust the media queries set on the preload links, by adding or subtracting 1 px.\nIf this functionality causes any issues, it can be disabled with the `normalizeMediaQueries` prop."
+        ]
       },
       {
         "name": "images",
         "type": "BackgroundImageOptions[]",
         "required": true,
-        "description": "An array of background image options for different breakpoints.",
-        "examples": []
+        "description": "An array of image objects of the `BackgroundImageOptions` type.",
+        "examples": [
+          "images={[ ... ]}"
+        ],
+        "remarks": []
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": "An optional class name for styling.",
-        "examples": []
+        "description": "Optional prop for any CSS class name(s) for the background image element.",
+        "examples": [
+          "className=\"absolute inset-0 bg-cover bg-center bg-no-repeat\""
+        ],
+        "remarks": []
       },
       {
         "name": "style",
         "type": "React.CSSProperties",
         "required": false,
-        "description": "An optional style prop, for passing css properties.",
-        "examples": []
+        "description": "Optional prop for any CSS style properties for the background image element.",
+        "examples": [
+          "style={{ color: \"red\" }}"
+        ],
+        "remarks": []
       },
       {
         "name": "children",
         "type": "React.ReactNode",
         "required": false,
         "description": "Optional child elements to render inside the component.",
-        "examples": []
+        "examples": [],
+        "remarks": []
       },
       {
         "name": "normalizeMediaQueries",
         "type": "boolean",
         "required": false,
-        "description": "An optional prop to disable the component from normalizing the media queries to remove overlaps. Defaults to `true`",
+        "description": "Optional prop to disable the component from normalizing the media queries to remove overlaps. Defaults to `true`",
         "examples": [
           "normalizeMediaQueries={false} // {false} | {true}"
-        ]
+        ],
+        "remarks": []
       }
     ]
   },
@@ -186,7 +225,8 @@
         "type": "string",
         "required": false,
         "description": "The media query to be used for the fallback image, if preload is true.",
-        "examples": []
+        "examples": [],
+        "remarks": []
       }
     ]
   },
@@ -199,21 +239,24 @@
         "type": "boolean",
         "required": false,
         "description": "Whether to preload the picture image. Defaults to `false`.",
-        "examples": []
+        "examples": [],
+        "remarks": []
       },
       {
         "name": "fallbackMedia",
         "type": "string",
         "required": false,
         "description": "The media query to be used for the fallback image, if preload is true.",
-        "examples": []
+        "examples": [],
+        "remarks": []
       },
       {
         "name": "normalizeMediaQueries",
         "type": "boolean",
         "required": false,
         "description": "Enables or disables media query normalization to remove overlaps. Defaults to `true`.",
-        "examples": []
+        "examples": [],
+        "remarks": []
       }
     ]
   },
@@ -226,7 +269,8 @@
         "type": "import(\"/Users/wluisi/wluisi-apps/next-image-plus/packages/next-image-plus/src/preload\").ImageAttributes[]",
         "required": true,
         "description": "An array of image attributes.",
-        "examples": []
+        "examples": [],
+        "remarks": []
       }
     ]
   },
@@ -239,7 +283,8 @@
         "type": "import(\"/Users/wluisi/wluisi-apps/next-image-plus/packages/next-image-plus/src/preload\").ImageAttributes[]",
         "required": true,
         "description": "An array of image attributes.",
-        "examples": []
+        "examples": [],
+        "remarks": []
       }
     ]
   },
@@ -252,14 +297,16 @@
         "type": "string",
         "required": true,
         "description": "",
-        "examples": []
+        "examples": [],
+        "remarks": []
       },
       {
         "name": "media",
         "type": "string",
         "required": true,
         "description": "",
-        "examples": []
+        "examples": [],
+        "remarks": []
       }
     ]
   },
