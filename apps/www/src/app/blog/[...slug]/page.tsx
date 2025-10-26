@@ -30,8 +30,8 @@ import { metadata as layoutMetadata } from "../../layout";
 import { Metadata } from "next";
 
 const BLOG_QUERY = gql`
-  query BlogQuery($id: String) {
-    blog(id: $id) {
+  query BlogQuery($path: String) {
+    blog(path: $path) {
       title
       description
       keywords
@@ -67,7 +67,7 @@ async function getBlog(path: string) {
   const { data } = await client.request({
     query: BLOG_QUERY,
     variables: {
-      id: path,
+      path: path,
     },
     options: {
       next: { tags: [path] },
@@ -118,7 +118,6 @@ export async function generateStaticParams() {
       blogCollection(limit: $limit, filter: $filter) {
         items {
           id
-          uuid
           path
           slug
         }
