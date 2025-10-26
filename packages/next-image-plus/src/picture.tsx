@@ -29,6 +29,7 @@ export type SourceProps = React.ComponentPropsWithRef<"source"> & {
    * <Source src="/image.jpg" />
    */
   src: string;
+
   /**
    * The width prop functions the same way as it does on the Next.js `<Image />` component.
    *
@@ -41,6 +42,7 @@ export type SourceProps = React.ComponentPropsWithRef<"source"> & {
    * [featuredLink] https://nextjs.org/docs/pages/api-reference/components/image#width-and-height | Source: Next.js Image API Reference
    */
   width: number | `${number}`;
+
   /**
    * The height prop functions the same way as it does on the Next.js `<Image />` component.
    *
@@ -94,14 +96,49 @@ export function Img({ src, width, height, alt, className }: ImgProps) {
 }
 
 export type PictureProps = React.ComponentPropsWithRef<"picture"> & {
-  /** Whether to preload the picture image. Defaults to `false`. */
+  /**
+   * Optional prop for preloading the image. This works similar to the `priority` prop on the Next.js Image component.
+   * Should be used for any `<Picture />` component that is above the fold, and flagged as the Largest Contentful Paint (LCP).
+   *
+   * @example
+   * preload={false}
+   *
+   * @remarks
+   * [important] For preloading to work properly, media queries on `<link rel="preload">` elements cannot overlap.
+   * Media queries on `<link rel="preload">` elements do not function the way they do on HTML elements.
+   * The user agent will look at multiple `<link rel="preload">` media queries and find multiple matches if there is any overlap in the media queries.
+   * This can lead to performance issues, where multiple images are preloaded.
+   * To avoid this, the `<Picture />` component will automatically adjust the media queries set on Source to remove any overlap,
+   * by adding or subtracting 1 px. If this functionality causes any issues, it can be disabled with the `normalizeMediaQueries` prop.
+   */
   preload?: boolean;
-  /** The media query to be used for the fallback image, if preload is true. */
+
+  /**
+   * An optional prop, to set the fallback media query for preloading.
+   *
+   * @example
+   * fallbackMedia="(max-width: 430px)"
+   */
   fallbackMedia?: string;
-  /** Enables or disables media query normalization to remove overlaps. Defaults to `true`. */
+
+  /**
+   * An optional prop to disable the component from normalizing the media queries to remove overlap.
+   *
+   * @example
+   * normalizeMediaQueries={false}
+   */
   normalizeMediaQueries?: boolean;
-  /** Optional child elements to render inside the component. */
-  children: React.ReactElement<SourceProps>[] | React.ReactElement<ImgProps>;
+
+  /**
+   * Optional child elements to render inside the component.
+   *
+   * @example
+   * <Picture>
+   *   <Source srcSet="image-320w.jpg" media="(max-width: 320px)" />
+   *   <Img src="image.jpg" alt="Example image" />
+   * </Picture>
+   */
+  children?: React.ReactElement<SourceProps>[] | React.ReactElement<ImgProps>;
 };
 
 /**

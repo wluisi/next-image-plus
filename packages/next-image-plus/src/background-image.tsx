@@ -204,6 +204,7 @@ export interface BackgroundImageProps {
    *
    */
   preload?: boolean;
+
   /**
    * An array of image objects of the `BackgroundImageOptions` type.
    *
@@ -211,6 +212,7 @@ export interface BackgroundImageProps {
    * images={[ ... ]}
    */
   images: BackgroundImageOptions[];
+
   /**
    * Optional prop for any CSS class name(s) for the background image element.
    *
@@ -218,6 +220,7 @@ export interface BackgroundImageProps {
    * className="absolute inset-0 bg-cover bg-center bg-no-repeat"
    */
   className?: string;
+
   /**
    * Optional prop for any CSS style properties for the background image element.
    *
@@ -225,8 +228,10 @@ export interface BackgroundImageProps {
    * style={{ color: "red" }}
    */
   style?: React.CSSProperties;
+
   /** Optional child elements to render inside the component. */
   children?: React.ReactNode;
+
   /**
    * Optional prop to disable the component from normalizing the media queries to remove overlaps. Defaults to `true`
    *
