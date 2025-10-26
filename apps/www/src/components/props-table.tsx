@@ -2,7 +2,7 @@ import * as React from "react";
 import propsJson from "../../../../generated/props.json";
 import { CodeSnippet, HeadingAnchorLink } from "@graphinery/ui";
 
-export function ComponentPropsTable({ name }: { name: string }) {
+export function PropsTable({ name }: { name: string }) {
   const component = propsJson.find((c) => c.component === name); // <-- use 'component' here
   if (!component) return <p>No props found for {name}</p>;
 
