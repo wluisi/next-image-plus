@@ -1,10 +1,12 @@
 import * as React from "react";
 import propsJson from "../../../../generated/props.json";
-import { CodeSnippet, HeadingAnchorLink } from "@graphinery/ui";
 
 export function PropsTable({ name }: { name: string }) {
-  const component = propsJson.find((c) => c.component === name); // <-- use 'component' here
-  if (!component) return <p>No props found for {name}</p>;
+  const component = propsJson.find((c) => c.component === name);
+
+  if (!component) {
+    return null;
+  }
 
   return (
     <div className="overflow-x-auto" tabIndex={0}>
@@ -34,40 +36,4 @@ export function PropsTable({ name }: { name: string }) {
       </table>
     </div>
   );
-}
-
-export function ComponentPropsDescriptionSet({ name }: { name: string }) {
-  const component = propsJson.find((c) => c.component === name); // <-- use 'component' here
-  if (!component) return <p>No props found for {name}</p>;
-
-  console.log("component.props", component.props);
-
-  // @todo
-  // - use HeadingAnchorLink instead of <h3>
-  // - something
-
-  return component.props.map((prop) => {
-    return (
-      <>
-        <HeadingAnchorLink
-          key={prop.name}
-          // className="text-1xl font-bold mb-5 heading-anchor-link flex items-center"
-          level="h3"
-          title={prop.name}
-        />
-
-        {prop.examples.length > 0 && (
-          <CodeSnippet
-            language="ts"
-            code={prop.examples[0]}
-            theme="material-theme-palenight"
-            colorReplacements={{
-              "#676e95": "#b9bbcb",
-            }}
-          />
-        )}
-        <p>{prop.description}</p>
-      </>
-    );
-  });
 }

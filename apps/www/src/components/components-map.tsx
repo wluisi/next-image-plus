@@ -26,8 +26,7 @@ import PictureExampleTabs from "./examples/picture-tabs";
 import BackgroundImageExampleTabs from "./examples/background-image-tabs";
 //
 import BlogCollection from "./../components/blog/blog-collection";
-
-import { PropsTable, ComponentPropsDescriptionSet } from "./props-table";
+import { PropsTable } from "./props-table";
 
 const createComponentMap = <T extends Record<string, React.ComponentType<any>>>(
   map: T
@@ -67,7 +66,6 @@ export const componentsMap = createComponentMap({
   Steps,
   SimpleGrid,
   PropsTable,
-  ComponentPropsDescriptionSet,
   // Overrides
   h1: (props) => {
     return <Heading level="h1" {...props} />;
