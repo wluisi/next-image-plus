@@ -7,9 +7,12 @@ import {
 import { getMediaQueries } from "./utils/media";
 import { PreloadImageLink } from "./preload";
 
-type BackgroundImageOptions = Omit<NextImageProps, "alt" | "src"> & {
+export type BackgroundImageOptions = Omit<NextImageProps, "alt" | "src"> & {
+  /** Optional breakpoint name. */
   breakpoint?: string;
+  /** The media query for the breakpoint. */
   media?: string;
+  /** The url for the background image. */
   url: string;
 };
 
@@ -190,7 +193,7 @@ export interface BackgroundImageProps {
    * preload={false} // {false} | {true}
    *
    * @remarks
-   * For preloading to work properly, media queries on `<link rel="preload">` elements cannot overlap.
+   * [important] For preloading to work properly, media queries on `<link rel="preload">` elements cannot overlap.
    * Media queries on `<link rel="preload">` elements do not function the way they do on HTML elements.
    * The user agent will look at multiple `<link rel="preload">` media queries and find multiple matches if there is any overlap in the media queries.
    * This can lead to performance issues, where multiple images are preloaded.

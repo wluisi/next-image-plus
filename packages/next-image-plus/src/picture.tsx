@@ -22,11 +22,36 @@ function getValidReactChildren(
 }
 
 export type SourceProps = React.ComponentPropsWithRef<"source"> & {
-  /** The URL of the image source. */
+  /**
+   * The URL of the image source. The value must be a path string or a statically imported file.
+   *
+   * @example
+   * <Source src="/image.jpg" />
+   */
   src: string;
-  /** The width of the source, can be a number or a string representing a number. */
+  /**
+   * The width prop functions the same way as it does on the Next.js `<Image />` component.
+   *
+   * @remarks
+   * [quote] The width property represents the intrinsic image width in pixels.
+   * This property is used to infer the correct aspect ratio of the image and avoid layout shift during loading.
+   * It does not determine the rendered size of the image,
+   * which is controlled by CSS, similar to the width attribute in the HTML `<img>` tag.
+   *
+   * [featuredLink] https://nextjs.org/docs/pages/api-reference/components/image#width-and-height | Source: Next.js Image API Reference
+   */
   width: number | `${number}`;
-  /** The height of the source, can be a number or a string representing a number. */
+  /**
+   * The height prop functions the same way as it does on the Next.js `<Image />` component.
+   *
+   * @remarks
+   * [quote] The height property represents the intrinsic image height in pixels.
+   * This property is used to infer the correct aspect ratio of the image and avoid layout shift during loading.
+   * It does not determine the rendered size of the image,
+   * which is controlled by CSS, similar to the width attribute in the HTML `<img>` tag.
+   *
+   * [featuredLink] https://nextjs.org/docs/pages/api-reference/components/image#width-and-height | Source: Next.js Image API Reference
+   */
   height: number | `${number}`;
 };
 

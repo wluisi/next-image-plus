@@ -29,7 +29,7 @@ The **next-image-plus** `<Picture />` component allows developers to provide mul
 
 The browser uses the first `<Source />` component with a media query that returns true. If none of the media queries match, the browser falls back to loading the image specified by the `<Img />` component.
 
-Basic example:
+### Basic example:
 
 {/* prettier-ignore */}
 ```tsx
@@ -61,160 +61,21 @@ import { Picture, Source, Img } from "next-image-plus";
 
 ## Picture Props
 
-| Prop                  | Example                              | Type    | Status |
-| --------------------- | ------------------------------------ | ------- | ------ |
-| preload               | `preload={true}`                     | Boolean | -      |
-| fallbackMedia         | `fallbackMedia="(max-width: 430px)"` | String  | -      |
-| normalizeMediaQueries | `normalizeMediaQueries={true}`       | Boolean | -      |
+<ComponentPropsTable name="PictureProps" />
 
-### preload
-
-```ts
-preload={false} // {false} | {true}
-```
-
-Optional prop for preloading the image. This works similar to the `priority` prop on the Next.js Image component.
-Should be used for any `<Picture />` component that is above the fold, and flagged as the Largest Contentful Paint (LCP).
-
-<Callout type="important">
-For preloading to work properly, media queries on `<link rel="preload">` elements cannot overlap.
-
-Media queries on `<link rel="preload">` elements do not function the way they do on HTML elements.
-The user agent will look at multiple `<link rel="preload">` media queries and find multiple matches if there is any overlap in the media queries.
-This can lead to performance issues, where multiple images are preloaded.
-
-To avoid this, the `<Picture />` component will automatically adjust the media queries set on Source to remove any overlap, by adding or subtracting 1 px.
-If this functionality causes any issues, it can be disabled with the `normalizeMediaQueries` prop.
-
-</Callout>
-
-### fallbackMedia
-
-An optional prop, to set the fallback media query for preloading.
-
-### normalizeMediaQueries
-
-```ts
-normalizeMediaQueries={false} // {false} | {true}
-```
-
-An optional prop to disable the component from normalizing the media queries to remove overlap.
+@propsDescriptionSet:PictureProps
 
 ## Source Props
 
-| Prop   | Example                                  | Type         | Status   |
-| ------ | ---------------------------------------- | ------------ | -------- |
-| src    | `src="/image.jpg"`                       | String       | Required |
-| media  | `media="(max-width: 430px)"`             | String       | Required |
-| width  | `width={500}`                            | Integer (px) | Required |
-| height | `height={500}`                           | Integer (px) | Required |
-| sizes  | `sizes="(max-width: 768px) 100vw, 33vw"` | String       | -        |
+<ComponentPropsTable name="SourceProps" />
 
-### src
-
-The value must a path string or a statically imported file.
-
-```ts
-// Path string example.
-<Source src="/image.jpg" />
-
-// Static import example.
-import myImage from "./image.jpg"
-
-<Source src={myImage} />
-```
-
-<Callout type="info">
-A key difference between the native html element for `<source>` and the `<Source />` component, is the html element does not accept a `src` attribute, but uses `srcset` instead.
-
-The value for `srcset` will get automatically generated for you, using the Next.js Image API, based on the `src` prop value.
-
-</Callout>
-
-### media
-
-A media query string, defining when to use this particular source image.
-
-### width
-
-The width prop functions the same way as it does on the Next.js `<Image />` component:
-
-> _The width property represents the intrinsic image width in pixels. This property is used to infer the correct aspect ratio of the image and avoid layout shift during loading.
-> It does not determine the rendered size of the image, which is controlled by CSS, similar to the width attribute in the HTML `<img>` tag._
-
-<SimpleGrid>
-  <FeaturedLink
-    href="https://nextjs.org/docs/pages/api-reference/components/image#width"
-    icon="next"
-  >
-    Source: Next.js Image API Reference
-  </FeaturedLink>
-</SimpleGrid>
-
-### height
-
-The height prop functions the same way as it does on the Next.js `<Image />` component:
-
-> _The height property represents the intrinsic image height in pixels. This property is used to infer the correct aspect ratio of the image and avoid layout shift during loading.
-> It does not determine the rendered size of the image, which is controlled by CSS, similar to the height attribute in the HTML `<img>` tag._
-
-<SimpleGrid>
-  <FeaturedLink
-    href="https://nextjs.org/docs/pages/api-reference/components/image#height"
-    icon="next"
-  >
-    Source: Next.js Image API Reference
-  </FeaturedLink>
-</SimpleGrid>
-
-### sizes
-
-The sizes prop functions the same way as it does on the Next.js `<Image />` component:
+@propsDescriptionSet:SourceProps
 
 ## Img Props
 
-| Prop   | Example                 | Type         | Status   |
-| ------ | ----------------------- | ------------ | -------- |
-| src    | `src="/image.jpg"`      | String       | Required |
-| width  | `width={500}`           | Integer (px) | Required |
-| height | `height={500}`          | Integer (px) | Required |
-| alt    | `mountains and a river` | String       | -        |
+<ComponentPropsTable name="ImgProps" />
 
-### src
-
-The value must a path string or a statically imported file.
-
-### width
-
-The width prop functions the same way as it does on the Next.js `<Image />` component:
-
-> _The width property represents the intrinsic image width in pixels. This property is used to infer the correct aspect ratio of the image and avoid layout shift during loading.
-> It does not determine the rendered size of the image, which is controlled by CSS, similar to the width attribute in the HTML `<img>` tag._
-
-<SimpleGrid>
-  <FeaturedLink
-    href="https://nextjs.org/docs/pages/api-reference/components/image#width"
-    icon="next"
-  >
-    Source: Next.js Image API Reference
-  </FeaturedLink>
-</SimpleGrid>
-
-### height
-
-The height prop functions the same way as it does on the Next.js `<Image />` component:
-
-> _The height property represents the intrinsic image height in pixels. This property is used to infer the correct aspect ratio of the image and avoid layout shift during loading.
-> It does not determine the rendered size of the image, which is controlled by CSS, similar to the height attribute in the HTML `<img>` tag._
-
-<SimpleGrid>
-  <FeaturedLink
-    href="https://nextjs.org/docs/pages/api-reference/components/image#height"
-    icon="next"
-  >
-    Source: Next.js Image API Reference
-  </FeaturedLink>
-</SimpleGrid>
+@propsDescriptionSet:ImgProps
 
 <PageNav>
   <PageNavItem href="/docs/getting-started" direction="prev">
