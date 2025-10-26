@@ -178,6 +178,7 @@ export interface BackgroundImageProps {
    * id="examples__background-image"
    */
   id: string;
+
   /**
    * The HTML tag or React component to use as the wrapper. Defaults to `<div>`.
    *
@@ -185,6 +186,7 @@ export interface BackgroundImageProps {
    * as="span"
    */
   as?: React.ElementType;
+
   /**
    * Optional prop for preloading the background image. This works similar to the `priority` prop on the Next.js image.
    * Should be used for any `<BackgroundImage />` component that is above the fold, and flagged as the Largest Contentful Paint (LCP).
@@ -200,8 +202,6 @@ export interface BackgroundImageProps {
    *
    * To avoid this, the `<BackgroundImage />` component will automatically adjust the media queries set on the preload links, by adding or subtracting 1 px.
    * If this functionality causes any issues, it can be disabled with the `normalizeMediaQueries` prop.
-   *
-   *
    */
   preload?: boolean;
 
