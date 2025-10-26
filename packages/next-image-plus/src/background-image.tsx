@@ -177,11 +177,24 @@ export interface BackgroundImageProps {
   id: string;
   /**
    * The HTML tag or React component to use as the wrapper. Defaults to `<div>`.
+   *
    * @example
    * as="span"
    */
   as?: React.ElementType;
-  /** Whether to preload the background images. Defaults to `false`. */
+  /**
+   * Whether to preload the background images. Defaults to `false`.
+   *
+   * @remarks
+   * For preloading to work properly, media queries on `<link rel="preload">` elements cannot overlap.
+   * Media queries on `<link rel="preload">` elements do not function the way they do on HTML elements.
+   * The user agent will look at multiple `<link rel="preload">` media queries and find multiple matches if there is any overlap in the media queries.
+   * This can lead to performance issues, where multiple images are preloaded.
+   *
+   * To avoid this, the `<BackgroundImage />` component will automatically adjust the media queries set on the preload links, by adding or subtracting 1 px.
+   * If this functionality causes any issues, it can be disabled with the `normalizeMediaQueries` prop.
+   *
+   * */
   preload?: boolean;
   /** An array of background image options for different breakpoints. */
   images: BackgroundImageOptions[];
@@ -191,7 +204,12 @@ export interface BackgroundImageProps {
   style?: React.CSSProperties;
   /** Optional child elements to render inside the component. */
   children?: React.ReactNode;
-  /** Enables or disables media query normalization to remove overlaps Defaults to `true`. */
+  /**
+   * An optional prop to disable the component from normalizing the media queries to remove overlaps. Defaults to `true`
+   *
+   * @example
+   * normalizeMediaQueries={false} // {false} | {true}
+   */
   normalizeMediaQueries?: boolean;
 }
 

@@ -14,12 +14,10 @@ import { metadata as layoutMetadata } from "./layout";
 import { Metadata } from "next";
 
 const HOME_QUERY = gql`
-  query HomeQuery($id: String) {
-    page(id: $id) {
+  query HomeQuery($path: String) {
+    page(path: $path) {
       id
-      uuid
       slug
-      bundle
       title
       description
       keywords
@@ -33,7 +31,7 @@ async function getHome(path: string) {
   const { data } = await client.request({
     query: HOME_QUERY,
     variables: {
-      id: path,
+      path: path,
     },
     options: {
       next: { tags: [path] },

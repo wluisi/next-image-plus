@@ -1,3 +1,5 @@
+// @todo consider moving this script to graphinery/mdx utils
+
 const { Project } = require("ts-morph");
 const fs = require("fs");
 const path = require("path");

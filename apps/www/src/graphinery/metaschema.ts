@@ -1,12 +1,14 @@
-import { EntityMetaschema } from "@graphinery/mdx";
+import { Metaschema } from "@graphinery/mdx";
 
-export const metaschema: EntityMetaschema[] = [
+import { getContentWithTokenReplacement } from "./utils";
+
+export const metaschema: Metaschema = [
   {
     name: "Page",
-    type: "type",
+    type: "collection",
+    interfaces: ["MdxContentTypeInterface"],
     datasource: {
-      entityType: "content",
-      bundle: "page",
+      collection: "page",
       directory: "[page]",
       pathPrefix: "/",
     },
@@ -14,12 +16,12 @@ export const metaschema: EntityMetaschema[] = [
       {
         name: "title",
         type: "string",
-        required: true,
+        nullable: false,
       },
       {
         name: "description",
         type: "string",
-        required: true,
+        nullable: false,
       },
       {
         name: "activeTrail",
@@ -28,13 +30,24 @@ export const metaschema: EntityMetaschema[] = [
       {
         name: "content",
         type: "string",
+        datasource: {
+          name: "mdx",
+          // Computed only changes the value at the datasource level, which works for toc field,
+          // but we also need an additional resolver for this field to alter the return value
+          // @todo figure out why this happens ?
+          computed: (data) => {
+            return getContentWithTokenReplacement(data?.mdx);
+          },
+        },
+        resolver: (data) => {
+          return getContentWithTokenReplacement(data?.mdx);
+        },
       },
       {
         name: "toc",
         type: "toc",
         datasource: {
           name: "content",
-          fieldType: "string",
         },
       },
       {
@@ -44,7 +57,7 @@ export const metaschema: EntityMetaschema[] = [
       {
         name: "publishedDate",
         type: "string",
-        required: true,
+        nullable: false,
       },
       {
         name: "updatedDate",
@@ -54,10 +67,10 @@ export const metaschema: EntityMetaschema[] = [
   },
   {
     name: "Blog",
-    type: "type",
+    type: "collection",
+    interfaces: ["MdxContentTypeInterface"],
     datasource: {
-      entityType: "content",
-      bundle: "blog",
+      collection: "blog",
       directory: "[blog]",
       pathPrefix: "/blog",
     },
@@ -65,12 +78,12 @@ export const metaschema: EntityMetaschema[] = [
       {
         name: "title",
         type: "string",
-        required: true,
+        nullable: false,
       },
       {
         name: "description",
         type: "string",
-        required: true,
+        nullable: false,
       },
       {
         name: "activeTrail",
@@ -85,7 +98,6 @@ export const metaschema: EntityMetaschema[] = [
         type: "toc",
         datasource: {
           name: "content",
-          fieldType: "string",
         },
       },
       {
@@ -94,17 +106,18 @@ export const metaschema: EntityMetaschema[] = [
       },
       {
         name: "tags",
-        type: "list",
-        datasource: {
-          name: "tags",
-          fieldType: "reference",
-          allowedTypes: ["tag"],
+        type: "reference",
+        ofType: "Tag",
+        list: true,
+        nullable: {
+          list: false,
+          items: true,
         },
       },
       {
         name: "publishedDate",
         type: "string",
-        required: true,
+        nullable: false,
       },
       {
         name: "updatedDate",
@@ -114,10 +127,10 @@ export const metaschema: EntityMetaschema[] = [
   },
   {
     name: "Tag",
-    type: "type",
+    type: "collection",
+    interfaces: ["MdxTaxonomyTermInterface"],
     datasource: {
-      entityType: "taxonomyTerm",
-      bundle: "tag",
+      collection: "tag",
       directory: "[tag]",
       pathPrefix: "/tag",
     },

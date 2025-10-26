@@ -60,8 +60,10 @@
         "name": "normalizeMediaQueries",
         "type": "boolean",
         "required": false,
-        "description": "Enables or disables media query normalization to remove overlaps Defaults to `true`.",
-        "examples": []
+        "description": "An optional prop to disable the component from normalizing the media queries to remove overlaps. Defaults to `true`",
+        "examples": [
+          "normalizeMediaQueries={false} // {false} | {true}"
+        ]
       }
     ]
   },
@@ -163,8 +165,10 @@
         "name": "normalizeMediaQueries",
         "type": "boolean",
         "required": false,
-        "description": "Enables or disables media query normalization to remove overlaps Defaults to `true`.",
-        "examples": []
+        "description": "An optional prop to disable the component from normalizing the media queries to remove overlaps. Defaults to `true`",
+        "examples": [
+          "normalizeMediaQueries={false} // {false} | {true}"
+        ]
       }
     ]
   },

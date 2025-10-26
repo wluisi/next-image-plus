@@ -38,7 +38,7 @@ async function getSidebarMenu() {
     variables: {
       filter: {
         status: { _eq: true },
-        bundle: { _all_in: ["page"] },
+        collection: { _all_in: ["page"] },
         path: { _neq: "/examples-pages" },
         parent: { _neq: "/examples-pages" },
       },

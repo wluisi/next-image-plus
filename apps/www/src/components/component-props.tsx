@@ -1,5 +1,5 @@
 import * as React from "react";
-import propsJson from "../../../../generated/props.json"; // adjust path if needed
+import propsJson from "../../../../generated/props.json";
 import { CodeSnippet, HeadingAnchorLink } from "@graphinery/ui";
 
 export function ComponentPropsTable({ name }: { name: string }) {
