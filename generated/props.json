@@ -136,7 +136,7 @@
         "description": "The width prop functions the same way as it does on the Next.js `<Image />` component.",
         "examples": [],
         "remarks": [
-          "[quote] The width property represents the intrinsic image width in pixels.\nThis property is used to infer the correct aspect ratio of the image and avoid layout shift during loading.\nIt does not determine the rendered size of the image,\nwhich is controlled by CSS, similar to the width attribute in the HTML `<img>` tag.\n\n[featuredLink] https://nextjs.org/docs/pages/api-reference/components/image#width-and-height | Source: Next.js Image API Reference"
+          "[quote] The width property represents the intrinsic image width in pixels.\nThis property is used to infer the correct aspect ratio of the image and avoid layout shift during loading.\nIt does not determine the rendered size of the image,\nwhich is controlled by CSS, similar to the width attribute in the HTML `<img>` tag.\n\n[link] https://nextjs.org/docs/pages/api-reference/components/image#width-and-height | Source: Next.js Image API Reference"
         ]
       },
       {
@@ -146,7 +146,7 @@
         "description": "The height prop functions the same way as it does on the Next.js `<Image />` component.",
         "examples": [],
         "remarks": [
-          "[quote] The height property represents the intrinsic image height in pixels.\nThis property is used to infer the correct aspect ratio of the image and avoid layout shift during loading.\nIt does not determine the rendered size of the image,\nwhich is controlled by CSS, similar to the width attribute in the HTML `<img>` tag.\n\n[featuredLink] https://nextjs.org/docs/pages/api-reference/components/image#width-and-height | Source: Next.js Image API Reference"
+          "[quote] The height property represents the intrinsic image height in pixels.\nThis property is used to infer the correct aspect ratio of the image and avoid layout shift during loading.\nIt does not determine the rendered size of the image,\nwhich is controlled by CSS, similar to the width attribute in the HTML `<img>` tag.\n\n[link] https://nextjs.org/docs/pages/api-reference/components/image#width-and-height | Source: Next.js Image API Reference"
         ]
       }
     ]

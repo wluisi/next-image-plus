@@ -39,7 +39,7 @@ export type SourceProps = React.ComponentPropsWithRef<"source"> & {
    * It does not determine the rendered size of the image,
    * which is controlled by CSS, similar to the width attribute in the HTML `<img>` tag.
    *
-   * [featuredLink] https://nextjs.org/docs/pages/api-reference/components/image#width-and-height | Source: Next.js Image API Reference
+   * [link] https://nextjs.org/docs/pages/api-reference/components/image#width-and-height | Source: Next.js Image API Reference
    */
   width: number | `${number}`;
 
@@ -52,7 +52,7 @@ export type SourceProps = React.ComponentPropsWithRef<"source"> & {
    * It does not determine the rendered size of the image,
    * which is controlled by CSS, similar to the width attribute in the HTML `<img>` tag.
    *
-   * [featuredLink] https://nextjs.org/docs/pages/api-reference/components/image#width-and-height | Source: Next.js Image API Reference
+   * [link] https://nextjs.org/docs/pages/api-reference/components/image#width-and-height | Source: Next.js Image API Reference
    */
   height: number | `${number}`;
 };

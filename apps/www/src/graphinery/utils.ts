@@ -30,7 +30,7 @@ export function getPropsDescriptionSetMdx(name: string) {
       lines.push(quoted);
       lines.push(""); // blank line after blockquote
     },
-    featuredlink: (content) => {
+    link: (content) => {
       const [href, children] = content.split("|").map((s) => s.trim());
       lines.push(""); // blank line before the link
       lines.push(`<SimpleGrid>
@@ -57,28 +57,13 @@ export function getPropsDescriptionSetMdx(name: string) {
         lines.push(`\`\`\`ts\n${prop.examples[0]}\n\`\`\``);
       }
 
-      // if (prop.remarks && prop.remarks.length > 0) {
-      //   for (const remark of prop.remarks) {
-      //     // Match all tagged segments like [quote] ... or [featuredLink] ...
-      //     const matches = remark.matchAll(
-      //       /\[(info|important|quote|featuredLink)\]\s*([\s\S]*?)(?=\n\s*\[|$)/gi
-      //     );
-
-      //     for (const match of matches) {
-      //       const [, type, content] = match;
-      //       const handler =
-      //         remarkHandlers[type.toLowerCase()] || remarkHandlers["info"];
-      //       handler(content.trim());
-      //     }
-      //   }
-      // }
       if (prop.remarks && prop.remarks.length > 0) {
         const allRemarks = prop.remarks.join("\n");
 
         // Match all blocks starting with a tag, even after blank lines
         const matches = Array.from(
           allRemarks.matchAll(
-            /\[\s*(info|important|quote|featuredLink)\]\s*([\s\S]*?)(?=(\n\s*\[|$))/gi
+            /\[\s*(info|important|quote|link)\]\s*([\s\S]*?)(?=(\n\s*\[|$))/gi
           )
         );
 

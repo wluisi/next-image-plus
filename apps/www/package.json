@@ -16,10 +16,10 @@
     "cypress:run": "../../node_modules/.bin/cypress run"
   },
   "dependencies": {
-    "@graphinery/client": "file:./../../local-packages/graphinery-client-1.0.0-beta.1.tgz",
+    "@graphinery/client": "file:./../../local-packages/graphinery-client-1.0.0-beta.2.tgz",
     "@graphinery/core": "file:./../../local-packages/graphinery-core-1.0.0-beta.4.tgz",
     "@graphinery/mdx": "file:./../../local-packages/graphinery-mdx-1.0.0-beta.11.tgz",
-    "@graphinery/server": "file:./../../local-packages/graphinery-server-1.0.0-beta.0.tgz",
+    "@graphinery/server": "file:./../../local-packages/graphinery-server-1.0.0-beta.1.tgz",
     "@graphinery/ui": "file:./../../local-packages/graphinery-ui-1.0.0-beta.6.tgz",
     "@vercel/analytics": "^1.5.0",
     "autoprefixer": "^10.4.14",
