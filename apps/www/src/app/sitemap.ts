@@ -21,10 +21,8 @@ const SITEMAP_QUERY = gql`
     ) {
       items {
         id
-        uuid
         title
         path
-        bundle
         description
         publishedDate
         updatedDate
@@ -45,10 +43,8 @@ const SITEMAP_QUERY = gql`
     ) {
       items {
         id
-        uuid
         title
         path
-        bundle
         description
         status
         publishedDate
