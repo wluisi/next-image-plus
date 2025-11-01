@@ -106,33 +106,31 @@ function getPropsTableMdx(componentName, propsList) {
     return null;
   }
 
-  const lines = [];
+  const rows = [];
 
   // Frontmatter
-  lines.push("---");
-  lines.push(`title: "${component.component} Props Table"`);
-  lines.push("status: true");
-  lines.push("---");
-  lines.push("");
+  const frontmatter = [
+    "---",
+    `title: "${component.component} Props Table"`,
+    "status: true",
+    "---",
+    "",
+  ];
 
-  // Table header
-  lines.push("| Name | Type | Required | Description |");
-  lines.push("| ---- | ---- | -------- | ----------- |");
+  // Table header and separator
+  rows.push(["Name", "Type", "Required", "Description"]);
+  rows.push(["----", "----", "--------", "-----------"]);
 
   for (const prop of component.props) {
     const name = prop.name || "";
-
-    // Wrap type in backticks and escape pipes/newlines
-    const type = `\`${(prop.type || "").replace(/\|/g, "\\|").replace(/\r?\n/g, " ")}\``;
-
+    const type = `\`${(prop.type || "")
+      .replace(/\|/g, "\\|")
+      .replace(/\r?\n/g, " ")}\``;
     const required = prop.required ? "Yes" : "No";
-
-    // Escape pipes/newlines in description
     let description = (prop.description || "")
       .replace(/\|/g, "\\|")
       .replace(/\r?\n/g, " ");
 
-    // Append first example in backticks if exists
     if (prop.examples && prop.examples.length > 0) {
       const example = prop.examples[0]
         .replace(/\|/g, "\\|")
@@ -140,11 +138,34 @@ function getPropsTableMdx(componentName, propsList) {
       description += ` \`${example}\``;
     }
 
-    lines.push(`| ${name} | ${type} | ${required} | ${description} |`);
+    rows.push([name, type, required, description]);
   }
 
-  lines.push("");
-  return lines.join("\n");
+  // Compute column widths
+  const colWidths = rows[0].map((_, i) =>
+    Math.max(...rows.map((r) => r[i].length))
+  );
+
+  // Build aligned table
+  const table = rows
+    .map((row, rowIndex) => {
+      const padChar = rowIndex === 1 ? "-" : " ";
+      return (
+        "| " +
+        row
+          .map((cell, i) => {
+            const padLen = colWidths[i] - cell.length;
+            return rowIndex === 1
+              ? padChar.repeat(colWidths[i])
+              : cell + " ".repeat(padLen);
+          })
+          .join(" | ") +
+        " |"
+      );
+    })
+    .join("\n");
+
+  return [...frontmatter, table, ""].join("\n");
 }
 
 module.exports = { getPropsMdx, getPropsTableMdx };
