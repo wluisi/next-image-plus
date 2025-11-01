@@ -8,7 +8,7 @@ status: true
 A unique id for the background image html element.
 
 ```ts
-id="examples__background-image"
+id = "examples__background-image";
 ```
 
 ### as
@@ -16,7 +16,7 @@ id="examples__background-image"
 The HTML tag or React component to use as the wrapper. Defaults to `<div>`.
 
 ```ts
-as="span"
+as = "span";
 ```
 
 ### preload
@@ -36,6 +36,7 @@ This can lead to performance issues, where multiple images are preloaded.
 
 To avoid this, the `<BackgroundImage />` component will automatically adjust the media queries set on the preload links, by adding or subtracting 1 px.
 If this functionality causes any issues, it can be disabled with the `normalizeMediaQueries` prop.
+
 </Callout>
 
 ### images
@@ -51,7 +52,7 @@ images={[ ... ]}
 Optional prop for any CSS class name(s) for the background image element.
 
 ```ts
-className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+className = "absolute inset-0 bg-cover bg-center bg-no-repeat";
 ```
 
 ### style

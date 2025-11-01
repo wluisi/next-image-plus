@@ -32,5 +32,9 @@ export async function PropsDoc({ id }: { id: string }) {
   const path = `/props-doc/${id}`;
   const propsDoc = await getPropsDoc(path);
 
+  if (!propsDoc) {
+    return null;
+  }
+
   return <GraphineryMdx mdx={propsDoc.content} components={componentsMap} />;
 }
