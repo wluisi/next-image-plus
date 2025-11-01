@@ -26,7 +26,6 @@ import PictureExampleTabs from "./examples/picture-tabs";
 import BackgroundImageExampleTabs from "./examples/background-image-tabs";
 //
 import BlogCollection from "./../components/blog/blog-collection";
-import { PropsTable } from "./props-table";
 
 import { PropsDoc } from "./props-doc";
 
@@ -68,7 +67,6 @@ export const componentsMap = createComponentMap({
   BackgroundImageExampleTabs,
   Steps,
   SimpleGrid,
-  PropsTable,
   // Overrides
   h1: (props) => {
     return <Heading level="h1" {...props} />;

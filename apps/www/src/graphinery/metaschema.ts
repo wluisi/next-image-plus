@@ -1,7 +1,5 @@
 import { Metaschema } from "@graphinery/mdx";
 
-import { getContentWithTokenReplacement } from "./utils";
-
 export const metaschema: Metaschema = [
   {
     name: "Page",
@@ -30,18 +28,6 @@ export const metaschema: Metaschema = [
       {
         name: "content",
         type: "string",
-        // datasource: {
-        //   name: "mdx",
-        //   // Computed only changes the value at the datasource level, which works for toc field,
-        //   // but we also need an additional resolver for this field to alter the return value
-        //   // @todo figure out why this happens ?
-        //   computed: (data) => {
-        //     return getContentWithTokenReplacement(data?.mdx);
-        //   },
-        // },
-        // resolver: (data) => {
-        //   return getContentWithTokenReplacement(data?.mdx);
-        // },
       },
       {
         name: "toc",
@@ -136,16 +122,6 @@ export const metaschema: Metaschema = [
     ],
   },
   {
-    name: "Tag",
-    type: "collection",
-    interfaces: ["MdxTaxonomyTermInterface"],
-    datasource: {
-      collection: "tag",
-      directory: "[tag]",
-      pathPrefix: "/tag",
-    },
-  },
-  {
     name: "PropsDoc",
     type: "collection",
     interfaces: ["MdxContentTypeInterface"],
@@ -163,5 +139,15 @@ export const metaschema: Metaschema = [
         },
       },
     ],
+  },
+  {
+    name: "Tag",
+    type: "collection",
+    interfaces: ["MdxTaxonomyTermInterface"],
+    datasource: {
+      collection: "tag",
+      directory: "[tag]",
+      pathPrefix: "/tag",
+    },
   },
 ];
