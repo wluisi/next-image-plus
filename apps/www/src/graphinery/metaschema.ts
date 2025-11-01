@@ -30,18 +30,18 @@ export const metaschema: Metaschema = [
       {
         name: "content",
         type: "string",
-        datasource: {
-          name: "mdx",
-          // Computed only changes the value at the datasource level, which works for toc field,
-          // but we also need an additional resolver for this field to alter the return value
-          // @todo figure out why this happens ?
-          computed: (data) => {
-            return getContentWithTokenReplacement(data?.mdx);
-          },
-        },
-        resolver: (data) => {
-          return getContentWithTokenReplacement(data?.mdx);
-        },
+        // datasource: {
+        //   name: "mdx",
+        //   // Computed only changes the value at the datasource level, which works for toc field,
+        //   // but we also need an additional resolver for this field to alter the return value
+        //   // @todo figure out why this happens ?
+        //   computed: (data) => {
+        //     return getContentWithTokenReplacement(data?.mdx);
+        //   },
+        // },
+        // resolver: (data) => {
+        //   return getContentWithTokenReplacement(data?.mdx);
+        // },
       },
       {
         name: "toc",
@@ -62,6 +62,16 @@ export const metaschema: Metaschema = [
       {
         name: "updatedDate",
         type: "string",
+      },
+      {
+        name: "propsDoc",
+        type: "reference",
+        ofType: "PropsDoc",
+        list: true,
+        nullable: {
+          list: false,
+          items: true,
+        },
       },
     ],
   },
@@ -134,5 +144,24 @@ export const metaschema: Metaschema = [
       directory: "[tag]",
       pathPrefix: "/tag",
     },
+  },
+  {
+    name: "PropsDoc",
+    type: "collection",
+    interfaces: ["MdxContentTypeInterface"],
+    datasource: {
+      collection: "propsDoc",
+      directory: "[propsDoc]",
+      pathPrefix: "/props-doc",
+    },
+    fields: [
+      {
+        name: "toc",
+        type: "toc",
+        datasource: {
+          name: "content",
+        },
+      },
+    ],
   },
 ];

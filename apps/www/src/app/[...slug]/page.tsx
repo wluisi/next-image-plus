@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { gql } from "@graphinery/client";
 import { getPathFromParams } from "@graphinery/core";
+// import { getTocFromMarkdown } from "@graphinery/mdx";
 
 import { client } from "../../graphinery";
 import { notFound } from "next/navigation";
@@ -25,9 +26,12 @@ import SidebarMenu from "../../components/sidebar-menu";
 import { metadata as layoutMetadata } from "../layout";
 import { Metadata } from "next";
 
+import { mergeToc } from "./../../utils/merge-toc";
+
 const PAGE_QUERY = gql`
   query PageQuery($path: String) {
     page(path: $path) {
+      internalId
       title
       description
       keywords
@@ -41,6 +45,19 @@ const PAGE_QUERY = gql`
         }
       }
       content
+      propsDoc {
+        id
+        internalId
+        title
+        content
+        toc {
+          items {
+            id
+            title
+            level
+          }
+        }
+      }
       toc {
         items {
           id
@@ -148,6 +165,15 @@ export default async function CatchAllSlugPage({
     notFound();
   }
 
+  // @todo this is wrong, and not working
+  // const toc = [
+  //   ...getTocFromMarkdown(page.content),
+  //   ...getTocFromMarkdown(page.propsDoc[0]?.content),
+  //   // ...getTocFromMarkdown(page.propsDoc[1]?.content),
+  // ];
+
+  // console.log(page.propsDoc);
+
   return (
     <Grid
       id="grid"
@@ -215,7 +241,8 @@ export default async function CatchAllSlugPage({
           path === "/blog" && "!hidden"
         )}
       >
-        <TableOfContents data={page.toc.items} />
+        {/* <TableOfContents data={page.toc.items} /> */}
+        <TableOfContents data={mergeToc(page?.toc, page?.propsDoc)} />
       </GridItem>
     </Grid>
   );
