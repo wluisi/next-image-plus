@@ -90,8 +90,6 @@ function getPropsMdx(componentName, propsList) {
           }
         }
       }
-
-      // lines.push(""); // blank line after each prop
     }
   }
 
@@ -145,7 +143,7 @@ function getPropsTableMdx(componentName, propsList) {
     lines.push(`| ${name} | ${type} | ${required} | ${description} |`);
   }
 
-  lines.push(""); // blank line at end
+  lines.push("");
   return lines.join("\n");
 }
 

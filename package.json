@@ -16,7 +16,7 @@
     "examples:dev": "npm run dev --workspace=examples/next",
     "examples:production": "npm run build --workspace=examples/next && npm run start --workspace=examples/next",
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
-    "generate:propsDocs": "node scripts/generate-props-docs.cjs",
+    "generate:props-docs": "node scripts/generate-props-docs.cjs",
     "lint": "eslint --ignore-path .eslintignore \"**/src/**/*.+(ts|js|tsx)\"",
     "lint:quiet": "eslint --ignore-path .eslintignore \"**/src/**/*.+(ts|js|tsx)\" --quiet",
     "next-image-plus:build": "npm run build --workspace=packages/next-image-plus",

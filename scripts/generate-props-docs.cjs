@@ -7,7 +7,6 @@ const path = require("path");
 const { getPropsMdx, getPropsTableMdx } = require("./get-props-mdx.cjs");
 
 const __CONTENT_DIR = "apps/www/src/__content/[propsDoc]";
-// const __CONTENT_DIR = "generated/[propsDoc]";
 
 // Convert PascalCase to kebab-case
 function pascalCaseToKebabCase(str) {
@@ -166,11 +165,11 @@ function processSourceFile(sourceFile) {
 project.getSourceFiles().forEach(processSourceFile);
 
 // Write JSON output
-const outputPath = path.join(process.cwd(), "generated/props.json");
-fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-fs.writeFileSync(outputPath, JSON.stringify(output, null, 2));
+// const outputPath = path.join(process.cwd(), "generated/props.json");
+// fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+// fs.writeFileSync(outputPath, JSON.stringify(output, null, 2));
 
-console.log("✅ Props JSON generated:", outputPath);
+// console.log("✅ Props JSON generated:", outputPath);
 
 // ----- WRITE MDX -------
 const mdxDir = path.join(process.cwd(), __CONTENT_DIR);
