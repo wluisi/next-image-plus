@@ -1,0 +1,75 @@
+---
+title: "BackgroundImageProps"
+status: true
+---
+
+### id
+
+A unique id for the background image html element.
+
+```ts
+id="examples__background-image"
+```
+
+### as
+
+The HTML tag or React component to use as the wrapper. Defaults to `<div>`.
+
+```ts
+as="span"
+```
+
+### preload
+
+Optional prop for preloading the background image. This works similar to the `priority` prop on the Next.js image.
+Should be used for any `<BackgroundImage />` component that is above the fold, and flagged as the Largest Contentful Paint (LCP).
+
+```ts
+preload={false} // {false} | {true}
+```
+
+<Callout type='important'>
+For preloading to work properly, media queries on `<link rel="preload">` elements cannot overlap.
+Media queries on `<link rel="preload">` elements do not function the way they do on HTML elements.
+The user agent will look at multiple `<link rel="preload">` media queries and find multiple matches if there is any overlap in the media queries.
+This can lead to performance issues, where multiple images are preloaded.
+
+To avoid this, the `<BackgroundImage />` component will automatically adjust the media queries set on the preload links, by adding or subtracting 1 px.
+If this functionality causes any issues, it can be disabled with the `normalizeMediaQueries` prop.
+</Callout>
+
+### images
+
+An array of image objects of the `BackgroundImageOptions` type.
+
+```ts
+images={[ ... ]}
+```
+
+### className
+
+Optional prop for any CSS class name(s) for the background image element.
+
+```ts
+className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+```
+
+### style
+
+Optional prop for any CSS style properties for the background image element.
+
+```ts
+style={{ color: "red" }}
+```
+
+### children
+
+Optional child elements to render inside the component.
+
+### normalizeMediaQueries
+
+Optional prop to disable the component from normalizing the media queries to remove overlaps. Defaults to `true`
+
+```ts
+normalizeMediaQueries={false} // {false} | {true}
+```

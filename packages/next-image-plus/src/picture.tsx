@@ -41,7 +41,7 @@ export type SourceProps = React.ComponentPropsWithRef<"source"> & {
    *
    * [link] https://nextjs.org/docs/pages/api-reference/components/image#width-and-height | Source: Next.js Image API Reference
    */
-  width: number | `${number}`;
+  width: number;
 
   /**
    * The height prop functions the same way as it does on the Next.js `<Image />` component.
@@ -54,7 +54,7 @@ export type SourceProps = React.ComponentPropsWithRef<"source"> & {
    *
    * [link] https://nextjs.org/docs/pages/api-reference/components/image#width-and-height | Source: Next.js Image API Reference
    */
-  height: number | `${number}`;
+  height: number;
 };
 
 /**
@@ -117,7 +117,7 @@ export type PictureProps = React.ComponentPropsWithRef<"picture"> & {
    * An optional prop, to set the fallback media query for preloading.
    *
    * @example
-   * fallbackMedia="(max-width: 430px)"
+   * fallbackMedia = "(max-width: 430px)";
    */
   fallbackMedia?: string;
 

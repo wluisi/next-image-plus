@@ -4,6 +4,19 @@ const { Project } = require("ts-morph");
 const fs = require("fs");
 const path = require("path");
 
+const { getPropsMdx, getPropsTableMdx } = require("./get-props-mdx.cjs");
+
+const __CONTENT_DIR = "apps/www/src/__content/[propsDoc]";
+// const __CONTENT_DIR = "generated/[propsDoc]";
+
+// Convert PascalCase to kebab-case
+function pascalCaseToKebabCase(str) {
+  return str
+    .replace(/([a-z0-9])([A-Z])/g, "$1-$2") // insert dash between lowercase/number and uppercase
+    .replace(/([A-Z])([A-Z][a-z])/g, "$1-$2") // handle consecutive capitals
+    .toLowerCase();
+}
+
 // Initialize TS project
 const project = new Project({
   tsConfigFilePath: "packages/next-image-plus/tsconfig.json",
@@ -158,3 +171,27 @@ fs.mkdirSync(path.dirname(outputPath), { recursive: true });
 fs.writeFileSync(outputPath, JSON.stringify(output, null, 2));
 
 console.log("✅ Props JSON generated:", outputPath);
+
+// ----- WRITE MDX -------
+const mdxDir = path.join(process.cwd(), __CONTENT_DIR);
+fs.mkdirSync(mdxDir, { recursive: true });
+
+output.forEach((component) => {
+  const fileBaseName = pascalCaseToKebabCase(component.component);
+
+  // Full props MDX
+  const propsMdx = getPropsMdx(component.component, output);
+  if (propsMdx) {
+    fs.writeFileSync(path.join(mdxDir, `${fileBaseName}.mdx`), propsMdx);
+  }
+
+  // Props table MDX
+  const tableMdx = getPropsTableMdx(component.component, output);
+  if (tableMdx) {
+    fs.writeFileSync(path.join(mdxDir, `${fileBaseName}-table.mdx`), tableMdx);
+  }
+
+  console.log(`📝 Wrote MDX files for ${component.component}`);
+});
+
+console.log("✅ All MDX prop docs generated");
