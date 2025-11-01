@@ -118,27 +118,28 @@ function getPropsTableMdx(componentName, propsList) {
   ];
 
   // Table header and separator
-  rows.push(["Name", "Type", "Required", "Description"]);
-  rows.push(["----", "----", "--------", "-----------"]);
+  rows.push(["Prop", "Example", "Type", "Status"]);
+  rows.push(["----", "-------", "----", "------"]);
 
   for (const prop of component.props) {
-    const name = prop.name || "";
+    const propName = prop.name || "";
+
+    // Example
+    let example = "-";
+    if (prop.examples && prop.examples.length > 0) {
+      example = prop.examples[0].replace(/\|/g, "\\|").replace(/\r?\n/g, " ");
+      example = `\`${example}\``;
+    }
+
+    // Type
     const type = `\`${(prop.type || "")
       .replace(/\|/g, "\\|")
       .replace(/\r?\n/g, " ")}\``;
-    const required = prop.required ? "Yes" : "No";
-    let description = (prop.description || "")
-      .replace(/\|/g, "\\|")
-      .replace(/\r?\n/g, " ");
 
-    if (prop.examples && prop.examples.length > 0) {
-      const example = prop.examples[0]
-        .replace(/\|/g, "\\|")
-        .replace(/\r?\n/g, " ");
-      description += ` \`${example}\``;
-    }
+    // Status
+    const status = prop.required ? "Required" : "-";
 
-    rows.push([name, type, required, description]);
+    rows.push([propName, example, type, status]);
   }
 
   // Compute column widths
