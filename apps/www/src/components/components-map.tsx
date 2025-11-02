@@ -27,6 +27,8 @@ import BackgroundImageExampleTabs from "./examples/background-image-tabs";
 //
 import BlogCollection from "./../components/blog/blog-collection";
 
+import { PropsDoc } from "./props-doc";
+
 const createComponentMap = <T extends Record<string, React.ComponentType<any>>>(
   map: T
 ) => map;
@@ -41,6 +43,7 @@ export const componentsMap = createComponentMap({
   AccordionPanel,
   BlogCollection,
   Callout,
+  PropsDoc,
   FeaturedLink: (props) => {
     return <FeaturedLink as={NextLink} {...props} />;
   },

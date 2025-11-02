@@ -7,10 +7,46 @@ import {
 import { getMediaQueries } from "./utils/media";
 import { PreloadImageLink } from "./preload";
 
-type BackgroundImageOptions = Omit<NextImageProps, "alt" | "src"> & {
+export type BackgroundImageOptions = Omit<NextImageProps, "alt" | "src"> & {
+  /**
+   * Optional breakpoint name.
+   *
+   * @example
+   * breakpoint = "fallback"
+   */
   breakpoint?: string;
+
+  /**
+   * The media query for the breakpoint.
+   *
+   * @example
+   * media = (max-width: 430px)
+   */
   media?: string;
+
+  /**
+   * The url for the background image.
+   *
+   * @example
+   * url = "https://picsum.photos/id/870/430/466"
+   */
   url: string;
+
+  /**
+   * The width of the background image.
+   *
+   * @example
+   * width = 430
+   */
+  width: number;
+
+  /**
+   * The height of the background image.
+   *
+   * @example
+   * height = 430
+   */
+  height: number;
 };
 
 interface BackgroundImageData {
@@ -168,21 +204,80 @@ export function Style({ id, bgImageProps }: StyleProps) {
 }
 
 export interface BackgroundImageProps {
-  /** A unique id for the background image html element. */
+  /**
+   * A unique id for the background image html element.
+   *
+   * @example
+   * id="examples__background-image"
+   */
   id: string;
-  /** The HTML tag or React component to use as the wrapper. Defaults to `<div>`. */
+
+  /**
+   * The HTML tag or React component to use as the wrapper. Defaults to `<div>`.
+   *
+   * @example
+   * as="span"
+   */
   as?: React.ElementType;
-  /** Whether to preload the background images. Defaults to `false`. */
+
+  /**
+   * Optional prop for preloading the background image. This works similar to the `priority` prop on the Next.js image.
+   * Should be used for any `<BackgroundImage />` component that is above the fold, and flagged as the Largest Contentful Paint (LCP).
+   *
+   * @example
+   * preload={false} // {false} | {true}
+   *
+   * @remarks
+   * [important] For preloading to work properly, media queries on `<link rel="preload">` elements cannot overlap.
+   * Media queries on `<link rel="preload">` elements do not function the way they do on HTML elements.
+   * The user agent will look at multiple `<link rel="preload">` media queries and find multiple matches if there is any overlap in the media queries.
+   * This can lead to performance issues, where multiple images are preloaded.
+   *
+   * To avoid this, the `<BackgroundImage />` component will automatically adjust the media queries set on the preload links, by adding or subtracting 1 px.
+   * If this functionality causes any issues, it can be disabled with the `normalizeMediaQueries` prop.
+   */
   preload?: boolean;
-  /** An array of background image options for different breakpoints. */
+
+  /**
+   * An array of image objects of the `BackgroundImageOptions` type.
+   *
+   * @example
+   * images={[ ... ]}
+   */
   images: BackgroundImageOptions[];
-  /** An optional class name for styling. */
+
+  /**
+   * Optional prop for any CSS class name(s) for the background image element.
+   *
+   * @example
+   * className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+   */
   className?: string;
-  /** An optional style prop, for passing css properties. */
+
+  /**
+   * Optional prop for any CSS style properties for the background image element.
+   *
+   * @example
+   * style={{ color: "red" }}
+   */
   style?: React.CSSProperties;
-  /** Optional child elements to render inside the component. */
+
+  /**
+   * Optional child elements to render inside the component.
+   *
+   * @example
+   * <BackgroundImage>
+   *   <div>content</div>
+   * </BackgroundImage>
+   */
   children?: React.ReactNode;
-  /** Enables or disables media query normalization to remove overlaps Defaults to `true`. */
+
+  /**
+   * Optional prop to disable the component from normalizing the media queries to remove overlaps. Defaults to `true`
+   *
+   * @example
+   * normalizeMediaQueries={false} // {false} | {true}
+   */
   normalizeMediaQueries?: boolean;
 }
 

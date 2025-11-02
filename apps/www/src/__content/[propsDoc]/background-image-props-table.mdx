@@ -1,0 +1,15 @@
+---
+title: "BackgroundImageProps Props Table"
+status: true
+---
+
+| Prop                  | Example                                                        | Type                                                        | Status   |
+| --------------------- | -------------------------------------------------------------- | ----------------------------------------------------------- | -------- |
+| id                    | `id="examples__background-image"`                              | `string`                                                    | Required |
+| as                    | `as="span"`                                                    | `React.ElementType<any, keyof React.JSX.IntrinsicElements>` | -        |
+| preload               | `preload={false} // {false} \| {true}`                         | `boolean`                                                   | -        |
+| images                | `images={[ ... ]}`                                             | `BackgroundImageOptions[]`                                  | Required |
+| className             | `className="absolute inset-0 bg-cover bg-center bg-no-repeat"` | `string`                                                    | -        |
+| style                 | `style={{ color: "red" }}`                                     | `React.CSSProperties`                                       | -        |
+| children              | `<BackgroundImage>   <div>content</div> </BackgroundImage>`    | `React.ReactNode`                                           | -        |
+| normalizeMediaQueries | `normalizeMediaQueries={false} // {false} \| {true}`           | `boolean`                                                   | -        |

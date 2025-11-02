@@ -22,12 +22,71 @@ function getValidReactChildren(
 }
 
 export type SourceProps = React.ComponentPropsWithRef<"source"> & {
-  /** The URL of the image source. */
+  /**
+   * The URL of the image source. The value must be a path string or a statically imported file.
+   *
+   * @example
+   * src = "/image.jpg"
+   *
+   * @remarks
+   * [info] A key difference between the native html element for `<source>` and the `<Source />` component, is the html element does not accept a `src` attribute,
+   * but uses `srcset` instead.
+   *
+   * The value for `srcset` will get automatically generated for you, using the Next.js Image API, based on the `src` prop value.
+   */
   src: string;
-  /** The width of the source, can be a number or a string representing a number. */
-  width: number | `${number}`;
-  /** The height of the source, can be a number or a string representing a number. */
-  height: number | `${number}`;
+
+  /**
+   * A media query string, defining when to use this particular source image.
+   *
+   * @example
+   * media = "(max-width: 430px)"
+   */
+  media: string;
+
+  /**
+   * The width prop functions the same way as it does on the Next.js `<Image />` component.
+   *
+   * @example
+   * width = {500}
+   *
+   * @remarks
+   * [quote] The width property represents the intrinsic image width in pixels.
+   * This property is used to infer the correct aspect ratio of the image and avoid layout shift during loading.
+   * It does not determine the rendered size of the image,
+   * which is controlled by CSS, similar to the width attribute in the HTML `<img>` tag.
+   *
+   * [link] https://nextjs.org/docs/pages/api-reference/components/image#width-and-height | Source: Next.js Image API Reference
+   */
+  width: number;
+
+  /**
+   * The height prop functions the same way as it does on the Next.js `<Image />` component.
+   *
+   * @example
+   * height = {500}
+   *
+   * @remarks
+   * [quote] The height property represents the intrinsic image height in pixels.
+   * This property is used to infer the correct aspect ratio of the image and avoid layout shift during loading.
+   * It does not determine the rendered size of the image,
+   * which is controlled by CSS, similar to the width attribute in the HTML `<img>` tag.
+   *
+   * [link] https://nextjs.org/docs/pages/api-reference/components/image#width-and-height | Source: Next.js Image API Reference
+   */
+  height: number;
+
+  /**
+   * Optional prop to define the sizes of the image at different breakpoints. Used to determined the best size for the generated srcset.
+   * The sizes prop functions the same way as it does on the Next.js `<Image />` component.
+   *
+   * @example
+   * sizes="(max-width: 768px) 100vw, 33vw"
+   *
+   * @remarks
+   * [link] https://nextjs.org/docs/pages/api-reference/components/image#sizes | Source: Next.js Image API Reference
+   */
+  sizes?: string;
 };
 
 /**
@@ -40,7 +99,60 @@ export function Source(props: Omit<SourceProps, "srcSet">) {
 }
 
 export type ImgProps = React.ImgHTMLAttributes<HTMLImageElement> & {
-  /** The media query to be used for the fallback image, if preload is true. */
+  /**
+   * The URL of the image source. The value must a path string or a statically imported file.
+   *
+   * @example
+   * src = "/image.jpg"
+   */
+  src: string;
+
+  /**
+   * The alt text for the image.
+   *
+   * @example
+   * alt = "Mountains and a river"
+   */
+  alt: string;
+
+  /**
+   * The width prop functions the same way as it does on the Next.js `<Image />` component.
+   *
+   * @example
+   * width = {500}
+   *
+   * @remarks
+   * [quote] The width property represents the intrinsic image width in pixels.
+   * This property is used to infer the correct aspect ratio of the image and avoid layout shift during loading.
+   * It does not determine the rendered size of the image,
+   * which is controlled by CSS, similar to the width attribute in the HTML `<img>` tag.
+   *
+   * [link] https://nextjs.org/docs/pages/api-reference/components/image#width-and-height | Source: Next.js Image API Reference
+   */
+  width: number;
+
+  /**
+   * The height prop functions the same way as it does on the Next.js `<Image />` component.
+   *
+   * @example
+   * height = {500}
+   *
+   * @remarks
+   * [quote] The height property represents the intrinsic image height in pixels.
+   * This property is used to infer the correct aspect ratio of the image and avoid layout shift during loading.
+   * It does not determine the rendered size of the image,
+   * which is controlled by CSS, similar to the width attribute in the HTML `<img>` tag.
+   *
+   * [link] https://nextjs.org/docs/pages/api-reference/components/image#width-and-height | Source: Next.js Image API Reference
+   */
+  height: number;
+
+  /**
+   * Optional media query to be used for the fallback image, if preload is true.
+   *
+   * @example
+   * media = "(max-width: 430px)"
+   */
   media?: string;
 };
 
@@ -69,14 +181,51 @@ export function Img({ src, width, height, alt, className }: ImgProps) {
 }
 
 export type PictureProps = React.ComponentPropsWithRef<"picture"> & {
-  /** Whether to preload the picture image. Defaults to `false`. */
+  /**
+   * Optional prop for preloading the image. This works similar to the `priority` prop on the Next.js Image component.
+   * Should be used for any `<Picture />` component that is above the fold, and flagged as the Largest Contentful Paint (LCP).
+   *
+   * @example
+   * preload={false}
+   *
+   * @remarks
+   * [important] For preloading to work properly, media queries on `<link rel="preload">` elements cannot overlap.
+   *
+   * Media queries on `<link rel="preload">` elements do not function the way they do on HTML elements.
+   * The user agent will look at multiple `<link rel="preload">` media queries and find multiple matches if there is any overlap in the media queries.
+   * This can lead to performance issues, where multiple images are preloaded.
+   *
+   * To avoid this, the `<Picture />` component will automatically adjust the media queries set on Source to remove any overlap,
+   * by adding or subtracting 1 px. If this functionality causes any issues, it can be disabled with the `normalizeMediaQueries` prop.
+   */
   preload?: boolean;
-  /** The media query to be used for the fallback image, if preload is true. */
+
+  /**
+   * An optional prop, to set the fallback media query for preloading.
+   *
+   * @example
+   * fallbackMedia = "(max-width: 430px)";
+   */
   fallbackMedia?: string;
-  /** Enables or disables media query normalization to remove overlaps. Defaults to `true`. */
+
+  /**
+   * An optional prop to disable the component from normalizing the media queries to remove overlap.
+   *
+   * @example
+   * normalizeMediaQueries={false}
+   */
   normalizeMediaQueries?: boolean;
-  /** Optional child elements to render inside the component. */
-  children: React.ReactElement<SourceProps>[] | React.ReactElement<ImgProps>;
+
+  /**
+   * Prop for passing the `<Source />` and `<Img />` components.
+   *
+   * @example
+   * <Picture>
+   *   <Source srcSet="image-320w.jpg" media="(max-width: 320px)" />
+   *   <Img src="image.jpg" alt="Example image" />
+   * </Picture>
+   */
+  children?: React.ReactElement<SourceProps>[] | React.ReactElement<ImgProps>;
 };
 
 /**
@@ -100,7 +249,7 @@ export function Picture({
     throw new Error("Image component not found in children");
   }
 
-  const imgChildProps: ImgProps = imgElement.props;
+  const imgChildProps = (imgElement as React.ReactElement<ImgProps>).props;
   const { props: imageProps } = getNextImageProps({
     src: imgChildProps.src,
     alt: imgChildProps.alt,
@@ -131,8 +280,8 @@ export function Picture({
     ...imageProps,
   });
 
-  const imgClone: React.ReactElement<ImgProps> = React.cloneElement(
-    imgElement,
+  const imgClone = React.cloneElement(
+    imgElement as React.ReactElement<ImgProps>,
     {
       ...imageProps,
     }

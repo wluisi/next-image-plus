@@ -1,12 +1,12 @@
-import { EntityMetaschema } from "@graphinery/mdx";
+import { Metaschema } from "@graphinery/mdx";
 
-export const metaschema: EntityMetaschema[] = [
+export const metaschema: Metaschema = [
   {
     name: "Page",
-    type: "type",
+    type: "collection",
+    interfaces: ["MdxContentTypeInterface"],
     datasource: {
-      entityType: "content",
-      bundle: "page",
+      collection: "page",
       directory: "[page]",
       pathPrefix: "/",
     },
@@ -14,12 +14,12 @@ export const metaschema: EntityMetaschema[] = [
       {
         name: "title",
         type: "string",
-        required: true,
+        nullable: false,
       },
       {
         name: "description",
         type: "string",
-        required: true,
+        nullable: false,
       },
       {
         name: "activeTrail",
@@ -34,7 +34,6 @@ export const metaschema: EntityMetaschema[] = [
         type: "toc",
         datasource: {
           name: "content",
-          fieldType: "string",
         },
       },
       {
@@ -44,20 +43,30 @@ export const metaschema: EntityMetaschema[] = [
       {
         name: "publishedDate",
         type: "string",
-        required: true,
+        nullable: false,
       },
       {
         name: "updatedDate",
         type: "string",
       },
+      {
+        name: "propsDoc",
+        type: "reference",
+        ofType: "PropsDoc",
+        list: true,
+        nullable: {
+          list: false,
+          items: true,
+        },
+      },
     ],
   },
   {
     name: "Blog",
-    type: "type",
+    type: "collection",
+    interfaces: ["MdxContentTypeInterface"],
     datasource: {
-      entityType: "content",
-      bundle: "blog",
+      collection: "blog",
       directory: "[blog]",
       pathPrefix: "/blog",
     },
@@ -65,12 +74,12 @@ export const metaschema: EntityMetaschema[] = [
       {
         name: "title",
         type: "string",
-        required: true,
+        nullable: false,
       },
       {
         name: "description",
         type: "string",
-        required: true,
+        nullable: false,
       },
       {
         name: "activeTrail",
@@ -85,7 +94,6 @@ export const metaschema: EntityMetaschema[] = [
         type: "toc",
         datasource: {
           name: "content",
-          fieldType: "string",
         },
       },
       {
@@ -94,17 +102,18 @@ export const metaschema: EntityMetaschema[] = [
       },
       {
         name: "tags",
-        type: "list",
-        datasource: {
-          name: "tags",
-          fieldType: "reference",
-          allowedTypes: ["tag"],
+        type: "reference",
+        ofType: "Tag",
+        list: true,
+        nullable: {
+          list: false,
+          items: true,
         },
       },
       {
         name: "publishedDate",
         type: "string",
-        required: true,
+        nullable: false,
       },
       {
         name: "updatedDate",
@@ -113,11 +122,30 @@ export const metaschema: EntityMetaschema[] = [
     ],
   },
   {
-    name: "Tag",
-    type: "type",
+    name: "PropsDoc",
+    type: "collection",
+    interfaces: ["MdxContentTypeInterface"],
     datasource: {
-      entityType: "taxonomyTerm",
-      bundle: "tag",
+      collection: "propsDoc",
+      directory: "[propsDoc]",
+      pathPrefix: "/props-doc",
+    },
+    fields: [
+      {
+        name: "toc",
+        type: "toc",
+        datasource: {
+          name: "content",
+        },
+      },
+    ],
+  },
+  {
+    name: "Tag",
+    type: "collection",
+    interfaces: ["MdxTaxonomyTermInterface"],
+    datasource: {
+      collection: "tag",
       directory: "[tag]",
       pathPrefix: "/tag",
     },

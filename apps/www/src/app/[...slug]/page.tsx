@@ -25,9 +25,12 @@ import SidebarMenu from "../../components/sidebar-menu";
 import { metadata as layoutMetadata } from "../layout";
 import { Metadata } from "next";
 
+import { mergeToc } from "./../../utils/merge-toc";
+
 const PAGE_QUERY = gql`
-  query PageQuery($id: String) {
-    page(id: $id) {
+  query PageQuery($path: String) {
+    page(path: $path) {
+      internalId
       title
       description
       keywords
@@ -41,6 +44,19 @@ const PAGE_QUERY = gql`
         }
       }
       content
+      propsDoc {
+        id
+        internalId
+        title
+        content
+        toc {
+          items {
+            id
+            title
+            level
+          }
+        }
+      }
       toc {
         items {
           id
@@ -56,7 +72,7 @@ async function getPage(path: string) {
   const { data } = await client.request({
     query: PAGE_QUERY,
     variables: {
-      id: path,
+      path: path,
     },
     options: {
       next: { tags: [path] },
@@ -107,7 +123,6 @@ export async function generateStaticParams() {
       pageCollection(limit: $limit, filter: $filter) {
         items {
           id
-          uuid
           path
           slug
         }
@@ -216,7 +231,7 @@ export default async function CatchAllSlugPage({
           path === "/blog" && "!hidden"
         )}
       >
-        <TableOfContents data={page.toc.items} />
+        <TableOfContents data={mergeToc(page.toc, page.propsDoc)} />
       </GridItem>
     </Grid>
   );
