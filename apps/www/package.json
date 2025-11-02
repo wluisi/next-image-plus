@@ -18,7 +18,7 @@
     "watch:metaschema": "node scripts/watch-metaschema.js"
   },
   "dependencies": {
-    "@graphinery/client": "file:./../../local-packages/graphinery-client-1.0.0-beta.2.tgz",
+    "@graphinery/client": "file:./../../local-packages/graphinery-client-1.0.0-beta.3.tgz",
     "@graphinery/core": "file:./../../local-packages/graphinery-core-1.0.0-beta.4.tgz",
     "@graphinery/mdx": "file:./../../local-packages/graphinery-mdx-1.0.0-beta.12.tgz",
     "@graphinery/server": "file:./../../local-packages/graphinery-server-1.0.0-beta.1.tgz",

@@ -31,6 +31,8 @@ import { componentsMap } from "../../components/components-map";
 import { default as ExamplesCardGrid } from "../../components/examples/card-grid";
 import { default as ExamplesHero } from "../../components/examples/hero";
 
+// @todo Add gql-tada
+
 const PAGE_QUERY = gql`
   query PageQuery($path: String) {
     page(path: $path) {

@@ -29,6 +29,8 @@ import formatDate from "./../../../utils/format-date";
 import { metadata as layoutMetadata } from "../../layout";
 import { Metadata } from "next";
 
+// @todo Add gql-tada
+
 const BLOG_QUERY = gql`
   query BlogQuery($path: String) {
     blog(path: $path) {

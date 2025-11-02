@@ -5,6 +5,8 @@ import { client } from "../graphinery";
 import { SidebarMenu as GraphineryUiSidebarMenu } from "@graphinery/ui";
 import Link from "next/link";
 
+// @todo Add gql-tada
+
 const SIDEBAR_MENU_QUERY = gql`
   query SidebarMenuQuery($filter: MdxMenuQueryFilter, $sort: _QuerySort) {
     mdxMenu(filter: $filter, sort: $sort) {

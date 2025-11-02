@@ -13,6 +13,8 @@ import {
 } from "@graphinery/ui";
 import Link from "next/link";
 
+// @todo Add gql-tada
+
 export const HEADER_MENU_QUERY = gql`
   query HeaderMenuQuery($filter: MdxMenuQueryFilter, $sort: _QuerySort) {
     mdxMenu(filter: $filter, sort: $sort) {

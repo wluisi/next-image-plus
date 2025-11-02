@@ -8,6 +8,8 @@ import { client } from "../../graphinery";
 import { SimpleGrid, FeaturedLink } from "@graphinery/ui";
 import Link from "next/link";
 
+// @todo Add gql-tada
+
 const BLOG_COLLECTION_QUERY = gql`
   query BlogCollectionQuery(
     $limit: Int

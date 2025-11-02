@@ -1,4 +1,3 @@
-import { gql } from "@graphinery/client";
 import { client } from "./../graphinery";
 import { notFound } from "next/navigation";
 
@@ -13,7 +12,9 @@ import Accordion from "../components/home/accordion";
 import { metadata as layoutMetadata } from "./layout";
 import { Metadata } from "next";
 
-const HOME_QUERY = gql`
+import { graphql, ResultOf, VariablesOf } from "../types";
+
+const HOME_QUERY = graphql(`
   query HomeQuery($path: String) {
     page(path: $path) {
       id
@@ -25,10 +26,14 @@ const HOME_QUERY = gql`
       content
     }
   }
-`;
+`);
 
-async function getHome(path: string) {
-  const { data } = await client.request({
+type Page = ResultOf<typeof HOME_QUERY>["page"];
+type PageData = { data: ResultOf<typeof HOME_QUERY> };
+type PageVariables = VariablesOf<typeof HOME_QUERY>;
+
+async function getHome(path: string): Promise<Page> {
+  const { data } = await client.request<PageData, PageVariables>({
     query: HOME_QUERY,
     variables: {
       path: path,
@@ -74,7 +79,7 @@ export async function generateMetadata(): Promise<Metadata | undefined> {
 export default async function HomePage() {
   const home = await getHome("/");
 
-  if (!home) {
+  if (!home || !home.content) {
     notFound();
   }
 

@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { gql } from "@graphinery/client";
 import { getPathFromParams } from "@graphinery/core";
 
 import { client } from "../../graphinery";
@@ -27,7 +26,9 @@ import { Metadata } from "next";
 
 import { mergeToc } from "./../../utils/merge-toc";
 
-const PAGE_QUERY = gql`
+import { graphql, ResultOf, VariablesOf } from "./../../types";
+
+const PAGE_QUERY = graphql(`
   query PageQuery($path: String) {
     page(path: $path) {
       internalId
@@ -66,10 +67,14 @@ const PAGE_QUERY = gql`
       }
     }
   }
-`;
+`);
 
-async function getPage(path: string) {
-  const { data } = await client.request({
+type Page = ResultOf<typeof PAGE_QUERY>["page"];
+type PageData = { data: ResultOf<typeof PAGE_QUERY> };
+type PageVariables = VariablesOf<typeof PAGE_QUERY>;
+
+async function getPage(path: string): Promise<Page> {
+  const { data } = await client.request<PageData, PageVariables>({
     query: PAGE_QUERY,
     variables: {
       path: path,
@@ -118,35 +123,43 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const PAGE_SLUGS_QUERY = gql`
+  const PAGE_SLUGS_QUERY = graphql(`
     query PageQuery($limit: Int, $filter: PageQueryFilter) {
       pageCollection(limit: $limit, filter: $filter) {
         items {
           id
-          path
           slug
         }
       }
     }
-  `;
+  `);
 
-  const { data } = await client.request({
+  // type PageCollection = ResultOf<typeof PAGE_SLUGS_QUERY>["pageCollection"];
+  type PageCollectionData = { data: ResultOf<typeof PAGE_SLUGS_QUERY> };
+  type PageCollectionVariables = VariablesOf<typeof PAGE_SLUGS_QUERY>;
+
+  const { data } = await client.request<
+    PageCollectionData,
+    PageCollectionVariables
+  >({
     query: PAGE_SLUGS_QUERY,
     variables: {
       limit: 400,
       filter: {
         status: { _eq: true },
         path: { _neq: "/" },
-        slug: { _nin: "examples-pages" },
+        slug: { _nin: ["examples-pages"] },
       },
     },
   });
 
   const slugs: { slug: string[] }[] = [];
-  data.pageCollection?.items?.forEach((page: { slug: string[] }) => {
-    slugs.push({
-      slug: page.slug,
-    });
+  data.pageCollection?.items?.forEach((page) => {
+    if (page) {
+      slugs.push({
+        slug: page.slug,
+      });
+    }
   });
 
   return slugs;
@@ -187,36 +200,36 @@ export default async function CatchAllSlugPage({
       >
         <article className="space-y-5 prose dark:prose-invert">
           <Breadcrumb className="m-auto max-w-xxl">
-            {page?.activeTrail?.items?.map(
-              (item: { id: string; path: string; title: string }) => {
-                const itemTitle =
-                  item.path === "/" ? (
-                    <HomeIcon className="h-4 w-4 text-black dark:text-zinc-100 mt-[2px]" />
-                  ) : (
-                    item.title
-                  );
-
-                return (
-                  <BreadcrumbItem key={item.path}>
-                    <BreadcrumbLink
-                      as={Link}
-                      href={item.path}
-                      isCurrentPage={item.path === page.path}
-                      ariaLabel={item.path === "/" ? "Home" : null}
-                    >
-                      {itemTitle}
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
+            {page.activeTrail?.items?.map((item) => {
+              const itemTitle =
+                item?.path === "/" ? (
+                  <HomeIcon className="h-4 w-4 text-black dark:text-zinc-100 mt-[2px]" />
+                ) : (
+                  item?.title
                 );
-              }
-            )}
+
+              return (
+                <BreadcrumbItem key={item?.path}>
+                  <BreadcrumbLink
+                    as={Link}
+                    href={item?.path}
+                    isCurrentPage={item?.path === page.path}
+                    ariaLabel={item?.path === "/" ? "Home" : null}
+                  >
+                    {itemTitle}
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+              );
+            })}
           </Breadcrumb>
-          <GraphineryMdx
-            mdx={page.content}
-            components={{
-              ...componentsMap,
-            }}
-          />
+          {page.content && (
+            <GraphineryMdx
+              mdx={page.content}
+              components={{
+                ...componentsMap,
+              }}
+            />
+          )}
         </article>
       </GridItem>
       <GridItem
@@ -231,7 +244,11 @@ export default async function CatchAllSlugPage({
           path === "/blog" && "!hidden"
         )}
       >
-        <TableOfContents data={mergeToc(page.toc, page.propsDoc)} />
+        {page.toc && page.propsDoc && (
+          <TableOfContents
+            data={mergeToc(page.toc as any, page.propsDoc as any)}
+          />
+        )}
       </GridItem>
     </Grid>
   );
