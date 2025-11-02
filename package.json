@@ -27,9 +27,12 @@
     "prepare": "npm run prepare --workspace=packages/next-image-plus",
     "test": "npm run test --workspace=packages/next-image-plus",
     "www:build": "npm run build --workspace=apps/www",
-    "www:dev": "npm run dev --workspace=apps/www",
+    "www:next:dev": "npm run dev --workspace=apps/www",
+    "www:dev": "concurrently \"npm:www:next:dev\" \"npm:www:generate:schema\" \"npm:www:watch:metaschema\"",
     "www:production": "npm run www:build && npm run www:start",
-    "www:start": "npm run start --workspace=apps/www"
+    "www:start": "npm run start --workspace=apps/www",
+    "www:generate:schema": "npm run generate:schema --workspace=apps/www",
+    "www:watch:metaschema": "npm run watch:metaschema --workspace=apps/www"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "5.23.0",

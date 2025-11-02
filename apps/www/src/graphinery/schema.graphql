@@ -1,0 +1,388 @@
+input _QuerySort {
+  field: String
+  direction: String
+}
+
+type _QueryPageInfo {
+  totalItems: Int
+  limit: Int
+  pageNumber: Int
+  pageCount: Int
+  timestamp: String
+  datasourceApiPath: String
+}
+
+input _IDFilterInput {
+  _and: [ID]
+  _or: [ID]
+  _eq: ID
+  _neq: ID
+  _gt: ID
+  _lt: ID
+  _gte: ID
+  _lte: ID
+  _sw: ID
+  _ew: ID
+  _like: ID
+  _in: [ID]
+  _all_in: [ID]
+  _nin: [ID]
+  _btw: [ID]
+  _nbtw: [ID]
+  _null: ID
+  _not_null: ID
+}
+
+input _StringFilterInput {
+  _and: [String]
+  _or: [String]
+  _eq: String
+  _neq: String
+  _gt: String
+  _lt: String
+  _gte: String
+  _lte: String
+  _sw: String
+  _ew: String
+  _like: String
+  _in: [String]
+  _all_in: [String]
+  _nin: [String]
+  _btw: [String]
+  _nbtw: [String]
+  _null: String
+  _not_null: String
+}
+
+input _IntFilterInput {
+  _and: [Int]
+  _or: [Int]
+  _eq: Int
+  _neq: Int
+  _gt: Int
+  _lt: Int
+  _gte: Int
+  _lte: Int
+  _sw: Int
+  _ew: Int
+  _like: Int
+  _in: [Int]
+  _all_in: [Int]
+  _nin: [Int]
+  _btw: [Int]
+  _nbtw: [Int]
+  _null: Int
+  _not_null: Int
+}
+
+input _BooleanFilterInput {
+  _and: [Boolean]
+  _or: [Boolean]
+  _eq: Boolean
+  _neq: Boolean
+  _gt: Boolean
+  _lt: Boolean
+  _gte: Boolean
+  _lte: Boolean
+  _sw: Boolean
+  _ew: Boolean
+  _like: Boolean
+  _in: [Boolean]
+  _all_in: [Boolean]
+  _nin: [Boolean]
+  _btw: [Boolean]
+  _nbtw: [Boolean]
+  _null: Boolean
+  _not_null: Boolean
+}
+
+type Page implements MdxContentTypeInterface {
+  id: ID!
+  internalId: String!
+  title: String!
+  slug: [String!]!
+  path: String!
+  collection: String!
+  weight: Int
+  status: Boolean!
+  content: String
+  activeTrail: _ActiveTrail
+  toc: TableOfContents
+  description: String!
+  keywords: String
+  publishedDate: String!
+  updatedDate: String
+  propsDoc: [PropsDoc]!
+}
+
+interface MdxContentTypeInterface {
+  id: ID!
+  internalId: String!
+  title: String!
+  slug: [String!]!
+  path: String!
+  collection: String!
+  weight: Int
+  status: Boolean!
+  content: String
+  activeTrail: _ActiveTrail
+  toc: TableOfContents
+}
+
+type _ActiveTrail {
+  ids: [String]
+  items: [_ActiveTrailItem]
+}
+
+type _ActiveTrailItem {
+  id: String!
+  title: String!
+  path: String!
+}
+
+type TableOfContents {
+  items: [TableOfContentsItem]
+}
+
+type TableOfContentsItem {
+  id: String!
+  title: String!
+  level: String!
+}
+
+type PropsDoc implements MdxContentTypeInterface {
+  id: ID!
+  type: String!
+  internalId: String!
+  title: String!
+  slug: [String!]!
+  path: String!
+  collection: String!
+  weight: Int
+  status: Boolean!
+  content: String
+  activeTrail: _ActiveTrail
+  toc: TableOfContents
+}
+
+type Query {
+  page(id: ID, path: String): Page
+  pageCollection(limit: Int, pageNumber: Int, sort: _QuerySort, filter: PageQueryFilter): PageConnection
+  blog(id: ID, path: String): Blog
+  blogCollection(limit: Int, pageNumber: Int, sort: _QuerySort, filter: BlogQueryFilter): BlogConnection
+  propsDoc(id: ID, path: String): PropsDoc
+  propsDocCollection(limit: Int, pageNumber: Int, sort: _QuerySort, filter: PropsDocQueryFilter): PropsDocConnection
+  tag(id: ID, path: String): Tag
+  tagCollection(limit: Int, pageNumber: Int, sort: _QuerySort, filter: TagQueryFilter): TagConnection
+  mdxMenu(id: String, filter: MdxMenuQueryFilter, sort: _QuerySort): MdxMenuConnection
+}
+
+type PageConnection {
+  items: [Page]
+  pageInfo: _QueryPageInfo
+}
+
+input PageQueryFilter {
+  _and: [PageQueryFilter]
+  _or: [PageQueryFilter]
+  id: _IDFilterInput
+  internalId: _StringFilterInput
+  title: _StringFilterInput
+  slug: _StringFilterInput
+  path: _StringFilterInput
+  collection: _StringFilterInput
+  weight: _IntFilterInput
+  status: _BooleanFilterInput
+  content: _StringFilterInput
+  description: _StringFilterInput
+  keywords: _StringFilterInput
+  publishedDate: _StringFilterInput
+  updatedDate: _StringFilterInput
+  propsDoc: _StringFilterInput
+}
+
+type Blog implements MdxContentTypeInterface {
+  id: ID!
+  internalId: String!
+  title: String!
+  slug: [String!]!
+  path: String!
+  collection: String!
+  weight: Int
+  status: Boolean!
+  content: String
+  activeTrail: _ActiveTrail
+  toc: TableOfContents
+  description: String!
+  keywords: String
+  tags: [Tag]!
+  publishedDate: String!
+  updatedDate: String
+}
+
+type Tag implements MdxTaxonomyTermInterface {
+  id: ID!
+  type: String!
+  internalId: String!
+  title: String!
+  slug: [String!]!
+  path: String!
+  collection: String!
+  weight: Int
+  status: Boolean!
+}
+
+type BlogConnection {
+  items: [Blog]
+  pageInfo: _QueryPageInfo
+}
+
+input BlogQueryFilter {
+  _and: [BlogQueryFilter]
+  _or: [BlogQueryFilter]
+  id: _IDFilterInput
+  internalId: _StringFilterInput
+  title: _StringFilterInput
+  slug: _StringFilterInput
+  path: _StringFilterInput
+  collection: _StringFilterInput
+  weight: _IntFilterInput
+  status: _BooleanFilterInput
+  content: _StringFilterInput
+  description: _StringFilterInput
+  keywords: _StringFilterInput
+  tags: _StringFilterInput
+  publishedDate: _StringFilterInput
+  updatedDate: _StringFilterInput
+}
+
+type PropsDocConnection {
+  items: [PropsDoc]
+  pageInfo: _QueryPageInfo
+}
+
+input PropsDocQueryFilter {
+  _and: [PropsDocQueryFilter]
+  _or: [PropsDocQueryFilter]
+  id: _IDFilterInput
+  internalId: _StringFilterInput
+  title: _StringFilterInput
+  slug: _StringFilterInput
+  path: _StringFilterInput
+  collection: _StringFilterInput
+  weight: _IntFilterInput
+  status: _BooleanFilterInput
+  content: _StringFilterInput
+}
+
+interface MdxTaxonomyTermInterface {
+  id: ID!
+  internalId: String!
+  title: String!
+  slug: [String!]!
+  path: String!
+  collection: String!
+  weight: Int
+  status: Boolean!
+}
+
+type TagConnection {
+  items: [Tag]
+  pageInfo: _QueryPageInfo
+}
+
+input TagQueryFilter {
+  _and: [TagQueryFilter]
+  _or: [TagQueryFilter]
+  id: _IDFilterInput
+  internalId: _StringFilterInput
+  title: _StringFilterInput
+  slug: _StringFilterInput
+  path: _StringFilterInput
+  collection: _StringFilterInput
+  weight: _IntFilterInput
+  status: _BooleanFilterInput
+}
+
+type _MenuConnection {
+  items: [_MenuItem]
+}
+
+interface _MenuItemInterface {
+  id: ID!
+  title: String
+  url: String!
+  parent: String
+  weight: Int!
+  sticky: Boolean!
+}
+
+type _MenuItem implements _MenuItemInterface {
+  id: ID!
+  title: String
+  url: String!
+  parent: String
+  weight: Int!
+  sticky: Boolean!
+  items: [_MenuItem]
+}
+
+interface _ImageInterface {
+  id: ID!
+  alt: String
+  uri: String!
+  width: Int!
+  height: Int!
+  transformations(ids: [String]): [_ImageTransformation]
+}
+
+type _ImageTransformation {
+  id: ID!
+  uri: String!
+  width: Int!
+  height: Int!
+}
+
+type _Image implements _ImageInterface {
+  id: ID!
+  alt: String
+  uri: String!
+  width: Int!
+  height: Int!
+  transformations(ids: [String]): [_ImageTransformation]
+}
+
+type MdxMenuConnection {
+  id: ID!
+  title: String
+  items: [MdxMenuItem]
+}
+
+type MdxMenuItem implements _MenuItemInterface {
+  id: ID!
+  title: String
+  url: String!
+  parent: String
+  weight: Int!
+  sticky: Boolean!
+  path: String!
+  collection: String!
+  status: Boolean!
+  items: [MdxMenuItem]
+}
+
+input MdxMenuQueryFilter {
+  _and: [MdxMenuQueryFilter]
+  _or: [MdxMenuQueryFilter]
+  id: _IDFilterInput
+  internalId: _StringFilterInput
+  title: _StringFilterInput
+  slug: _StringFilterInput
+  path: _StringFilterInput
+  collection: _StringFilterInput
+  weight: _IntFilterInput
+  status: _BooleanFilterInput
+  parent: _StringFilterInput
+  url: _StringFilterInput
+  sticky: _BooleanFilterInput
+}
