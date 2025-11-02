@@ -8,12 +8,45 @@ import { getMediaQueries } from "./utils/media";
 import { PreloadImageLink } from "./preload";
 
 export type BackgroundImageOptions = Omit<NextImageProps, "alt" | "src"> & {
-  /** Optional breakpoint name. */
+  /**
+   * Optional breakpoint name.
+   *
+   * @example
+   * breakpoint = "fallback"
+   */
   breakpoint?: string;
-  /** The media query for the breakpoint. */
+
+  /**
+   * The media query for the breakpoint.
+   *
+   * @example
+   * media = (max-width: 430px)
+   */
   media?: string;
-  /** The url for the background image. */
+
+  /**
+   * The url for the background image.
+   *
+   * @example
+   * url = "https://picsum.photos/id/870/430/466"
+   */
   url: string;
+
+  /**
+   * The width of the background image.
+   *
+   * @example
+   * width = 430
+   */
+  width: number;
+
+  /**
+   * The height of the background image.
+   *
+   * @example
+   * height = 430
+   */
+  height: number;
 };
 
 interface BackgroundImageData {
@@ -229,7 +262,14 @@ export interface BackgroundImageProps {
    */
   style?: React.CSSProperties;
 
-  /** Optional child elements to render inside the component. */
+  /**
+   * Optional child elements to render inside the component.
+   *
+   * @example
+   * <BackgroundImage>
+   *   <div>content</div>
+   * </BackgroundImage>
+   */
   children?: React.ReactNode;
 
   /**
