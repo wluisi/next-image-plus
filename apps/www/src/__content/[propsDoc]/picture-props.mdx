@@ -14,9 +14,11 @@ preload={false}
 
 <Callout type='important'>
 For preloading to work properly, media queries on `<link rel="preload">` elements cannot overlap.
+
 Media queries on `<link rel="preload">` elements do not function the way they do on HTML elements.
 The user agent will look at multiple `<link rel="preload">` media queries and find multiple matches if there is any overlap in the media queries.
 This can lead to performance issues, where multiple images are preloaded.
+
 To avoid this, the `<Picture />` component will automatically adjust the media queries set on Source to remove any overlap,
 by adding or subtracting 1 px. If this functionality causes any issues, it can be disabled with the `normalizeMediaQueries` prop.
 </Callout>
@@ -39,7 +41,7 @@ normalizeMediaQueries={false}
 
 ### children
 
-Optional child elements to render inside the component.
+Prop for passing the `<Source />` and `<Img />` components.
 
 ```ts
 <Picture>
