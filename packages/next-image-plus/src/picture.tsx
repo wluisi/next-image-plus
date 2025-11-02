@@ -99,7 +99,60 @@ export function Source(props: Omit<SourceProps, "srcSet">) {
 }
 
 export type ImgProps = React.ImgHTMLAttributes<HTMLImageElement> & {
-  /** The media query to be used for the fallback image, if preload is true. */
+  /**
+   * The URL of the image source. The value must a path string or a statically imported file.
+   *
+   * @example
+   * src = "/image.jpg"
+   */
+  src: string;
+
+  /**
+   * The alt text for the image.
+   *
+   * @example
+   * alt = "Mountains and a river"
+   */
+  alt: string;
+
+  /**
+   * The width prop functions the same way as it does on the Next.js `<Image />` component.
+   *
+   * @example
+   * width = {500}
+   *
+   * @remarks
+   * [quote] The width property represents the intrinsic image width in pixels.
+   * This property is used to infer the correct aspect ratio of the image and avoid layout shift during loading.
+   * It does not determine the rendered size of the image,
+   * which is controlled by CSS, similar to the width attribute in the HTML `<img>` tag.
+   *
+   * [link] https://nextjs.org/docs/pages/api-reference/components/image#width-and-height | Source: Next.js Image API Reference
+   */
+  width: number;
+
+  /**
+   * The height prop functions the same way as it does on the Next.js `<Image />` component.
+   *
+   * @example
+   * height = {500}
+   *
+   * @remarks
+   * [quote] The height property represents the intrinsic image height in pixels.
+   * This property is used to infer the correct aspect ratio of the image and avoid layout shift during loading.
+   * It does not determine the rendered size of the image,
+   * which is controlled by CSS, similar to the width attribute in the HTML `<img>` tag.
+   *
+   * [link] https://nextjs.org/docs/pages/api-reference/components/image#width-and-height | Source: Next.js Image API Reference
+   */
+  height: number;
+
+  /**
+   * Optional media query to be used for the fallback image, if preload is true.
+   *
+   * @example
+   * media = "(max-width: 430px)"
+   */
   media?: string;
 };
 
@@ -196,7 +249,7 @@ export function Picture({
     throw new Error("Image component not found in children");
   }
 
-  const imgChildProps: ImgProps = imgElement.props;
+  const imgChildProps = (imgElement as React.ReactElement<ImgProps>).props;
   const { props: imageProps } = getNextImageProps({
     src: imgChildProps.src,
     alt: imgChildProps.alt,
@@ -227,8 +280,8 @@ export function Picture({
     ...imageProps,
   });
 
-  const imgClone: React.ReactElement<ImgProps> = React.cloneElement(
-    imgElement,
+  const imgClone = React.cloneElement(
+    imgElement as React.ReactElement<ImgProps>,
     {
       ...imageProps,
     }

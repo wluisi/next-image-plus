@@ -3,6 +3,74 @@ title: "ImgProps"
 status: true
 ---
 
+### src
+
+The URL of the image source. The value must a path string or a statically imported file.
+
+```ts
+src = "/image.jpg"
+```
+
+### alt
+
+The alt text for the image.
+
+```ts
+alt = "Mountains and a river"
+```
+
+### width
+
+The width prop functions the same way as it does on the Next.js `<Image />` component.
+
+```ts
+width = {500}
+```
+
+> _The width property represents the intrinsic image width in pixels._
+> _This property is used to infer the correct aspect ratio of the image and avoid layout shift during loading._
+> _It does not determine the rendered size of the image,_
+> _which is controlled by CSS, similar to the width attribute in the HTML `<img>` tag._
+
+
+<SimpleGrid>
+  <FeaturedLink
+    href="https://nextjs.org/docs/pages/api-reference/components/image#width-and-height"
+    icon="next"
+  >
+    Source: Next.js Image API Reference
+  </FeaturedLink>
+</SimpleGrid>
+
+
+### height
+
+The height prop functions the same way as it does on the Next.js `<Image />` component.
+
+```ts
+height = {500}
+```
+
+> _The height property represents the intrinsic image height in pixels._
+> _This property is used to infer the correct aspect ratio of the image and avoid layout shift during loading._
+> _It does not determine the rendered size of the image,_
+> _which is controlled by CSS, similar to the width attribute in the HTML `<img>` tag._
+
+
+<SimpleGrid>
+  <FeaturedLink
+    href="https://nextjs.org/docs/pages/api-reference/components/image#width-and-height"
+    icon="next"
+  >
+    Source: Next.js Image API Reference
+  </FeaturedLink>
+</SimpleGrid>
+
+
 ### media
 
-The media query to be used for the fallback image, if preload is true.
+Optional media query to be used for the fallback image, if preload is true.
+
+```ts
+media = "(max-width: 430px)"
+```
