@@ -2,15 +2,14 @@
 
 import * as React from "react";
 
-import { gql } from "@graphinery/client";
 import { client } from "../../graphinery";
 
 import { SimpleGrid, FeaturedLink } from "@graphinery/ui";
 import Link from "next/link";
 
-// @todo Add gql-tada
+import { graphql, ResultOf, VariablesOf } from "./../../types";
 
-const BLOG_COLLECTION_QUERY = gql`
+const BLOG_COLLECTION_QUERY = graphql(`
   query BlogCollectionQuery(
     $limit: Int
     $pageNumber: Int
@@ -38,10 +37,19 @@ const BLOG_COLLECTION_QUERY = gql`
       }
     }
   }
-`;
+`);
 
-async function getBlogCollection() {
-  const { data } = await client.request({
+export type BlogCollection = ResultOf<
+  typeof BLOG_COLLECTION_QUERY
+>["blogCollection"];
+type BlogCollectionData = { data: ResultOf<typeof BLOG_COLLECTION_QUERY> };
+type BlogCollectionVariables = VariablesOf<typeof BLOG_COLLECTION_QUERY>;
+
+async function getBlogCollection(): Promise<BlogCollection> {
+  const { data } = await client.request<
+    BlogCollectionData,
+    BlogCollectionVariables
+  >({
     query: BLOG_COLLECTION_QUERY,
     variables: {
       limit: 10,
@@ -57,9 +65,17 @@ async function getBlogCollection() {
 export default async function BlogCollection() {
   const blogCollection = await getBlogCollection();
 
+  if (!blogCollection || !blogCollection.items) {
+    return null;
+  }
+
   return (
     <SimpleGrid id="blog-collection">
-      {blogCollection?.items?.map((item: any) => {
+      {blogCollection.items.map((item) => {
+        if (!item) {
+          return null;
+        }
+
         return (
           <FeaturedLink
             key={item.id}
