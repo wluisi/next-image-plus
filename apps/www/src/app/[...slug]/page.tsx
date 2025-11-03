@@ -69,9 +69,12 @@ const PAGE_QUERY = graphql(`
   }
 `);
 
-type Page = ResultOf<typeof PAGE_QUERY>["page"];
+export type Page = ResultOf<typeof PAGE_QUERY>["page"];
 type PageData = { data: ResultOf<typeof PAGE_QUERY> };
 type PageVariables = VariablesOf<typeof PAGE_QUERY>;
+
+// type PageToc = NonNullable<Page>["toc"];
+// type PagePropsDoc = NonNullable<Page>["propsDoc"];
 
 async function getPage(path: string): Promise<Page> {
   const { data } = await client.request<PageData, PageVariables>({
@@ -245,9 +248,7 @@ export default async function CatchAllSlugPage({
         )}
       >
         {page.toc && page.propsDoc && (
-          <TableOfContents
-            data={mergeToc(page.toc as any, page.propsDoc as any)}
-          />
+          <TableOfContents data={mergeToc(page.toc, page.propsDoc)} />
         )}
       </GridItem>
     </Grid>
