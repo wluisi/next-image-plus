@@ -7,18 +7,9 @@ import { notFound } from "next/navigation";
 
 import { GraphineryMdx } from "@graphinery/mdx";
 import { componentsMap } from "../../components/components-map";
-import Link from "next/link";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  Grid,
-  GridItem,
-  HomeIcon,
-  TableOfContents,
-  cn,
-} from "@graphinery/ui";
+import { Grid, GridItem, TableOfContents, cn } from "@graphinery/ui";
 import SidebarMenu from "../../components/sidebar-menu";
+import { Breadcrumb, BreadcrumbFragment } from "./../../components/breadcrumb";
 
 // Metadata
 import { metadata as layoutMetadata } from "../layout";
@@ -28,28 +19,31 @@ import { mergeToc } from "./../../utils/merge-toc";
 
 import { graphql, ResultOf, VariablesOf } from "./../../types";
 
-const PAGE_QUERY = graphql(`
-  query PageQuery($path: String) {
-    page(path: $path) {
-      internalId
-      title
-      description
-      keywords
-      path
-      status
-      activeTrail {
-        items {
-          id
-          title
-          path
-        }
-      }
-      content
-      propsDoc {
-        id
+const PAGE_QUERY = graphql(
+  `
+    query PageQuery($path: String) {
+      page(path: $path) {
         internalId
         title
+        description
+        keywords
+        path
+        status
+        ...Breadcrumb
         content
+        propsDoc {
+          id
+          internalId
+          title
+          content
+          toc {
+            items {
+              id
+              title
+              level
+            }
+          }
+        }
         toc {
           items {
             id
@@ -58,16 +52,10 @@ const PAGE_QUERY = graphql(`
           }
         }
       }
-      toc {
-        items {
-          id
-          title
-          level
-        }
-      }
     }
-  }
-`);
+  `,
+  [BreadcrumbFragment]
+);
 
 export type Page = ResultOf<typeof PAGE_QUERY>["page"];
 type PageData = { data: ResultOf<typeof PAGE_QUERY> };
@@ -202,29 +190,7 @@ export default async function CatchAllSlugPage({
         )}
       >
         <article className="space-y-5 prose dark:prose-invert">
-          <Breadcrumb className="m-auto max-w-xxl">
-            {page.activeTrail?.items?.map((item) => {
-              const itemTitle =
-                item?.path === "/" ? (
-                  <HomeIcon className="h-4 w-4 text-black dark:text-zinc-100 mt-[2px]" />
-                ) : (
-                  item?.title
-                );
-
-              return (
-                <BreadcrumbItem key={item?.path}>
-                  <BreadcrumbLink
-                    as={Link}
-                    href={item?.path}
-                    isCurrentPage={item?.path === page.path}
-                    ariaLabel={item?.path === "/" ? "Home" : null}
-                  >
-                    {itemTitle}
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-              );
-            })}
-          </Breadcrumb>
+          <Breadcrumb page={page} currentPath={page.path} />
           {page.content && (
             <GraphineryMdx
               mdx={page.content}
