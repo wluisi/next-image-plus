@@ -45,7 +45,7 @@ import { graphql, ResultOf, VariablesOf } from "./../../../types";
 // X - breadcrumb
 //   - table of contents
 // X - tags
-// - use graphinery/ui components for <PostHeader>
+// X - use graphinery/ui components for <PostHeader>
 // @see https://github.com/wluisi/graphinery/blob/ad8d01f163403c30d299a3a818c72e0e7ddba35e/examples/mdx-next-blog/src/app/blog/%5B...slug%5D/page.tsx#L181
 
 const BLOG_QUERY = graphql(
