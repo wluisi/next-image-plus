@@ -8,22 +8,21 @@ import { notFound } from "next/navigation";
 import { GraphineryMdx } from "@graphinery/mdx";
 import { componentsMap } from "../../../components/components-map";
 import {
-  // Avatar,
+  Avatar,
   Grid,
   GridItem,
-  // PostByline,
-  // PostDateline,
+  PostByline,
+  PostDateline,
   PostHeader,
   PostLastUpdated,
-  // PostStack,
+  PostStack,
   PostTitle,
   TableOfContents,
   cn,
 } from "@graphinery/ui";
 import SidebarMenu from "../../../components/sidebar-menu";
-import AuthorInfo from "./../../../components/shared/author-info";
 import formatDate from "./../../../utils/format-date";
-// import avatarImage from "./../../images/wluisi-headshot-square.jpg";
+import avatarImage from "./../../../images/wluisi-headshot-square.jpg";
 
 // Metadata
 import { metadata as layoutMetadata } from "../../layout";
@@ -214,14 +213,13 @@ export default async function BlogSlug({
             </PostLastUpdated>
             <PostTitle>{blog.title}</PostTitle>
             <TagGroup tags={blog.tags} />
-            <AuthorInfo fullName="William Luisi" date={dateline} />
-            {/* <PostStack className="!mb-8">
-              <Avatar src={avatarImage} alt="Photo of author" />
+            <PostStack className="!mb-8">
+              <Avatar src={avatarImage.src} alt="Photo of author" />
               <PostStack direction="column">
                 <PostByline>William Luisi</PostByline>
                 <PostDateline>{dateline}</PostDateline>
               </PostStack>
-            </PostStack> */}
+            </PostStack>
           </PostHeader>
           {blog.content && (
             <div className="space-y-5">
