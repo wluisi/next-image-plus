@@ -13,14 +13,16 @@
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
     "pre-commit": "lint-staged",
     "cypress:open": "../../node_modules/.bin/cypress open",
-    "cypress:run": "../../node_modules/.bin/cypress run"
+    "cypress:run": "../../node_modules/.bin/cypress run",
+    "generate:schema": "gql-tada generate-schema http://localhost:3000/api/graphql --output ./src/graphinery/schema.graphql",
+    "watch:metaschema": "node scripts/watch-metaschema.js"
   },
   "dependencies": {
-    "@graphinery/client": "file:./../../local-packages/graphinery-client-1.0.0-beta.2.tgz",
+    "@graphinery/client": "file:./../../local-packages/graphinery-client-1.0.0-beta.6.tgz",
     "@graphinery/core": "file:./../../local-packages/graphinery-core-1.0.0-beta.4.tgz",
     "@graphinery/mdx": "file:./../../local-packages/graphinery-mdx-1.0.0-beta.12.tgz",
     "@graphinery/server": "file:./../../local-packages/graphinery-server-1.0.0-beta.1.tgz",
-    "@graphinery/ui": "file:./../../local-packages/graphinery-ui-1.0.0-beta.6.tgz",
+    "@graphinery/ui": "file:./../../local-packages/graphinery-ui-1.0.0-beta.10.tgz",
     "@vercel/analytics": "^1.5.0",
     "autoprefixer": "^10.4.14",
     "dayjs": "^1.11.13",
@@ -35,6 +37,7 @@
     "tailwindcss": "^3.3.2"
   },
   "devDependencies": {
+    "@gql.tada/cli-utils": "^1.7.1",
     "@types/node": "^18.0.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -42,6 +45,7 @@
     "cypress-axe": "^1.5.0",
     "cypress-set-device-pixel-ratio": "^1.0.7",
     "cypress-terminal-report": "^7.1.0",
+    "gql.tada": "^1.8.13",
     "typescript": "^5.8.2"
   },
   "lint-staged": {

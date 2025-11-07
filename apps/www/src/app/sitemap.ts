@@ -1,11 +1,12 @@
 import type { MetadataRoute } from "next";
 
-import { gql } from "@graphinery/client";
 import { client } from "./../graphinery";
+
+import { graphql, ResultOf, VariablesOf } from "../types";
 
 const BASE_URL = "https://www.next-image-plus.com";
 
-const SITEMAP_QUERY = gql`
+const SITEMAP_QUERY = graphql(`
   query SitemapQuery(
     $limit: Int
     $pageNumber: Int
@@ -28,12 +29,6 @@ const SITEMAP_QUERY = gql`
         updatedDate
         status
       }
-      pageInfo {
-        totalItems
-        limit
-        pageCount
-        pageNumber
-      }
     }
     blogCollection(
       limit: $limit
@@ -50,18 +45,24 @@ const SITEMAP_QUERY = gql`
         publishedDate
         updatedDate
       }
-      pageInfo {
-        totalItems
-        limit
-        pageCount
-        pageNumber
-      }
     }
   }
-`;
+`);
 
-async function getSitemap() {
-  const { data } = await client.request({
+type SitemapItem =
+  | NonNullable<
+      NonNullable<ResultOf<typeof SITEMAP_QUERY>["pageCollection"]>["items"]
+    >[number]
+  | NonNullable<
+      NonNullable<ResultOf<typeof SITEMAP_QUERY>["blogCollection"]>["items"]
+    >[number];
+type SitemapCollection = SitemapItem[];
+
+type SitemapData = { data: ResultOf<typeof SITEMAP_QUERY> };
+type SitemapVariables = VariablesOf<typeof SITEMAP_QUERY>;
+
+async function getSitemap(): Promise<SitemapCollection> {
+  const { data } = await client.request<SitemapData, SitemapVariables>({
     query: SITEMAP_QUERY,
     variables: {
       limit: 500,
@@ -74,24 +75,35 @@ async function getSitemap() {
     },
   });
 
-  return [...data?.pageCollection?.items, ...data?.blogCollection?.items];
+  const pages = data?.pageCollection?.items ?? [];
+  const blogs = data?.blogCollection?.items ?? [];
+
+  return [...pages, ...blogs].filter(
+    (item): item is SitemapItem => item !== null
+  );
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const content = await getSitemap();
 
-  const urlset: MetadataRoute.Sitemap = content.map((item) => {
-    const lastModified =
-      item.updatedDate !== null ? item.updatedDate : item.publishedDate;
-    const priority = item.path === "/" ? 1 : 0.8;
+  if (!content) {
+    return [];
+  }
 
-    return {
-      url: `${BASE_URL}${item.path}`,
-      lastModified: lastModified,
-      changeFrequency: "monthly",
-      priority: priority,
-    };
-  });
+  const urlset: MetadataRoute.Sitemap = content
+    .filter((item): item is NonNullable<typeof item> => item !== null)
+    .map((item) => {
+      const lastModified =
+        item.updatedDate !== null ? item.updatedDate : item.publishedDate;
+      const priority = item.path === "/" ? 1 : 0.8;
+
+      return {
+        url: `${BASE_URL}${item.path}`,
+        lastModified,
+        changeFrequency: "monthly",
+        priority,
+      };
+    });
 
   return urlset;
 }

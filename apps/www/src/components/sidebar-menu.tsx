@@ -1,11 +1,12 @@
 "use server";
 
-import { gql } from "@graphinery/client";
 import { client } from "../graphinery";
 import { SidebarMenu as GraphineryUiSidebarMenu } from "@graphinery/ui";
 import Link from "next/link";
 
-const SIDEBAR_MENU_QUERY = gql`
+import { graphql, ResultOf, VariablesOf } from "./../types";
+
+const SIDEBAR_MENU_QUERY = graphql(`
   query SidebarMenuQuery($filter: MdxMenuQueryFilter, $sort: _QuerySort) {
     mdxMenu(filter: $filter, sort: $sort) {
       id
@@ -30,10 +31,14 @@ const SIDEBAR_MENU_QUERY = gql`
       }
     }
   }
-`;
+`);
 
-async function getSidebarMenu() {
-  const { data } = await client.request({
+export type SidebarMenu = ResultOf<typeof SIDEBAR_MENU_QUERY>["mdxMenu"];
+type SidebarMenuData = { data: ResultOf<typeof SIDEBAR_MENU_QUERY> };
+type SidebarMenuVariables = VariablesOf<typeof SIDEBAR_MENU_QUERY>;
+
+async function getSidebarMenu(): Promise<SidebarMenu> {
+  const { data } = await client.request<SidebarMenuData, SidebarMenuVariables>({
     query: SIDEBAR_MENU_QUERY,
     variables: {
       filter: {
@@ -55,14 +60,17 @@ export default async function SidebarMenu({
   currentPath: string;
 }) {
   const menu = await getSidebarMenu();
-  // Only get menu items starting at 2nd level.
-  const menuItems = menu?.items;
+
+  if (!menu || !menu.items) {
+    return null;
+  }
 
   return (
     <GraphineryUiSidebarMenu
       id={menu.id}
       currentPath={currentPath}
-      menuItems={menuItems}
+      // Only get menu items starting at 2nd level.
+      menuItems={menu?.items as any}
       linkAs={Link}
       linkClassNames="decoration-red-400 hover:decoration-red-400"
     />

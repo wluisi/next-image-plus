@@ -2,8 +2,8 @@
 
 import * as React from "react";
 
-import { gql } from "@graphinery/client";
 import { client } from "../graphinery";
+import { graphql, ResultOf, VariablesOf } from "../types";
 
 import {
   GithubIcon,
@@ -15,7 +15,7 @@ import {
 } from "@graphinery/ui";
 import Link from "next/link";
 
-const HEADER_MENU_QUERY = gql`
+const HEADER_MENU_QUERY = graphql(`
   query HeaderMenuQuery($filter: MdxMenuQueryFilter, $sort: _QuerySort) {
     mdxMenu(filter: $filter, sort: $sort) {
       id
@@ -40,10 +40,14 @@ const HEADER_MENU_QUERY = gql`
       }
     }
   }
-`;
+`);
 
-async function getHeaderMenu() {
-  const { data } = await client.request({
+type HeaderMenu = ResultOf<typeof HEADER_MENU_QUERY>["mdxMenu"];
+type HeaderMenuData = { data: ResultOf<typeof HEADER_MENU_QUERY> };
+type HeaderMenuVariables = VariablesOf<typeof HEADER_MENU_QUERY>;
+
+async function getHeaderMenu(): Promise<HeaderMenu> {
+  const { data } = await client.request<HeaderMenuData, HeaderMenuVariables>({
     query: HEADER_MENU_QUERY,
     variables: {
       filter: {
@@ -81,19 +85,26 @@ export async function Header() {
   const id = "next-image-plus-docs__header";
 
   const menu = await getHeaderMenu();
-  const menuItems = menu?.items;
+
+  if (!menu) {
+    return null;
+  }
+
+  const menuItems = menu.items;
 
   return (
     <GraphineryUiHeader
       main={
         <>
           <Logo />
-          <DesktopNavigation
-            id={id}
-            menuItems={menuItems}
-            menuLinkAs={Link}
-            iconMap={iconMap}
-          />
+          {menuItems && (
+            <DesktopNavigation
+              id={id}
+              menuItems={menuItems as any}
+              menuLinkAs={Link}
+              iconMap={iconMap}
+            />
+          )}
         </>
       }
       utility={
@@ -107,7 +118,13 @@ export async function Header() {
           >
             <GithubIcon className="h-5 w-5" />
           </Link>
-          <MobileNavigation id={id} menuItems={menuItems} menuLinkAs={Link} />
+          {menuItems && (
+            <MobileNavigation
+              id={id}
+              menuItems={menuItems as any}
+              menuLinkAs={Link}
+            />
+          )}
         </>
       }
     />

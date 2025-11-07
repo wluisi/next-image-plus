@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { gql } from "@graphinery/client";
 import { getPathFromParams } from "@graphinery/core";
 
 import { client } from "../../../graphinery";
@@ -8,63 +7,74 @@ import { notFound } from "next/navigation";
 
 import { GraphineryMdx } from "@graphinery/mdx";
 import { componentsMap } from "../../../components/components-map";
-import Link from "next/link";
 import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
+  Avatar,
   Grid,
   GridItem,
-  Heading,
-  HomeIcon,
+  PostByline,
+  PostDateline,
+  PostHeader,
+  PostLastUpdated,
+  PostStack,
+  PostTitle,
   TableOfContents,
   cn,
 } from "@graphinery/ui";
 import SidebarMenu from "../../../components/sidebar-menu";
-import Tag, { TagColor } from "./../../../components/shared/tag";
-import AuthorInfo from "./../../../components/shared/author-info";
 import formatDate from "./../../../utils/format-date";
+import avatarImage from "./../../../images/wluisi-headshot-square.jpg";
 
 // Metadata
 import { metadata as layoutMetadata } from "../../layout";
 import { Metadata } from "next";
 
-const BLOG_QUERY = gql`
-  query BlogQuery($path: String) {
-    blog(path: $path) {
-      title
-      description
-      keywords
-      path
-      status
-      activeTrail {
-        items {
-          id
-          title
-          path
-        }
-      }
-      content
-      toc {
-        items {
-          id
-          title
-          level
-        }
-      }
-      publishedDate
-      updatedDate
-      tags {
-        id
-        path
+import {
+  Breadcrumb,
+  BreadcrumbFragment,
+} from "./../../../components/blog/breadcrumb";
+
+import {
+  TagGroup,
+  TagFieldsFragment,
+} from "./../../../components/blog/tag-group";
+
+import { graphql, ResultOf, VariablesOf } from "./../../../types";
+
+const BLOG_QUERY = graphql(
+  `
+    query BlogQuery($path: String) {
+      blog(path: $path) {
         title
+        description
+        keywords
+        path
+        status
+        ...Breadcrumb
+        content
+        toc {
+          items {
+            id
+            title
+            level
+          }
+        }
+        publishedDate
+        updatedDate
+        tags {
+          ...TagFields
+        }
       }
     }
-  }
-`;
+  `,
+  [BreadcrumbFragment, TagFieldsFragment]
+);
 
-async function getBlog(path: string) {
-  const { data } = await client.request({
+type Blog = ResultOf<typeof BLOG_QUERY>["blog"];
+type BlogData = { data: ResultOf<typeof BLOG_QUERY> };
+type BlogVariables = VariablesOf<typeof BLOG_QUERY>;
+
+async function getBlog(path: string): Promise<Blog> {
+  const { data } = await client.request<BlogData, BlogVariables>({
     query: BLOG_QUERY,
     variables: {
       path: path,
@@ -113,19 +123,24 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const BLOG_SLUGS_QUERY = gql`
+  const BLOG_SLUGS_QUERY = graphql(`
     query BlogSlugsQuery($limit: Int, $filter: BlogQueryFilter) {
       blogCollection(limit: $limit, filter: $filter) {
         items {
           id
-          path
           slug
         }
       }
     }
-  `;
+  `);
 
-  const { data } = await client.request({
+  type BlogCollectionData = { data: ResultOf<typeof BLOG_SLUGS_QUERY> };
+  type BlogCollectionVariables = VariablesOf<typeof BLOG_SLUGS_QUERY>;
+
+  const { data } = await client.request<
+    BlogCollectionData,
+    BlogCollectionVariables
+  >({
     query: BLOG_SLUGS_QUERY,
     variables: {
       limit: 400,
@@ -136,10 +151,12 @@ export async function generateStaticParams() {
   });
 
   const slugs: { slug: string[] }[] = [];
-  data.blogCollection?.items?.forEach((blog: { slug: string[] }) => {
-    slugs.push({
-      slug: blog.slug,
-    });
+  data.blogCollection?.items?.forEach((blog) => {
+    if (blog) {
+      slugs.push({
+        slug: blog.slug,
+      });
+    }
   });
 
   return slugs;
@@ -157,17 +174,11 @@ export default async function BlogSlug({
     notFound();
   }
 
-  const activeTrail = blog.activeTrail.items;
-  activeTrail.pop();
-
   const lastUpdatedDate = blog.updatedDate
     ? blog.updatedDate
     : blog.publishedDate;
 
-  const colorPaletteMap: Record<string, TagColor> = {
-    article: "red",
-    release: "green",
-  };
+  const dateline = formatDate(blog.publishedDate);
 
   return (
     <Grid
@@ -187,65 +198,31 @@ export default async function BlogSlug({
         className={cn("md:col-span-10 lg:col-span-8 pb-10 md:px-10")}
       >
         <article className="prose dark:prose-invert">
-          <Breadcrumb className="m-auto max-w-xxl">
-            {activeTrail.map(
-              (item: { id: string; path: string; title: string }) => {
-                const itemTitle =
-                  item.path === "/" ? (
-                    <HomeIcon className="h-4 w-4 text-black dark:text-zinc-100 mt-[2px]" />
-                  ) : (
-                    item.title
-                  );
-
-                return (
-                  <BreadcrumbItem key={item.path}>
-                    <BreadcrumbLink
-                      as={Link}
-                      href={item.path}
-                      isCurrentPage={item.path === blog.path}
-                      ariaLabel={item.path === "/" ? "Home" : null}
-                    >
-                      {itemTitle}
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
-                );
-              }
-            )}
-          </Breadcrumb>
-
-          <header className="not-prose space-y-4 mt-5 mb-6 border-b dark:border-zinc-600">
-            <div className="text-xs text-zinc-500 dark:text-zinc-400">
+          <Breadcrumb blog={blog} currentPath={blog.path} />
+          <PostHeader>
+            <PostLastUpdated>
               Last updated: {formatDate(lastUpdatedDate)}
+            </PostLastUpdated>
+            <PostTitle>{blog.title}</PostTitle>
+            <TagGroup tags={blog.tags} />
+            <PostStack className="!mb-8">
+              <Avatar src={avatarImage.src} alt="Photo of author" />
+              <PostStack direction="column">
+                <PostByline>William Luisi</PostByline>
+                <PostDateline>{dateline}</PostDateline>
+              </PostStack>
+            </PostStack>
+          </PostHeader>
+          {blog.content && (
+            <div className="space-y-5">
+              <GraphineryMdx
+                mdx={blog.content}
+                components={{
+                  ...componentsMap,
+                }}
+              />
             </div>
-            <Heading level="h1" className="!mt-0 !mb-2">
-              {blog.title}
-            </Heading>
-            {blog?.tags && (
-              <div className="mb-5 flex gap-3">
-                <ul className="list-none flex gap-y-3 flex-wrap pl-0">
-                  {blog.tags.map((tag: { id: string; title: string }) => (
-                    <li key={tag.id} className="!pl-0 pr-3">
-                      <Tag colorPalette={colorPaletteMap[tag.id]}>
-                        {tag.title.toLowerCase()}
-                      </Tag>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            <AuthorInfo
-              fullName="William Luisi"
-              date={formatDate(blog.publishedDate)}
-            />
-          </header>
-          <div className="space-y-5">
-            <GraphineryMdx
-              mdx={blog.content}
-              components={{
-                ...componentsMap,
-              }}
-            />
-          </div>
+          )}
         </article>
       </GridItem>
       <GridItem
@@ -255,7 +232,7 @@ export default async function BlogSlug({
           "hidden lg:flex lg:col-span-2 md:h-screen md:sticky md:top-[var(--navbar-height)]"
         )}
       >
-        <TableOfContents data={blog.toc.items} />
+        {blog.toc && <TableOfContents data={blog.toc.items as any} />}
       </GridItem>
     </Grid>
   );
