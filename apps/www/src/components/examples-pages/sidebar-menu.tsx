@@ -1,12 +1,11 @@
-import { gql } from "@graphinery/client";
 import { useQuery } from "@graphinery/client/react";
 import { SidebarMenu as GraphineryUiSidebarMenu } from "@graphinery/ui";
 
 import Link from "next/link";
 
-// @todo Add gql-tada
+import { graphql, ResultOf, VariablesOf } from "../../types";
 
-export const SIDEBAR_MENU_QUERY = gql`
+export const SIDEBAR_MENU_QUERY = graphql(`
   query SidebarMenuQuery($filter: MdxMenuQueryFilter, $sort: _QuerySort) {
     mdxMenu(filter: $filter, sort: $sort) {
       id
@@ -31,15 +30,21 @@ export const SIDEBAR_MENU_QUERY = gql`
       }
     }
   }
-`;
+`);
+
+export type SidebarMenuData = { data: ResultOf<typeof SIDEBAR_MENU_QUERY> };
+export type SidebarMenuVariables = VariablesOf<typeof SIDEBAR_MENU_QUERY>;
 
 export default function SidebarMenu({ currentPath }: { currentPath: string }) {
-  const { isLoading, isError, data } = useQuery(SIDEBAR_MENU_QUERY, {
+  const { isLoading, isError, data } = useQuery<
+    SidebarMenuData["data"],
+    SidebarMenuVariables
+  >(SIDEBAR_MENU_QUERY, {
     queryKey: ["pages-sidebar-menu"],
     variables: {
       filter: {
         status: { _eq: true },
-        bundle: { _all_in: ["page"] },
+        collection: { _all_in: ["page"] },
         path: { _neq: "/examples-pages" },
         parent: { _neq: "/examples-pages" },
       },
@@ -55,13 +60,17 @@ export default function SidebarMenu({ currentPath }: { currentPath: string }) {
     return <div>Error ...</div>;
   }
 
-  const menu = data.mdxMenu;
+  const menu = data?.mdxMenu;
+
+  if (!menu) {
+    return null;
+  }
 
   return (
     <GraphineryUiSidebarMenu
       id={menu.id}
       currentPath={currentPath}
-      menuItems={menu.items}
+      menuItems={menu.items as any}
       linkAs={Link}
       linkClassNames="decoration-red-400 hover:decoration-red-400"
     />

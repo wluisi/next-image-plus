@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { gql } from "@graphinery/client";
 import { useQuery } from "@graphinery/client/react";
 
 import {
@@ -13,9 +12,9 @@ import {
 } from "@graphinery/ui";
 import Link from "next/link";
 
-// @todo Add gql-tada
+import { graphql, ResultOf, VariablesOf } from "../../types";
 
-export const HEADER_MENU_QUERY = gql`
+export const HEADER_MENU_QUERY = graphql(`
   query HeaderMenuQuery($filter: MdxMenuQueryFilter, $sort: _QuerySort) {
     mdxMenu(filter: $filter, sort: $sort) {
       id
@@ -40,7 +39,10 @@ export const HEADER_MENU_QUERY = gql`
       }
     }
   }
-`;
+`);
+
+export type HeaderMenuData = { data: ResultOf<typeof HEADER_MENU_QUERY> };
+export type HeaderMenuVariables = VariablesOf<typeof HEADER_MENU_QUERY>;
 
 const iconMap: Record<string, React.JSX.Element> = {
   github: <GithubIcon className="h-6 w-6" />,
@@ -64,12 +66,15 @@ function Logo() {
 export default function Header() {
   const id = "next-image-plus-docs__header";
 
-  const { isLoading, isError, data } = useQuery(HEADER_MENU_QUERY, {
+  const { isLoading, isError, data } = useQuery<
+    HeaderMenuData["data"],
+    HeaderMenuVariables
+  >(HEADER_MENU_QUERY, {
     queryKey: ["pages-header-menu"],
     variables: {
       filter: {
         status: { _eq: true },
-        bundle: { _all_in: ["page"] },
+        collection: { _all_in: ["page"] },
         path: { _neq: "/examples-pages" },
         parent: { _neq: "/examples-pages" },
       },
@@ -85,7 +90,11 @@ export default function Header() {
     return <div>Error ...</div>;
   }
 
-  const menu = data.mdxMenu;
+  const menu = data?.mdxMenu;
+
+  if (!menu) {
+    return null;
+  }
 
   return (
     <GraphineryUiHeader
@@ -94,7 +103,7 @@ export default function Header() {
           <Logo />
           <DesktopNavigation
             id={id}
-            menuItems={menu.items}
+            menuItems={menu?.items as any}
             menuLinkAs={Link}
             iconMap={iconMap}
           />
@@ -109,7 +118,11 @@ export default function Header() {
           >
             <GithubIcon className="h-5 w-5" />
           </Link>
-          <MobileNavigation id={id} menuItems={menu.items} menuLinkAs={Link} />
+          <MobileNavigation
+            id={id}
+            menuItems={menu?.items as any}
+            menuLinkAs={Link}
+          />
         </>
       }
     />

@@ -1,9 +1,8 @@
 import * as React from "react";
 
-// Graphinery
-import { gql } from "@graphinery/client";
 import { useQuery } from "@graphinery/client/react";
 import { client } from "../../graphinery";
+import { graphql, ResultOf, VariablesOf } from "../../types";
 
 // Next
 import { useRouter } from "next/router";
@@ -21,26 +20,28 @@ import {
 
 import SidebarMenu, {
   SIDEBAR_MENU_QUERY,
+  SidebarMenuData,
+  SidebarMenuVariables,
 } from "../../components/examples-pages/sidebar-menu";
-import { HEADER_MENU_QUERY } from "../../components/examples-pages/header";
+import {
+  HEADER_MENU_QUERY,
+  HeaderMenuData,
+  HeaderMenuVariables,
+} from "../../components/examples-pages/header";
 
 // Mdx
 import { serialize } from "next-mdx-remote/serialize";
-import { MDXRemote } from "next-mdx-remote";
+import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { componentsMap } from "../../components/components-map";
 import { default as ExamplesCardGrid } from "../../components/examples/card-grid";
 import { default as ExamplesHero } from "../../components/examples/hero";
 
-// @todo Add gql-tada
+import { GetStaticPropsContext } from "next";
 
-const PAGE_QUERY = gql`
+const PAGE_QUERY = graphql(`
   query PageQuery($path: String) {
     page(path: $path) {
       id
-      path
-      title
-      description
-      keywords
       path
       activeTrail {
         items {
@@ -52,13 +53,23 @@ const PAGE_QUERY = gql`
       content
     }
   }
-`;
+`);
 
-export default function ExamplePagesSlug({ mdx }: { mdx: any }) {
+type PageData = { data: ResultOf<typeof PAGE_QUERY> };
+type PageVariables = VariablesOf<typeof PAGE_QUERY>;
+
+export default function ExamplePagesSlug({
+  mdx,
+}: {
+  mdx: MDXRemoteSerializeResult;
+}) {
   const router = useRouter();
   const { slug } = router?.query;
 
-  const { isLoading, isError, data } = useQuery(PAGE_QUERY, {
+  const { isLoading, isError, data } = useQuery<
+    PageData["data"],
+    PageVariables
+  >(PAGE_QUERY, {
     queryKey: ["page", "examples-pages", slug as string],
     variables: {
       path: `/examples-pages/${slug}`,
@@ -75,7 +86,11 @@ export default function ExamplePagesSlug({ mdx }: { mdx: any }) {
     );
   }
 
-  const page = data.page;
+  const page = data?.page;
+
+  if (!page) {
+    return null;
+  }
 
   return (
     <Grid
@@ -98,28 +113,30 @@ export default function ExamplePagesSlug({ mdx }: { mdx: any }) {
       >
         <article className="space-y-5 prose dark:prose-invert">
           <Breadcrumb className="m-auto max-w-xxl">
-            {page?.activeTrail?.items?.map(
-              (item: { id: string; path: string; title: string }) => {
-                const itemTitle =
-                  item.path === "/" ? (
-                    <HomeIcon className="h-4 w-4 text-black dark:text-zinc-100 mt-[2px]" />
-                  ) : (
-                    item.title
-                  );
-
-                return (
-                  <BreadcrumbItem key={item.path}>
-                    <BreadcrumbLink
-                      as={Link}
-                      href={item.path}
-                      isCurrentPage={item.path === page.path}
-                    >
-                      {itemTitle}
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
-                );
+            {page.activeTrail?.items?.map((item) => {
+              if (!item) {
+                return null;
               }
-            )}
+
+              const itemTitle =
+                item.path === "/" ? (
+                  <HomeIcon className="h-4 w-4 text-black dark:text-zinc-100 mt-[2px]" />
+                ) : (
+                  item.title
+                );
+
+              return (
+                <BreadcrumbItem key={item.path}>
+                  <BreadcrumbLink
+                    as={Link}
+                    href={item.path}
+                    isCurrentPage={item.path === page.path}
+                  >
+                    {itemTitle}
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+              );
+            })}
           </Breadcrumb>
           <MDXRemote
             {...mdx}
@@ -136,46 +153,71 @@ export default function ExamplePagesSlug({ mdx }: { mdx: any }) {
 }
 
 export async function getStaticPaths() {
-  const PAGE_SLUGS_QUERY = gql`
-    query PageQuery($limit: Int, $filter: PageQueryFilter) {
+  const PAGE_SLUGS_QUERY = graphql(`
+    query PageSlugsQuery($limit: Int, $filter: PageQueryFilter) {
       pageCollection(limit: $limit, filter: $filter) {
         items {
           id
           internalId
-          path
-          slug
         }
       }
     }
-  `;
+  `);
 
-  const { data } = await client.request({
+  type PageSlugsData = { data: ResultOf<typeof PAGE_SLUGS_QUERY> };
+  type PageSlugsVariables = VariablesOf<typeof PAGE_SLUGS_QUERY>;
+
+  const { data } = await client.request<PageSlugsData, PageSlugsVariables>({
     query: PAGE_SLUGS_QUERY,
     variables: {
       limit: 400,
       filter: {
         path: { _neq: "/examples-pages" },
-        slug: { _in: "examples-pages" },
+        slug: { _in: ["examples-pages"] },
       },
     },
   });
 
   const pageCollection = data?.pageCollection;
 
-  const paths = pageCollection?.items.map((page: { internalId: string[] }) => ({
-    params: { slug: page.internalId },
-  }));
+  const paths = (() => {
+    if (!pageCollection || !pageCollection.items) {
+      return [];
+    }
+
+    const nonNullItems = pageCollection.items.filter(
+      (item): item is NonNullable<typeof item> => item !== null
+    );
+
+    const mappedPaths = nonNullItems.map((page) => {
+      return {
+        params: {
+          slug: page.internalId,
+        },
+      };
+    });
+
+    return mappedPaths;
+  })();
 
   return {
-    paths: paths,
+    paths,
     fallback: false,
   };
 }
 
-export const getStaticProps = async (context: any) => {
-  const { slug } = context?.params;
+export const getStaticProps = async (
+  context: GetStaticPropsContext<{ slug: string }>
+) => {
+  const slug = context.params?.slug;
 
-  const { data } = await client.request({
+  if (!slug) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const { data } = await client.request<PageData, PageVariables>({
     query: PAGE_QUERY,
     queryKey: ["page", "examples-pages", slug],
     variables: {
@@ -184,11 +226,14 @@ export const getStaticProps = async (context: any) => {
   });
 
   const page = data?.page;
-  const mdx = await serialize(page?.content, {
-    parseFrontmatter: true,
-  });
+  const mdx = page?.content
+    ? await serialize(page.content, {
+        parseFrontmatter: true,
+      })
+    : null;
 
-  await client.request({
+  // Prefetch sidebar menu.
+  await client.request<SidebarMenuData, SidebarMenuVariables>({
     query: SIDEBAR_MENU_QUERY,
     queryKey: ["pages-sidebar-menu"],
     variables: {
@@ -200,8 +245,8 @@ export const getStaticProps = async (context: any) => {
     },
   });
 
-  // Prefetch header
-  await client.request({
+  // Prefetch header menu.
+  await client.request<HeaderMenuData, HeaderMenuVariables>({
     query: HEADER_MENU_QUERY,
     queryKey: ["pages-header-menu"],
     variables: {
