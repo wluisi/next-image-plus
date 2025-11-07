@@ -125,7 +125,6 @@ export async function generateStaticParams() {
     }
   `);
 
-  // type PageCollection = ResultOf<typeof PAGE_SLUGS_QUERY>["pageCollection"];
   type PageCollectionData = { data: ResultOf<typeof PAGE_SLUGS_QUERY> };
   type PageCollectionVariables = VariablesOf<typeof PAGE_SLUGS_QUERY>;
 
