@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: 20.9.0
 
-      - name: Prepare npm auth for CI
+      - name: Setup auth
         run: cp apps/www/.npmrc .npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -59,7 +59,7 @@ jobs:
         with:
           node-version: 20.9.0
 
-      - name: Prepare npm auth for CI
+      - name: Setup auth
         run: cp apps/www/.npmrc .npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
