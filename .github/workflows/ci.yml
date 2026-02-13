@@ -21,8 +21,15 @@ jobs:
         with:
           node-version: 20.9.0
 
+      - name: Setup auth
+        run: cp apps/www/.npmrc .npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Install
         run: npm install
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Build next-image-plus package
         run: npm run build --workspace=packages/next-image-plus
@@ -52,8 +59,15 @@ jobs:
         with:
           node-version: 20.9.0
 
+      - name: Setup auth
+        run: cp apps/www/.npmrc .npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Install
         run: npm install
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Build next-image-plus
         run: npm run build --workspace=packages/next-image-plus

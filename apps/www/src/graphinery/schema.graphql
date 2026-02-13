@@ -141,7 +141,7 @@ type _ActiveTrailItem {
 }
 
 type TableOfContents {
-  items: [TableOfContentsItem]
+  items: [TableOfContentsItem!]!
 }
 
 type TableOfContentsItem {
@@ -305,12 +305,12 @@ input TagQueryFilter {
 }
 
 type _MenuConnection {
-  items: [_MenuItem]
+  items: [_MenuItem!]!
 }
 
 interface _MenuItemInterface {
   id: ID!
-  title: String
+  title: String!
   url: String!
   parent: String
   weight: Int!
@@ -319,12 +319,12 @@ interface _MenuItemInterface {
 
 type _MenuItem implements _MenuItemInterface {
   id: ID!
-  title: String
+  title: String!
   url: String!
   parent: String
   weight: Int!
   sticky: Boolean!
-  items: [_MenuItem]
+  items: [_MenuItem!]
 }
 
 interface _ImageInterface {
@@ -360,7 +360,7 @@ type MdxMenuConnection {
 
 type MdxMenuItem implements _MenuItemInterface {
   id: ID!
-  title: String
+  title: String!
   url: String!
   parent: String
   weight: Int!
