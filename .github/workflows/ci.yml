@@ -21,10 +21,13 @@ jobs:
         with:
           node-version: 20.9.0
 
-      - name: Install
-        run: npm install
+      - name: Prepare npm auth for CI
+        run: cp apps/www/.npmrc .npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Install
+        run: npm install
 
       - name: Build next-image-plus package
         run: npm run build --workspace=packages/next-image-plus
@@ -54,10 +57,13 @@ jobs:
         with:
           node-version: 20.9.0
 
-      - name: Install
-        run: npm install
+      - name: Prepare npm auth for CI
+        run: cp apps/www/.npmrc .npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Install
+        run: npm install
 
       - name: Build next-image-plus
         run: npm run build --workspace=packages/next-image-plus
