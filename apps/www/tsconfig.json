@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@/public/*": ["./public/*"]
+      "@/public/*": ["./public/*"],
+      "content-collections": ["./.content-collections/generated/index.js"]
     },
     "incremental": true,
     "plugins": [

@@ -1,8 +1,5 @@
 import * as React from "react";
 
-import { getPathFromParams } from "@graphinery/core";
-
-import { client } from "../../../graphinery";
 import { notFound } from "next/navigation";
 
 import { GraphineryMdx } from "@graphinery/mdx";
@@ -38,62 +35,17 @@ import {
   TagFieldsFragment,
 } from "./../../../components/blog/tag-group";
 
-import { graphql, ResultOf, VariablesOf } from "./../../../types";
-
-const BLOG_QUERY = graphql(
-  `
-    query BlogQuery($path: String) {
-      blog(path: $path) {
-        title
-        description
-        keywords
-        path
-        status
-        ...Breadcrumb
-        content
-        toc {
-          items {
-            id
-            title
-            level
-          }
-        }
-        publishedDate
-        updatedDate
-        tags {
-          ...TagFields
-        }
-      }
-    }
-  `,
-  [BreadcrumbFragment, TagFieldsFragment]
-);
-
-type Blog = ResultOf<typeof BLOG_QUERY>["blog"];
-type BlogData = { data: ResultOf<typeof BLOG_QUERY> };
-type BlogVariables = VariablesOf<typeof BLOG_QUERY>;
-
-async function getBlog(path: string): Promise<Blog> {
-  const { data } = await client.request<BlogData, BlogVariables>({
-    query: BLOG_QUERY,
-    variables: {
-      path: path,
-    },
-    options: {
-      next: { tags: [path] },
-    },
-  });
-
-  return data.blog;
-}
+// Content collections
+import { getEntry } from "./../../../utils/get-entry";
+import { getCollection } from "./../../../utils/get-collection";
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata | undefined> {
-  const path = getPathFromParams({ pathPrefix: "blog", params: await params });
-  const blog = await getBlog(path);
+  const { slug } = await params;
+  const blog = getEntry(slug[0], { collection: "blog" });
 
   if (!blog || blog.status === false) {
     return;
@@ -106,13 +58,13 @@ export async function generateMetadata({
     keywords: blog.keywords,
     // This sets the `<link rel="canonical">`.
     alternates: {
-      canonical: blog.path,
+      canonical: blog._base.pathname,
     },
     openGraph: {
       ...layoutMetadata.openGraph,
       title: blog.title,
       description: blog.description,
-      url: blog.path,
+      url: blog._base.pathname,
     },
     twitter: {
       ...layoutMetadata.twitter,
@@ -123,38 +75,13 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const BLOG_SLUGS_QUERY = graphql(`
-    query BlogSlugsQuery($limit: Int, $filter: BlogQueryFilter) {
-      blogCollection(limit: $limit, filter: $filter) {
-        items {
-          id
-          slug
-        }
-      }
-    }
-  `);
-
-  type BlogCollectionData = { data: ResultOf<typeof BLOG_SLUGS_QUERY> };
-  type BlogCollectionVariables = VariablesOf<typeof BLOG_SLUGS_QUERY>;
-
-  const { data } = await client.request<
-    BlogCollectionData,
-    BlogCollectionVariables
-  >({
-    query: BLOG_SLUGS_QUERY,
-    variables: {
-      limit: 400,
-      filter: {
-        status: { _eq: true },
-      },
-    },
-  });
+  const blogCollection = getCollection("blog");
 
   const slugs: { slug: string[] }[] = [];
-  data.blogCollection?.items?.forEach((blog) => {
+  blogCollection?.forEach((blog) => {
     if (blog) {
       slugs.push({
-        slug: blog.slug,
+        slug: [blog.slug],
       });
     }
   });
@@ -167,8 +94,8 @@ export default async function BlogSlug({
 }: {
   params: Promise<{ slug: string[] }>;
 }) {
-  const path = getPathFromParams({ pathPrefix: "blog", params: await params });
-  const blog = await getBlog(path);
+  const { slug } = await params;
+  const blog = getEntry(slug[0], { collection: "blog" });
 
   if (!blog || blog.status === false) {
     notFound();
@@ -198,13 +125,13 @@ export default async function BlogSlug({
         className={cn("md:col-span-10 lg:col-span-8 pb-10 md:px-10")}
       >
         <article className="prose dark:prose-invert">
-          <Breadcrumb blog={blog} currentPath={blog.path} />
+          {/* <Breadcrumb blog={blog} currentPath={blog.path} /> */}
           <PostHeader>
             <PostLastUpdated>
               Last updated: {formatDate(lastUpdatedDate)}
             </PostLastUpdated>
             <PostTitle>{blog.title}</PostTitle>
-            <TagGroup tags={blog.tags} />
+            {/* <TagGroup tags={blog.tags} /> */}
             <PostStack className="!mb-8">
               <Avatar src={avatarImage.src} alt="Photo of author" />
               <PostStack direction="column">
@@ -232,7 +159,7 @@ export default async function BlogSlug({
           "hidden lg:flex lg:col-span-2 md:h-screen md:sticky md:top-[var(--navbar-height)]"
         )}
       >
-        {blog.toc && <TableOfContents data={blog.toc.items as any} />}
+        {/* {blog.toc && <TableOfContents data={blog.toc.items as any} />} */}
       </GridItem>
     </Grid>
   );
