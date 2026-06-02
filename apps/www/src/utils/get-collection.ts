@@ -1,10 +1,5 @@
-import { allBlogs, allTags } from "content-collections";
+import { registry } from "./shared";
 import { Sort, QueryFilter } from "./types";
-
-const registry = {
-  blog: allBlogs,
-  tag: allTags,
-};
 
 export interface GetCollectionOptions {
   limit: number;

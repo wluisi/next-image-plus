@@ -1,10 +1,4 @@
-import { allBlogs, allPages, allTags } from "content-collections";
-
-const registry = {
-  blog: allBlogs,
-  page: allPages,
-  tag: allTags,
-};
+import { registry } from "./shared";
 
 export function getEntry<K extends keyof typeof registry>(
   slug: string,
