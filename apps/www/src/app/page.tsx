@@ -13,10 +13,9 @@ import { Metadata } from "next";
 
 // Content collections
 import { getEntry } from "./../utils/get-entry";
-import { getCollection } from "./../utils/get-collection";
 
 export async function generateMetadata(): Promise<Metadata | undefined> {
-  const page = getEntry("home", { collection: "page" });
+  const page = getEntry("index", { collection: "page" });
 
   if (!page) {
     return;
@@ -29,13 +28,13 @@ export async function generateMetadata(): Promise<Metadata | undefined> {
     keywords: page.keywords,
     // This sets the `<link rel="canonical">`.
     alternates: {
-      canonical: page._base.pathname,
+      canonical: page._path,
     },
     openGraph: {
       ...layoutMetadata.openGraph,
       title: page.title,
       description: page.description,
-      url: page._base.pathname,
+      url: page._path,
     },
     twitter: {
       ...layoutMetadata.twitter,
@@ -46,7 +45,7 @@ export async function generateMetadata(): Promise<Metadata | undefined> {
 }
 
 export default async function HomePage() {
-  const home = getEntry("home", { collection: "page" });
+  const home = getEntry("/", { collection: "page" });
 
   if (!home || !home.content) {
     notFound();

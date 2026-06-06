@@ -2,8 +2,8 @@
 
 import * as React from "react";
 
-import { client } from "../graphinery";
-import { graphql, ResultOf, VariablesOf } from "../types";
+import { getCollection } from "./../utils/get-collection";
+import { getContentTree } from "./../utils/get-content-tree";
 
 import {
   GithubIcon,
@@ -14,54 +14,6 @@ import {
   ThemeToggle,
 } from "@graphinery/ui";
 import Link from "next/link";
-
-const HEADER_MENU_QUERY = graphql(`
-  query HeaderMenuQuery($filter: MdxMenuQueryFilter, $sort: _QuerySort) {
-    mdxMenu(filter: $filter, sort: $sort) {
-      id
-      title
-      items {
-        id
-        title
-        url
-        parent
-        items {
-          id
-          title
-          url
-          parent
-          items {
-            id
-            title
-            url
-            parent
-          }
-        }
-      }
-    }
-  }
-`);
-
-type HeaderMenu = ResultOf<typeof HEADER_MENU_QUERY>["mdxMenu"];
-type HeaderMenuData = { data: ResultOf<typeof HEADER_MENU_QUERY> };
-type HeaderMenuVariables = VariablesOf<typeof HEADER_MENU_QUERY>;
-
-async function getHeaderMenu(): Promise<HeaderMenu> {
-  const { data } = await client.request<HeaderMenuData, HeaderMenuVariables>({
-    query: HEADER_MENU_QUERY,
-    variables: {
-      filter: {
-        status: { _eq: true },
-        collection: { _all_in: ["page"] },
-        path: { _neq: "/examples-pages" },
-        parent: { _neq: "/examples-pages" },
-      },
-      sort: { field: "weight", direction: "ASC" },
-    },
-  });
-
-  return data.mdxMenu;
-}
 
 const iconMap: Record<string, React.JSX.Element> = {
   github: <GithubIcon className="h-6 w-6" />,
@@ -84,13 +36,23 @@ function Logo() {
 export async function Header() {
   const id = "next-image-plus-docs__header";
 
-  const menu = await getHeaderMenu();
+  const pageCollection = getCollection("page", {
+    filter: {
+      _and: [
+        { _and: [{ status: { _eq: true } }] },
+        { _and: [{ _path: { _neq: "/examples-pages" } }] },
+        { _and: [{ _path: { _neq: "/examples-pages/picture" } }] },
+        { _and: [{ _path: { _neq: "/examples-pages/background-image" } }] },
+      ],
+    },
+    sort: { field: "weight", direction: "ASC" },
+  });
 
-  if (!menu) {
+  const menuItems = getContentTree(pageCollection);
+
+  if (!menuItems) {
     return null;
   }
-
-  const menuItems = menu.items;
 
   return (
     <GraphineryUiHeader
@@ -100,7 +62,7 @@ export async function Header() {
           {menuItems && (
             <DesktopNavigation
               id={id}
-              menuItems={menuItems as any}
+              menuItems={menuItems}
               menuLinkAs={Link}
               iconMap={iconMap}
             />
@@ -119,11 +81,7 @@ export async function Header() {
             <GithubIcon className="h-5 w-5" />
           </Link>
           {menuItems && (
-            <MobileNavigation
-              id={id}
-              menuItems={menuItems as any}
-              menuLinkAs={Link}
-            />
+            <MobileNavigation id={id} menuItems={menuItems} menuLinkAs={Link} />
           )}
         </>
       }

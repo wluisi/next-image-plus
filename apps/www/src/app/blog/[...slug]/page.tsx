@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { notFound } from "next/navigation";
+import { getPathFromParams } from "@graphinery/core";
 
 import { GraphineryMdx } from "@graphinery/mdx";
 import { componentsMap } from "../../../components/components-map";
@@ -38,14 +39,15 @@ import {
 // Content collections
 import { getEntry } from "./../../../utils/get-entry";
 import { getCollection } from "./../../../utils/get-collection";
+import { getActiveTrail } from "./../../../utils/get-active-trail";
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata | undefined> {
-  const { slug } = await params;
-  const blog = getEntry(slug[0], { collection: "blog" });
+  const path = getPathFromParams({ pathPrefix: "blog", params: await params });
+  const blog = getEntry(path, { collection: "blog" });
 
   if (!blog || blog.status === false) {
     return;
@@ -58,13 +60,13 @@ export async function generateMetadata({
     keywords: blog.keywords,
     // This sets the `<link rel="canonical">`.
     alternates: {
-      canonical: blog._base.pathname,
+      canonical: blog._path,
     },
     openGraph: {
       ...layoutMetadata.openGraph,
       title: blog.title,
       description: blog.description,
-      url: blog._base.pathname,
+      url: blog._path,
     },
     twitter: {
       ...layoutMetadata.twitter,
@@ -81,7 +83,7 @@ export async function generateStaticParams() {
   blogCollection?.forEach((blog) => {
     if (blog) {
       slugs.push({
-        slug: [blog.slug],
+        slug: blog._slug,
       });
     }
   });
@@ -94,8 +96,8 @@ export default async function BlogSlug({
 }: {
   params: Promise<{ slug: string[] }>;
 }) {
-  const { slug } = await params;
-  const blog = getEntry(slug[0], { collection: "blog" });
+  const path = getPathFromParams({ pathPrefix: "blog", params: await params });
+  const blog = getEntry(path, { collection: "blog" });
 
   if (!blog || blog.status === false) {
     notFound();

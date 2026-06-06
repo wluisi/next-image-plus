@@ -2,7 +2,6 @@ import * as React from "react";
 
 import { getPathFromParams } from "@graphinery/core";
 
-import { client } from "../../graphinery";
 import { notFound } from "next/navigation";
 
 import { GraphineryMdx } from "@graphinery/mdx";
@@ -17,66 +16,10 @@ import { Metadata } from "next";
 
 import { mergeToc } from "./../../utils/merge-toc";
 
-import { graphql, ResultOf, VariablesOf } from "./../../types";
-
-const PAGE_QUERY = graphql(
-  `
-    query PageQuery($path: String) {
-      page(path: $path) {
-        internalId
-        title
-        description
-        keywords
-        path
-        status
-        ...Breadcrumb
-        content
-        propsDoc {
-          id
-          internalId
-          title
-          content
-          toc {
-            items {
-              id
-              title
-              level
-            }
-          }
-        }
-        toc {
-          items {
-            id
-            title
-            level
-          }
-        }
-      }
-    }
-  `,
-  [BreadcrumbFragment]
-);
-
-export type Page = ResultOf<typeof PAGE_QUERY>["page"];
-type PageData = { data: ResultOf<typeof PAGE_QUERY> };
-type PageVariables = VariablesOf<typeof PAGE_QUERY>;
-
-// type PageToc = NonNullable<Page>["toc"];
-// type PagePropsDoc = NonNullable<Page>["propsDoc"];
-
-async function getPage(path: string): Promise<Page> {
-  const { data } = await client.request<PageData, PageVariables>({
-    query: PAGE_QUERY,
-    variables: {
-      path: path,
-    },
-    options: {
-      next: { tags: [path] },
-    },
-  });
-
-  return data.page;
-}
+// Content collections
+import { getEntry } from "./../../utils/get-entry";
+import { getCollection } from "./../../utils/get-collection";
+import { getActiveTrail } from "./../../utils/get-active-trail";
 
 export async function generateMetadata({
   params,
@@ -84,7 +27,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata | undefined> {
   const path = getPathFromParams({ params: await params });
-  const page = await getPage(path);
+  const page = getEntry(path, { collection: "page" });
 
   if (!page || page.status === false) {
     return;
@@ -97,13 +40,13 @@ export async function generateMetadata({
     keywords: page.keywords,
     // This sets the `<link rel="canonical">`.
     alternates: {
-      canonical: page.path,
+      canonical: page._path,
     },
     openGraph: {
       ...layoutMetadata.openGraph,
       title: page.title,
       description: page.description,
-      url: page.path,
+      url: page._path,
     },
     twitter: {
       ...layoutMetadata.twitter,
@@ -114,40 +57,13 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const PAGE_SLUGS_QUERY = graphql(`
-    query PageQuery($limit: Int, $filter: PageQueryFilter) {
-      pageCollection(limit: $limit, filter: $filter) {
-        items {
-          id
-          slug
-        }
-      }
-    }
-  `);
-
-  type PageCollectionData = { data: ResultOf<typeof PAGE_SLUGS_QUERY> };
-  type PageCollectionVariables = VariablesOf<typeof PAGE_SLUGS_QUERY>;
-
-  const { data } = await client.request<
-    PageCollectionData,
-    PageCollectionVariables
-  >({
-    query: PAGE_SLUGS_QUERY,
-    variables: {
-      limit: 400,
-      filter: {
-        status: { _eq: true },
-        path: { _neq: "/" },
-        slug: { _nin: ["examples-pages"] },
-      },
-    },
-  });
+  const pageCollection = getCollection("page");
 
   const slugs: { slug: string[] }[] = [];
-  data.pageCollection?.items?.forEach((page) => {
+  pageCollection?.forEach((page) => {
     if (page) {
       slugs.push({
-        slug: page.slug,
+        slug: page._slug,
       });
     }
   });
@@ -161,11 +77,18 @@ export default async function CatchAllSlugPage({
   params: Promise<{ slug: string[] }>;
 }) {
   const path = getPathFromParams({ params: await params });
-  const page = await getPage(path);
+  const page = getEntry(path, { collection: "page" });
 
   if (!page || page.status === false) {
     notFound();
   }
+
+  // const pageCollection = getCollection("page");
+  // const activeTrail = getActiveTrail(page._path, {
+  //   contentTree: pageCollection,
+  // });
+
+  // console.log("activeTrail", activeTrail);
 
   return (
     <Grid
@@ -189,7 +112,7 @@ export default async function CatchAllSlugPage({
         )}
       >
         <article className="space-y-5 prose dark:prose-invert">
-          <Breadcrumb page={page} currentPath={page.path} />
+          {/* <Breadcrumb page={page} currentPath={page._path} /> */}
           {page.content && (
             <GraphineryMdx
               mdx={page.content}
@@ -212,9 +135,9 @@ export default async function CatchAllSlugPage({
           path === "/blog" && "!hidden"
         )}
       >
-        {page.toc && page.propsDoc && (
+        {/* {page.toc && page.propsDoc && (
           <TableOfContents data={mergeToc(page.toc, page.propsDoc)} />
-        )}
+        )} */}
       </GridItem>
     </Grid>
   );

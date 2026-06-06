@@ -31,13 +31,15 @@ const blog = defineCollection({
 
     const pathPrefix = "/blog";
 
+    const path =
+      document._meta.path === "index"
+        ? pathPrefix
+        : `${pathPrefix}/${document._meta.path}`;
+
     return {
-      _base: {
-        collection: "blog",
-        slug: document._meta.path,
-        pathname: `${pathPrefix}/${document._meta.path}`,
-      },
-      slug: document._meta.path,
+      _slug: document._meta.path.split("/").filter(Boolean),
+      _path: path,
+      _collection: "blog",
       ...document,
       tags: resolvedTags,
     };
@@ -57,29 +59,21 @@ const page = defineCollection({
     tags: z.array(z.string()).default([]),
     keywords: z.string(),
     status: z.boolean(),
+    weight: z.number().optional().default(0),
   }),
-  transform: async (document, context) => {
-    // const allTags = context.documents(tag);
-    // const resolvedTags = document.tags.map((slug) => {
-    //   const found = allTags.find((t) => t._meta.path === slug);
-    //   if (!found) {
-    //     throw new Error(`Tag "${slug}" not found in tag collection`);
-    //   }
-
-    //   return found;
-    // });
-
+  transform: async (document, _context) => {
     const pathPrefix = "/";
 
+    const path =
+      document._meta.path === "index"
+        ? pathPrefix
+        : `${pathPrefix}${document._meta.path}`;
+
     return {
-      _base: {
-        collection: "page",
-        slug: document._meta.path,
-        pathname: `${pathPrefix}/${document._meta.path}`,
-      },
-      slug: document._meta.path,
+      _slug: document._meta.path.split("/").filter(Boolean),
+      _path: path,
+      _collection: "page",
       ...document,
-      // tags: resolvedTags,
     };
   },
 });
@@ -92,6 +86,21 @@ const tag = defineCollection({
     title: z.string(),
     content: z.string(),
   }),
+  transform: async (document, _context) => {
+    const pathPrefix = "/";
+
+    const path =
+      document._meta.path === "index"
+        ? pathPrefix
+        : `${pathPrefix}${document._meta.path}`;
+
+    return {
+      _slug: document._meta.path.split("/").filter(Boolean),
+      _path: path,
+      _collection: "tag",
+      ...document,
+    };
+  },
 });
 
 export default defineConfig({

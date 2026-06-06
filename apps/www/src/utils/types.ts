@@ -3,6 +3,7 @@ export interface ContentTreeEntry {
   id: string;
   title: string;
   path: string;
+  url: string;
   parent: string;
   items?: ContentTreeEntry[];
 }
@@ -42,10 +43,5 @@ export type QueryFilterConjunction =
 
 export interface Sort {
   field: string;
-  direction: SortDirections;
-}
-
-enum SortDirections {
-  ASC = "ASC",
-  DSC = "DESC",
+  direction: "ASC" | "DESC";
 }
