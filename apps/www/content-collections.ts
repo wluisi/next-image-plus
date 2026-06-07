@@ -1,6 +1,8 @@
 import { defineCollection, defineConfig } from "@content-collections/core";
 import { z } from "zod";
 
+import { getBaseFields } from "./src/utils/get-base-fields";
+
 const blog = defineCollection({
   name: "blog",
   directory: "src/__content/[blog]",
@@ -29,17 +31,11 @@ const blog = defineCollection({
       return found;
     });
 
-    const pathPrefix = "/blog";
-
-    const path =
-      document._meta.path === "index"
-        ? pathPrefix
-        : `${pathPrefix}/${document._meta.path}`;
-
     return {
-      _slug: document._meta.path.split("/").filter(Boolean),
-      _path: path,
-      _collection: "blog",
+      ...getBaseFields(document, {
+        pathPrefix: "/blog",
+        collectionName: "blog",
+      }),
       ...document,
       tags: resolvedTags,
     };
@@ -62,17 +58,11 @@ const page = defineCollection({
     weight: z.number().optional().default(0),
   }),
   transform: async (document, _context) => {
-    const pathPrefix = "/";
-
-    const path =
-      document._meta.path === "index"
-        ? pathPrefix
-        : `${pathPrefix}${document._meta.path}`;
-
     return {
-      _slug: document._meta.path.split("/").filter(Boolean),
-      _path: path,
-      _collection: "page",
+      ...getBaseFields(document, {
+        pathPrefix: "/",
+        collectionName: "page",
+      }),
       ...document,
     };
   },
@@ -87,17 +77,11 @@ const tag = defineCollection({
     content: z.string(),
   }),
   transform: async (document, _context) => {
-    const pathPrefix = "/";
-
-    const path =
-      document._meta.path === "index"
-        ? pathPrefix
-        : `${pathPrefix}${document._meta.path}`;
-
     return {
-      _slug: document._meta.path.split("/").filter(Boolean),
-      _path: path,
-      _collection: "tag",
+      ...getBaseFields(document, {
+        pathPrefix: "/tag",
+        collectionName: "tag",
+      }),
       ...document,
     };
   },
