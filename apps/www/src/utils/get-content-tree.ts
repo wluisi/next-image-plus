@@ -1,12 +1,11 @@
-import type { ContentTree, ContentTreeEntry } from "./types";
+import type { ContentTreeEntry } from "./types";
 import path from "path";
 
 export function getContentTree(pages: any[]): ContentTreeEntry[] {
   const map = new Map<string, ContentTreeEntry>();
 
   for (const page of pages) {
-    const p = page._meta.path;
-    if (p === "index") {
+    if (page._meta.path === "index") {
       continue;
     }
 
@@ -15,7 +14,7 @@ export function getContentTree(pages: any[]): ContentTreeEntry[] {
       title: page.title,
       path: page._path,
       url: page._path,
-      parent: "/" + path.posix.dirname(p).replace(/^\.$/, ""),
+      parent: path.posix.dirname(page._path),
       items: [],
     };
 

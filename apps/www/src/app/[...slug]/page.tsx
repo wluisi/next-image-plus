@@ -8,7 +8,7 @@ import { GraphineryMdx } from "@graphinery/mdx";
 import { componentsMap } from "../../components/components-map";
 import { Grid, GridItem, TableOfContents, cn } from "@graphinery/ui";
 import SidebarMenu from "../../components/sidebar-menu";
-import { Breadcrumb, BreadcrumbFragment } from "./../../components/breadcrumb";
+import { Breadcrumb } from "./../../components/breadcrumb";
 
 // Metadata
 import { metadata as layoutMetadata } from "../layout";
@@ -19,7 +19,6 @@ import { mergeToc } from "./../../utils/merge-toc";
 // Content collections
 import { getEntry } from "./../../utils/get-entry";
 import { getCollection } from "./../../utils/get-collection";
-import { getActiveTrail } from "./../../utils/get-active-trail";
 
 export async function generateMetadata({
   params,
@@ -83,13 +82,6 @@ export default async function CatchAllSlugPage({
     notFound();
   }
 
-  // const pageCollection = getCollection("page");
-  // const activeTrail = getActiveTrail(page._path, {
-  //   contentTree: pageCollection,
-  // });
-
-  // console.log("activeTrail", activeTrail);
-
   return (
     <Grid
       id="grid"
@@ -112,7 +104,7 @@ export default async function CatchAllSlugPage({
         )}
       >
         <article className="space-y-5 prose dark:prose-invert">
-          {/* <Breadcrumb page={page} currentPath={page._path} /> */}
+          <Breadcrumb currentPath={page._path} />
           {page.content && (
             <GraphineryMdx
               mdx={page.content}

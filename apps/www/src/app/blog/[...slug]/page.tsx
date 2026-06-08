@@ -26,10 +26,7 @@ import avatarImage from "./../../../images/wluisi-headshot-square.jpg";
 import { metadata as layoutMetadata } from "../../layout";
 import { Metadata } from "next";
 
-import {
-  Breadcrumb,
-  BreadcrumbFragment,
-} from "./../../../components/blog/breadcrumb";
+import { Breadcrumb } from "./../../../components/breadcrumb";
 
 import {
   TagGroup,
@@ -39,7 +36,6 @@ import {
 // Content collections
 import { getEntry } from "./../../../utils/get-entry";
 import { getCollection } from "./../../../utils/get-collection";
-import { getActiveTrail } from "./../../../utils/get-active-trail";
 
 export async function generateMetadata({
   params,
@@ -127,7 +123,7 @@ export default async function BlogSlug({
         className={cn("md:col-span-10 lg:col-span-8 pb-10 md:px-10")}
       >
         <article className="prose dark:prose-invert">
-          {/* <Breadcrumb blog={blog} currentPath={blog.path} /> */}
+          <Breadcrumb currentPath={blog._path} />
           <PostHeader>
             <PostLastUpdated>
               Last updated: {formatDate(lastUpdatedDate)}
