@@ -34,7 +34,7 @@ const blog = defineCollection({
     return {
       ...getBaseFields(document, {
         pathPrefix: "/blog",
-        collectionName: "blog",
+        collection: "blog",
       }),
       ...document,
       tags: resolvedTags,
@@ -61,7 +61,7 @@ const page = defineCollection({
     return {
       ...getBaseFields(document, {
         pathPrefix: "/",
-        collectionName: "page",
+        collection: "page",
       }),
       ...document,
     };
@@ -80,7 +80,7 @@ const tag = defineCollection({
     return {
       ...getBaseFields(document, {
         pathPrefix: "/tag",
-        collectionName: "tag",
+        collection: "tag",
       }),
       ...document,
     };

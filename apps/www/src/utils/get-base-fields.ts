@@ -2,13 +2,13 @@ import path from "path";
 import { Document } from "@content-collections/core";
 
 type GetBaseFieldsOptions = {
-  collectionName: string;
+  collection: string;
   pathPrefix: string;
 };
 
 export function getBaseFields(
   document: Document,
-  { collectionName, pathPrefix }: GetBaseFieldsOptions
+  { collection, pathPrefix }: GetBaseFieldsOptions
 ) {
   const resolvedPath =
     document._meta.path === "index"
@@ -18,6 +18,6 @@ export function getBaseFields(
   return {
     _slug: document._meta.path.split("/").filter(Boolean),
     _path: resolvedPath,
-    _collection: collectionName,
+    _collection: collection,
   };
 }
