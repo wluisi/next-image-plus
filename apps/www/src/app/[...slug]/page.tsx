@@ -56,7 +56,13 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const pageCollection = getCollection("page");
+  const pageCollection = getCollection("page", {
+    filter: {
+      status: { _eq: true },
+      path: { _neq: "/" },
+      slug: { _nin: ["examples-pages"] },
+    },
+  });
 
   const slugs: { slug: string[] }[] = [];
   pageCollection?.forEach((page) => {
