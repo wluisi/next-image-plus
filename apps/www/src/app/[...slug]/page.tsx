@@ -14,7 +14,7 @@ import { Breadcrumb } from "./../../components/breadcrumb";
 import { metadata as layoutMetadata } from "../layout";
 import { Metadata } from "next";
 
-import { mergeToc } from "./../../utils/merge-toc";
+import { mergeToc } from "../../cc/merge-toc";
 
 // Content collections
 import { getCollection, getEntry } from "../../cc/collection";

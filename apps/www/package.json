@@ -13,9 +13,7 @@
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
     "pre-commit": "lint-staged",
     "cypress:open": "../../node_modules/.bin/cypress open",
-    "cypress:run": "../../node_modules/.bin/cypress run",
-    "generate:schema": "gql-tada generate-schema http://localhost:3000/api/graphql --output ./src/graphinery/schema.graphql",
-    "watch:metaschema": "node scripts/watch-metaschema.js"
+    "cypress:run": "../../node_modules/.bin/cypress run"
   },
   "dependencies": {
     "@content-collections/core": "^0.15.1",
