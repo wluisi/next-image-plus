@@ -12,7 +12,7 @@ import { metadata as layoutMetadata } from "./layout";
 import { Metadata } from "next";
 
 // Content collections
-import { getEntry } from "./../utils/get-entry";
+import { getEntry } from "../cc/collection";
 
 export async function generateMetadata(): Promise<Metadata | undefined> {
   const page = getEntry("index", { collection: "page" });

@@ -3,8 +3,8 @@
 import { SidebarMenu as GraphineryUiSidebarMenu } from "@graphinery/ui";
 import Link from "next/link";
 
-import { getCollection } from "./../utils/get-collection";
-import { getContentTree } from "./../utils/get-content-tree";
+import { getCollection } from "../cc/collection";
+import { getContentTree } from "../cc/content-tree";
 
 export default async function SidebarMenu({
   currentPath,

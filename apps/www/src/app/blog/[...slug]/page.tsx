@@ -34,8 +34,7 @@ import {
 } from "./../../../components/blog/tag-group";
 
 // Content collections
-import { getEntry } from "./../../../utils/get-entry";
-import { getCollection } from "./../../../utils/get-collection";
+import { getCollection, getEntry } from "../../../cc/collection";
 
 export async function generateMetadata({
   params,

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { getCollection } from "./../utils/get-collection";
+import { getCollection } from "../cc/collection";
 
 const BASE_URL = "https://www.next-image-plus.com";
 

@@ -6,9 +6,9 @@ import {
 } from "@graphinery/ui";
 import Link from "next/link";
 
-import { getCollection } from "./../utils/get-collection";
-import { getContentTree } from "./../utils/get-content-tree";
-import { getActiveTrail } from "./../utils/get-active-trail";
+import { getCollection } from "../cc/collection";
+import { getContentTree } from "../cc/content-tree";
+import { getActiveTrail } from "../cc/active-trail";
 
 interface BreadcrumbProps {
   currentPath: string;

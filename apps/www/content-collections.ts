@@ -1,7 +1,7 @@
 import { defineCollection, defineConfig } from "@content-collections/core";
 import { z } from "zod";
 
-import { getBaseFields } from "./src/utils/get-base-fields";
+import { getBaseFields } from "./src/cc/base-fields";
 
 const blog = defineCollection({
   name: "blog",

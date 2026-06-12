@@ -17,8 +17,7 @@ import { Metadata } from "next";
 import { mergeToc } from "./../../utils/merge-toc";
 
 // Content collections
-import { getEntry } from "./../../utils/get-entry";
-import { getCollection } from "./../../utils/get-collection";
+import { getCollection, getEntry } from "../../cc/collection";
 
 export async function generateMetadata({
   params,

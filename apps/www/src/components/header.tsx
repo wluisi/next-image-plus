@@ -2,8 +2,8 @@
 
 import * as React from "react";
 
-import { getCollection } from "./../utils/get-collection";
-import { getContentTree } from "./../utils/get-content-tree";
+import { getCollection } from "../cc/collection";
+import { getContentTree } from "../cc/content-tree";
 
 import {
   GithubIcon,
