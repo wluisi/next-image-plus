@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import { useQuery } from "@graphinery/client/react";
-
 import {
   GithubIcon,
   ImageIcon,
@@ -12,43 +10,13 @@ import {
 } from "@graphinery/ui";
 import Link from "next/link";
 
-import { graphql, ResultOf, VariablesOf } from "../../types";
-
-export const HEADER_MENU_QUERY = graphql(`
-  query HeaderMenuQuery($filter: MdxMenuQueryFilter, $sort: _QuerySort) {
-    mdxMenu(filter: $filter, sort: $sort) {
-      id
-      title
-      items {
-        id
-        title
-        url
-        parent
-        items {
-          id
-          title
-          url
-          parent
-          items {
-            id
-            title
-            url
-            parent
-          }
-        }
-      }
-    }
-  }
-`);
-
-export type HeaderMenuData = { data: ResultOf<typeof HEADER_MENU_QUERY> };
-export type HeaderMenuVariables = VariablesOf<typeof HEADER_MENU_QUERY>;
+import { getCollection } from "../../cc/collection";
+import { getContentTree } from "../../cc/content-tree";
 
 const iconMap: Record<string, React.JSX.Element> = {
   github: <GithubIcon className="h-6 w-6" />,
 };
 
-// @todo import this from the real header.
 function Logo() {
   return (
     <div className="logo flex">
@@ -66,33 +34,21 @@ function Logo() {
 export default function Header() {
   const id = "next-image-plus-docs__header";
 
-  const { isLoading, isError, data } = useQuery<
-    HeaderMenuData["data"],
-    HeaderMenuVariables
-  >(HEADER_MENU_QUERY, {
-    queryKey: ["pages-header-menu"],
-    variables: {
-      filter: {
-        status: { _eq: true },
-        collection: { _all_in: ["page"] },
-        path: { _neq: "/examples-pages" },
-        parent: { _neq: "/examples-pages" },
-      },
-      sort: { field: "weight", direction: "ASC" },
+  const pageCollection = getCollection("page", {
+    filter: {
+      _and: [
+        { _and: [{ status: { _eq: true } }] },
+        { _and: [{ _path: { _neq: "/examples-pages" } }] },
+        { _and: [{ _path: { _neq: "/examples-pages/picture" } }] },
+        { _and: [{ _path: { _neq: "/examples-pages/background-image" } }] },
+      ],
     },
+    sort: { field: "weight", direction: "ASC" },
   });
 
-  if (isLoading) {
-    return <div>Loading ...</div>;
-  }
+  const menuItems = getContentTree(pageCollection);
 
-  if (isError) {
-    return <div>Error ...</div>;
-  }
-
-  const menu = data?.mdxMenu;
-
-  if (!menu) {
+  if (!menuItems) {
     return null;
   }
 
@@ -101,12 +57,14 @@ export default function Header() {
       main={
         <>
           <Logo />
-          <DesktopNavigation
-            id={id}
-            menuItems={menu?.items as any}
-            menuLinkAs={Link}
-            iconMap={iconMap}
-          />
+          {menuItems && (
+            <DesktopNavigation
+              id={id}
+              menuItems={menuItems}
+              menuLinkAs={Link}
+              iconMap={iconMap}
+            />
+          )}
         </>
       }
       utility={
@@ -114,15 +72,15 @@ export default function Header() {
           <ThemeToggle />
           <Link
             href="https://github.com/wluisi/next-image-plus"
+            target="_blank"
             className="text-black dark:text-zinc-100 p-2 rounded-md no-underline hover:bg-zinc-200 dark:hover:bg-zinc-700"
+            aria-label="github link"
           >
             <GithubIcon className="h-5 w-5" />
           </Link>
-          <MobileNavigation
-            id={id}
-            menuItems={menu?.items as any}
-            menuLinkAs={Link}
-          />
+          {menuItems && (
+            <MobileNavigation id={id} menuItems={menuItems} menuLinkAs={Link} />
+          )}
         </>
       }
     />
