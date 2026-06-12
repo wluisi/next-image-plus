@@ -28,10 +28,7 @@ import { Metadata } from "next";
 
 import { Breadcrumb } from "./../../../components/breadcrumb";
 
-import {
-  TagGroup,
-  TagFieldsFragment,
-} from "./../../../components/blog/tag-group";
+import { TagGroup } from "./../../../components/blog/tag-group";
 
 // Content collections
 import { getCollection, getEntry } from "../../../cc/collection";
@@ -128,7 +125,7 @@ export default async function BlogSlug({
               Last updated: {formatDate(lastUpdatedDate)}
             </PostLastUpdated>
             <PostTitle>{blog.title}</PostTitle>
-            {/* <TagGroup tags={blog.tags} /> */}
+            <TagGroup tags={blog.tags} />
             <PostStack className="!mb-8">
               <Avatar src={avatarImage.src} alt="Photo of author" />
               <PostStack direction="column">
