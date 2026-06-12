@@ -132,9 +132,9 @@ export default async function CatchAllSlugPage({
           path === "/blog" && "!hidden"
         )}
       >
-        {/* {page.toc && page.propsDoc && (
+        {page.toc && page.propsDoc && (
           <TableOfContents data={mergeToc(page.toc, page.propsDoc)} />
-        )} */}
+        )}
       </GridItem>
     </Grid>
   );

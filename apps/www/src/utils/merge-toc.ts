@@ -4,49 +4,38 @@ type TocItem = {
   level: string;
 };
 
-type Toc = {
-  items:
-    | ({
-        id: string;
-        title: string;
-        level: string;
-      } | null)[]
-    | null;
-} | null;
+type Toc = ({ id: string; title: string; level: string } | null)[] | null;
 
 type PropsDoc = {
-  id: string;
-  internalId: string;
   title: string;
   content: string | null;
-  toc: {
-    items:
-      | ({
-          id: string;
-          title: string;
-          level: string;
-        } | null)[]
-      | null;
-  } | null;
+  _meta: {
+    filePath: string;
+    fileName: string;
+    directory: string;
+    extension: string;
+    path: string;
+  };
+  toc: ({ id: string; title: string; level: string } | null)[] | null;
 } | null;
 
 export function mergeToc(toc?: Toc, propsDoc: PropsDoc[] = []): TocItem[] {
   const result: TocItem[] = [];
 
-  if (!toc?.items?.length) {
+  if (!toc?.length) {
     return result;
   }
 
-  for (const item of toc.items) {
+  for (const item of toc) {
     if (!item) {
       continue;
     }
 
     result.push(item);
 
-    const match = propsDoc.find((doc) => doc?.internalId === item.id);
-    if (match?.toc?.items?.length) {
-      for (const nestedItem of match.toc.items) {
+    const match = propsDoc.find((doc) => doc?._meta.path === item.id);
+    if (match?.toc?.length) {
+      for (const nestedItem of match.toc) {
         if (nestedItem) result.push(nestedItem);
       }
     }

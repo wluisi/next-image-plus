@@ -2,6 +2,55 @@ import { defineCollection, defineConfig } from "@content-collections/core";
 import { z } from "zod";
 
 import { getBaseFields } from "./src/cc/base-fields";
+import { getTocFromMarkdown } from "@graphinery/mdx";
+
+const tag = defineCollection({
+  name: "tag",
+  directory: "src/__content/[tag]",
+  include: "**/*.mdx",
+  schema: z.object({
+    title: z.string(),
+    content: z.string(),
+  }),
+  transform: async (document, _context) => {
+    return {
+      ...getBaseFields(document, {
+        pathPrefix: "/tag",
+        collection: "tag",
+      }),
+      ...document,
+    };
+  },
+});
+
+const propsDoc = defineCollection({
+  name: "propsDoc",
+  directory: "src/__content/[propsDoc]",
+  include: "**/*.mdx",
+  schema: z.object({
+    title: z.string(),
+    content: z.string(),
+    toc: z
+      .array(
+        z.object({
+          id: z.string(),
+          title: z.string(),
+          level: z.string(),
+        })
+      )
+      .optional(),
+  }),
+  transform: async (document, _context) => {
+    return {
+      ...getBaseFields(document, {
+        pathPrefix: "/props-doc",
+        collection: "propsDoc",
+      }),
+      ...document,
+      toc: getTocFromMarkdown(document.content),
+    };
+  },
+});
 
 const blog = defineCollection({
   name: "blog",
@@ -56,37 +105,47 @@ const page = defineCollection({
     keywords: z.string(),
     status: z.boolean(),
     weight: z.number().optional().default(0),
+    propsDoc: z.array(z.string()).default([]),
+    toc: z
+      .array(
+        z.object({
+          id: z.string(),
+          title: z.string(),
+          level: z.string(),
+        })
+      )
+      .optional(),
   }),
-  transform: async (document, _context) => {
+  transform: async (document, context) => {
+    const propsDocsCollection = context.documents(propsDoc);
+
+    const propsDocsResolved = document.propsDoc.map((slug) => {
+      const found = propsDocsCollection.find(
+        (entry) => entry._meta.path === slug
+      );
+
+      if (!found) {
+        throw new Error(`propsDoc "${slug}" not found in propsDoc collection`);
+      }
+
+      return {
+        ...found,
+        toc: getTocFromMarkdown(found.content),
+      };
+    });
+
     return {
       ...getBaseFields(document, {
         pathPrefix: "/",
         collection: "page",
       }),
       ...document,
-    };
-  },
-});
-
-const tag = defineCollection({
-  name: "tag",
-  directory: "src/__content/[tag]",
-  include: "**/*.mdx",
-  schema: z.object({
-    title: z.string(),
-    content: z.string(),
-  }),
-  transform: async (document, _context) => {
-    return {
-      ...getBaseFields(document, {
-        pathPrefix: "/tag",
-        collection: "tag",
-      }),
-      ...document,
+      propsDoc: propsDocsResolved,
+      toc: getTocFromMarkdown(document.content),
     };
   },
 });
 
 export default defineConfig({
-  content: [blog, page, tag],
+  content: [blog, page, tag, propsDoc],
 });
