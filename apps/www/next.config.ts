@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-// const { withGraphineryMdx } = require("@graphinery/mdx/next");
-// import { metaschema } from "./src/graphinery/metaschema";
 import type { NextConfig } from "next";
 
 import { withContentCollections } from "@content-collections/next";
@@ -40,10 +37,3 @@ const nextConfig: NextConfig = {
 };
 
 export default withContentCollections(nextConfig);
-
-// Apply your plugin
-// export default withGraphineryMdx({
-//   baseDirectory: "./src/__content",
-//   metaschema: metaschema,
-//   menu: true,
-// })(nextConfig);
