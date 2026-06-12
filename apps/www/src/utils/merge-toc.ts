@@ -4,7 +4,7 @@ type TocItem = {
   level: string;
 };
 
-type Toc = ({ id: string; title: string; level: string } | null)[] | null;
+type Toc = (TocItem | null)[] | null;
 
 type PropsDoc = {
   title: string;
@@ -16,7 +16,7 @@ type PropsDoc = {
     extension: string;
     path: string;
   };
-  toc: ({ id: string; title: string; level: string } | null)[] | null;
+  toc: (TocItem | null)[] | null;
 } | null;
 
 export function mergeToc(toc?: Toc, propsDoc: PropsDoc[] = []): TocItem[] {
