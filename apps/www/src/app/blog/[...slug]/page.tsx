@@ -3,7 +3,7 @@ import * as React from "react";
 import { notFound } from "next/navigation";
 import { getPathFromParams } from "@graphinery/core";
 
-import { GraphineryMdx, getTocFromMarkdown } from "@graphinery/mdx";
+import { GraphineryMdx } from "@graphinery/mdx";
 import { componentsMap } from "../../../components/components-map";
 import {
   Avatar,
@@ -98,8 +98,6 @@ export default async function BlogSlug({
     notFound();
   }
 
-  const toc = getTocFromMarkdown(blog.content);
-
   const lastUpdatedDate = blog.updatedDate
     ? blog.updatedDate
     : blog.publishedDate;
@@ -158,7 +156,7 @@ export default async function BlogSlug({
           "hidden lg:flex lg:col-span-2 md:h-screen md:sticky md:top-[var(--navbar-height)]"
         )}
       >
-        {toc && <TableOfContents data={toc} />}
+        {blog.toc && <TableOfContents data={blog.toc} />}
       </GridItem>
     </Grid>
   );

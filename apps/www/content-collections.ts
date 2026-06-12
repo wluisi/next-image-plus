@@ -65,6 +65,15 @@ const blog = defineCollection({
     tags: z.array(z.string()).default([]),
     keywords: z.string(),
     status: z.boolean(),
+    toc: z
+      .array(
+        z.object({
+          id: z.string(),
+          title: z.string(),
+          level: z.string(),
+        })
+      )
+      .optional(),
     // @todo add fields:
     // activeTrail: -- deps on `getContentTree()` and `getActiveTrail()`.
     // toc: -- deps on `getToc()`
@@ -87,6 +96,7 @@ const blog = defineCollection({
       }),
       ...document,
       tags: resolvedTags,
+      toc: getTocFromMarkdown(document.content),
     };
   },
 });
