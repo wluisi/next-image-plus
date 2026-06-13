@@ -16,22 +16,13 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@/public/*": ["./public/*"]
+      "@/public/*": ["./public/*"],
+      "content-collections": ["./.content-collections/generated/index.js"]
     },
     "incremental": true,
     "plugins": [
       {
         "name": "next"
-      },
-      {
-        "name": "gql.tada/ts-plugin",
-        "schemas": [
-          {
-            "name": "@next-image-plus/www",
-            "schema": "./src/graphinery/schema.graphql",
-            "tadaOutputLocation": "./src/graphql-env.d.ts"
-          }
-        ]
       }
     ]
   },

@@ -1,4 +1,3 @@
-import { client } from "./../graphinery";
 import { notFound } from "next/navigation";
 
 import { Grid, GridItem } from "@graphinery/ui";
@@ -12,42 +11,11 @@ import Accordion from "../components/home/accordion";
 import { metadata as layoutMetadata } from "./layout";
 import { Metadata } from "next";
 
-import { graphql, ResultOf, VariablesOf } from "../types";
-
-const HOME_QUERY = graphql(`
-  query HomeQuery($path: String) {
-    page(path: $path) {
-      id
-      slug
-      title
-      description
-      keywords
-      path
-      content
-    }
-  }
-`);
-
-type Page = ResultOf<typeof HOME_QUERY>["page"];
-type PageData = { data: ResultOf<typeof HOME_QUERY> };
-type PageVariables = VariablesOf<typeof HOME_QUERY>;
-
-async function getHome(path: string): Promise<Page> {
-  const { data } = await client.request<PageData, PageVariables>({
-    query: HOME_QUERY,
-    variables: {
-      path: path,
-    },
-    options: {
-      next: { tags: [path] },
-    },
-  });
-
-  return data.page;
-}
+// Content collections
+import { getEntry } from "../cc/collection";
 
 export async function generateMetadata(): Promise<Metadata | undefined> {
-  const page = await getHome("/");
+  const page = getEntry("index", { collection: "page" });
 
   if (!page) {
     return;
@@ -60,13 +28,13 @@ export async function generateMetadata(): Promise<Metadata | undefined> {
     keywords: page.keywords,
     // This sets the `<link rel="canonical">`.
     alternates: {
-      canonical: page.path,
+      canonical: page._path,
     },
     openGraph: {
       ...layoutMetadata.openGraph,
       title: page.title,
       description: page.description,
-      url: page.path,
+      url: page._path,
     },
     twitter: {
       ...layoutMetadata.twitter,
@@ -77,7 +45,7 @@ export async function generateMetadata(): Promise<Metadata | undefined> {
 }
 
 export default async function HomePage() {
-  const home = await getHome("/");
+  const home = getEntry("/", { collection: "page" });
 
   if (!home || !home.content) {
     notFound();

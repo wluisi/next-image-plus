@@ -6,49 +6,42 @@ import {
 } from "@graphinery/ui";
 import Link from "next/link";
 
-import { graphql, FragmentOf, readFragment } from "./../types";
-
-export const BreadcrumbFragment = graphql(`
-  fragment Breadcrumb on Page {
-    activeTrail {
-      items {
-        id
-        title
-        path
-      }
-    }
-  }
-`);
+import { getCollection } from "../cc/collection";
+import { getContentTree } from "../cc/content-tree";
+import { getActiveTrail } from "../cc/active-trail";
 
 interface BreadcrumbProps {
-  page: FragmentOf<typeof BreadcrumbFragment> | null;
   currentPath: string;
 }
 
-export function Breadcrumb({ page, currentPath }: BreadcrumbProps) {
-  const breadcrumb = readFragment(BreadcrumbFragment, page);
+export function Breadcrumb({ currentPath }: BreadcrumbProps) {
+  const allEntries = [...getCollection("page"), ...getCollection("blog")];
+  const activeTrail = getActiveTrail(currentPath, {
+    contentTree: getContentTree(allEntries),
+  });
 
-  if (!breadcrumb || !breadcrumb?.activeTrail) {
-    return null;
-  }
+  const items = [
+    { id: "/", title: "Home", path: "/", url: "/", parent: "" },
+    ...activeTrail,
+  ];
 
   return (
     <GraphineryUiBreadcrumb className="m-auto max-w-xxl">
-      {breadcrumb.activeTrail.items?.map((item) => {
+      {items.map((item) => {
         const itemTitle =
-          item?.path === "/" ? (
+          item.path === "/" ? (
             <HomeIcon className="h-4 w-4 text-black dark:text-zinc-100 mt-[2px]" />
           ) : (
-            item?.title
+            item.title
           );
 
         return (
-          <BreadcrumbItem key={item?.path}>
+          <BreadcrumbItem key={item.path}>
             <BreadcrumbLink
               as={Link}
-              href={item?.path}
-              isCurrentPage={item?.path === currentPath}
-              ariaLabel={item?.path === "/" ? "Home" : null}
+              href={item.path}
+              isCurrentPage={item.path === currentPath}
+              ariaLabel={item.path === "/" ? "Home" : null}
             >
               {itemTitle}
             </BreadcrumbLink>

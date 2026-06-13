@@ -4,23 +4,18 @@ import {
   TagGroup as GraphineryUiTagGroup,
 } from "@graphinery/ui";
 
-import { graphql, FragmentOf, readFragment } from "./../../types";
-
-export const TagFieldsFragment = graphql(`
-  fragment TagFields on Tag @_unmask {
-    id
-    internalId
-    title
-  }
-`);
+type Tag = {
+  title: string;
+  _meta: {
+    path: string;
+  };
+};
 
 interface TagGroupProps {
-  tags: (FragmentOf<typeof TagFieldsFragment> | null)[];
+  tags: Tag[];
 }
 
-export function TagGroup({ tags: blogTags }: TagGroupProps) {
-  const tags = readFragment(TagFieldsFragment, blogTags);
-
+export function TagGroup({ tags }: TagGroupProps) {
   if (!tags) {
     return null;
   }
@@ -39,9 +34,9 @@ export function TagGroup({ tags: blogTags }: TagGroupProps) {
 
         return (
           <Tag
-            key={tag.internalId}
+            key={tag._meta.path}
             variant="outline"
-            colorPalette={colorPaletteMap[tag.internalId] ?? "blue"}
+            colorPalette={colorPaletteMap[tag._meta.path] ?? "blue"}
           >
             {tag.title.toLowerCase()}
           </Tag>

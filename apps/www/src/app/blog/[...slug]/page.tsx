@@ -1,9 +1,7 @@
 import * as React from "react";
 
-import { getPathFromParams } from "@graphinery/core";
-
-import { client } from "../../../graphinery";
 import { notFound } from "next/navigation";
+import { getPathFromParams } from "@graphinery/core";
 
 import { GraphineryMdx } from "@graphinery/mdx";
 import { componentsMap } from "../../../components/components-map";
@@ -28,64 +26,12 @@ import avatarImage from "./../../../images/wluisi-headshot-square.jpg";
 import { metadata as layoutMetadata } from "../../layout";
 import { Metadata } from "next";
 
-import {
-  Breadcrumb,
-  BreadcrumbFragment,
-} from "./../../../components/blog/breadcrumb";
+import { Breadcrumb } from "./../../../components/breadcrumb";
 
-import {
-  TagGroup,
-  TagFieldsFragment,
-} from "./../../../components/blog/tag-group";
+import { TagGroup } from "./../../../components/blog/tag-group";
 
-import { graphql, ResultOf, VariablesOf } from "./../../../types";
-
-const BLOG_QUERY = graphql(
-  `
-    query BlogQuery($path: String) {
-      blog(path: $path) {
-        title
-        description
-        keywords
-        path
-        status
-        ...Breadcrumb
-        content
-        toc {
-          items {
-            id
-            title
-            level
-          }
-        }
-        publishedDate
-        updatedDate
-        tags {
-          ...TagFields
-        }
-      }
-    }
-  `,
-  [BreadcrumbFragment, TagFieldsFragment]
-);
-
-type Blog = ResultOf<typeof BLOG_QUERY>["blog"];
-type BlogData = { data: ResultOf<typeof BLOG_QUERY> };
-type BlogVariables = VariablesOf<typeof BLOG_QUERY>;
-
-async function getBlog(path: string): Promise<Blog> {
-  const { data } = await client.request<BlogData, BlogVariables>({
-    query: BLOG_QUERY,
-    variables: {
-      path: path,
-    },
-    options: {
-      next: { tags: [path] },
-    },
-  });
-
-  return data.blog;
-}
+// Content collections
+import { getCollection, getEntry } from "../../../cc/collection";
 
 export async function generateMetadata({
   params,
@@ -93,7 +39,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata | undefined> {
   const path = getPathFromParams({ pathPrefix: "blog", params: await params });
-  const blog = await getBlog(path);
+  const blog = getEntry(path, { collection: "blog" });
 
   if (!blog || blog.status === false) {
     return;
@@ -106,13 +52,13 @@ export async function generateMetadata({
     keywords: blog.keywords,
     // This sets the `<link rel="canonical">`.
     alternates: {
-      canonical: blog.path,
+      canonical: blog._path,
     },
     openGraph: {
       ...layoutMetadata.openGraph,
       title: blog.title,
       description: blog.description,
-      url: blog.path,
+      url: blog._path,
     },
     twitter: {
       ...layoutMetadata.twitter,
@@ -123,38 +69,13 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const BLOG_SLUGS_QUERY = graphql(`
-    query BlogSlugsQuery($limit: Int, $filter: BlogQueryFilter) {
-      blogCollection(limit: $limit, filter: $filter) {
-        items {
-          id
-          slug
-        }
-      }
-    }
-  `);
-
-  type BlogCollectionData = { data: ResultOf<typeof BLOG_SLUGS_QUERY> };
-  type BlogCollectionVariables = VariablesOf<typeof BLOG_SLUGS_QUERY>;
-
-  const { data } = await client.request<
-    BlogCollectionData,
-    BlogCollectionVariables
-  >({
-    query: BLOG_SLUGS_QUERY,
-    variables: {
-      limit: 400,
-      filter: {
-        status: { _eq: true },
-      },
-    },
-  });
+  const blogCollection = getCollection("blog");
 
   const slugs: { slug: string[] }[] = [];
-  data.blogCollection?.items?.forEach((blog) => {
+  blogCollection?.forEach((blog) => {
     if (blog) {
       slugs.push({
-        slug: blog.slug,
+        slug: blog._slug,
       });
     }
   });
@@ -168,7 +89,7 @@ export default async function BlogSlug({
   params: Promise<{ slug: string[] }>;
 }) {
   const path = getPathFromParams({ pathPrefix: "blog", params: await params });
-  const blog = await getBlog(path);
+  const blog = getEntry(path, { collection: "blog" });
 
   if (!blog || blog.status === false) {
     notFound();
@@ -198,7 +119,7 @@ export default async function BlogSlug({
         className={cn("md:col-span-10 lg:col-span-8 pb-10 md:px-10")}
       >
         <article className="prose dark:prose-invert">
-          <Breadcrumb blog={blog} currentPath={blog.path} />
+          <Breadcrumb currentPath={blog._path} />
           <PostHeader>
             <PostLastUpdated>
               Last updated: {formatDate(lastUpdatedDate)}
@@ -232,7 +153,7 @@ export default async function BlogSlug({
           "hidden lg:flex lg:col-span-2 md:h-screen md:sticky md:top-[var(--navbar-height)]"
         )}
       >
-        {blog.toc && <TableOfContents data={blog.toc.items as any} />}
+        {blog.toc && <TableOfContents data={blog.toc} />}
       </GridItem>
     </Grid>
   );

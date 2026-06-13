@@ -13,15 +13,14 @@
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
     "pre-commit": "lint-staged",
     "cypress:open": "../../node_modules/.bin/cypress open",
-    "cypress:run": "../../node_modules/.bin/cypress run",
-    "generate:schema": "gql-tada generate-schema http://localhost:3000/api/graphql --output ./src/graphinery/schema.graphql",
-    "watch:metaschema": "node scripts/watch-metaschema.js"
+    "cypress:run": "../../node_modules/.bin/cypress run"
   },
   "dependencies": {
+    "@content-collections/core": "^0.15.1",
+    "@content-collections/next": "^0.2.11",
     "@graphinery/client": "1.0.0-beta.7",
     "@graphinery/core": "1.0.0-beta.6",
     "@graphinery/mdx": "1.0.0-beta.14",
-    "@graphinery/server": "1.0.0-beta.2",
     "@graphinery/ui": "1.0.0-beta.14",
     "@vercel/analytics": "^1.5.0",
     "autoprefixer": "^10.4.14",
@@ -34,10 +33,10 @@
     "react-dom": "^19.0.0",
     "sharp": "^0.32.6",
     "shiki": "^1.12.1",
-    "tailwindcss": "^3.3.2"
+    "tailwindcss": "^3.3.2",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@gql.tada/cli-utils": "^1.7.1",
     "@types/node": "^18.0.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -45,7 +44,6 @@
     "cypress-axe": "^1.5.0",
     "cypress-set-device-pixel-ratio": "^1.0.7",
     "cypress-terminal-report": "^7.1.0",
-    "gql.tada": "^1.8.13",
     "typescript": "^5.8.2"
   },
   "lint-staged": {

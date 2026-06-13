@@ -1,9 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const { withGraphineryMdx } = require("@graphinery/mdx/next");
-import { metaschema } from "./src/graphinery/metaschema";
+import type { NextConfig } from "next";
+
+import { withContentCollections } from "@content-collections/next";
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
     // 430 and 860 are custom sizes, for mobile.
@@ -36,9 +36,4 @@ const nextConfig = {
   transpilePackages: ["@graphinery/ui"],
 };
 
-// Apply your plugin
-export default withGraphineryMdx({
-  baseDirectory: "./src/__content",
-  metaschema: metaschema,
-  menu: true,
-})(nextConfig);
+export default withContentCollections(nextConfig);
