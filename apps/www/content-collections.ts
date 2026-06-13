@@ -4,6 +4,12 @@ import { z } from "zod";
 import { getBaseFields } from "./src/cc/base-fields";
 import { getTocFromMarkdown } from "@graphinery/mdx";
 
+const tocItem = z.object({
+  id: z.string(),
+  title: z.string(),
+  level: z.string(),
+});
+
 const tag = defineCollection({
   name: "tag",
   directory: "src/__content/[tag]",
@@ -30,15 +36,7 @@ const propsDoc = defineCollection({
   schema: z.object({
     title: z.string(),
     content: z.string(),
-    toc: z
-      .array(
-        z.object({
-          id: z.string(),
-          title: z.string(),
-          level: z.string(),
-        })
-      )
-      .optional(),
+    toc: z.array(tocItem).optional(),
   }),
   transform: async (document, _context) => {
     return {
@@ -65,15 +63,7 @@ const blog = defineCollection({
     tags: z.array(z.string()).default([]),
     keywords: z.string(),
     status: z.boolean(),
-    toc: z
-      .array(
-        z.object({
-          id: z.string(),
-          title: z.string(),
-          level: z.string(),
-        })
-      )
-      .optional(),
+    toc: z.array(tocItem).optional(),
     // @todo add fields:
     // activeTrail: -- deps on `getContentTree()` and `getActiveTrail()`.
     // toc: -- deps on `getToc()`
@@ -116,15 +106,7 @@ const page = defineCollection({
     status: z.boolean(),
     weight: z.number().optional().default(0),
     propsDoc: z.array(z.string()).default([]),
-    toc: z
-      .array(
-        z.object({
-          id: z.string(),
-          title: z.string(),
-          level: z.string(),
-        })
-      )
-      .optional(),
+    toc: z.array(tocItem).optional(),
   }),
   transform: async (document, context) => {
     const propsDocsCollection = context.documents(propsDoc);
