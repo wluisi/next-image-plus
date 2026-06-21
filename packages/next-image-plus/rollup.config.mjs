@@ -9,10 +9,12 @@ const external = [
   "next/compat/router",
   "next/head",
   "next/image",
+  "next/navigation",
   "react",
   "react-dom",
   "react/jsx-dev-runtime",
   "react/jsx-runtime",
+  "react-intersection-observer",
 ];
 
 const config = [
