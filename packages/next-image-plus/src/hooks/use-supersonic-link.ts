@@ -1,3 +1,5 @@
+"use client";
+
 import { useInView } from "react-intersection-observer";
 import { useRouter } from "next/navigation";
 
@@ -22,7 +24,7 @@ type UseSupersonicLinkOptions = {
  *
  * @example
  * ```tsx
- * import { useSupersonicLink } from "@graphinery/ui";
+ * import { useSupersonicLink } from "next-image-plus";
  * import Link from "next/link";
  *
  * const { ref } = useSupersonicLink({
