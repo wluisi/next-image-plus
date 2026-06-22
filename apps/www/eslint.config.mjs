@@ -1,8 +1,8 @@
 import { resolve } from "path";
 import { defineConfig } from "eslint/config";
-import baseConfig from "@graphinery/eslint-config/base";
-import nextConfig from "@graphinery/eslint-config/next";
-// import tailwindConfig from "@graphinery/eslint-config/tailwind";
+import baseConfig from "@next-image-plus/eslint-config/base";
+import nextConfig from "@next-image-plus/eslint-config/next";
+// import tailwindConfig from "@next-image-plus/eslint-config/tailwind";
 
 export default defineConfig([
   ...baseConfig,
