@@ -13,7 +13,8 @@
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
     "pre-commit": "lint-staged",
     "cypress:open": "../../node_modules/.bin/cypress open",
-    "cypress:run": "../../node_modules/.bin/cypress run"
+    "cypress:run": "../../node_modules/.bin/cypress run",
+    "playwright:test": "npx playwright test"
   },
   "dependencies": {
     "@content-collections/core": "^0.15.1",
@@ -37,10 +38,11 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@next-image-plus/eslint-config": "*",
+    "@playwright/test": "^1.61.0",
     "@types/node": "^18.0.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@next-image-plus/eslint-config": "*",
     "cypress": "^13.6.3",
     "cypress-axe": "^1.5.0",
     "cypress-set-device-pixel-ratio": "^1.0.7",
