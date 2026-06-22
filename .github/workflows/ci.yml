@@ -47,8 +47,8 @@ jobs:
           browser: chrome
           working-directory: apps/www
 
-  jest-test:
-    name: next-image-plus jest tests
+  vitest-test:
+    name: next-image-plus vitest tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout branch
