@@ -38,13 +38,13 @@ export default function Hero({ title, description }: HeroProps) {
           },
         ]}
       >
-        <div className="absolute inset-0 bg-black bg-opacity-50" />
+        <div className="absolute inset-0 bg-black/50" />
         <div className="relative h-full w-full flex items-center justify-center">
           <div className="text-center max-w-3xl px-6 z-10">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
               {title}
             </h1>
-            <p className="text-lg md:text-xl !text-white/90 mb-8">
+            <p className="text-lg md:text-xl !text-white/90 mb-8 leading-[28px]!">
               {description}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

@@ -47,11 +47,19 @@ export const componentsMap = createComponentMap({
   FeaturedLink: (props) => {
     return <FeaturedLink as={NextLink} {...props} />;
   },
-  PageNav,
+  PageNav: (props) => {
+    return (
+      <PageNav
+        {...props}
+        // @todo this should be added to @graphinery/ui `<PageNav />` component.
+        className="[&>a[data-direction='direction-next']]:col-start-2"
+      />
+    );
+  },
   PageNavItem: (props) => {
     return (
       // The classname `[&_svg]:shrink-0` is a temporary workaround to fix the icon shrinking if text wraps
-      // @todo this should get added to the `<PageNavItem />` component.
+      // @todo this should get added to the @graphinery/ui `<PageNavItem />` component.
       <PageNavItem as={NextLink} className="[&_svg]:shrink-0" {...props} />
     );
   },
