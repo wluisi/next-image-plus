@@ -1,4 +1,4 @@
-import "./globals.css";
+import "./../global.css";
 import { Header } from "../components/header";
 import { Analytics } from "@vercel/analytics/next";
 
