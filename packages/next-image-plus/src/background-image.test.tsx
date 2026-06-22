@@ -156,7 +156,7 @@ describe("BackgroundImage component tests.", () => {
     const style = window.getComputedStyle(element as Element);
 
     expect(style.backgroundImage).toBe(
-      "url(/_next/image?url=https%3A%2F%2Fpicsum.photos%2Fid%2F10%2F400%2F143&w=828&q=75)"
+      'url("/_next/image?url=https%3A%2F%2Fpicsum.photos%2Fid%2F10%2F400%2F143&w=828&q=75")'
     );
   });
 
@@ -178,7 +178,7 @@ describe("BackgroundImage component tests.", () => {
 
     const style = window.getComputedStyle(element as Element);
     expect(style.backgroundImage).toBe(
-      "url(/_next/image?url=https%3A%2F%2Fpicsum.photos%2Fid%2F10%2F400%2F143&w=828&q=75)"
+      'url("/_next/image?url=https%3A%2F%2Fpicsum.photos%2Fid%2F10%2F400%2F143&w=828&q=75")'
     );
   });
 
@@ -286,7 +286,7 @@ describe("BackgroundImage component tests.", () => {
 
     const style = window.getComputedStyle(element as Element);
     expect(style.backgroundImage).toBe(
-      "url(/_next/image?url=https%3A%2F%2Fpicsum.photos%2Fid%2F10%2F400%2F143&w=828&q=75)"
+      'url("/_next/image?url=https%3A%2F%2Fpicsum.photos%2Fid%2F10%2F400%2F143&w=828&q=75")'
     );
 
     expect(preloadSpy).toHaveBeenCalledTimes(1);
