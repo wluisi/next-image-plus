@@ -47,7 +47,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c --watch",
-    "lint": "TIMING=1 eslint src --fix",
+    "lint": "TIMING=1 eslint src",
     "prebuild": "rm -rf dist",
     "prepare": "cp ../../README.md ./README.md",
     "test": "jest --verbose"
@@ -57,6 +57,7 @@
     "@babel/preset-env": "^7.22.7",
     "@babel/preset-react": "^7.26.3",
     "@babel/preset-typescript": "^7.22.5",
+    "@next-image-plus/eslint-config": "*",
     "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@testing-library/jest-dom": "^6.6.3",
@@ -78,12 +79,6 @@
     "react": "^19 || ^19.0.0-rc",
     "react-dom": "^19 || ^19.0.0-rc",
     "next": "^15"
-  },
-  "lint-staged": {
-    "./src/**/*.{ts,js,jsx,tsx}": [
-      "eslint --ignore-path .gitignore --fix",
-      "prettier --ignore-path .gitignore --write"
-    ]
   },
   "jest": {
     "testRegex": "(/__tests__/.*.test.ts$|(\\.|/)(test|spec))\\.[jt]sx?$",

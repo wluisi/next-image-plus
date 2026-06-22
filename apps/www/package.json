@@ -9,7 +9,7 @@
     "build": "next build",
     "start": "next start",
     "type-check": "tsc",
-    "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\"",
+    "lint": "eslint \"src/**/*.+(ts|js|tsx)\"",
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
     "pre-commit": "lint-staged",
     "cypress:open": "../../node_modules/.bin/cypress open",
@@ -40,16 +40,11 @@
     "@types/node": "^18.0.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@next-image-plus/eslint-config": "*",
     "cypress": "^13.6.3",
     "cypress-axe": "^1.5.0",
     "cypress-set-device-pixel-ratio": "^1.0.7",
     "cypress-terminal-report": "^7.1.0",
     "typescript": "^5.8.2"
-  },
-  "lint-staged": {
-    "./src/**/*.{ts,js,jsx,tsx}": [
-      "eslint --ignore-path .gitignore --fix",
-      "prettier --ignore-path .gitignore --write"
-    ]
   }
 }
