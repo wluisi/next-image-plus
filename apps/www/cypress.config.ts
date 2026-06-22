@@ -2,7 +2,6 @@ import { defineConfig } from "cypress";
 
 export default defineConfig({
   e2e: {
-    experimentalRunAllSpecs: true,
     baseUrl: "http://localhost:3000",
     setupNodeEvents(on, _config) {
       // eslint-disable-next-line @typescript-eslint/no-require-imports
