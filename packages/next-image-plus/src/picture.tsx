@@ -163,7 +163,6 @@ export type ImgProps = React.ImgHTMLAttributes<HTMLImageElement> & {
  */
 export function Img({ src, width, height, alt, className }: ImgProps) {
   return (
-    // eslint-disable-next-line @next/next/no-img-element
     <img
       src={src}
       width={width}

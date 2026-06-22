@@ -1,0 +1,20 @@
+{
+  "name": "@next-image-plus/eslint-config",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "exports": {
+    "./base": "./base.mjs",
+    "./next": "./next.mjs",
+    "./tailwind": "./tailwind.mjs"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.1",
+    "eslint-config-next": "^16.1.6",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-better-tailwindcss": "^4.5.0",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "typescript-eslint": "^8.46.3"
+  }
+}

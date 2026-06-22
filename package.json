@@ -17,8 +17,8 @@
     "examples:production": "npm run build --workspace=examples/next && npm run start --workspace=examples/next",
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
     "generate:props-docs": "node scripts/generate-props-docs.cjs",
-    "lint": "eslint --ignore-path .eslintignore \"**/src/**/*.+(ts|js|tsx)\"",
-    "lint:quiet": "eslint --ignore-path .eslintignore \"**/src/**/*.+(ts|js|tsx)\" --quiet",
+    "lint": "eslint \"**/src/**/*.+(ts|js|tsx)\"",
+    "lint:quiet": "eslint \"**/src/**/*.+(ts|js|tsx)\" --quiet",
     "next-image-plus:build": "npm run build --workspace=packages/next-image-plus",
     "next-image-plus:dev": "npm run dev --workspace=packages/next-image-plus",
     "next-image-plus:test": "npm run test --workspace=packages/next-image-plus",
@@ -33,24 +33,12 @@
     "www:start": "npm run start --workspace=apps/www"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "5.23.0",
-    "@typescript-eslint/parser": "5.23.0",
     "concurrently": "^8.2.0",
-    "eslint": "8.15.0",
-    "eslint-config-next": "14.2.5",
-    "eslint-config-prettier": "8.5.0",
-    "eslint-import-resolver-typescript": "3.6.3",
-    "eslint-plugin-prettier": "5.0.0",
+    "eslint": "^9",
     "husky": "8.0.1",
     "lint-staged": "12.4.1",
     "prettier": "^3.4.2",
     "ts-morph": "^27.0.2",
     "typescript": "^5.8.2"
-  },
-  "lint-staged": {
-    "./src/**/*.{ts,js,jsx,tsx}": [
-      "eslint --ignore-path .gitignore --fix",
-      "prettier --ignore-path .gitignore --write"
-    ]
   }
 }
