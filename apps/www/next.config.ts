@@ -33,7 +33,7 @@ const nextConfig: NextConfig = {
 
     return config;
   },
-  transpilePackages: ["@graphinery/ui"],
+  transpilePackages: ["@graphinery/ui", "next-mdx-remote"],
 };
 
-export default withContentCollections(nextConfig);
+export default withContentCollections(nextConfig as any);
