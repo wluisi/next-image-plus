@@ -161,7 +161,7 @@ export function Card({ id, title, description, image }: CardProps) {
           <h2 className="mb-2 text-zinc-900 dark:text-zinc-100 text-lg font-semibold">
             {title}
           </h2>
-          <p className="mb-5 text-zinc-600 dark:text-zinc-300 leading-normal text-base font-light">
+          <p className="mb-5 text-zinc-600 dark:text-zinc-300 leading-lg text-base font-light">
             {description}
           </p>
         </div>

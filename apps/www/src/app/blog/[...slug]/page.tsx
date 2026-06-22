@@ -121,10 +121,10 @@ export default async function BlogSlug({
         <article className="prose dark:prose-invert">
           <Breadcrumb currentPath={blog._path} />
           <PostHeader>
-            <PostLastUpdated>
+            <PostLastUpdated className="mb-0">
               Last updated: {formatDate(lastUpdatedDate)}
             </PostLastUpdated>
-            <PostTitle>{blog.title}</PostTitle>
+            <PostTitle className="mb-4!">{blog.title}</PostTitle>
             <TagGroup tags={blog.tags} />
             <PostStack className="!mb-8">
               <Avatar src={avatarImage.src} alt="Photo of author" />

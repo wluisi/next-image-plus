@@ -26,7 +26,7 @@ export function Breadcrumb({ currentPath }: BreadcrumbProps) {
   ];
 
   return (
-    <GraphineryUiBreadcrumb className="m-auto max-w-xxl">
+    <GraphineryUiBreadcrumb className="m-auto max-w-xxl mb-5">
       {items.map((item) => {
         const itemTitle =
           item.path === "/" ? (
