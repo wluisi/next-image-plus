@@ -1,5 +1,5 @@
 /**
- * @jest-environment jsdom
+ * @vitest-environment jsdom
  */
 
 import * as React from "react";
@@ -10,14 +10,12 @@ import { render } from "@testing-library/react";
 import { BackgroundImage, getBackgroundImageProps } from "./background-image";
 
 // Mock next/compat/router before importing the tested component.
-jest.mock("next/compat/router", () => ({
-  useRouter: jest.fn(() => null),
+vi.mock("next/compat/router", () => ({
+  useRouter: vi.fn(() => null),
 }));
 
 // Spy on ReactDOM.preload
-const preloadSpy = jest
-  .spyOn(ReactDOM, "preload")
-  .mockImplementation(() => null);
+const preloadSpy = vi.spyOn(ReactDOM, "preload").mockImplementation(() => null);
 
 const backgroundImageDataMock = [
   {
@@ -137,7 +135,7 @@ describe("getBackgroundImageProps tests", () => {
 
 describe("BackgroundImage component tests.", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it("should render a div with a background image.", () => {
