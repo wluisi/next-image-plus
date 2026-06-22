@@ -121,9 +121,11 @@ export default async function BlogSlug({
         <article className="prose dark:prose-invert">
           <Breadcrumb currentPath={blog._path} />
           <PostHeader>
+            {/* @todo this className should be added to @graphinery/ui `<PostLastUpdated />` component. */}
             <PostLastUpdated className="mb-0">
               Last updated: {formatDate(lastUpdatedDate)}
             </PostLastUpdated>
+            {/* @todo this className should be added to @graphinery/ui `<PostTitle />` component. */}
             <PostTitle className="mb-4!">{blog.title}</PostTitle>
             <TagGroup tags={blog.tags} />
             <PostStack className="!mb-8">
