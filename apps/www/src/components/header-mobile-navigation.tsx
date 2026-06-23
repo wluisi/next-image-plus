@@ -6,12 +6,15 @@ import {
   type MenuItems,
 } from "@graphinery/ui";
 
-interface HeaderMobileNavProps {
+interface HeaderMobileNavigationProps {
   id: string;
   menuItems: MenuItems;
 }
 
-export function MobileNavigation({ id, menuItems }: HeaderMobileNavProps) {
+export function HeaderMobileNavigation({
+  id,
+  menuItems,
+}: HeaderMobileNavigationProps) {
   return (
     <GraphineryUiMobileNavigation
       id={id}

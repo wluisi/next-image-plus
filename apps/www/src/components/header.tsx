@@ -10,11 +10,10 @@ import {
   ImageIcon,
   DesktopNavigation,
   Header as GraphineryUiHeader,
-  // MobileNavigation,
   ThemeToggle,
 } from "@graphinery/ui";
 import Link from "next/link";
-import { MobileNavigation } from "./header.client";
+import { HeaderMobileNavigation } from "./header-mobile-navigation";
 
 const iconMap: Record<string, React.JSX.Element> = {
   github: <GithubIcon className="h-6 w-6" />,
@@ -81,7 +80,9 @@ export async function Header() {
           >
             <GithubIcon className="h-5 w-5" />
           </Link>
-          {menuItems && <MobileNavigation id={id} menuItems={menuItems} />}
+          {menuItems && (
+            <HeaderMobileNavigation id={id} menuItems={menuItems} />
+          )}
         </>
       }
     />
