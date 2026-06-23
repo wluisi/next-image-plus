@@ -3,7 +3,7 @@ import * as React from "react";
 import { notFound } from "next/navigation";
 import { getPathFromParams } from "@graphinery/core";
 
-import { GraphineryMdx } from "./../../../components/graphinery-mdx";
+import { ContentComponentsMdx } from "../../../components/content-components-mdx";
 import { componentsMap } from "../../../components/components-map";
 import {
   Avatar,
@@ -138,7 +138,7 @@ export default async function BlogSlug({
           </PostHeader>
           {blog.content && (
             <div className="space-y-5">
-              <GraphineryMdx
+              <ContentComponentsMdx
                 mdx={blog.content}
                 components={{
                   ...componentsMap,

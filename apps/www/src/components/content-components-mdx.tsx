@@ -5,7 +5,7 @@ import { compileMDX } from "next-mdx-remote/rsc";
 
 type ComponentsMap = Record<string, React.ComponentType<any>>;
 
-type GraphineryMdxProps = {
+type ContentComponentsMdxProps = {
   /**
    * The mdx string.
    *
@@ -44,9 +44,12 @@ export async function getContent(
 /**
  * The component description.
  *
- * @returns The return value for `GraphineryMdx`.
+ * @returns The return value for `ContentComponentsMdx`.
  */
-export async function GraphineryMdx({ mdx, components }: GraphineryMdxProps) {
+export async function ContentComponentsMdx({
+  mdx,
+  components,
+}: ContentComponentsMdxProps) {
   const content = await getContent(mdx, components);
 
   return <>{content}</>;

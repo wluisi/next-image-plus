@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 
 import { Grid, GridItem } from "@graphinery/ui";
 
-import { GraphineryMdx } from "./../components/graphinery-mdx";
+import { ContentComponentsMdx } from "../components/content-components-mdx";
 import Hero from "./../components/home/hero";
 import FeaturedCardGrid from "./../components/home/featured-card-grid";
 import Accordion from "../components/home/accordion";
@@ -61,7 +61,7 @@ export default async function HomePage() {
         className="md:col-span-8 pb-10 md:px-10"
       >
         <div className="max-w-[960px] mx-auto py-3">
-          <GraphineryMdx
+          <ContentComponentsMdx
             mdx={home.content}
             components={{
               Accordion: Accordion,
