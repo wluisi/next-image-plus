@@ -4,7 +4,7 @@ import { getPathFromParams } from "@graphinery/core";
 
 import { notFound } from "next/navigation";
 
-import { GraphineryMdx } from "@graphinery/mdx";
+import { ContentComponentsMdx } from "../../components/content-components-mdx";
 import { componentsMap } from "../../components/components-map";
 import { Grid, GridItem, TableOfContents, cn } from "@graphinery/ui";
 import SidebarMenu from "../../components/sidebar-menu";
@@ -111,7 +111,7 @@ export default async function CatchAllSlugPage({
         <article className="space-y-5 prose dark:prose-invert">
           <Breadcrumb currentPath={page._path} />
           {page.content && (
-            <GraphineryMdx
+            <ContentComponentsMdx
               mdx={page.content}
               components={{
                 ...componentsMap,
