@@ -4,7 +4,7 @@ import { getPathFromParams } from "@graphinery/core";
 
 import { notFound } from "next/navigation";
 
-import { GraphineryMdx } from "@graphinery/mdx";
+import { GraphineryMdx } from "./../../components/graphinery-mdx";
 import { componentsMap } from "../../components/components-map";
 import { Grid, GridItem, TableOfContents, cn } from "@graphinery/ui";
 import SidebarMenu from "../../components/sidebar-menu";

@@ -72,7 +72,7 @@
   "peerDependencies": {
     "react": "^19 || ^19.0.0-rc",
     "react-dom": "^19 || ^19.0.0-rc",
-    "next": "^15"
+    "next": "^15 || ^16"
   },
   "homepage": "https://www.next-image-plus.com",
   "repository": {

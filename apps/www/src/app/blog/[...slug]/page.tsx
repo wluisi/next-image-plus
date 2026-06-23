@@ -3,7 +3,7 @@ import * as React from "react";
 import { notFound } from "next/navigation";
 import { getPathFromParams } from "@graphinery/core";
 
-import { GraphineryMdx } from "@graphinery/mdx";
+import { GraphineryMdx } from "./../../../components/graphinery-mdx";
 import { componentsMap } from "../../../components/components-map";
 import {
   Avatar,

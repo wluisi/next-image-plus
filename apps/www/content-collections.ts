@@ -2,7 +2,7 @@ import { defineCollection, defineConfig } from "@content-collections/core";
 import { z } from "zod";
 
 import { getBaseFields } from "./src/cc/base-fields";
-import { getTocFromMarkdown } from "@graphinery/mdx";
+import { getTocFromMarkdown } from "./src/cc/toc";
 
 const tocItem = z.object({
   id: z.string(),
