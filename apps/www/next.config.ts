@@ -21,12 +21,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // webpack: (config: any, { isServer }: any) => {
-  //   if (!isServer) {
-  //     config.resolve.fallback = { fs: false };
-  //   }
-  //   return config;
-  // },
   transpilePackages: ["@graphinery/ui", "next-mdx-remote"],
 };
 
