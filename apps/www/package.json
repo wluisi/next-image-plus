@@ -19,7 +19,6 @@
   "dependencies": {
     "@content-collections/core": "^0.15.1",
     "@content-collections/next": "^0.2.11",
-    "@graphinery/client": "1.0.0-beta.9",
     "@graphinery/core": "1.0.0-beta.7",
     "@graphinery/ui": "1.0.0-beta.20",
     "@tailwindcss/postcss": "^4.3.1",
