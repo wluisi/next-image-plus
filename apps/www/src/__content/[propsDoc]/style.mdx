@@ -1,0 +1,30 @@
+---
+title: "Style"
+status: true
+---
+
+## Style
+
+Generates and applies responsive background image styles. Only supported in React 19.
+
+## StyleProps
+
+| Prop                | Example | Type                  | Status   |
+| ------------------- | ------- | --------------------- | -------- |
+| string              | -       | `string`              | Required |
+| string              | -       | `string`              | -        |
+| BackgroundImageData | -       | `BackgroundImageData` | Required |
+
+### id
+
+The id of the html element, for generating the responsive styles.
+
+### href
+
+A unique id for the <style> element. Allows React to de-duplicate styles that have the same href.
+
+### bgImageProps
+
+An object mapping breakpoints to their corresponding media query and image properties.
+
+---

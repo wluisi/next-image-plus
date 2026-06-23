@@ -1,0 +1,23 @@
+---
+title: "PreloadImageLink"
+status: true
+---
+
+## PreloadImageLink
+
+Generates preloading image links for `<Picture>` and `<BackgroundImage>` components.
+
+Supports both Next.js app and pages routers, with a fallback for React 18.
+Uses `ReactDOM.preload` when available in the app router.
+
+## PreloadImageLinkProps
+
+| Prop              | Example | Type                | Status   |
+| ----------------- | ------- | ------------------- | -------- |
+| ImageAttributes[] | -       | `ImageAttributes[]` | Required |
+
+### data
+
+An array of image attributes.
+
+---

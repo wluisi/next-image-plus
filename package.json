@@ -31,9 +31,11 @@
     "www:next:dev": "npm run dev --workspace=apps/www",
     "www:dev": "npm run dev --workspace=apps/www",
     "www:production": "npm run www:build && npm run www:start",
-    "www:start": "npm run start --workspace=apps/www"
+    "www:start": "npm run start --workspace=apps/www",
+    "docsgen": "node scripts/docsgen.cjs"
   },
   "devDependencies": {
+    "@graphinery/docsgen": "1.0.0-beta.6",
     "concurrently": "^10.0.0",
     "eslint": "^9",
     "husky": "8.0.1",

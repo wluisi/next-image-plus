@@ -1,0 +1,32 @@
+---
+title: "getMediaQueries"
+status: true
+---
+
+## getMediaQueries
+
+Normalize media queries to remove overlapping ranges:
+- Bump first source's min-width by 1 to prevent overlap with fallback.
+- For adjacent sources, reduce max-width by 1 if it overlaps the next min-width.
+
+### Parameters
+
+| Parameter | Description                 | Type                   | Status   |
+| --------- | --------------------------- | ---------------------- | -------- |
+| items     | Array of media query items. | `MediaQueryItem[]`     | Required |
+| options   | -                           | `GetMediaQueryOptions` | -        |
+
+### GetMediaQueryOptions
+
+| Name        | Description                                                                           | Type      | Status |
+| ----------- | ------------------------------------------------------------------------------------- | --------- | ------ |
+| `normalize` | Enables or disables media query normalization to remove overlaps. Defaults to `true`. | `boolean` | -      |
+| `fallback`  | Optional fallback media query.                                                        | `string`  | -      |
+
+### Returns
+
+`null`
+
+Normalized object of objects, keyed by uuid.
+
+---

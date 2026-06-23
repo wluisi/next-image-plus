@@ -1,0 +1,23 @@
+---
+title: "getSmallestMediaQuery"
+status: true
+---
+
+## getSmallestMediaQuery
+
+Finds the media query that applies to the smallest viewport.
+Prioritizes `max-width` values when available; otherwise, falls back to `min-width`.
+
+### Parameters
+
+| Parameter | Description                                | Type       | Status   |
+| --------- | ------------------------------------------ | ---------- | -------- |
+| queries   | An array of valid CSS media query strings. | `string[]` | Required |
+
+### Returns
+
+`null`
+
+The smallest media query or `null` if none are valid.
+
+---
