@@ -1,7 +1,4 @@
-import * as React from "react";
 import { AppProps } from "next/app";
-
-import { GraphineryPageProps } from "@graphinery/client";
 
 // Components
 import { default as PagesHeader } from "../components/examples-pages/header";
@@ -9,10 +6,7 @@ import { default as PagesHeader } from "../components/examples-pages/header";
 import "./../global.css";
 import { Analytics } from "@vercel/analytics/next";
 
-export default function MyApp({
-  Component,
-  pageProps,
-}: AppProps<GraphineryPageProps>) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <PagesHeader />

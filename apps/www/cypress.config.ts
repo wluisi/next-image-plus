@@ -2,9 +2,9 @@ import { defineConfig } from "cypress";
 
 export default defineConfig({
   e2e: {
-    experimentalRunAllSpecs: true,
     baseUrl: "http://localhost:3000",
     setupNodeEvents(on, _config) {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       require("cypress-terminal-report/src/installLogsPrinter")(on, {
         printLogsToConsole: "always",
       });
@@ -32,6 +32,6 @@ export default defineConfig({
         },
       });
     },
-    specPattern: "**/*.test.{js,jsx,ts,tsx}",
+    specPattern: "cypress/**/*.test.{js,jsx,ts,tsx}",
   },
 });

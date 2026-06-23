@@ -12,13 +12,14 @@
     "current:dev": "concurrently \"npm:next-image-plus:dev\" \"npm:examples:dev\" \"npm:www:dev\"",
     "cypress:open": "npm run cypress:open --workspace=apps/www",
     "cypress:run": "npm run cypress:run --workspace=apps/www -- --browser chrome",
+    "playwright:test": "npm run playwright:test --workspace=apps/www",
     "dev": "concurrently \"npm:next-image-plus:dev\" \"npm:www:dev\"",
     "examples:dev": "npm run dev --workspace=examples/next",
     "examples:production": "npm run build --workspace=examples/next && npm run start --workspace=examples/next",
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
     "generate:props-docs": "node scripts/generate-props-docs.cjs",
-    "lint": "eslint --ignore-path .eslintignore \"**/src/**/*.+(ts|js|tsx)\"",
-    "lint:quiet": "eslint --ignore-path .eslintignore \"**/src/**/*.+(ts|js|tsx)\" --quiet",
+    "lint": "npm run lint --workspace=apps/www --workspace=packages/next-image-plus",
+    "lint:quiet": "npm run lint --workspace=apps/www --workspace=packages/next-image-plus -- --quiet",
     "next-image-plus:build": "npm run build --workspace=packages/next-image-plus",
     "next-image-plus:dev": "npm run dev --workspace=packages/next-image-plus",
     "next-image-plus:test": "npm run test --workspace=packages/next-image-plus",
@@ -33,24 +34,12 @@
     "www:start": "npm run start --workspace=apps/www"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "5.23.0",
-    "@typescript-eslint/parser": "5.23.0",
-    "concurrently": "^8.2.0",
-    "eslint": "8.15.0",
-    "eslint-config-next": "14.2.5",
-    "eslint-config-prettier": "8.5.0",
-    "eslint-import-resolver-typescript": "3.6.3",
-    "eslint-plugin-prettier": "5.0.0",
+    "concurrently": "^10.0.0",
+    "eslint": "^9",
     "husky": "8.0.1",
-    "lint-staged": "12.4.1",
+    "lint-staged": "^15.0.0",
     "prettier": "^3.4.2",
     "ts-morph": "^27.0.2",
     "typescript": "^5.8.2"
-  },
-  "lint-staged": {
-    "./src/**/*.{ts,js,jsx,tsx}": [
-      "eslint --ignore-path .gitignore --fix",
-      "prettier --ignore-path .gitignore --write"
-    ]
   }
 }

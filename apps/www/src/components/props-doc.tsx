@@ -1,7 +1,7 @@
 import { getEntry } from "../cc/collection";
 
 import { componentsMap } from "./components-map";
-import { GraphineryMdx } from "@graphinery/mdx";
+import { ContentComponentsMdx } from "./content-components-mdx";
 
 export function PropsDoc({ id }: { id: string }) {
   const path = `/props-doc/${id}`;
@@ -11,5 +11,7 @@ export function PropsDoc({ id }: { id: string }) {
     return null;
   }
 
-  return <GraphineryMdx mdx={propsDoc.content} components={componentsMap} />;
+  return (
+    <ContentComponentsMdx mdx={propsDoc.content} components={componentsMap} />
+  );
 }
