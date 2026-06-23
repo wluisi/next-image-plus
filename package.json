@@ -35,7 +35,7 @@
     "docsgen": "node scripts/docsgen.cjs"
   },
   "devDependencies": {
-    "@graphinery/docsgen": "1.0.0-beta.6",
+    "@graphinery/docsgen": "1.0.0-beta.7",
     "concurrently": "^10.0.0",
     "eslint": "^9",
     "husky": "8.0.1",
